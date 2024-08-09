@@ -123,7 +123,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         if (this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
             this.anims.play(`${this.monsterType}_move`);
         }
-
         // if (!this.isMoving && !this.isDamaged  && currentAnimKey !== `${this.monsterType}_idle`) {
         //     this.anims.play(`${this.monsterType}_idle`);
         // }

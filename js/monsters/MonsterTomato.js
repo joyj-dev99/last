@@ -50,7 +50,6 @@ export default class MonsterTomato extends Monster {
                 // 몬스터 객체 삭제 후 아이템 객체 생성하기 위해 미리 x,y 받아두기
                 const x = this.x;
                 const y = this.y;
-
                 const randomValue = Math.random();
                 if(randomValue <= 0.2){
                     console.log("토마토 시체 아이템 생성");
