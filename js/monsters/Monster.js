@@ -135,7 +135,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
     }
 
     prepareMove() {
-
         //몬스터가 플레이어를 따라다니고 있을 때는 좌표 계산 안함
         if (this.isFollowing && this.isReturning) return;
         // 만약 초기 위치에서 너무 많이 떨어진 경우 다시 초기 위치로 돌아가야 함

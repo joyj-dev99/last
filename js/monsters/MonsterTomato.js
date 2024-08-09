@@ -24,7 +24,6 @@ export default class MonsterTomato extends Monster {
             followDistance : 70,
             player: player
         });
-
     }
 
     takeDamage(amount) {
