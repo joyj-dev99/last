@@ -127,6 +127,9 @@ export default class MainScene extends Phaser.Scene {
 
     update() {
         this.player.update();
+        this.monsterArr.forEach((monster) =>{
+            monster.update();
+        });
     }
 
     setupWorld(stageNumber, mapNumber) {

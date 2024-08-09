@@ -53,6 +53,27 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         this.setCollisionCategory(MONSTER_CATEGORY);
         this.setCollidesWith([PLAYER_CATEGORY, TILE_CATEGORY]);
 
+        this.isMoving = false;
+        this.isFollowing = false;
+        this.hurt = false;
+        this.isReturning = false;
+
+        this.isAlive = true;
+
+        this.state = 'alive'; // 현재 상태
+
+        // 위치 설정
+        this.initialX = x;
+        this.initialY = y;
+        this.target = new Phaser.Math.Vector2(this.x, this.y);
+
+
+        this.moveEvent = this.scene.time.addEvent({
+            delay: 2000, // 1초마다
+            callback: this.prepareMove,
+            callbackScope: this,
+            loop: true
+        });
     }
 
     static preload(scene) {
@@ -63,9 +84,89 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
     }
 
     update() {
-        
+        if (!this.isAlive) {
+            this.moveEvent.destroy();
+        }
+        //플레이어와 몬스터 사이의 거리 계산
+        const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.player.x, this.player.y);
+        if (distanceToPlayer < this.followDistance) {
+            this.target.x = this.player.x;
+            this.target.y = this.player.y;
+            this.isFollowing = true;
+        } else {
+            this.isFollowing = false;
+            this.isMoving = false;
+        }
+
+        const speed = this.speed;
+        let monsterVelocity = new Phaser.Math.Vector2();
+        let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
+        let distanceToTarget = toTarget.length();
+
+        if (distanceToTarget > 5) {
+            toTarget.normalize(); // 벡터를 단위 벡터로 정규화
+            monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
+            this.isMoving = true;
+            if (toTarget.x < 0) {
+                this.setFlipX(true);
+            } else {
+                this.setFlipX(false);
+            }
+            this.setVelocity(monsterVelocity.x, monsterVelocity.y);
+        } else {
+            this.isMoving = false;
+            this.setVelocity(0, 0);
+        }
+
+        const currentAnimKey = this.anims.currentAnim.key;
+        // 상태 변화 감지 및 애니메이션 재생
+        if (this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
+            this.anims.play(`${this.monsterType}_move`);
+        }
+        // if (!this.isMoving && !this.isDamaged  && currentAnimKey !== `${this.monsterType}_idle`) {
+        //     this.anims.play(`${this.monsterType}_idle`);
+        // }
+        // console.log("현재 상태 : " + this.isMoving, this.isFollowing, this.isDamaged);
     }
 
+    getMonsterCollider() {
+        return this.monsterCollider;
+    }
+
+    prepareMove() {
+        //몬스터가 플레이어를 따라다니고 있을 때는 좌표 계산 안함
+        if (this.isFollowing && this.isReturning) return;
+        // 만약 초기 위치에서 너무 많이 떨어진 경우 다시 초기 위치로 돌아가야 함
+        if (Phaser.Math.Distance.Between(this.initialX, this.initialY, this.x, this.y) > this.maxMove) {
+            console.log("돌아가야해 : ", this.x, this.y)
+            this.target.x = this.initialX;
+            this.target.y = this.initialY;
+            this.isReturning = true;
+        } else {
+            this.isReturning = false;
+            const directions = [
+                {x: -1, y: 0},  // left
+                {x: 1, y: 0},   // right
+                {x: 0, y: -1},  // up
+                {x: 0, y: 1},   // down
+                {x: -1, y: -1}, // up-left
+                {x: 1, y: -1},  // up-right
+                {x: -1, y: 1},  // down-left
+                {x: 1, y: 1}    // down-right
+            ];
+
+            const direction = Phaser.Math.RND.pick(directions);
+            let newX = this.target.x + direction.x * this.oneMove;
+            let newY = this.target.y + direction.y * this.oneMove;
+
+            if (Phaser.Math.Distance.Between(this.initialX, this.initialY, newX, newY) < this.maxMove) {
+                this.target.x = newX;
+                this.target.y = newY;
+            }
+        }
+        this.isMoving = true;
+        console.log('몬스터 타겟 위치 설정 : ', this.target.x, this.target.y);
+    }
     // 자식 몬스터 클래스에서 필수로 오버라이드 해야 하는 함수들
     itemDrop() {
         throw new Error('Method "itemDrop()" must be implemented.');
