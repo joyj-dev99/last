@@ -48,6 +48,9 @@ export default class MainScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_01_03_map", "assets/map/stage_01_03.json");
         this.load.tilemapTiledJSON("stage_01_04_map", "assets/map/stage_01_04.json");
 
+        // 배경음악 로드
+        this.load.audio("backgroundMusic", "assets/audio/field_theme_1.wav");
+
         Player.preload(this);
         Monster.preload(this);
         Chord.preload(this);
@@ -61,10 +64,26 @@ export default class MainScene extends Phaser.Scene {
 
     create() {
         // 씬이 시작될때 페이드인 효과 적용
-        // this.cameras.main.fadeIn(1000, 0, 0, 0);
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
         this.setupWorld(this.stageNumber, this.mapNumber);
 
-        
+        // Play background music
+        this.backgroundMusic = this.sound.add('backgroundMusic', {
+            volume: 0.3, // Set the volume (0 to 1)
+            loop: true // Enable looping if desired
+        });
+
+        // 스테이지 진행률 UI
+        this.progressIndicator = new ProgressIndicator(this,'progressSheet', this.stageNumber , this.mapNumber - 1);
+        // 하트(체력) UI
+        this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
+
+        //페이드인 완료 후 게임 실행
+        this.cameras.main.once('camerafadeincomplete', (camera) => {
+            this.chord.startPlayLute();
+            this.backgroundMusic.play();
+        });
+
         // 플레이어와 몬스터 충돌 이벤트 설정
         this.matterCollision.addOnCollideStart({
             objectA: this.player,
@@ -84,10 +103,10 @@ export default class MainScene extends Phaser.Scene {
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
 
-                let item = new Item(this, gameObjectB.x+10, gameObjectB.y+10, 'coin', null, this.player, 'coin');
-                this.itemArr.push(item);
-                console.log('this.itemArr 에 값 추가');
-                console.dir(this.itemArr);
+                // let item = new Item(this, gameObjectB.x+10, gameObjectB.y+10, 'coin', null, this.player, 'coin');
+                // this.itemArr.push(item);
+                // console.log('this.itemArr 에 값 추가');
+                // console.dir(this.itemArr);
 
             }
         });
@@ -120,10 +139,10 @@ export default class MainScene extends Phaser.Scene {
             const playerStatus = this.player.status;
             if (mapNumber < 5) {
                 this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
-                // this.scene.backgroundMusic.stop();
+                this.backgroundMusic.stop();
             } else {
                 this.scene.start('NightScene', {stageNumber, mapNumber, playerStatus});
-                // this.scene.backgroundMusic.stop();
+                this.backgroundMusic.stop();
             }
         }
 
@@ -159,6 +178,7 @@ export default class MainScene extends Phaser.Scene {
 
     update() {
         this.player.update();
+        this.heartIndicator.setHeart(this.player.status.nowHeart);
         this.monsterArr.forEach((monster) =>{
             monster.update();
         });
