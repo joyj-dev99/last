@@ -1,7 +1,14 @@
+import HeartIndicator from "./HeartIndicator.js";
+import ProgressIndicator from "./ProgressIndicator.js";
+import TextIndicator from "./TextIndicator.js";
+
 import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
+import MonsterEggplant from "./monsters/MonsterEggplant.js";
+
 import Milestone from "./objects/Milestone.js";
+import Chord from "./character/Chord.js";
 
 const PLAYER_CATEGORY = 0x0001;
 const MONSTER_CATEGORY = 0x0002;
@@ -39,6 +46,10 @@ export default class MainScene extends Phaser.Scene {
 
         Player.preload(this);
         Monster.preload(this);
+        Chord.preload(this);
+
+        ProgressIndicator.preload(this);
+        HeartIndicator.preload(this);
 
         Milestone.preload(this);
     }
@@ -160,7 +171,20 @@ export default class MainScene extends Phaser.Scene {
     
             // 코드 생성 위치 설정
             if (type === 'chord') {
-
+                if (name === 'chordStart') {
+                    this.chord = new Chord({
+                        scene: this,
+                        x: x,
+                        y: y
+                    });
+                } else if (name === 'chordBattle') {
+                    this.chordBattle = {x: x, y: y};
+                    console.log(`chordBattle = {x: ${this.chordBattle.x}, y: ${this.chordBattle.y}`);
+                    
+                } else if (name === 'chordEnd') {
+                    this.chordEnd = {x: x, y: y};
+                    console.log(`chordEnd = {x: ${this.chordEnd.x}, y: ${this.chordEnd.y}`);
+                }
             }
 
             // 표지판
@@ -179,6 +203,10 @@ export default class MainScene extends Phaser.Scene {
                     x: x,
                     y: y
                 });
+                this.player.setDepth(100);
+                if (this.playerStatus != null) {
+                    this.player.status = this.playerStatus;
+                }
             }
         });
 
@@ -198,12 +226,12 @@ export default class MainScene extends Phaser.Scene {
                         });
                         break;
                     case 'eggplant':
-                        // m = new MonsterEggplant({
-                        //     scene: this, 
-                        //     x: x, 
-                        //     y: y,
-                        //     player: this.player // 플레이어 객체 전달
-                        // });
+                        m = new MonsterEggplant({
+                            scene: this, 
+                            x: x, 
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
                         break;
                     default:
                         // console.log("몬스터 생성 : " + name);
