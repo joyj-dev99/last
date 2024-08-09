@@ -1,6 +1,7 @@
 import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
+import Milestone from "./objects/Milestone.js";
 
 const PLAYER_CATEGORY = 0x0001;
 const MONSTER_CATEGORY = 0x0002;
@@ -38,6 +39,8 @@ export default class MainScene extends Phaser.Scene {
 
         Player.preload(this);
         Monster.preload(this);
+
+        Milestone.preload(this);
     }
 
     create() {
@@ -64,6 +67,48 @@ export default class MainScene extends Phaser.Scene {
                 });
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
+            }
+        });
+
+        // 다음 맵으로 이동하는 이벤트 핸들러
+        const goToNextHandler = (event) => {
+            console.log('Moving to the next map...');
+            const stageNumber = this.stageNumber;
+            const mapNumber = this.mapNumber + 1;
+            const playerStatus = this.player.status;
+            if (mapNumber < 5) {
+                this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
+                // this.scene.backgroundMusic.stop();
+            } else {
+                this.scene.start('NightScene', {stageNumber, mapNumber, playerStatus});
+                // this.scene.backgroundMusic.stop();
+            }
+        }
+
+        // 플레이어와 표지판 충돌 이벤트 설정
+        this.matterCollision.addOnCollideStart({
+            objectA: this.player,
+            objectB: this.milestone,
+            callback: eventData => {
+                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                console.log("플레이어와 표지판 충돌");
+                // 상호작용 가능 키 표시
+                gameObjectB.showInteractPrompt();
+                // 키보드 입력 이벤트 설정
+                this.input.keyboard.on('keydown-E', goToNextHandler);
+            }
+        });
+
+        this.matterCollision.addOnCollideEnd({
+            objectA: this.player,
+            objectB: this.milestone,
+            callback: eventData => {
+                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                console.log("플레이어와 표지판 떨어짐");
+                // 상호작용 가능 키 숨기기
+                gameObjectB.hideInteractPrompt();
+                // 키보드 입력 이벤트 해제
+                this.input.keyboard.off('keydown-E', goToNextHandler);
             }
         });
        
@@ -120,7 +165,11 @@ export default class MainScene extends Phaser.Scene {
 
             // 표지판
             if (name === 'milestone') {
-
+                this.milestone = new Milestone({
+                    scene: this,
+                    x: x,
+                    y: y
+                });
             }
 
             // 플레이어 시작 위치 설정

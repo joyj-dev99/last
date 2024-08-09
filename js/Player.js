@@ -1,6 +1,7 @@
 const PLAYER_CATEGORY = 0x0001;
 const MONSTER_CATEGORY = 0x0002;
 const TILE_CATEGORY = 0x0004;
+const OBJECT_CATEGORY = 0x0005;
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -59,10 +60,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.isRolling = false;
         this.hitByMonster = false;
 
-
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_CATEGORY);
-        this.setCollidesWith([MONSTER_CATEGORY, TILE_CATEGORY]);
+        this.setCollidesWith([MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY]);
     }
 
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
