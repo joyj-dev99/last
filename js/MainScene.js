@@ -244,5 +244,22 @@ export default class MainScene extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 960, 320);
         this.matter.world.setBounds(0, 0, 960, 320);
         this.cameras.main.startFollow(this.player);
+
+        // 상단 coins:{누적갯수} 텍스트 박스 표시
+        this.text = TextIndicator.createText(this, 10, 10,  `Coins: ${this.player.status.coin}`, {
+            fontSize: '1vw',
+            fill: '#000', // 글씨 색상 검은색
+            backgroundColor: 'rgba(255, 255, 255, 0.5)', // 배경 투명한 흰색
+            padding: {
+                x: 10, // 좌우 패딩
+                y: 5  // 상하 패딩
+            }
+        });
+        // 계속 상단에 고정되도록 UI 레이어 설정
+        TextIndicator.setScrollFactorText(this.text);
+
+        // player가 coin 값 변경될 때마다 text 값 변경할 수 있도록 변수 값 넘겨주기
+        this.player.setCoinIndicatorText(this.text);
+
     }
 }
