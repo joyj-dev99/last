@@ -1,6 +1,7 @@
 import HeartIndicator from "./HeartIndicator.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import TextIndicator from "./TextIndicator.js";
+import Item from "./Item.js";
 
 import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
@@ -31,6 +32,9 @@ export default class MainScene extends Phaser.Scene {
         
         // 현재 스테이지에 살아있는 몬스터 객체를 담은 배열
         this.monsterArr = [];
+        // 현재 스테이지에 드랍된 아이템 객체를 담은 배열
+        this.itemArr = [];
+
         // 현재 스테이지에서 전투중 코드의 위치(x,y)를 담은 객체
         this.chordBattle = {x: 0, y: 0};
         // 현재 스테이지에서 전투가 끝난 후 코드의 위치(x,y)를 담은 객체;
@@ -47,6 +51,7 @@ export default class MainScene extends Phaser.Scene {
         Player.preload(this);
         Monster.preload(this);
         Chord.preload(this);
+        Item.preload(this);
 
         ProgressIndicator.preload(this);
         HeartIndicator.preload(this);
@@ -78,8 +83,34 @@ export default class MainScene extends Phaser.Scene {
                 });
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
+
+                let item = new Item(this, gameObjectB.x+10, gameObjectB.y+10, 'coin', null, this.player, 'coin');
+                this.itemArr.push(item);
+                console.log('this.itemArr 에 값 추가');
+                console.dir(this.itemArr);
+
             }
         });
+
+        // // 플레이어와 아이템 충돌 이벤트 설정
+        // this.matterCollision.addOnCollideStart({
+        //     objectA: this.player,
+        //     objectB: this.itemArr,
+        //     callback: eventData => {
+                
+        //         // 플레이어가 A, 충돌이 발생한 몬스터가 B
+        //         const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+        //         console.log("플레이어와 아이템 충돌");
+
+        //         // 아이템 화면에서 제거
+        //         // gameObjectB.destroy();
+
+        //         // this.player.applyKnockback(gameObjectB);
+                
+        //     }
+        // });
+
+
 
         // 다음 맵으로 이동하는 이벤트 핸들러
         const goToNextHandler = (event) => {
@@ -123,6 +154,7 @@ export default class MainScene extends Phaser.Scene {
             }
         });
        
+        
     }
 
     update() {
@@ -133,6 +165,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     setupWorld(stageNumber, mapNumber) {
+
         const map = this.make.tilemap({key: `stage_0${stageNumber}_0${mapNumber}_map`});
         const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
         
@@ -247,5 +280,22 @@ export default class MainScene extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 960, 320);
         this.matter.world.setBounds(0, 0, 960, 320);
         this.cameras.main.startFollow(this.player);
+
+        // 상단 coins:{누적갯수} 텍스트 박스 표시
+        this.text = TextIndicator.createText(this, 10, 10,  `Coins: ${this.player.status.coin}`, {
+            fontSize: '1vw',
+            fill: '#000', // 글씨 색상 검은색
+            backgroundColor: 'rgba(255, 255, 255, 0.5)', // 배경 투명한 흰색
+            padding: {
+                x: 10, // 좌우 패딩
+                y: 5  // 상하 패딩
+            }
+        });
+        // 계속 상단에 고정되도록 UI 레이어 설정
+        TextIndicator.setScrollFactorText(this.text);
+
+        // player가 coin 값 변경될 때마다 text 값 변경할 수 있도록 변수 값 넘겨주기
+        this.player.setCoinIndicatorText(this.text);
+
     }
 }

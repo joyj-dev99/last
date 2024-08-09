@@ -257,7 +257,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         });
     }
 
+    // 상단 coin 갯수 표시되는 텍스트 박스의 text 변수를 player 객체가 받기
+    setCoinIndicatorText(coinIndicatorText){
+        this.coinIndicatorText = coinIndicatorText;
+    }
 
-
-
+    // 코인 획득 (코인 추가)
+    addCoin(amount){
+        console.log('addCoin');
+        this.status.coin += amount;
+        // 상단 coin 누적 갯수 화면에 반영
+        this.coinIndicatorText.setText(`Coins: ${this.status.coin}`);
+        console.log(' this.status.coin : '+ this.status.coin);
+    }
+    
 }
