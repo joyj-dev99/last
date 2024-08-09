@@ -1,0 +1,24 @@
+{
+    "anims": [
+        {
+            "key": "milestone_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 5,
+            "frames": [
+                {
+                    "key": "milestone",
+                    "frame": "milestone_0"
+                },
+                {
+                    "key": "milestone",
+                    "frame": "milestone_1"
+                },
+                {
+                    "key": "milestone",
+                    "frame": "milestone_2"
+                }
+            ]
+        }
+    ]
+}

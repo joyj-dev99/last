@@ -1,0 +1,176 @@
+{
+    "anims": [
+        {
+            "key": "tomato_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "tomato",
+                    "frame": "tomato_idle_01"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_idle_02"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_idle_03"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_idle_04"
+                }
+            ]
+        },
+        {
+            "key": "tomato_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 9,
+            "frames": [
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_01"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_02"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_03"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_04"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_05"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_06"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_07"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_move_08"
+                }
+            ]
+        },
+        {
+            "key": "tomato_attack",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_01"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_02"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_03"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_04"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_05"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_06"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_07"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_attack_08"
+                }
+            ]
+        },
+        {
+            "key": "tomato_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "tomato",
+                    "frame": "tomato_damage_01"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_damage_02"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_damage_03"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_damage_04"
+                }
+            ]
+        },
+        {
+            "key": "tomato_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_01"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_02"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_03"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_04"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_05"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_06"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_07"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_08"
+                },
+                {
+                    "key": "tomato",
+                    "frame": "tomato_death_09"
+                }
+            ]
+        }
+    ]
+}

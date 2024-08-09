@@ -1,0 +1,28 @@
+{
+    "anims": [
+        {
+            "key": "bonfire_fire",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "bonfire",
+                    "frame": "bonfire_1"
+                },
+                {
+                    "key": "bonfire",
+                    "frame": "bonfire_2"
+                },
+                {
+                    "key": "bonfire",
+                    "frame": "bonfire_3"
+                },
+                {
+                    "key": "bonfire",
+                    "frame": "bonfire_4"
+                }
+            ]
+        }
+    ]
+}

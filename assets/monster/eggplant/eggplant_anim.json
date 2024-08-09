@@ -1,0 +1,220 @@
+{
+    "anims": [
+        {
+            "key": "eggplant_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 7,
+            "frames": [
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_idle_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_idle_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_idle_03"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_idle_04"
+                }
+            ]
+        },
+        {
+            "key": "eggplant_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_03"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_04"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_05"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_06"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_07"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_move_08"
+                }
+            ]
+        },
+        {
+            "key": "eggplant_throw_egg",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_throw_egg_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_throw_egg_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_throw_egg_03"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_throw_egg_04"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_throw_egg_05"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_throw_egg_06"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_throw_egg_07"
+                }
+            ]
+        },
+        {
+            "key": "eggplant_egg_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_move_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_move_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_move_03"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_move_04"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_move_05"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_move_06"
+                }
+            ]
+        },
+        {
+            "key": "eggplant_egg_hit",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_hit_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_hit_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_hit_03"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_egg_hit_04"
+                }
+            ]
+        },
+        {
+            "key": "eggplant_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_03"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_04"
+                }
+            ]
+        },
+        {
+            "key": "eggplant_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 7,
+            "frames": [
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_03"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_damage_04"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_death_01"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_death_02"
+                },
+                {
+                    "key": "eggplant",
+                    "frame": "eggplant_death_03"
+                }
+            ]
+        }
+    ]
+}

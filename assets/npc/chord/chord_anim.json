@@ -1,0 +1,288 @@
+{
+    "anims": [
+        {
+            "key": "chord_idle_1",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 7,
+            "frames": [
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_1_01"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_1_02"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_1_03"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_1_04"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_1_05"
+                }
+            ]
+        },
+        {
+            "key": "chord_idle_2",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_01"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_02"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_03"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_04"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_05"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_06"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_07"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_08"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_09"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_10"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_11"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_12"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_13"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_14"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_idle_2_15"
+                }
+            ]
+        },
+        {
+            "key": "chord_ready",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 7,
+            "frames": [
+                {
+                    "key": "chord",
+                    "frame": "chord_ready_01"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_ready_02"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_ready_03"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_ready_04"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_ready_05"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_ready_06"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_ready_07"
+                }
+            ]
+        },
+        {
+            "key": "chord_sing",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_01"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_02"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_03"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_04"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_05"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_06"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_07"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_08"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_09"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_10"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_sing_11"
+                }
+            ]
+        },
+        {
+            "key": "chord_run",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "chord",
+                    "frame": "chord_run_01"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_run_02"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_run_03"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_run_04"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_run_05"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_run_06"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_run_07"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_run_08"
+                }
+            ]
+        },
+        {
+            "key": "chord_yes",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 5,
+            "frames": [
+                {
+                    "key": "chord",
+                    "frame": "chord_yes_01"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_yes_02"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_yes_03"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_yes_04"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_yes_01"
+                }
+            ]
+        },
+        {
+            "key": "chord_no",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "chord",
+                    "frame": "chord_no_01"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_no_02"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_no_03"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_no_04"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_no_05"
+                },
+                {
+                    "key": "chord",
+                    "frame": "chord_no_06"
+                }
+            ]
+        }
+    ]
+}
