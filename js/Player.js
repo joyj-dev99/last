@@ -291,6 +291,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if (this.isRolling) return;
         this.hitByMonster = true;
         this.status.nowHeart -= amount;
+        this.status.nowHeart = this.status.nowHeart < 0 ? 0 : this.status.nowHeart;
 
         if(this.status.nowHeart === 0){
             console.log("플레이어 죽음");
@@ -327,18 +328,19 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         });
     }
 
-    // 상단 coin 갯수 표시되는 텍스트 박스의 text 변수를 player 객체가 받기
-    setCoinIndicatorText(coinIndicatorText){
-        this.coinIndicatorText = coinIndicatorText;
-    }
-
     // 코인 획득 (코인 추가)
     addCoin(amount){
         console.log('addCoin');
         this.status.coin += amount;
-        // 상단 coin 누적 갯수 화면에 반영
-        this.coinIndicatorText.setText(`Coins: ${this.status.coin}`);
         console.log(' this.status.coin : '+ this.status.coin);
+    }
+
+
+    // 체력 amount만큼 증가
+    increaseHeart(amount){
+        console.log('increaseHeart');
+        this.status.nowHeart = this.status.nowHeart + amount > this.status.maxHeart ? this.status.maxHeart : this.status.nowHeart + amount;
+        console.log('this.status.nowHeart : '+ this.status.nowHeart);
     }
 
     // 애니메이션이 완료되었을 때 실행될 로직을 중앙화
