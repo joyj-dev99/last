@@ -15,7 +15,7 @@ const PLAYER_CATEGORY = 0x0001;
 const MONSTER_CATEGORY = 0x0002;
 const TILE_CATEGORY = 0x0004;
 
-export default class MainScene extends Phaser.Scene {
+export default class MainSceneTest extends Phaser.Scene {
     
     constructor() {
         super("MainScene");
@@ -39,6 +39,7 @@ export default class MainScene extends Phaser.Scene {
         this.chordBattle = {x: 0, y: 0};
         // 현재 스테이지에서 전투가 끝난 후 코드의 위치(x,y)를 담은 객체;
         this.chordEnd = {x: 0, y: 0};
+
     }
 
     preload() {
@@ -63,6 +64,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
+
         // 씬이 시작될때 페이드인 효과 적용
         this.cameras.main.fadeIn(1000, 0, 0, 0);
         this.setupWorld(this.stageNumber, this.mapNumber);
@@ -89,6 +91,7 @@ export default class MainScene extends Phaser.Scene {
             objectA: this.player,
             objectB: this.monsterArr,
             callback: eventData => {
+                
                 // 플레이어가 A, 충돌이 발생한 몬스터가 B
                 const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                 console.log("플레이어와 몬스터 충돌");
@@ -103,33 +106,34 @@ export default class MainScene extends Phaser.Scene {
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
 
-                // let item = new Item(this, gameObjectB.x+10, gameObjectB.y+10, 'coin', null, this.player, 'coin');
-                // this.itemArr.push(item);
-                // console.log('this.itemArr 에 값 추가');
-                // console.dir(this.itemArr);
+                // 몬스터와 충돌 시 아이템 드랍하기
+                // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
+                const itemType = Item.createItemType(gameObjectB);
+             
+                // 몬스터의 위치에 객체 생성 
+                let item = new Item({
+                    scene : this,
+                    x : gameObjectB.x,
+                    y : gameObjectB.y,
+                    itemType : itemType
+                });
 
+                // 플레이어와 아이템 충돌 이벤트 설정
+                const unsubscribe = this.matterCollision.addOnCollideStart({
+                    objectA: this.player,
+                    objectB: item,
+                    callback: eventData => {
+
+                        const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                        console.log("플레이어와 아이템 충돌");
+                        // 아이템 효과 적용하기 및 화면에 반영하기
+                        gameObjectB.applyItem(gameObjectA,this.coinIndicatorText,this.heartIndicator);
+                        unsubscribe();
+                    }
+                });
+                
             }
         });
-
-        // // 플레이어와 아이템 충돌 이벤트 설정
-        // this.matterCollision.addOnCollideStart({
-        //     objectA: this.player,
-        //     objectB: this.itemArr,
-        //     callback: eventData => {
-                
-        //         // 플레이어가 A, 충돌이 발생한 몬스터가 B
-        //         const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-        //         console.log("플레이어와 아이템 충돌");
-
-        //         // 아이템 화면에서 제거
-        //         // gameObjectB.destroy();
-
-        //         // this.player.applyKnockback(gameObjectB);
-                
-        //     }
-        // });
-
-
 
         // 다음 맵으로 이동하는 이벤트 핸들러
         const goToNextHandler = (event) => {
@@ -157,6 +161,8 @@ export default class MainScene extends Phaser.Scene {
                 gameObjectB.showInteractPrompt();
                 // 키보드 입력 이벤트 설정
                 this.input.keyboard.on('keydown-E', goToNextHandler);
+
+                
             }
         });
 
@@ -172,8 +178,7 @@ export default class MainScene extends Phaser.Scene {
                 this.input.keyboard.off('keydown-E', goToNextHandler);
             }
         });
-       
-        
+
     }
 
     update() {
@@ -302,7 +307,7 @@ export default class MainScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
 
         // 상단 coins:{누적갯수} 텍스트 박스 표시
-        this.text = TextIndicator.createText(this, 10, 10,  `Coins: ${this.player.status.coin}`, {
+        this.coinIndicatorText = TextIndicator.createText(this, 10, 10,  `Coins: ${this.player.status.coin}`, {
             fontSize: '1vw',
             fill: '#000', // 글씨 색상 검은색
             backgroundColor: 'rgba(255, 255, 255, 0.5)', // 배경 투명한 흰색
@@ -312,10 +317,7 @@ export default class MainScene extends Phaser.Scene {
             }
         });
         // 계속 상단에 고정되도록 UI 레이어 설정
-        TextIndicator.setScrollFactorText(this.text);
-
-        // player가 coin 값 변경될 때마다 text 값 변경할 수 있도록 변수 값 넘겨주기
-        this.player.setCoinIndicatorText(this.text);
+        TextIndicator.setScrollFactorText(this.coinIndicatorText);
 
     }
 }
