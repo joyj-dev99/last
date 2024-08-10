@@ -1,6 +1,8 @@
 const PLAYER_CATEGORY = 0x0001;
 const MONSTER_CATEGORY = 0x0002;
 const TILE_CATEGORY = 0x0004;
+const OBJECT_CATEGORY = 0x0005;
+const PLAYER_ATTACK_CATEGORY = 0x0006;4;
 
 export default class Monster extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -51,7 +53,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
 
 
         this.setCollisionCategory(MONSTER_CATEGORY);
-        this.setCollidesWith([PLAYER_CATEGORY, TILE_CATEGORY]);
+        this.setCollidesWith([PLAYER_CATEGORY, TILE_CATEGORY, PLAYER_ATTACK_CATEGORY]);
 
         this.isMoving = false;
         this.isFollowing = false;

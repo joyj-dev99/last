@@ -1,4 +1,4 @@
-import MainScene from './MainScene.js';
+import MainScene from './MainSceneTest.js';
 import NightScene from './NightScene.js';
 import IntroScene from './IntroScene.js';
 import TitleScene from './TitleScene.js';
