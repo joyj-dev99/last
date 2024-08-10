@@ -119,7 +119,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 });
 
                 // 플레이어와 아이템 충돌 이벤트 설정
-                this.matterCollision.addOnCollideStart({
+                const unsubscribe = this.matterCollision.addOnCollideStart({
                     objectA: this.player,
                     objectB: item,
                     callback: eventData => {
@@ -128,7 +128,7 @@ export default class MainSceneTest extends Phaser.Scene {
                         console.log("플레이어와 아이템 충돌");
                         // 아이템 효과 적용하기 및 화면에 반영하기
                         gameObjectB.applyItem(gameObjectA,this.coinIndicatorText,this.heartIndicator);
-                        
+                        unsubscribe();
                     }
                 });
                 
