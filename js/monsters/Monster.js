@@ -4,13 +4,15 @@ const TILE_CATEGORY = 0x0004;
 
 export default class Monster extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
-        let {scene, x, y, texture, frame, monsterType, bodyWidth, bodyHeight, centreX, centreY, 
-            hp, damage, reach, speed, oneMove, maxMove, followDistance, player} = data;
+        let {
+            scene, x, y, texture, frame, monsterType, bodyWidth, bodyHeight, centreX, centreY,
+            hp, damage, reach, speed, oneMove, maxMove, followDistance, player
+        } = data;
 
         super(scene.matter.world, x, y, texture, frame);
         this.scene = scene;
         this.scene.add.existing(this);
-    
+
         // 최초 생성시 왼쪽을 바라보도록.
         this.setFlipX(true);
 
@@ -23,9 +25,9 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         this.oneMove = oneMove; // 한번에 이동하는 거리 (픽셀)
         this.maxMove = maxMove; // 초기 위치에서 최대로 이동할 수 있는 거리 (픽셀)
         this.followDistance = followDistance; // 플레이어와 몬스터 사이 거리가 해당 수치보다 작으면 몬스터가 플레이어를 따라다님 (픽셀)
-        
+
         // 플레이어 객체 참조
-        this.player = player; 
+        this.player = player;
 
         // 충돌체 생성
         const {Body, Bodies} = Phaser.Physics.Matter.Matter;
@@ -86,51 +88,78 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
     update() {
         if (!this.isAlive) {
             this.moveEvent.destroy();
-        }
-        //플레이어와 몬스터 사이의 거리 계산
-        const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.player.x, this.player.y);
-        if (distanceToPlayer < this.followDistance) {
-            this.target.x = this.player.x;
-            this.target.y = this.player.y;
-            this.isFollowing = true;
         } else {
-            this.isFollowing = false;
-            this.isMoving = false;
-        }
-
-        const speed = this.speed;
-        let monsterVelocity = new Phaser.Math.Vector2();
-        let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
-        let distanceToTarget = toTarget.length();
-
-        if (distanceToTarget > 5) {
-            toTarget.normalize(); // 벡터를 단위 벡터로 정규화
-            monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
-            this.isMoving = true;
-            if (toTarget.x < 0) {
-                this.setFlipX(true);
+            //플레이어와 몬스터 사이의 거리 계산
+            const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.player.x, this.player.y);
+            if (distanceToPlayer < this.followDistance) {
+                this.target.x = this.player.x;
+                this.target.y = this.player.y;
+                this.isFollowing = true;
             } else {
-                this.setFlipX(false);
+                this.isFollowing = false;
+                this.isMoving = false;
             }
-            this.setVelocity(monsterVelocity.x, monsterVelocity.y);
-        } else {
-            this.isMoving = false;
-            this.setVelocity(0, 0);
-        }
 
-        const currentAnimKey = this.anims.currentAnim.key;
-        // 상태 변화 감지 및 애니메이션 재생
-        if (this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
-            this.anims.play(`${this.monsterType}_move`);
+            const speed = this.speed;
+            let monsterVelocity = new Phaser.Math.Vector2();
+            let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
+            let distanceToTarget = toTarget.length();
+
+            if (distanceToTarget > 5) {
+                toTarget.normalize(); // 벡터를 단위 벡터로 정규화
+                monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
+                this.isMoving = true;
+                if (toTarget.x < 0) {
+                    this.setFlipX(true);
+                } else {
+                    this.setFlipX(false);
+                }
+                this.setVelocity(monsterVelocity.x, monsterVelocity.y);
+            } else {
+                this.isMoving = false;
+                this.setVelocity(0, 0);
+            }
+
+            const currentAnimKey = this.anims.currentAnim.key;
+            // 상태 변화 감지 및 애니메이션 재생
+            if (this.isMoving && currentAnimKey !== `${this.monsterType}_move`
+                && this.state === 'alive') {
+                this.anims.play(`${this.monsterType}_move`);
+            }
+            // if (!this.isMoving && !this.isDamaged  && currentAnimKey !== `${this.monsterType}_idle`) {
+            //     this.anims.play(`${this.monsterType}_idle`);
+            // }
+            // console.log("현재 상태 : " + this.isMoving, this.isFollowing, this.isDamaged);
         }
-        // if (!this.isMoving && !this.isDamaged  && currentAnimKey !== `${this.monsterType}_idle`) {
-        //     this.anims.play(`${this.monsterType}_idle`);
-        // }
-        // console.log("현재 상태 : " + this.isMoving, this.isFollowing, this.isDamaged);
     }
 
     getMonsterCollider() {
         return this.monsterCollider;
+    }
+
+    actionAmin(state) {
+        this.state = state;
+        if (state === 'attack') {
+            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
+            this.setStatic(true);
+            this.anims.play(`${this.monsterType}_attack`, true);
+            // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
+            this.scene.time.delayedCall(500, () => {
+                this.setStatic(false);
+            });
+        }
+        if (state === 'damage') {
+            this.setStatic(true);
+            this.anims.play(`${this.monsterType}_damage`, true);
+            this.scene.time.delayedCall(500, () => {
+                this.setStatic(false);
+            });
+
+        }
+
+        if (this.hp <= 0) {
+            // this.isAction = true;
+        }
     }
 
     prepareMove() {
@@ -165,8 +194,10 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             }
         }
         this.isMoving = true;
+        this.state = 'alive';
         console.log('몬스터 타겟 위치 설정 : ', this.target.x, this.target.y);
     }
+
     // 자식 몬스터 클래스에서 필수로 오버라이드 해야 하는 함수들
     itemDrop() {
         throw new Error('Method "itemDrop()" must be implemented.');
@@ -176,5 +207,5 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         throw new Error('Method "takeDamage()" must be implemented.');
     }
 
-    
+
 }

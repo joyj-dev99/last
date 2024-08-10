@@ -15,11 +15,11 @@ export default class MonsterTomato extends Monster {
             bodyHeight: 14,
             centreX: 0,
             centreY: -6,
-            hp: 100,
+            hp: 60,
             damage: 0.5, //플레이어의 기준 체력이 3이기 때문에, 0.5로 설정
             reach: 20,
-            speed: 2,
-            oneMove : 30, 
+            speed: 1,
+            oneMove : 30,
             maxMove : 100,
             followDistance : 70,
             player: player
@@ -32,18 +32,16 @@ export default class MonsterTomato extends Monster {
             this.hp -= amount;
             console.log('monster HP', this.hp)
             if (this.hp > 0) {
-                this.state = 'damage';
+                this.actionAmin('damage');
             } else {
                 this.isAlive = false;
                 this.hp = 0;
                 this.anims.play('tomato_death');
-                this.isAction = true;
             }
             this.hurt = true;
             if (this.hp > 0) {
                 this.scene.time.delayedCall(1000, () => {
                     this.hurt = false;
-                    this.state = 'attack';
                 });
             } else {
                 // 몬스터 현재 위치 가져오기
@@ -58,8 +56,7 @@ export default class MonsterTomato extends Monster {
                     console.log("coin 아이템 생성");
                     // new Item(this.scene, this.x, this.y, 'coin', null, this.player, 'coin');
                 }
-
-                this.scene.time.delayedCall(2000, () => {
+                this.scene.time.delayedCall(1000, () => {
                     this.destroy();
                 });
                 return 'destroy';

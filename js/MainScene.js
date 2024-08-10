@@ -96,15 +96,13 @@ export default class MainSceneTest extends Phaser.Scene {
                 const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                 console.log("플레이어와 몬스터 충돌");
                 // console.dir(gameObjectB);
-                // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
-                gameObjectB.setStatic(true);
-
-                // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
-                this.time.delayedCall(100, () => {
-                    gameObjectB.setStatic(false);
-                });
-                this.player.takeDamage(gameObjectB.damage);
-                this.player.applyKnockback(gameObjectB);
+                //
+                // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
+                if (gameObjectB.isAlive) {
+                    gameObjectB.actionAmin('attack');
+                    this.player.takeDamage(gameObjectB.damage);
+                    this.player.applyKnockback(gameObjectB);
+                }
 
                 // 몬스터와 충돌 시 아이템 드랍하기
                 // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
@@ -186,6 +184,30 @@ export default class MainSceneTest extends Phaser.Scene {
         this.heartIndicator.setHeart(this.player.status.nowHeart);
         this.monsterArr.forEach((monster) =>{
             monster.update();
+            //
+            //
+            // 이부분 정리할만함
+            // 공격 소드 애니메이션이 실행될때
+            // 공격범위 안에 몬스터가 있으면 데미지를 입고
+            // 죽으면 배열에서 제거
+            if (this.player.anims.isPlaying
+                && (this.player.anims.currentAnim.key === 'player_sword_1'
+                    || this.player.anims.currentAnim.key === 'player_sword_2'
+                    || this.player.anims.currentAnim.key === 'player_sword_3')
+                && monster && !monster.hurt) {
+                const swordAttackRadius = 50; // 공격 범위 반지름
+                const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, monster.x, monster.y);
+                if (distance <= swordAttackRadius) {
+                    console.log('몬스터 공겸 범위 안에 들어옴', monster.x, monster.y);
+                    const result = monster.takeDamage(this.player.status.swordATK);
+                    if (result === 'destory') {
+                        this.monsterArr = this.monsterArr.filter(item => item !== monster);
+                    }
+                } else {
+                    console.log('몬스터 공겸 범위 밖에 있음', monster.x, monster.y);
+                }
+            }
+
         });
     }
 
