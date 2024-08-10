@@ -15,8 +15,6 @@ const PLAYER_CATEGORY = 0x0001;
 const MONSTER_CATEGORY = 0x0002;
 const TILE_CATEGORY = 0x0004;
 
-
-
 export default class MainSceneTest extends Phaser.Scene {
     
     constructor() {
@@ -82,34 +80,6 @@ export default class MainSceneTest extends Phaser.Scene {
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
 
-        // 동전 아이템 데이터 
-        const COIN_ITEM = {
-            type : 'coin',
-            texture : 'coin',
-            frame : null,
-            scale : 0.5,
-            // 상단 누적코인 갯수 표시하는 text 객체
-            textIndicator : this.coinIndicatorText,
-            message : '+10 coin'
-        };
-        
-        // 토마토 시체 아이템 데이터 
-        const TOMATO_ITEM = {
-            type : 'tomato',
-            texture : 'fruit',
-            frame : 3,
-            // 상단 우측 체력 표시하는 하트 표시 객체
-            heartIndicator : this.heartIndicator,
-            message : '+1 heart'
-        };
-        // 가지 시체 아이템 데이터 
-        const Eggplant_ITEM = {
-            type : 'eggplant',
-            texture : 'fruit',
-            frame : 15,
-            message : '+5 ATK' //Strength (공격력 5 증가) 
-        };
-
         //페이드인 완료 후 게임 실행
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.chord.startPlayLute();
@@ -136,18 +106,11 @@ export default class MainSceneTest extends Phaser.Scene {
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
 
-                let monsterITEM = null;
-                if(gameObjectB instanceof MonsterEggplant){
-                    monsterITEM = Eggplant_ITEM;
-                }
-                else if(gameObjectB instanceof MonsterTomato){
-                    monsterITEM = TOMATO_ITEM;
-                }
-
-                // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
-                const randomValue = Math.random();
-                const itemType = randomValue <= 0.2 ? monsterITEM : COIN_ITEM;
+                // 몬스터와 충돌 시 아이템 드랍하기
+                // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
+                const itemType = Item.createItemType(gameObjectB);
              
+                // 몬스터의 위치에 객체 생성 
                 let item = new Item({
                     scene : this,
                     x : gameObjectB.x,
@@ -163,8 +126,9 @@ export default class MainSceneTest extends Phaser.Scene {
 
                         const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                         console.log("플레이어와 아이템 충돌");
-                        gameObjectB.applyItem(gameObjectA);
-
+                        // 아이템 효과 적용하기 및 화면에 반영하기
+                        gameObjectB.applyItem(gameObjectA,this.coinIndicatorText,this.heartIndicator);
+                        
                     }
                 });
                 
