@@ -11,6 +11,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
 
         let {scene, x, y, itemType} = data;
 
+        // COIN_ITEM에서 scale 값을 받아오고, 기본값은 1로 설정
+        let scale = itemType.scale !== undefined ? itemType.scale : 1;
+
         // Matter.js 물리를 사용하여 지정된 texture로 (x, y) 위치에 플레이어 스프라이트를 생성
         super(scene.matter.world, x, y, itemType.texture, itemType.frame);
 
@@ -20,6 +23,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     
         // 밀리지 않도록 객체를 고정
         this.setStatic(true);
+        // 크기 설정 (코인 크기 0.5배로 설정)
+        this.setScale(scale);
 
         // 충돌 이벤트 리스너 추가
         // scene.matter.world.on('collisionstart', this.handleCollision, this);
@@ -52,7 +57,12 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             player.increaseHeart(1);
             this.itemType.heartIndicator.setHeart(player.status.nowHeart);
         }
-       
+        else if(this.itemType.type == 'eggplant'){
+            // 힘 3종류 +5 적용
+            player.increaseATK(5);
+        }
+
+
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
             fontSize: '0.8vw',
             fill: '#FFF' // 글씨 색상 검은색

@@ -343,6 +343,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         console.log('this.status.nowHeart : '+ this.status.nowHeart);
     }
 
+    // 힘 amount만큼 증가
+    increaseATK(amount){
+        console.log('increaseATK');
+        this.status.swordATK += amount;
+        this.status.bowATK += amount;
+        this.status.magicATK += amount;
+        console.log('this.status.swordATK : '+ this.status.swordATK);
+        console.log('this.status.bowATK : '+ this.status.bowATK);
+        console.log('this.status.magicATK : '+ this.status.magicATK);
+    }
+
     // 애니메이션이 완료되었을 때 실행될 로직을 중앙화
     handleAnimationComplete(animation, frame) {
         if( animation.key == 'player_roll'){
