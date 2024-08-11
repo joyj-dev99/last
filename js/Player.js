@@ -1,4 +1,5 @@
 import Arrow from "./Arrow.js";
+import Magic from "./Magic.js";
 import Slash from "./Slash.js";
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
@@ -48,10 +49,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 키보드 방향키 입력 설정
         this.cursors = scene.input.keyboard.createCursorKeys();
-        // Q 키 입력 설정
-        this.qKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-        // W 키 입력 설정
-        this.wKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        // Z 키 입력 설정
+        this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+        // X 키 입력 설정
+        this.xKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        // C 키 입력 설정
+        this.cKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         // shift 키 입력 설정
         this.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
@@ -98,6 +101,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         Slash.preload(scene);
         Arrow.preload(scene);
+        Magic.preload(scene);
     }
 
     update() {
@@ -115,8 +119,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
 
        // 칼 휘두르기
-        // q키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
-        if (Phaser.Input.Keyboard.JustDown(this.qKey)) {
+        // z키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
+        if (Phaser.Input.Keyboard.JustDown(this.zKey)) {
 
             //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
             if(this.comboState === 0 && !this.isSwinging){ 
@@ -138,14 +142,24 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             }
         }
 
-        // W키 누르면 해당 방향으로 활 쏘기
-        if (Phaser.Input.Keyboard.JustDown(this.wKey)) {
+        // x키 누르면 해당 방향으로 활 쏘기
+        if (Phaser.Input.Keyboard.JustDown(this.xKey)) {
+            this.anims.play('player_bow');
             let arrow = new Arrow({
                 scene: this.scene,
                 x: this.x + 2,
                 y: this.y
             });
             this.scene.setCollisionOfPlayerAttack(arrow);
+        }
+
+        //c키 누르면 마법 생성.
+        if (Phaser.Input.Keyboard.JustDown(this.cKey)) {
+            this.anims.play('player_spell');
+            let magic = new Magic({
+                scene : this.scene
+            });
+            this.scene.setCollisionOfPlayerAttack(magic);
         }
 
 
