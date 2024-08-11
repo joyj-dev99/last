@@ -1,7 +1,5 @@
-const PLAYER_CATEGORY = 0x0001;
-const MONSTER_CATEGORY = 0x0002;
-const TILE_CATEGORY = 0x0004;
-const OBJECT_CATEGORY = 0x0005;
+import Arrow from "./Arrow.js";
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -49,10 +47,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 키보드 방향키 입력 설정
         this.cursors = scene.input.keyboard.createCursorKeys();
-        // Z 키 입력 설정
-        this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         // Q 키 입력 설정
         this.qKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        // W 키 입력 설정
+        this.wKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         // shift 키 입력 설정
         this.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
@@ -65,6 +63,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.isLookingRight = true;
         this.anims.play('player_idle');
 
+        // 마지막 공격 방향을 확인하기 위한 변수
+        this.lastDirection = new Phaser.Math.Vector2(1, 0); // 기본 방향 오른쪽
+
         // 초기 상태 설정
         this.isMoving = false;
         this.isRolling = false;
@@ -76,7 +77,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_CATEGORY); //현재 객체의 충돌 카테고리를 설정
-        this.setCollidesWith([MONSTER_CATEGORY, TILE_CATEGORY]); // 이 객체가 충돌할 대상 카테고리를 설정
+        this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY]); // 이 객체가 충돌할 대상 카테고리를 설정
 
     }
 
@@ -93,6 +94,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.wav');
         scene.load.audio('sound_player_teleport', 'assets/audio/sound_player_teleport.wav');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
+
+        Arrow.preload(scene);
     }
 
     update() {
@@ -127,8 +130,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.swingSword(3);
                     break;
                 }
-                }
             }
+        }
+
+        // W키 누르면 해당 방향으로 활 쏘기
+        if (Phaser.Input.Keyboard.JustDown(this.wKey)) {
+            let arrow = new Arrow({
+                scene: this.scene,
+                x: this.x + 2,
+                y: this.y
+            });
+            this.scene.setCollisionOfPlayerAttack(arrow);
+        }
 
 
         // 8방향 이동과 구르기
@@ -207,6 +220,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
         // 이동 상태에 따른 속도 설정
         if (this.isMoving) {
+            // 플레이어 마지막으로 눌렀던 방향 저장
+            this.lastDirection = playerVelocity;
+
             playerVelocity.normalize().scale(speed);
             this.setVelocity(playerVelocity.x, playerVelocity.y);
             if (this.anims.currentAnim.key !== 'player_run') {
@@ -378,9 +394,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                         console.log('0.5초 내에 콤보 초기화');
                     }
             });
-
             this.anims.play('player_idle', true);
-
         }
     }
     

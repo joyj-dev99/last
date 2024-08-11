@@ -11,9 +11,9 @@ import MonsterEggplant from "./monsters/MonsterEggplant.js";
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
 
-const PLAYER_CATEGORY = 0x0001;
-const MONSTER_CATEGORY = 0x0002;
-const TILE_CATEGORY = 0x0004;
+import Arrow from "./Arrow.js";
+
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
 export default class MainSceneTest extends Phaser.Scene {
     
@@ -103,33 +103,6 @@ export default class MainSceneTest extends Phaser.Scene {
                     this.player.takeDamage(gameObjectB.damage);
                     this.player.applyKnockback(gameObjectB);
                 }
-
-                // 몬스터와 충돌 시 아이템 드랍하기
-                // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
-                const itemType = Item.createItemType(gameObjectB);
-             
-                // 몬스터의 위치에 객체 생성 
-                let item = new Item({
-                    scene : this,
-                    x : gameObjectB.x,
-                    y : gameObjectB.y,
-                    itemType : itemType
-                });
-
-                // 플레이어와 아이템 충돌 이벤트 설정
-                const unsubscribe = this.matterCollision.addOnCollideStart({
-                    objectA: this.player,
-                    objectB: item,
-                    callback: eventData => {
-
-                        const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-                        console.log("플레이어와 아이템 충돌");
-                        // 아이템 효과 적용하기 및 화면에 반영하기
-                        gameObjectB.applyItem(gameObjectA,this.coinIndicatorText,this.heartIndicator);
-                        unsubscribe();
-                    }
-                });
-                
             }
         });
 
@@ -184,30 +157,6 @@ export default class MainSceneTest extends Phaser.Scene {
         this.heartIndicator.setHeart(this.player.status.nowHeart);
         this.monsterArr.forEach((monster) =>{
             monster.update();
-            //
-            //
-            // 이부분 정리할만함
-            // 공격 소드 애니메이션이 실행될때
-            // 공격범위 안에 몬스터가 있으면 데미지를 입고
-            // 죽으면 배열에서 제거
-            if (this.player.anims.isPlaying
-                && (this.player.anims.currentAnim.key === 'player_sword_1'
-                    || this.player.anims.currentAnim.key === 'player_sword_2'
-                    || this.player.anims.currentAnim.key === 'player_sword_3')
-                && monster && !monster.hurt) {
-                const swordAttackRadius = 50; // 공격 범위 반지름
-                const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, monster.x, monster.y);
-                if (distance <= swordAttackRadius) {
-                    console.log('몬스터 공겸 범위 안에 들어옴', monster.x, monster.y);
-                    const result = monster.takeDamage(this.player.status.swordATK);
-                    if (result === 'destory') {
-                        this.monsterArr = this.monsterArr.filter(item => item !== monster);
-                    }
-                } else {
-                    console.log('몬스터 공겸 범위 밖에 있음', monster.x, monster.y);
-                }
-            }
-
         });
     }
 
@@ -341,5 +290,51 @@ export default class MainSceneTest extends Phaser.Scene {
         // 계속 상단에 고정되도록 UI 레이어 설정
         TextIndicator.setScrollFactorText(this.coinIndicatorText);
 
+    }
+
+    // 동적으로 생성된 플레이어 공격에 충돌 이벤트 추가
+    setCollisionOfPlayerAttack(attack) {
+        this.matterCollision.addOnCollideStart({
+            objectA: this.monsterArr, // 몬스터 배열
+            objectB: attack, // 공격 객체
+            callback: eventData => {
+                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                if (gameObjectB instanceof Arrow) {
+                    console.log("몬스터가 화살에 맞음");
+                    gameObjectB.destroy(); // 화살 제거
+                    const result = gameObjectA.takeDamage(this.player.status.bowATK);
+                    console.log('result : ', result);
+                    if (result === 'destroy') {
+                        console.dir(gameObjectA);
+                        // 몬스터와 충돌 시 아이템 드랍하기
+                        // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
+                        const itemType = Item.createItemType(gameObjectA);
+             
+                        // 몬스터의 위치에 객체 생성 
+                        let item = new Item({
+                            scene : this,
+                            x : gameObjectA.x,
+                            y : gameObjectA.y,
+                            itemType : itemType
+                        });
+
+                        // 플레이어와 아이템 충돌 이벤트 설정
+                        const unsubscribe = this.matterCollision.addOnCollideStart({
+                            objectA: this.player,
+                            objectB: item,
+                            callback: eventData => {
+                                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                                console.log("플레이어와 아이템 충돌");
+                                // 아이템 효과 적용하기 및 화면에 반영하기
+                                gameObjectB.applyItem(gameObjectA,this.coinIndicatorText,this.heartIndicator);
+                                unsubscribe();
+                            }
+                        });
+
+                        this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
+                    }
+                }
+            }
+        });
     }
 }

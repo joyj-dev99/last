@@ -44,26 +44,11 @@ export default class MonsterTomato extends Monster {
                     this.hurt = false;
                 });
             } else {
-                // 몬스터 현재 위치 가져오기
-                // 몬스터 객체 삭제 후 아이템 객체 생성하기 위해 미리 x,y 받아두기
-                const x = this.x;
-                const y = this.y;
-                const randomValue = Math.random();
-                if(randomValue <= 0.2){
-                    console.log("토마토 시체 아이템 생성");
-                    // new Item(this.scene, this.x, this.y, 'item', 3, this.player, 'tomato');
-                }else{
-                    console.log("coin 아이템 생성");
-                    // new Item(this.scene, this.x, this.y, 'coin', null, this.player, 'coin');
-                }
                 this.scene.time.delayedCall(1000, () => {
                     this.destroy();
                 });
                 return 'destroy';
             }
         }
-    }
-
-    itemDrop() {
     }
 }

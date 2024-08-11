@@ -1,7 +1,4 @@
-const PLAYER_CATEGORY = 0x0001;
-const TILE_CATEGORY = 0x0004;
-const OBJECT_CATEGORY = 0x0005;
-// const ITEM_CATEGORY = 0x0003;
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
 import TextIndicator from "./TextIndicator.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
@@ -90,10 +87,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     }
 
     static preload(scene) {
-        // Load the SVG file
         scene.load.image('coin', 'assets/item/pixel_meat_coin.png');
         scene.load.spritesheet('fruit', 'assets/item/fruits asset.png', { frameWidth: 16, frameHeight: 16 });
-        // scene.load.image('coin', 'assets/item/meatCoin.png');
     }
 
     // 아이템 적용 메소드
