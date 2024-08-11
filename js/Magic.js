@@ -50,6 +50,9 @@ export default class Magic extends Phaser.Physics.Matter.Sprite {
             // 반원 내에 몬스터가 없을 때
             targetX = player.x + directionVector.x * REACH;
             targetY = player.y;
+
+            //x 좌표가 맵 범위 밖으로 벗어나지 않게 제한
+            targetX = Phaser.Math.Clamp(targetX, 15, 945);
         }
 
         // Matter.js 물리를 사용하여 지정된 texture로 (x, y) 위치에 스프라이트를 생성
