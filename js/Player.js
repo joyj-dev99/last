@@ -1,4 +1,5 @@
 import Arrow from "./Arrow.js";
+import Slash from "./Slash.js";
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
@@ -95,6 +96,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.audio('sound_player_teleport', 'assets/audio/sound_player_teleport.wav');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
 
+        Slash.preload(scene);
         Arrow.preload(scene);
     }
 
@@ -119,15 +121,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
             if(this.comboState === 0 && !this.isSwinging){ 
                 this.swingSword(1);
+                this.scene.setCollisionOfPlayerAttack(this.slash1);
 
             //두 번째와 세 번째 단계는 스윙이 진행 중일 때 입력 허용
             }else if(this.isSwinging){  
                 switch (this.comboState) {
                     case 1:
                 this.swingSword(2);
+                this.scene.setCollisionOfPlayerAttack(this.slash2);
                     break;
                     case 2:
                 this.swingSword(3);
+                this.scene.setCollisionOfPlayerAttack(this.slash3);
                     break;
                 }
             }
@@ -285,18 +290,26 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 console.log("칼 휘두르기 1단계");
                 this.scene.sound.play('sound_player_sword_1');
                 this.comboState = 1;
+                // slash1 객체 생성
+                this.slash1 = new Slash(this.scene, this.x+10, this.y);
                 break;
             case 2:
                 this.anims.play('player_sword_2', true);
                 console.log("칼 휘두르기 2단계");
                 this.scene.sound.play('sound_player_sword_1');
                 this.comboState = 2;
+                // slash2 객체 생성
+                this.slash1.handleAnimationComplete();
+                this.slash2 = new Slash(this.scene, this.x+12, this.y);
                 break;
             case 3:
                 this.anims.play('player_sword_3', true);
                 console.log("칼 휘두르기 3단계");
                 this.scene.sound.play('sound_player_sword_1');   
                 this.comboState = 0;
+                // slash3 객체 생성
+                this.slash2.handleAnimationComplete();
+                this.slash3 = new Slash(this.scene, this.x+14, this.y);
                 break;
         }
         this.isSwinging = true;
