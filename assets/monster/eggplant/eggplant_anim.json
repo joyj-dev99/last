@@ -65,38 +65,38 @@
             ]
         },
         {
-            "key": "eggplant_throw_egg",
+            "key": "eggplant_attack",
             "type": "frames",
             "repeat": 0,
             "frameRate": 12,
             "frames": [
                 {
                     "key": "eggplant",
-                    "frame": "eggplant_throw_egg_01"
+                    "frame": "eggplant_attack_01"
                 },
                 {
                     "key": "eggplant",
-                    "frame": "eggplant_throw_egg_02"
+                    "frame": "eggplant_attack_02"
                 },
                 {
                     "key": "eggplant",
-                    "frame": "eggplant_throw_egg_03"
+                    "frame": "eggplant_attack_03"
                 },
                 {
                     "key": "eggplant",
-                    "frame": "eggplant_throw_egg_04"
+                    "frame": "eggplant_attack_04"
                 },
                 {
                     "key": "eggplant",
-                    "frame": "eggplant_throw_egg_05"
+                    "frame": "eggplant_attack_05"
                 },
                 {
                     "key": "eggplant",
-                    "frame": "eggplant_throw_egg_06"
+                    "frame": "eggplant_attack_06"
                 },
                 {
                     "key": "eggplant",
-                    "frame": "eggplant_throw_egg_07"
+                    "frame": "eggplant_attack_07"
                 }
             ]
         },

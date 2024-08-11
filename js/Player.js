@@ -254,8 +254,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
 
     startRoll(playerVelocity) {
-
-         // 이동중일때만, 구르기 시작가능
+        // 이동중일때만, 구르기 시작가능
         if (this.isMoving) {
             this.isRolling = true;
 
@@ -355,15 +354,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
     
         // 밀려나는 방향으로 힘과 속도를 동시에 적용
-        impactDirection.normalize();
+        impactDirection.normalize().scale(10);
         const force = { x: impactDirection.x * 0.1, y: impactDirection.y * 0.1 };
-        this.setVelocity(impactDirection.x * 20, impactDirection.y * 20);
+        this.setVelocity(impactDirection.x, impactDirection.y);
 
         // Phaser에서 Matter 객체를 올바르게 참조합니다.
         const Matter = Phaser.Physics.Matter.Matter;
         Matter.Body.applyForce(this.body, this.body.position, force);
         
-
         // 일정 시간 후 속도를 0으로 설정하여 멈춤
         this.scene.time.delayedCall(200, () => {
             this.setVelocity(0, 0);

@@ -157,7 +157,7 @@
             }
         },
         {
-            "filename": "eggplant_throw_egg_01",
+            "filename": "eggplant_attack_01",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -170,7 +170,7 @@
             }
         },
         {
-            "filename": "eggplant_throw_egg_02",
+            "filename": "eggplant_attack_02",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -183,7 +183,7 @@
             }
         },
         {
-            "filename": "eggplant_throw_egg_03",
+            "filename": "eggplant_attack_03",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -196,7 +196,7 @@
             }
         },
         {
-            "filename": "eggplant_throw_egg_04",
+            "filename": "eggplant_attack_04",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -209,7 +209,7 @@
             }
         },
         {
-            "filename": "eggplant_throw_egg_05",
+            "filename": "eggplant_attack_05",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -222,7 +222,7 @@
             }
         },
         {
-            "filename": "eggplant_throw_egg_06",
+            "filename": "eggplant_attack_06",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -235,7 +235,7 @@
             }
         },
         {
-            "filename": "eggplant_throw_egg_07",
+            "filename": "eggplant_attack_07",
             "frame": {
                 "w": 32,
                 "h": 32,
