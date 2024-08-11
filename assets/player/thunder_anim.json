@@ -1,0 +1,64 @@
+{
+    "anims": [
+        {
+            "key": "thunder",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 15,
+            "frames": [
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_0"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_1"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_2"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_3"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_4"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_5"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_6"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_7"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_8"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_9"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_10"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_11"
+                },
+                {
+                    "key": "thunder",
+                    "frame": "thunderstrike_w_blur_12"
+                }
+            ]
+        }
+    ]
+}
