@@ -98,10 +98,9 @@ export default class MainSceneTest extends Phaser.Scene {
                 const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                 console.log("플레이어와 몬스터 충돌");
                 // console.dir(gameObjectB);
-                //
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 if (gameObjectB.isAlive) {
-                    gameObjectB.actionAmin('attack');
+                    //gameObjectB.actionAmin('attack');
                     this.player.takeDamage(gameObjectB.damage);
                     this.player.applyKnockback(gameObjectB);
                 }
@@ -303,30 +302,42 @@ export default class MainSceneTest extends Phaser.Scene {
                 const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                 if (gameObjectB instanceof Arrow) {
                     console.log("몬스터가 화살에 맞음");
-                    gameObjectB.destroy(); // 화살 제거
                     const result = gameObjectA.takeDamage(this.player.status.bowATK);
-                    console.log('result : ', result);
                     if (result === 'destroy') {
-                        this.itemDrop(gameObjectA);
+                        this.iteamDrop(gameObjectA);
+                        // 몬스터 배열에서 해당 몬스터 제거
+                        this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
+                    } else {
+                        gameObjectA.applyKnockback(gameObjectB);
                     }
+                    gameObjectB.destroy(); // 화살 제거
+                    
                 } else if(gameObjectB instanceof Slash){
                     console.log("몬스터가 칼날에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.swordATK);
                     if (result === 'destroy') {
-                        this.itemDrop(gameObjectA);
+                        this.iteamDrop(gameObjectA);
+                        // 몬스터 배열에서 해당 몬스터 제거
+                        this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
+                    } else {
+                        gameObjectA.applyKnockback(gameObjectB);
                     }
                 } else if (gameObjectB instanceof Magic) {
                     console.log("몬스터가 마법에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.magicATK);
                     if (result === 'destroy') {
-                        this.itemDrop(gameObjectA);
+                        this.iteamDrop(gameObjectA);
+                        // 몬스터 배열에서 해당 몬스터 제거
+                        this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
+                    } else {
+                        gameObjectA.applyKnockback(gameObjectB);
                     }
                 }
             }
         });
     }
 
-    itemDrop(monster) {
+    iteamDrop(monster) {
         // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
         const itemType = Item.createItemType(monster);
                     
@@ -337,7 +348,6 @@ export default class MainSceneTest extends Phaser.Scene {
             y : monster.y,
             itemType : itemType
         });
-
         // 플레이어와 아이템 충돌 이벤트 설정
         const unsubscribe = this.matterCollision.addOnCollideStart({
             objectA: this.player,
@@ -350,8 +360,20 @@ export default class MainSceneTest extends Phaser.Scene {
                 unsubscribe();
             }
         });
+    }
 
-        // 해당 몬스터 제거
-        this.monsterArr = this.monsterArr.filter(item => item !== monster);
+    // 동적으로 생성된 몬스터 원거리 공격에 대한 충돌 이벤트 추가, 몸통박치기의 경우 이 메서드 사용하면 안됨
+    setCollisionOfMonsterAttack(attack) {
+        this.matterCollision.addOnCollideStart({
+            objectA: this.player, // 플레이어
+            objectB: attack, // 공격 객체
+            callback: eventData => {
+                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                console.log("플레이어와 몬스터 공격에 맞음");
+                // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
+                this.player.takeDamage(gameObjectB.damage);
+                this.player.applyKnockback(gameObjectB);
+            }
+        });
     }
 }

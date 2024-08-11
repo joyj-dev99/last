@@ -1,9 +1,9 @@
 import Monster from "./Monster.js";
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "../constants.js";
 
 export default class MonsterTomato extends Monster {
     constructor(data) {
         let {scene, x, y, player} = data;
-
         super({
             scene: scene,
             x: x,
@@ -28,22 +28,21 @@ export default class MonsterTomato extends Monster {
 
     takeDamage(amount) {
         console.log('takeDamage 실행됨');
-        if (!this.hurt) {
+        if (!this.isHurt) {
+            this.isHurt = true;
             this.hp -= amount;
             console.log('monster HP', this.hp)
             if (this.hp > 0) {
                 this.actionAmin('damage');
-            } else {
-                this.isAlive = false;
-                this.hp = 0;
-                this.anims.play('tomato_death');
-            }
-            this.hurt = true;
-            if (this.hp > 0) {
                 this.scene.time.delayedCall(1000, () => {
-                    this.hurt = false;
+                    this.isHurt = false;
                 });
             } else {
+                this.isAlive = false;
+                this.moveEvent.destroy();
+                this.hp = 0;
+                this.setCollidesWith([TILE_CATEGORY]);
+                this.anims.play('tomato_death');
                 this.scene.time.delayedCall(1000, () => {
                     this.destroy();
                 });
