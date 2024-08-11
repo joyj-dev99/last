@@ -1,7 +1,5 @@
-const PLAYER_CATEGORY = 0x0001;
-const MONSTER_CATEGORY = 0x0002;
-const TILE_CATEGORY = 0x0004;
-const OBJECT_CATEGORY = 0x0005;
+import Arrow from "./Arrow.js";
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -49,8 +47,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 키보드 방향키 입력 설정
         this.cursors = scene.input.keyboard.createCursorKeys();
-        // Z 키 입력 설정
-        this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+        // W 키 입력 설정
+        this.wKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         // Q 키 입력 설정
         this.qKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         // shift 키 입력 설정
@@ -65,6 +63,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.isLookingRight = true;
         this.anims.play('player_idle');
 
+        // 마지막 공격 방향을 확인하기 위한 변수
+        this.lastDirection = new Phaser.Math.Vector2(1, 0); // 기본 방향 오른쪽
+
         // 초기 상태 설정
         this.isMoving = false;
         this.isRolling = false;
@@ -76,7 +77,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_CATEGORY); //현재 객체의 충돌 카테고리를 설정
-        this.setCollidesWith([MONSTER_CATEGORY, TILE_CATEGORY]); // 이 객체가 충돌할 대상 카테고리를 설정
+        this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY]); // 이 객체가 충돌할 대상 카테고리를 설정
 
     }
 
@@ -93,6 +94,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.wav');
         scene.load.audio('sound_player_teleport', 'assets/audio/sound_player_teleport.wav');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
+
+        Arrow.preload(scene);
     }
 
     update() {
@@ -109,7 +112,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.anims.play('player_idle', true);
         }
 
-       // 칼 휘두르기
+        // 칼 휘두르기
         // q키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
         if (Phaser.Input.Keyboard.JustDown(this.qKey)) {
 
@@ -118,7 +121,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.swingSword(1);
 
             //두 번째와 세 번째 단계는 스윙이 진행 중일 때 입력 허용
-            }else if(this.isSwinging){  
+            }else if(this.isSwinging) {  
                 switch (this.comboState) {
                     case 1:
                 this.swingSword(2);
@@ -127,9 +130,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.swingSword(3);
                     break;
                 }
-                }
             }
+        }
 
+        // W키 누르면 해당 방향으로 활 쏘기
+        if (Phaser.Input.Keyboard.JustDown(this.wKey)) {
+            let arrow = new Arrow({
+                scene: this.scene,
+                x: this.x + 2,
+                y: this.y
+            });
+            this.scene.setCollisionOfPlayerAttack(arrow);
+        }
 
         // 8방향 이동과 구르기
         // 몬스터와 부딪힌 상태가 아니고, 구르는 상태가 아닐때
@@ -207,6 +219,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
         // 이동 상태에 따른 속도 설정
         if (this.isMoving) {
+
+            // 플레이어 마지막으로 눌렀던 방향 저장
+            this.lastDirection = playerVelocity;
+
             playerVelocity.normalize().scale(speed);
             this.setVelocity(playerVelocity.x, playerVelocity.y);
             if (this.anims.currentAnim.key !== 'player_run') {
@@ -219,7 +235,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
 
     startRoll(playerVelocity) {
-
          // 이동중일때만, 구르기 시작가능
         if (this.isMoving) {
             this.isRolling = true;

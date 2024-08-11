@@ -1,8 +1,4 @@
-const PLAYER_CATEGORY = 0x0001;
-const MONSTER_CATEGORY = 0x0002;
-const TILE_CATEGORY = 0x0004;
-const OBJECT_CATEGORY = 0x0005;
-const PLAYER_ATTACK_CATEGORY = 0x0006;4;
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
 export default class Monster extends Phaser.Physics.Matter.Sprite {
     constructor(data) {

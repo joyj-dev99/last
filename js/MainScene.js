@@ -11,9 +11,7 @@ import MonsterEggplant from "./monsters/MonsterEggplant.js";
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
 
-const PLAYER_CATEGORY = 0x0001;
-const MONSTER_CATEGORY = 0x0002;
-const TILE_CATEGORY = 0x0004;
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
 
 export default class MainScene extends Phaser.Scene {
     
@@ -110,26 +108,6 @@ export default class MainScene extends Phaser.Scene {
 
             }
         });
-
-        // // 플레이어와 아이템 충돌 이벤트 설정
-        // this.matterCollision.addOnCollideStart({
-        //     objectA: this.player,
-        //     objectB: this.itemArr,
-        //     callback: eventData => {
-                
-        //         // 플레이어가 A, 충돌이 발생한 몬스터가 B
-        //         const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-        //         console.log("플레이어와 아이템 충돌");
-
-        //         // 아이템 화면에서 제거
-        //         // gameObjectB.destroy();
-
-        //         // this.player.applyKnockback(gameObjectB);
-                
-        //     }
-        // });
-
-
 
         // 다음 맵으로 이동하는 이벤트 핸들러
         const goToNextHandler = (event) => {
@@ -317,5 +295,18 @@ export default class MainScene extends Phaser.Scene {
         // player가 coin 값 변경될 때마다 text 값 변경할 수 있도록 변수 값 넘겨주기
         this.player.setCoinIndicatorText(this.text);
 
+    }
+
+    // 동적으로 생성된 플레이어 공격에 충돌 이벤트 추가
+    setCollisionOfPlayerAttack(attack) {
+        this.matterCollision.addOnCollideStart({
+            objectA: this.monsterArr, // 몬스터 배열
+            objectB: attack, // 공격 객체
+            callback: eventData => {
+                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                console.log("몬스터가 공격에 맞음");
+                gameObjectB.destroy(); // 화살 제거
+            }
+        });
     }
 }

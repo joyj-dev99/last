@@ -17,7 +17,7 @@ export default class Arrow extends Phaser.Physics.Matter.Sprite {
         // 물리적 바디 설정
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         //물리적 바디가 초기 시각적 스프라이트 위치와 일치
-        const arrowCollider = Bodies.circle(this.x, this.y, 10, { 
+        const arrowCollider = Bodies.rectangle(this.x, this.y, 12, 6, { 
             isSensor: false,
             isStatic: false, 
             label: 'arrow' 
@@ -33,17 +33,6 @@ export default class Arrow extends Phaser.Physics.Matter.Sprite {
 
         // 플레이어의 방향에 따라 화살의 속도와 각도를 설정
         this.setDirectionAndVelocity(scene.player);
-
-        // 동적으로 생성된 화살에 충돌 이벤트 추가
-        this.scene.matterCollision.addOnCollideStart({
-            objectA: this.scene.mosterArr, // 몬스터 배열
-            objectB: this, // 현재 화살 객체
-            callback: eventData => {
-                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-                console.log("몬스터가 공격에 맞음");
-                gameObjectB.destroy(); // 화살 제거
-            }
-        });
 
         scene.time.addEvent({
             delay: this.DURATION,
