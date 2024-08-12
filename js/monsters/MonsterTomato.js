@@ -25,29 +25,4 @@ export default class MonsterTomato extends Monster {
             player: player
         });
     }
-
-    takeDamage(amount) {
-        console.log('takeDamage 실행됨');
-        if (!this.isHurt) {
-            this.isHurt = true;
-            this.hp -= amount;
-            console.log('monster HP', this.hp)
-            if (this.hp > 0) {
-                this.actionAmin('damage');
-                this.scene.time.delayedCall(1000, () => {
-                    this.isHurt = false;
-                });
-            } else {
-                this.isAlive = false;
-                this.moveEvent.destroy();
-                this.hp = 0;
-                this.setCollidesWith([TILE_CATEGORY]);
-                this.anims.play('tomato_death');
-                this.scene.time.delayedCall(1000, () => {
-                    this.destroy();
-                });
-                return 'destroy';
-            }
-        }
-    }
 }

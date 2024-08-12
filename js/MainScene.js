@@ -305,7 +305,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 if (gameObjectB instanceof Arrow) {
                     console.log("몬스터가 화살에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.bowATK);
-                    if (result === 'destroy') {
+                    if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
@@ -317,7 +317,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 } else if (gameObjectB instanceof Slash) {
                     console.log("몬스터가 칼날에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.swordATK);
-                    if (result === 'destroy') {
+                    if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
@@ -327,7 +327,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 } else if (gameObjectB instanceof Magic) {
                     console.log("몬스터가 마법에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.magicATK);
-                    if (result === 'destroy') {
+                    if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);

@@ -148,10 +148,12 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
 
     handleAnimationComplete(animation) {
         if (animation.key === `${this.monsterType}_damage`) {
-            this.setStatic(false);
+            this.isHurt = false;
             this.anims.play(`${this.monsterType}_idle`, true);
         } else if (animation.key === `${this.monsterType}_attack`)  {
             this.anims.play(`${this.monsterType}_idle`, true);
+        } else if (animation.key === `${this.monsterType}_death`) {
+            this.destroy();
         }
     }
 
@@ -195,8 +197,22 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         throw new Error('Method "takeDamage()" must be implemented.');
     }
 
-    takeDamage() {
-        throw new Error('Method "attack()" must be implemented.');
+    takeDamage(amount) {
+        console.log('takeDamage 실행됨', this.monsterType, amount);
+        this.isHurt = true;
+        this.hp -= amount;
+        console.log('monster HP', this.hp)
+
+        if (this.hp > 0) {
+            this.anims.play(`${this.monsterType}_damage`, true);
+        } else {
+            this.setCollidesWith([TILE_CATEGORY]);
+            this.isAlive = false;
+            this.moveEvent.destroy();
+            this.hp = 0;
+            this.anims.play(`${this.monsterType}_death`);
+            return 'death';
+        }
     }
 
     /** 

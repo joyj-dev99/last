@@ -1,5 +1,5 @@
 import Monster from "./Monster.js";
-import {MONSTER_CATEGORY, PLAYER_CATEGORY, TILE_CATEGORY} from "../constants.js";
+import {MONSTER_CATEGORY, PLAYER_CATEGORY, TILE_CATEGORY, MONSTER_ATTACK_CATEGORY} from "../constants.js";
 
 export default class MonsterEggplant extends Monster {
     constructor(data) {
@@ -34,32 +34,7 @@ export default class MonsterEggplant extends Monster {
         this.bulletDistance = 200;
 
     }
-
-    takeDamage(amount) {
-        console.log('takeDamage 실행됨');
-        if (!this.isHurt) {
-            this.isHurt = true;
-            this.hp -= amount;
-            console.log('monster HP', this.hp)
-            if (this.hp > 0) {
-                this.actionAmin('damage');
-                this.scene.time.delayedCall(1000, () => {
-                    this.isHurt = false;
-                });
-            } else {
-                this.isAlive = false;
-                this.moveEvent.destroy();
-                this.hp = 0;
-                this.setCollidesWith([TILE_CATEGORY]);
-                this.anims.play('eggplant_death');
-                this.scene.time.delayedCall(1000, () => {
-                    this.destroy();
-                });
-                return 'destroy';
-            }
-        }
-    }
-
+    
     update() {
         super.update();
         if (this.isFollowing) {
@@ -89,7 +64,7 @@ export default class MonsterEggplant extends Monster {
             type: 'circle',
             radius: 5, // 반지름을 작게 설정하여 충돌 범위 축소
         });
-        bullet.setCollisionCategory(MONSTER_CATEGORY);
+        bullet.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
         bullet.setCollidesWith([PLAYER_CATEGORY]);
         bullet.setFixedRotation();
         bullet.setFrictionAir(0);
