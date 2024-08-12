@@ -20,7 +20,7 @@ export default class Slash extends Phaser.Physics.Matter.Sprite{
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         //물리적 바디가 초기 시각적 스프라이트 위치와 일치
         const slashCollider = Bodies.rectangle(this.x, this.y, 35, 35, { 
-            isSensor: false,
+            isSensor: true,
             isStatic: false, 
             label: 'slash' 
         });
@@ -29,9 +29,6 @@ export default class Slash extends Phaser.Physics.Matter.Sprite{
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_ATTACK_CATEGORY);
         this.setCollidesWith([MONSTER_CATEGORY]);
-
-        // Listen for the end of the animation to destroy the sprite
-        this.on('animationcomplete', this.handleAnimationComplete, this);
 
     }
 
@@ -43,11 +40,5 @@ export default class Slash extends Phaser.Physics.Matter.Sprite{
         } else {
             console.error("Scene does not have a load property. Ensure you're passing a valid Phaser scene.");
         }
-    }
-
-    handleAnimationComplete() {
-        // Destroy the sprite when the animation is complete
-        this.destroy();
-    
     }
 }

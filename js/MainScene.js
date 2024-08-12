@@ -103,6 +103,12 @@ export default class MainSceneTest extends Phaser.Scene {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 console.log("플레이어와 몬스터 충돌");
                 // console.dir(gameObjectB);
+
+                // 슬래쉬 초기화
+                this.player.resetSlash();
+                // 콤보 초기화
+                this.player.comboState = 0;
+
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 if (gameObjectB.isAlive) {
                     gameObjectB.actionAmin('attack');
