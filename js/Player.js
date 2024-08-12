@@ -314,7 +314,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 기존에 슬래쉬가 있다면 제거
         this.removeSlash();
-        // Slash 새롭게 생성 및 컨테이너에 추가
         this.slash = new Slash(this.scene, this.x + offsetX, this.y); // 플레이어에 상대적인 위치
         this.slash.setFlipX(!this.isLookingRight);
 
@@ -329,7 +328,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    // 컨테이너에서 slash 제거 및 파괴
     removeSlash() {
         if (this.slash) {
             this.slash.destroy();
