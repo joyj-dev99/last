@@ -1,4 +1,5 @@
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "../constants.js";
+import Arrow from "../Arrow.js";
 
 export default class Monster extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -66,7 +67,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
 
 
         this.moveEvent = this.scene.time.addEvent({
-            delay: 2000, // 1초마다
+            delay: 2000, // 2초마다
             callback: this.prepareMove,
             callbackScope: this,
             loop: true
@@ -81,6 +82,8 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('tomatoAnim', 'assets/monster/tomato/tomato_anim.json');
         scene.load.atlas('eggplant', 'assets/monster/eggplant/eggplant.png', 'assets/monster/eggplant/eggplant_atlas.json');
         scene.load.animation('eggplantoAnim', 'assets/monster/eggplant/eggplant_anim.json');
+
+        Arrow.preload(scene);
     }
 
     update() {
@@ -117,19 +120,22 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(0, 0);
         }
 
+        //
+        // 공격 애니메이션 처리 안됨
         const currentAnimKey = this.anims.currentAnim.key;
         // 상태 변화 감지 및 애니메이션 재생
-        if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
-            this.anims.play(`${this.monsterType}_move`);
-        }
+        // if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
+        //     this.anims.play(`${this.monsterType}_move`);
+        // }
     }
 
     actionAmin(state) {
         this.state = state;
         if (state === 'attack') {
+
             // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
-            this.setStatic(true);
             this.anims.play(`${this.monsterType}_attack`, true);
+            this.setStatic(true);
             // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
             this.scene.time.delayedCall(500, () => {
                 this.setStatic(false);
