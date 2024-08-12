@@ -1,4 +1,4 @@
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
+import {MONSTER_CATEGORY, PLAYER_ATTACK_CATEGORY, PLAYER_ATTACK_GROUP} from "./constants.js";
 
 export default class Slash extends Phaser.Physics.Matter.Sprite{
 
@@ -31,6 +31,8 @@ export default class Slash extends Phaser.Physics.Matter.Sprite{
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_ATTACK_CATEGORY);
         this.setCollidesWith([MONSTER_CATEGORY]);
+        // 충돌 그룹 설정
+        this.scene.matter.setCollisionGroup([this], PLAYER_ATTACK_GROUP);
 
         // 플레이어 depth 100. 항상 플레이어보다 위에 있음.
         this.setDepth(101);
