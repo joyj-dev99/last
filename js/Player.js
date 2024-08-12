@@ -1,6 +1,7 @@
 import Arrow from "./Arrow.js";
 import Magic from "./Magic.js";
 import Slash from "./Slash.js";
+import SpeechBubble from "./SpeechBubble.js";
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, MONSTER_ATTACK_CATEGORY} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
@@ -434,5 +435,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 슬래쉬 객체 제거
             this.removeSlash();
     }
+
+    showSpeechBubble(contents, onDestroyCallback) {
+
+        // SpeechBubble 클래스 인스턴스 생성
+        new SpeechBubble(this.scene, contents, onDestroyCallback, 'Max');
+    }
+
     
 }

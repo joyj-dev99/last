@@ -112,11 +112,13 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             player.increaseATK(5);
         }
 
-
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
-            fontSize: '0.8vw',
-            fill: '#FFF' // 글씨 색상 검은색
+            fontFamily: 'GalmuriMono7, sans-serif',
+            fontSize: '8px', //8배수 단위로 늘어나야 잘 보임
+            fill: '#FFFFFF',
+            resolution:2
         });
+
         this.scene.time.delayedCall(2000, () => {
             // gpt가 이 지연 호출이 정확히 실행될 때 text 객체가 이미 파괴되었을 가능성이 있습니다. 
             // 안전하게 처리하려면 text가 존재할 때만 제거하도록 할 수 있습니다.

@@ -15,6 +15,8 @@ import Arrow from "./Arrow.js";
 import Slash from "./Slash.js";
 import Magic from "./Magic.js";
 
+import SpeechBubble from "./SpeechBubble.js";
+
 import {
     PLAYER_CATEGORY,
     MONSTER_CATEGORY,
@@ -69,6 +71,7 @@ export default class MainSceneTest extends Phaser.Scene {
         HeartIndicator.preload(this);
 
         Milestone.preload(this);
+        SpeechBubble.preload(this);
     }
 
     create() {
@@ -93,6 +96,45 @@ export default class MainSceneTest extends Phaser.Scene {
             this.chord.startPlayLute();
             this.backgroundMusic.play();
         });
+
+
+        // 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
+        if (this.mapNumber === 1) {
+            // 특정 지점에 센서 생성
+            this.startSensor = this.matter.add.rectangle(this.player.x +400, this.player.y - 160, 10, 500, {
+                isSensor: true, // 센서로 설정
+                isStatic: true  // 센서는 물리 반응이 필요 없음
+            });
+
+            // 충돌 감지 설정
+            this.matter.world.on('collisionstart', (event) => {
+                event.pairs.forEach(pair => {
+                    if ((pair.bodyA === this.player.body && pair.bodyB === this.startSensor) ||
+                        (pair.bodyB === this.player.body && pair.bodyA === this.startSensor)) {
+                        this.removeSensor(this.startSensor);
+                        // 코드의 위치 이동시키기
+                        this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
+                        
+                        // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
+                        this.player.showSpeechBubble('뭐야,토마토 괴물이잖아?', ()=>{
+
+                            this.chord.showSpeechBubble('볼프강 박사가 무슨생체실험을 했다나봐요', ()=>{
+
+                                this.player.showSpeechBubble(' 생체실험으로 몬스터가? 완전 미쳤군', ()=>{
+
+                                    this.chord.showSpeechBubble('앞으로 점점 더 많아진대요 :)', ()=>{
+
+                                        this.chord.showSpeechBubble('주위의 몬스터를 처리해야 \n 볼프강 박사가 있는 곳으로 갈 수 있어요!');
+                                    });
+
+                                });
+                            });
+                        });
+                    }
+                });
+            }); 
+        }
+
 
         // 플레이어와 몬스터 충돌 이벤트 설정
         this.matterCollision.addOnCollideStart({
@@ -288,7 +330,8 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 상단 coins:{누적갯수} 텍스트 박스 표시
         this.coinIndicatorText = TextIndicator.createText(this, 10, 10, `Coins: ${this.player.status.coin}`, {
-            fontSize: '1vw',
+            fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '12px',
             fill: '#000', // 글씨 색상 검은색
             backgroundColor: 'rgba(255, 255, 255, 0.5)', // 배경 투명한 흰색
             padding: {
@@ -346,16 +389,45 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     iteamDrop(monster) {
-        // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
-        const itemType = Item.createItemType(monster);
+
+        if (this.mapNumber === 1) {
+            //맵 1인 경우, 반드시 미트코인이 나온다
+            this.itemType = Item.COIN_ITEM;
+
+        }else{
+            // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
+            this.itemType = Item.createItemType(monster);
+        }
 
         // 몬스터의 위치에 객체 생성 
         let item = new Item({
             scene: this,
             x: monster.x,
             y: monster.y,
-            itemType: itemType
+            itemType: this.itemType
         });
+
+        // 1초 지연 후에 플레이어 말풍선 생성
+        setTimeout(() => {
+            this.player.showSpeechBubble('뭐야? \n 미트코인이잖아?', () => {
+
+                this.player.showSpeechBubble('왜 상폐된 코인이 \n 나오는거야? ', () => {
+
+                    this.chord.showSpeechBubble('역시 맥스님! A등급 용병답네요!', () => {
+
+                        this.player.showSpeechBubble('근데, 너는 지금 내가 \n 몬스터 잡는다고 이 고생인데', () => {
+
+                            this.player.showSpeechBubble('고작 악기 연주나 하고 있어?', () => {
+
+                                this.chord.showSpeechBubble('아무래도 응원가가 \n 있으면 좋으니까요!');
+                            });
+                        });
+                    });
+                });
+            });
+        }, 1000); // 1초 (1000 밀리초) 후에 실행
+
+
         // 플레이어와 아이템 충돌 이벤트 설정
         const unsubscribe = this.matterCollision.addOnCollideStart({
             objectA: this.player,
@@ -400,5 +472,10 @@ export default class MainSceneTest extends Phaser.Scene {
             }
         });
 
+    }
+
+    removeSensor(sensor) {
+        // 센서를 물리 세계에서 제거
+        this.matter.world.remove(sensor);
     }
 }

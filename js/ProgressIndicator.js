@@ -23,10 +23,10 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
 
         // 'Stage 1' 텍스트 추가
         this.stageText = scene.add.text(x, y - 12, `Stage ${stageNum}`, {
-            font: '13px Arial',
+            fontFamily: 'Galmuri11, sans-serif',
             fill: '#ffffff',
             align: 'center'
-        }).setOrigin(0.5, 0.5);  // 텍스트를 중앙 정렬
+        }).setOrigin(0.5, 0.7);  // 텍스트를 중앙 정렬
 
         this.stageText.setScrollFactor(0);
         this.stageText.setDepth(1001);
