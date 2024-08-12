@@ -139,9 +139,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                     break;
                 }
             }
-            //else{
-            //     console.log("z키누름");
-            // }
         }
 
         // x키 누르면 해당 방향으로 활 쏘기

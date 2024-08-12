@@ -130,11 +130,11 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         }
     }
 
-    actionAmin(state) {
-        this.state = state;
-        if (state === 'attack') {
-
-            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
+    actionAmin(state) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+        this.state = state;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        if (state === 'attack') {                                                                             
+                
+            // 몬스터를 일시적으로 정적으로 설정하여                                                                                         충돌 순간에 제자리에 있도록 함
             this.anims.play(`${this.monsterType}_attack`, true);
             this.setStatic(true);
             // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
