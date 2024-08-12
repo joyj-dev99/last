@@ -7,7 +7,7 @@ import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
-
+import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
 
@@ -79,6 +79,7 @@ export default class MainSceneTest extends Phaser.Scene {
 
         Player.preload(this);
         Monster.preload(this);
+        MonsterBossPumpkin.preload(this);
         Chord.preload(this);
         Item.preload(this);
 
@@ -336,7 +337,7 @@ export default class MainSceneTest extends Phaser.Scene {
                         });
                         break;
                     case 'pumpkin' : 
-                        m = new MonsterTomato({
+                        m = new MonsterBossPumpkin({
                             scene: this,
                             x: x,
                             y: y,
@@ -493,8 +494,35 @@ export default class MainSceneTest extends Phaser.Scene {
                 });
             }
         });
-
     }
+
+
+    setCollisionOfMonsterPumpkinShockwave(attack) {
+        this.matterCollision.addOnCollideStart({
+            objectA: this.player, // 플레이어
+            objectB: attack, // 공격 객체 쇼크웨이브
+            callback: eventData => {
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("플레이어가 몬스터 공격에 맞음");
+                // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
+                this.player.takeDamage(gameObjectB.damage);
+                this.player.applyKnockback(gameObjectB);
+
+                // // 충돌하면 총알 제거
+                // gameObjectB.destroy();
+                //
+                // // 충돌 후 애니메이션 재생 하고 소멸
+                // let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
+                // egg_hit_anim.setBody({width: 1, height: 1})
+                // egg_hit_anim.setSensor(true)
+                // egg_hit_anim.play('eggplant_egg_hit');
+                // this.time.delayedCall(600, () => {
+                //     egg_hit_anim.destroy();
+                // });
+            }
+        });
+    }
+
 
     removeSensor(sensor) {
         // 센서를 물리 세계에서 제거
