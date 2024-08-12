@@ -15,10 +15,16 @@ import Arrow from "./Arrow.js";
 import Slash from "./Slash.js";
 import Magic from "./Magic.js";
 
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
+import {
+    PLAYER_CATEGORY,
+    MONSTER_CATEGORY,
+    TILE_CATEGORY,
+    OBJECT_CATEGORY,
+    PLAYER_ATTACK_CATEGORY
+} from "./constants.js";
 
 export default class MainSceneTest extends Phaser.Scene {
-    
+
     constructor() {
         super("MainScene");
     }
@@ -31,7 +37,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
-        
+
         // 현재 스테이지에 살아있는 몬스터 객체를 담은 배열
         this.monsterArr = [];
         // 현재 스테이지에 드랍된 아이템 객체를 담은 배열
@@ -78,7 +84,7 @@ export default class MainSceneTest extends Phaser.Scene {
         });
 
         // 스테이지 진행률 UI
-        this.progressIndicator = new ProgressIndicator(this,'progressSheet', this.stageNumber , this.mapNumber - 1);
+        this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber - 1);
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
 
@@ -93,14 +99,13 @@ export default class MainSceneTest extends Phaser.Scene {
             objectA: this.player,
             objectB: this.monsterArr,
             callback: eventData => {
-                
                 // 플레이어가 A, 충돌이 발생한 몬스터가 B
-                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 console.log("플레이어와 몬스터 충돌");
                 // console.dir(gameObjectB);
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 if (gameObjectB.isAlive) {
-                    //gameObjectB.actionAmin('attack');
+                    gameObjectB.actionAmin('attack');
                     this.player.takeDamage(gameObjectB.damage);
                     this.player.applyKnockback(gameObjectB);
                 }
@@ -127,14 +132,12 @@ export default class MainSceneTest extends Phaser.Scene {
             objectA: this.player,
             objectB: this.milestone,
             callback: eventData => {
-                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 console.log("플레이어와 표지판 충돌");
                 // 상호작용 가능 키 표시
                 gameObjectB.showInteractPrompt();
                 // 키보드 입력 이벤트 설정
                 this.input.keyboard.on('keydown-E', goToNextHandler);
-
-                
             }
         });
 
@@ -142,7 +145,7 @@ export default class MainSceneTest extends Phaser.Scene {
             objectA: this.player,
             objectB: this.milestone,
             callback: eventData => {
-                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 console.log("플레이어와 표지판 떨어짐");
                 // 상호작용 가능 키 숨기기
                 gameObjectB.hideInteractPrompt();
@@ -156,16 +159,15 @@ export default class MainSceneTest extends Phaser.Scene {
     update() {
         this.player.update();
         this.heartIndicator.setHeart(this.player.status.nowHeart);
-        this.monsterArr.forEach((monster) =>{
+        this.monsterArr.forEach((monster) => {
             monster.update();
         });
     }
 
     setupWorld(stageNumber, mapNumber) {
-
         const map = this.make.tilemap({key: `stage_0${stageNumber}_0${mapNumber}_map`});
         const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
-        
+
         const floor = map.createLayer("floor", forestTileset, 0, 0);
         map.createLayer("cliff", forestTileset, 0, 0);
         map.createLayer("decor1", forestTileset, 0, 0);
@@ -199,9 +201,9 @@ export default class MainSceneTest extends Phaser.Scene {
         const objectLayer = map.getObjectLayer('object');
         objectLayer.objects.forEach(object => {
             // 각 오브젝트의 속성에 접근
-            const { x, y, name, type} = object;
+            const {x, y, name, type} = object;
             console.log(`Object: ${name}, Type: ${type}, X: ${x}, Y: ${y}`);
-    
+
             // 코드 생성 위치 설정
             if (type === 'chord') {
                 if (name === 'chordStart') {
@@ -213,7 +215,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 } else if (name === 'chordBattle') {
                     this.chordBattle = {x: x, y: y};
                     console.log(`chordBattle = {x: ${this.chordBattle.x}, y: ${this.chordBattle.y}`);
-                    
+
                 } else if (name === 'chordEnd') {
                     this.chordEnd = {x: x, y: y};
                     console.log(`chordEnd = {x: ${this.chordEnd.x}, y: ${this.chordEnd.y}`);
@@ -245,29 +247,29 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 몬스터 생성 - 플레이어가 생성된 이후에 생성되어야 함.
         objectLayer.objects.forEach(object => {
-            const { x, y, name, type } = object;
+            const {x, y, name, type} = object;
             if (type === 'monster') {
                 let m;
                 //몬스터 종류에 따라 다르게 생성 -> 추후 구현
                 switch (name) {
                     case 'tomato':
                         m = new MonsterTomato({
-                            scene: this, 
-                            x: x, 
+                            scene: this,
+                            x: x,
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
                     case 'eggplant':
                         m = new MonsterEggplant({
-                            scene: this, 
-                            x: x, 
+                            scene: this,
+                            x: x,
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
                     default:
-                        // console.log("몬스터 생성 : " + name);
+                    // console.log("몬스터 생성 : " + name);
                 }
                 this.monsterArr.push(m);
             }
@@ -279,7 +281,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
 
         // 상단 coins:{누적갯수} 텍스트 박스 표시
-        this.coinIndicatorText = TextIndicator.createText(this, 10, 10,  `Coins: ${this.player.status.coin}`, {
+        this.coinIndicatorText = TextIndicator.createText(this, 10, 10, `Coins: ${this.player.status.coin}`, {
             fontSize: '1vw',
             fill: '#000', // 글씨 색상 검은색
             backgroundColor: 'rgba(255, 255, 255, 0.5)', // 배경 투명한 흰색
@@ -299,7 +301,7 @@ export default class MainSceneTest extends Phaser.Scene {
             objectA: this.monsterArr, // 몬스터 배열
             objectB: attack, // 공격 객체
             callback: eventData => {
-                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 if (gameObjectB instanceof Arrow) {
                     console.log("몬스터가 화살에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.bowATK);
@@ -311,8 +313,8 @@ export default class MainSceneTest extends Phaser.Scene {
                         gameObjectA.applyKnockback(gameObjectB);
                     }
                     gameObjectB.destroy(); // 화살 제거
-                    
-                } else if(gameObjectB instanceof Slash){
+
+                } else if (gameObjectB instanceof Slash) {
                     console.log("몬스터가 칼날에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.swordATK);
                     if (result === 'destroy') {
@@ -340,23 +342,23 @@ export default class MainSceneTest extends Phaser.Scene {
     iteamDrop(monster) {
         // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
         const itemType = Item.createItemType(monster);
-                    
+
         // 몬스터의 위치에 객체 생성 
         let item = new Item({
-            scene : this,
-            x : monster.x,
-            y : monster.y,
-            itemType : itemType
+            scene: this,
+            x: monster.x,
+            y: monster.y,
+            itemType: itemType
         });
         // 플레이어와 아이템 충돌 이벤트 설정
         const unsubscribe = this.matterCollision.addOnCollideStart({
             objectA: this.player,
             objectB: item,
             callback: eventData => {
-                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 console.log("플레이어와 아이템 충돌");
                 // 아이템 효과 적용하기 및 화면에 반영하기
-                gameObjectB.applyItem(gameObjectA,this.coinIndicatorText,this.heartIndicator);
+                gameObjectB.applyItem(gameObjectA, this.coinIndicatorText, this.heartIndicator);
                 unsubscribe();
             }
         });
@@ -366,14 +368,31 @@ export default class MainSceneTest extends Phaser.Scene {
     setCollisionOfMonsterAttack(attack) {
         this.matterCollision.addOnCollideStart({
             objectA: this.player, // 플레이어
-            objectB: attack, // 공격 객체
+            objectB: attack, // 공격 객체(총알 그 자체)
             callback: eventData => {
-                const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-                console.log("플레이어와 몬스터 공격에 맞음");
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("플레이어가 몬스터 공격에 맞음");
+
+                let x = gameObjectB.x;
+                let y = gameObjectB.y;
+
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
+
+                // 충돌하면 총알 제거
+                gameObjectB.destroy();
+
+                // 충돌 후 애니메이션 재생 하고 소멸
+                let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
+                egg_hit_anim.setBody({width: 1, height: 1})
+                egg_hit_anim.setSensor(true)
+                egg_hit_anim.play('eggplant_egg_hit');
+                this.time.delayedCall(600, () => {
+                    egg_hit_anim.destroy();
+                });
             }
         });
+
     }
 }
