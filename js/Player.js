@@ -26,11 +26,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.scene = scene;
         scene.add.existing(this);
 
-        // 컨테이너 생성 및 초기화
-        // 컨테이너를 플레이어 객체로 생성
-        this.container = scene.add.container(this.x, this.y);
-        this.container.add(this); //플레이어 스프라이트 추가
-
         // Phaser.Physics.Matter.Matter에서 Body와 Bodies 객체를 가져옴
         // Bodies는 간단한 물리 바디를 생성할 때 사용되고, Body는 이러한 바디를 조작할 때 사용
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;     
@@ -40,7 +35,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             isSensor: false, // 실제 물리적 충돌을 일으킴
             label: 'playerCollider' 
         });
-        this.setFrictionAir(0.35);
 
         // this.playerCollider 를 현재 게임 객체의 물리적 바디로 설정
         this.setExistingBody(this.playerCollider);
@@ -85,10 +79,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_CATEGORY); //현재 객체의 충돌 카테고리를 설정
         this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY]); // 이 객체가 충돌할 대상 카테고리를 설정
-
-        console.log('스프라이트 위치:', this.x, this.y);
-        console.log('바디 위치:', this.body.position.x, this.body.position.y);
-        console.log("컨테이너 위치:", this.container.x,this.container.y);
 
 
     }
@@ -148,6 +138,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                     break;
                 }
             }
+            //else{
+            //     console.log("z키누름");
+            // }
         }
 
         // x키 누르면 해당 방향으로 활 쏘기
@@ -177,11 +170,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             // 8방향 이동 입력 처리
             this.handleArrowKeyInput(playerVelocity, speed);
-            // 플레이어 위치에 컨테이너 위치 동기화
-            // 여기를 넣으면 변하긴 하는데 원인을 모르겠음
-            // 특히 카메라의 좌표 시스템과 컨테이너의 좌표가 불일치
-            this.container.setPosition(this.x, this.y);
-
+            
+            if(this.isSwinging){ // 검을 휘두르는 동안에
+                // 플레이어 위치에 slash 객체 동기화
+                this.slash.setPosition(this.x, this.y);
+            }
+        
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
                 this.startRoll(playerVelocity);
@@ -323,7 +317,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // Slash 새롭게 생성 및 컨테이너에 추가
         this.slash = new Slash(this.scene, this.x + offsetX, this.y); // 플레이어에 상대적인 위치
         this.slash.setFlipX(!this.isLookingRight);
-        this.container.add(this.slash); // 컨테이너에 slash 추가
 
         // 단계에 따른 애니메이션 재생zzzz
         const swordAnimKey = `player_sword_${stage}`;
@@ -339,8 +332,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     // 컨테이너에서 slash 제거 및 파괴
     removeSlash() {
         if (this.slash) {
-            this.container.remove(this.slash, true); 
-            this.slash = null;
+            this.slash.destroy();
         }
     }
 
@@ -424,20 +416,25 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             animation.key === 'player_sword_2' ||
             animation.key === 'player_sword_3'){
 
-            this.removeSlash(); // 애니메이션 완료 시 컨테이너에서 slash 제거 및 파괴
+            // 슬래쉬 초기화
+            this.resetSlash();
 
-            this.isSwinging = false; // 칼 휘두르는 상태 리셋
-            console.log("칼 휘두르는 상태 리셋");
-
-            // 일정 시간 내에 입력 없으면 콤보 초기화
+            // 일정 시간 내에 입력 없으면, 콤보 초기화
             this.scene.time.delayedCall(500, () => {
-                    if (!this.isSwinging && this.comboState !== 0) {
-                        this.comboState = 0;
-                        console.log('0.5초 내에 콤보 초기화');
-                    }
+                // 콤보 초기화
+                this.comboState = 0;
             });
             this.anims.play('player_idle', true);
         }
+    }
+
+    // 칼을 휘두르는 도중에 몬스터에게 맞았을떄 실행하는 코드
+    // 슬래쉬 초기화
+    resetSlash(){
+            // 해당 칼 휘두르는 동작 중지
+            this.isSwinging = false;
+            // 슬래쉬 객체 제거
+            this.removeSlash();
     }
     
 }

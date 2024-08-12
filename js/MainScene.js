@@ -99,8 +99,10 @@ export default class MainSceneTest extends Phaser.Scene {
                 console.log("플레이어와 몬스터 충돌");
                 // console.dir(gameObjectB);
 
-                 // 이전의 slash 제거
-                this.player.removeSlash();
+                // 슬래쉬 초기화
+                this.player.resetSlash();
+                // 콤보 초기화
+                this.player.comboState = 0;
 
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 if (gameObjectB.isAlive) {
