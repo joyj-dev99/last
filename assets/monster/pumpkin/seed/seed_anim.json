@@ -1,0 +1,28 @@
+{
+    "anims": [
+        {
+            "key": "seed_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "seed",
+                    "frame": "seed_sprite_sheet_0"
+                },
+                {
+                    "key": "seed",
+                    "frame": "seed_sprite_sheet_1"
+                },
+                {
+                    "key": "seed",
+                    "frame": "seed_sprite_sheet_2"
+                },
+                {
+                    "key": "seed",
+                    "frame": "seed_sprite_sheet_3"
+                }
+            ]
+        }
+    ]
+}
