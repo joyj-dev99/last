@@ -120,13 +120,14 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(0, 0);
         }
 
-        //
-        // 공격 애니메이션 처리 안됨
+        
         const currentAnimKey = this.anims.currentAnim.key;
-        // 상태 변화 감지 및 애니메이션 재생
-        // if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
-        //     this.anims.play(`${this.monsterType}_move`);
-        // }
+        // isMoving 에 따른 move, idle 애니메이션 실행
+        if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
+            this.anims.play(`${this.monsterType}_move`);
+        } else if (!this.isHurt && !this.isMoving && currentAnimKey !== `${this.monsterType}_idle`) {
+            this.anims.play(`${this.monsterType}_idle`);
+        }
     }
 
     actionAmin(state) {
@@ -220,12 +221,13 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
      */ 
     applyKnockback(source) {
         console.log("몬스터 넉백 시작");
+        console.dir(source);
         // 충돌 방향 계산
         const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
     
         // 밀려나는 방향으로 힘과 속도를 동시에 적용
-        impactDirection.normalize().scale(50);
-        const force = { x: impactDirection.x * 0.1, y: impactDirection.y * 0.1 };
+        impactDirection.normalize().scale(10);
+        const force = { x: impactDirection.x * 0.5, y: impactDirection.y * 0.5 };
         this.setVelocity(impactDirection.x, impactDirection.y);
 
         // Phaser에서 Matter 객체를 올바르게 참조합니다.
@@ -235,7 +237,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         // 일정 시간 후 속도를 0으로 설정하여 멈춤
         this.scene.time.delayedCall(200, () => {
             this.setVelocity(0, 0);
-            this.isHurt = false;
         });
     }
 

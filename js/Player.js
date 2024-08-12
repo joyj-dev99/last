@@ -172,8 +172,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.handleArrowKeyInput(playerVelocity, speed);
             
             if(this.isSwinging){ // 검을 휘두르는 동안에
+                const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
                 // 플레이어 위치에 slash 객체 동기화
-                this.slash.setPosition(this.x, this.y);
+                this.slash.setPosition(this.x + offsetX, this.y);
             }
         
             // Shift 키를 눌렀을 때 구르기 시작
@@ -359,7 +360,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
     
         // 밀려나는 방향으로 힘과 속도를 동시에 적용
-        impactDirection.normalize().scale(10);
+        impactDirection.normalize().scale(1);
         const force = { x: impactDirection.x * 0.1, y: impactDirection.y * 0.1 };
         this.setVelocity(impactDirection.x, impactDirection.y);
 

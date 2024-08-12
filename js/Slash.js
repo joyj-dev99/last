@@ -20,15 +20,20 @@ export default class Slash extends Phaser.Physics.Matter.Sprite{
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         //물리적 바디가 초기 시각적 스프라이트 위치와 일치
         const slashCollider = Bodies.rectangle(this.x, this.y, 35, 35, { 
-            isSensor: true,
+            isSensor: false,
             isStatic: false, 
             label: 'slash' 
         });
         this.setExistingBody(slashCollider);
+        //충돌로 인한 회전을 방지
+        this.setFixedRotation();
 
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_ATTACK_CATEGORY);
         this.setCollidesWith([MONSTER_CATEGORY]);
+
+        // 플레이어 depth 100. 항상 플레이어보다 위에 있음.
+        this.setDepth(101);
 
     }
 
