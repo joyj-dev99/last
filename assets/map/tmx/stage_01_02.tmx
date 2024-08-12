@@ -4,7 +4,7 @@
   <export target="stage_01_02.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Forest-Prairie Tileset v1" tilewidth="32" tileheight="32" tilecount="567" columns="21">
-  <image source="../mylocal/Level2Game/assets/map/Forest-Prairie Tileset v1.png" width="672" height="864"/>
+  <image source="../Forest-Prairie Tileset v1.png" width="672" height="864"/>
   <tile id="128">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -712,7 +712,7 @@
   <object id="3" name="chordBattle" type="chord" x="528.5" y="86">
    <point/>
   </object>
-  <object id="4" name="sign" x="944" y="151.5">
+  <object id="4" name="milestone" x="944" y="151.5">
    <point/>
   </object>
   <object id="5" name="chordEnd" type="chord" x="913.5" y="150">
@@ -727,10 +727,10 @@
   <object id="8" name="tomato" type="moster" x="511.5" y="176">
    <point/>
   </object>
-  <object id="9" name="tomato" type="moster" x="664.5" y="139.5">
+  <object id="9" name="eggplant" type="moster" x="664.5" y="139.5">
    <point/>
   </object>
-  <object id="10" name="tomato" type="moster" x="746.5" y="217">
+  <object id="10" name="eggplant" type="moster" x="746.5" y="217">
    <point/>
   </object>
  </objectgroup>

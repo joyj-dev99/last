@@ -136,8 +136,8 @@
                  "type":"monster",
                  "visible":true,
                  "width":0,
-                 "x":640,
-                 "y":172
+                 "x":782.823661282927,
+                 "y":172.978244255363
                 }, 
                 {
                  "height":0,
@@ -148,8 +148,8 @@
                  "type":"chord",
                  "visible":true,
                  "width":0,
-                 "x":496.5,
-                 "y":95
+                 "x":702.90953788149,
+                 "y":91.08702297855
                 }, 
                 {
                  "height":0,
@@ -179,7 +179,7 @@
         {
          "columns":21,
          "firstgid":1,
-         "image":"..\/mylocal\/Level2Game\/assets\/map\/Forest-Prairie Tileset v1.png",
+         "image":"Forest-Prairie Tileset v1.png",
          "imageheight":864,
          "imagewidth":672,
          "margin":0,

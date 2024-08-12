@@ -4,7 +4,7 @@
   <export target="stage_01_04.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Forest-Prairie Tileset v1" tilewidth="32" tileheight="32" tilecount="567" columns="21">
-  <image source="../mylocal/Level2Game/assets/map/Forest-Prairie Tileset v1.png" width="672" height="864"/>
+  <image source="../Forest-Prairie Tileset v1.png" width="672" height="864"/>
   <tile id="128">
    <properties>
     <property name="collides" type="bool" value="true"/>

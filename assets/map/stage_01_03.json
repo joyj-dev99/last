@@ -100,8 +100,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":18.6666666666667,
-                 "y":184.666666666667
+                 "x":18.6667,
+                 "y":184.667
                 }, 
                 {
                  "height":0,
@@ -113,7 +113,7 @@
                  "visible":true,
                  "width":0,
                  "x":18,
-                 "y":143.333333333333
+                 "y":143.333
                 }, 
                 {
                  "height":0,
@@ -124,8 +124,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":943.333333333333,
-                 "y":153.333333333333
+                 "x":943.333,
+                 "y":153.333
                 }, 
                 {
                  "height":0,
@@ -136,8 +136,8 @@
                  "type":"chord",
                  "visible":true,
                  "width":0,
-                 "x":910.666666666667,
-                 "y":152.666666666667
+                 "x":910.667,
+                 "y":152.667
                 }, 
                 {
                  "height":0,
@@ -148,56 +148,80 @@
                  "type":"chord",
                  "visible":true,
                  "width":0,
-                 "x":523.333333333333,
-                 "y":284.666666666667
+                 "x":523.333,
+                 "y":284.667
                 }, 
                 {
                  "height":0,
                  "id":6,
-                 "name":"tomato",
+                 "name":"apple",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
                  "visible":true,
                  "width":0,
                  "x":280,
-                 "y":155.333333333333
+                 "y":155.333
                 }, 
                 {
                  "height":0,
                  "id":7,
-                 "name":"eggplant",
+                 "name":"apple",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
                  "visible":true,
                  "width":0,
-                 "x":379.333333333333,
-                 "y":204.666666666667
+                 "x":586.720782136852,
+                 "y":187.058603403475
                 }, 
                 {
                  "height":0,
                  "id":8,
-                 "name":"tomato",
+                 "name":"lemon",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
                  "visible":true,
                  "width":0,
-                 "x":662.666666666667,
-                 "y":208
+                 "x":663.645244255363,
+                 "y":227.56488510725
                 }, 
                 {
                  "height":0,
                  "id":9,
-                 "name":"eggplant",
+                 "name":"apple",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
                  "visible":true,
                  "width":0,
-                 "x":731.333333333333,
-                 "y":152
+                 "x":220.689498700769,
+                 "y":215.585876598563
+                }, 
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"lemon",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":398.145411932542,
+                 "y":195.648851072502
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"lemon",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":696.509909818108,
+                 "y":153.584348091914
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -206,7 +230,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":10,
+ "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.0",
@@ -215,7 +239,7 @@
         {
          "columns":21,
          "firstgid":1,
-         "image":"..\/mylocal\/Level2Game\/assets\/map\/Forest-Prairie Tileset v1.png",
+         "image":"Forest-Prairie Tileset v1.png",
          "imageheight":864,
          "imagewidth":672,
          "margin":0,
