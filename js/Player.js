@@ -360,7 +360,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
     
         // 밀려나는 방향으로 힘과 속도를 동시에 적용
-        impactDirection.normalize().scale(10);
+        impactDirection.normalize().scale(1);
         const force = { x: impactDirection.x * 0.1, y: impactDirection.y * 0.1 };
         this.setVelocity(impactDirection.x, impactDirection.y);
 
