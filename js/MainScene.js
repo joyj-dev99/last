@@ -48,6 +48,21 @@ export default class MainSceneTest extends Phaser.Scene {
         // 현재 스테이지에서 전투가 끝난 후 코드의 위치(x,y)를 담은 객체;
         this.chordEnd = {x: 0, y: 0};
 
+        if (this.mapNumber < 3) { // 일반맵
+            this.mapWidth = 960;
+            this.mapHigth = 320;
+            this.minX = 10;
+            this.maxX = 950;
+            this.minY = 96;
+            this.maxY = 240;
+        } else if (this.mapNumber == 4) { // 보스맵
+            this.mapWidth = 480;
+            this.mapHigth = 480;
+            this.minX = 74;
+            this.maxX = 406;
+            this.minY = 106;
+            this.maxY = 438;
+        }
     }
 
     preload() {
@@ -191,18 +206,6 @@ export default class MainSceneTest extends Phaser.Scene {
             }
         });
 
-        if (mapNumber < 5) { // 낮일 때
-            this.minX = 10;
-            this.maxX = 950;
-            this.minY = 96;
-            this.maxY = 240;
-        } else { // 밤일때
-            this.minX = 10;
-            this.maxX = 950;
-            this.minY = 96;
-            this.maxY = 240;
-        }
-
         //오브젝트 레이어 관련 코드
         const objectLayer = map.getObjectLayer('object');
         objectLayer.objects.forEach(object => {
@@ -305,9 +308,10 @@ export default class MainSceneTest extends Phaser.Scene {
             }
         });
 
+       
         // 플레이어 움직임에 따라 카메라 이동
-        this.cameras.main.setBounds(0, 0, 960, 320);
-        this.matter.world.setBounds(0, 0, 960, 320);
+        this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHigth);
+        this.matter.world.setBounds(0, 0, this.mapWidth, this.mapHigth);
         this.cameras.main.startFollow(this.player);
 
         // 상단 coins:{누적갯수} 텍스트 박스 표시
@@ -334,35 +338,29 @@ export default class MainSceneTest extends Phaser.Scene {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 if (gameObjectB instanceof Arrow) {
                     console.log("몬스터가 화살에 맞음");
-                    const result = gameObjectA.takeDamage(this.player.status.bowATK);
+                    const result = gameObjectA.takeDamage(this.player.status.bowATK, gameObjectB);
                     if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
-                    } else {
-                        gameObjectA.applyKnockback(gameObjectB);
                     }
                     gameObjectB.destroy(); // 화살 제거
 
                 } else if (gameObjectB instanceof Slash) {
                     console.log("몬스터가 칼날에 맞음");
-                    const result = gameObjectA.takeDamage(this.player.status.swordATK);
+                    const result = gameObjectA.takeDamage(this.player.status.swordATK, gameObjectB);
                     if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
-                    } else {
-                        gameObjectA.applyKnockback(gameObjectB);
                     }
                 } else if (gameObjectB instanceof Magic) {
                     console.log("몬스터가 마법에 맞음");
-                    const result = gameObjectA.takeDamage(this.player.status.magicATK);
+                    const result = gameObjectA.takeDamage(this.player.status.magicATK, gameObjectB);
                     if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
-                    } else {
-                        gameObjectA.applyKnockback(gameObjectB);
                     }
                 }
             }
