@@ -88,7 +88,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
 
     update() {
         // 몬스터가 죽었으면 update 실행하지 않음
-        if (!this.isAlive) return;
+        if (!this.isAlive && this.isHurt) return;
         // 플레이어와 몬스터 사이의 거리 계산
         const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.player.x, this.player.y);
         if (distanceToPlayer < this.followDistance) {
@@ -198,7 +198,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         throw new Error('Method "takeDamage()" must be implemented.');
     }
 
-    takeDamage(amount) {
+    takeDamage(amount, gameObject) {
         console.log('takeDamage 실행됨', this.monsterType, amount);
         this.isHurt = true;
         this.hp -= amount;
@@ -206,6 +206,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
 
         if (this.hp > 0) {
             this.anims.play(`${this.monsterType}_damage`, true);
+            this.applyKnockback(gameObject);
         } else {
             this.setCollidesWith([TILE_CATEGORY]);
             this.isAlive = false;
