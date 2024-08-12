@@ -293,7 +293,7 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'pumkin' : 
+                    case 'pumpkin' : 
                         m = new MonsterTomato({
                             scene: this,
                             x: x,
