@@ -120,13 +120,14 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(0, 0);
         }
 
-        //
-        // 공격 애니메이션 처리 안됨
+        
         const currentAnimKey = this.anims.currentAnim.key;
-        // 상태 변화 감지 및 애니메이션 재생
-        // if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
-        //     this.anims.play(`${this.monsterType}_move`);
-        // }
+        // isMoving 에 따른 move, idle 애니메이션 실행
+        if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
+            this.anims.play(`${this.monsterType}_move`);
+        } else if (!this.isHurt && !this.isMoving && currentAnimKey !== `${this.monsterType}_idle`) {
+            this.anims.play(`${this.monsterType}_idle`);
+        }
     }
 
     actionAmin(state) {
@@ -225,7 +226,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
     
         // 밀려나는 방향으로 힘과 속도를 동시에 적용
         impactDirection.normalize().scale(50);
-        const force = { x: impactDirection.x * 0.1, y: impactDirection.y * 0.1 };
+        const force = { x: impactDirection.x * 0.5, y: impactDirection.y * 0.5 };
         this.setVelocity(impactDirection.x, impactDirection.y);
 
         // Phaser에서 Matter 객체를 올바르게 참조합니다.
