@@ -30,6 +30,8 @@ export default class Slash extends Phaser.Physics.Matter.Sprite{
         this.setCollisionCategory(PLAYER_ATTACK_CATEGORY);
         this.setCollidesWith([MONSTER_CATEGORY]);
 
+        this.setDepth(101);
+
     }
 
     static preload(scene) {
