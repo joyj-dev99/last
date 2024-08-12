@@ -3,7 +3,7 @@
         {
             "key": "slash",
             "type": "frames",
-            "repeat": 0,
+            "repeat": -1,
             "frameRate": 15,
             "frames": [
                 {

@@ -26,6 +26,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.scene = scene;
         scene.add.existing(this);
 
+        // 컨테이너 생성 및 초기화
+        // 컨테이너를 플레이어 객체로 생성
+        this.container = scene.add.container(this.x, this.y);
+        this.container.add(this); //플레이어 스프라이트 추가
+
         // Phaser.Physics.Matter.Matter에서 Body와 Bodies 객체를 가져옴
         // Bodies는 간단한 물리 바디를 생성할 때 사용되고, Body는 이러한 바디를 조작할 때 사용
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;     
@@ -35,13 +40,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             isSensor: false, // 실제 물리적 충돌을 일으킴
             label: 'playerCollider' 
         });
-        // 복합 바디 생성 (여러 파트를 합쳐서 하나의 복합 바디)
-        const compoundBody = Body.create({
-            parts: [this.playerCollider],
-            frictionAir: 0.35, // 값이 높을수록 공기 저항이 커져 바디가 느리게 이동
-        });
-        // compoundBody를 현재 게임 객체의 물리적 바디로 설정
-        this.setExistingBody(compoundBody);
+        this.setFrictionAir(0.35);
+
+        // this.playerCollider 를 현재 게임 객체의 물리적 바디로 설정
+        this.setExistingBody(this.playerCollider);
+
         //충돌로 인한 회전을 방지
         this.setFixedRotation();
         // 충돌체 중심점 아래로 이동
@@ -82,6 +85,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 충돌 카테고리 설정
         this.setCollisionCategory(PLAYER_CATEGORY); //현재 객체의 충돌 카테고리를 설정
         this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY]); // 이 객체가 충돌할 대상 카테고리를 설정
+
+        console.log('스프라이트 위치:', this.x, this.y);
+        console.log('바디 위치:', this.body.position.x, this.body.position.y);
+        console.log("컨테이너 위치:", this.container.x,this.container.y);
+
 
     }
 
@@ -125,18 +133,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
             if(this.comboState === 0 && !this.isSwinging){ 
                 this.swingSword(1);
-                this.scene.setCollisionOfPlayerAttack(this.slash1);
+                this.scene.setCollisionOfPlayerAttack(this.slash);
 
             //두 번째와 세 번째 단계는 스윙이 진행 중일 때 입력 허용
             }else if(this.isSwinging){  
                 switch (this.comboState) {
                     case 1:
                 this.swingSword(2);
-                this.scene.setCollisionOfPlayerAttack(this.slash2);
+                this.scene.setCollisionOfPlayerAttack(this.slash);
                     break;
                     case 2:
                 this.swingSword(3);
-                this.scene.setCollisionOfPlayerAttack(this.slash3);
+                this.scene.setCollisionOfPlayerAttack(this.slash);
                     break;
                 }
             }
@@ -169,6 +177,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             // 8방향 이동 입력 처리
             this.handleArrowKeyInput(playerVelocity, speed);
+            // 플레이어 위치에 컨테이너 위치 동기화
+            // 여기를 넣으면 변하긴 하는데 원인을 모르겠음
+            // 특히 카메라의 좌표 시스템과 컨테이너의 좌표가 불일치
+            this.container.setPosition(this.x, this.y);
 
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
@@ -239,12 +251,19 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
         // 이동 상태에 따른 속도 설정
         if (this.isMoving) {
+
+            //데미지 애니메이션이 재생중일때도 이동가능
+            if(this.anims.currentAnim.key === 'player_damage'){
+                this.anims.stop();
+            }
+
             // 플레이어 마지막으로 눌렀던 방향 저장
             this.lastDirection = playerVelocity;
 
             playerVelocity.normalize().scale(speed);
             this.setVelocity(playerVelocity.x, playerVelocity.y);
-            if (this.anims.currentAnim.key !== 'player_run') {
+            if (this.anims.currentAnim.key !== 'player_run' && !this.isSwinging) {
+                 //검을 휘두르지 않을때만 달리기 애니메이션을 실행한다
                 this.anims.play('player_run', true);
             }
         } else {
@@ -297,36 +316,32 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
     swingSword(stage) {
-        switch (stage) {
-            case 1:
-                this.anims.play('player_sword_1', true);
-                console.log("칼 휘두르기 1단계");
-                this.scene.sound.play('sound_player_sword_1');
-                this.comboState = 1;
-                // slash1 객체 생성
-                this.slash1 = new Slash(this.scene, this.x+10, this.y);
-                break;
-            case 2:
-                this.anims.play('player_sword_2', true);
-                console.log("칼 휘두르기 2단계");
-                this.scene.sound.play('sound_player_sword_1');
-                this.comboState = 2;
-                // slash2 객체 생성
-                this.slash1.handleAnimationComplete();
-                this.slash2 = new Slash(this.scene, this.x+12, this.y);
-                break;
-            case 3:
-                this.anims.play('player_sword_3', true);
-                console.log("칼 휘두르기 3단계");
-                this.scene.sound.play('sound_player_sword_1');   
-                this.comboState = 0;
-                // slash3 객체 생성
-                this.slash2.handleAnimationComplete();
-                this.slash3 = new Slash(this.scene, this.x+14, this.y);
-                break;
-        }
-        this.isSwinging = true;
+        const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
 
+        // 기존에 슬래쉬가 있다면 제거
+        this.removeSlash();
+        // Slash 새롭게 생성 및 컨테이너에 추가
+        this.slash = new Slash(this.scene, this.x + offsetX, this.y); // 플레이어에 상대적인 위치
+        this.slash.setFlipX(!this.isLookingRight);
+        this.container.add(this.slash); // 컨테이너에 slash 추가
+
+        // 단계에 따른 애니메이션 재생zzzz
+        const swordAnimKey = `player_sword_${stage}`;
+        this.anims.play(swordAnimKey, true);
+
+        this.isSwinging = true;
+        this.comboState = stage;
+        console.log(`칼 휘두르기 ${stage}단계`);
+        this.scene.sound.play('sound_player_sword_1');
+
+    }
+
+    // 컨테이너에서 slash 제거 및 파괴
+    removeSlash() {
+        if (this.slash) {
+            this.container.remove(this.slash, true); 
+            this.slash = null;
+        }
     }
 
     takeDamage(amount) {
@@ -339,7 +354,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             console.log("플레이어 죽음");
             this.anims.play('player_death');
 
-        }else if(this.status.nowHeart > 0){
+        }else{
             this.anims.play('player_damage');
         }
         
@@ -408,6 +423,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         else if( animation.key === 'player_sword_1' ||
             animation.key === 'player_sword_2' ||
             animation.key === 'player_sword_3'){
+
+            this.removeSlash(); // 애니메이션 완료 시 컨테이너에서 slash 제거 및 파괴
 
             this.isSwinging = false; // 칼 휘두르는 상태 리셋
             console.log("칼 휘두르는 상태 리셋");
