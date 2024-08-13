@@ -82,8 +82,8 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('tomatoAnim', 'assets/monster/tomato/tomato_anim.json');
         scene.load.atlas('eggplant', 'assets/monster/eggplant/eggplant.png', 'assets/monster/eggplant/eggplant_atlas.json');
         scene.load.animation('eggplantoAnim', 'assets/monster/eggplant/eggplant_anim.json');
-
-        Arrow.preload(scene);
+        scene.load.atlas('lemon', 'assets/monster/lemon/lemon.png', 'assets/monster/lemon/lemon_atlas.json');
+        scene.load.animation('lemonAnim', 'assets/monster/lemon/lemon_anim.json');
     }
 
     update() {
@@ -133,8 +133,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
     actionAmin(state) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
         this.state = state;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
         if (state === 'attack') {                                                                             
-                
-            // 몬스터를 일시적으로 정적으로 설정하여                                                                                         충돌 순간에 제자리에 있도록 함
+            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
             this.anims.play(`${this.monsterType}_attack`, true);
             this.setStatic(true);
             // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정

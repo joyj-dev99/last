@@ -7,6 +7,7 @@ import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
+import MonsterLemon from "./monsters/MonsterLemon.js";
 import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
@@ -356,7 +357,7 @@ export default class MainSceneTest extends Phaser.Scene {
                         });
                         break;
                     case 'lemon' :
-                        m = new MonsterTomato({
+                        m = new MonsterLemon({
                             scene: this,
                             x: x,
                             y: y,
@@ -443,7 +444,7 @@ export default class MainSceneTest extends Phaser.Scene {
         if (this.mapNumber === 1) {
             //맵 1인 경우, 반드시 미트코인이 나온다
             this.itemType = Item.COIN_ITEM;
-
+        
             // 몬스터의 위치에 객체 생성 
             this.item = new Item({
                 scene: this,
