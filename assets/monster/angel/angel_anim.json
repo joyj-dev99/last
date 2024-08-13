@@ -1,0 +1,120 @@
+{
+    "anims": [
+        {
+            "key": "angel_idle_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_0"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_1"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_2"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_3"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_4"
+                }
+            ]
+        },
+        {
+            "key": "angel_attack",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_6"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_7"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_8"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_9"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_10"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_11"
+                }
+            ]
+        },
+        {
+            "key": "angel_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_12"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_13"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_14"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_15"
+                }
+            ]
+        },
+        {
+            "key": "angel_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_18"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_19"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_20"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_21"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_22"
+                },
+                {
+                    "key": "angel",
+                    "frame": "angel_sprite_sheet_23"
+                }
+            ]
+        }
+    ]
+}
