@@ -1,0 +1,203 @@
+{
+    "anims": [
+        {
+            "key": "ratfolk_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": []
+        },
+        {
+            "key": "ratfolk_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_8"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_9"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_10"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_11"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_12"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_13"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_14"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_15"
+                }
+            ]
+        },
+        {
+            "key": "ratfolk_taunt",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_16"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_17"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_18"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_19"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_20"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_21"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_22"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_23"
+                }
+            ]
+        },
+        {
+            "key": "ratfolk_attack",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_24"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_25"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_26"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_27"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_28"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_29"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_30"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_31"
+                }
+            ]
+        },
+        {
+            "key": "ratfolk_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_32"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_33"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_34"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_35"
+                }
+            ]
+        },
+        {
+            "key": "ratfolk_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_0"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_1"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_2"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_3"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_40"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_41"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_42"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_43"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_44"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_sprite_sheet_45"
+                }
+            ]
+        }
+    ]
+}
