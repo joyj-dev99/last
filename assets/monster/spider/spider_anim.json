@@ -1,0 +1,244 @@
+{
+    "anims": [
+        {
+            "key": "spider_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_0"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_1"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_2"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_3"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_4"
+                }
+            ]
+        },
+        {
+            "key": "spider_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_9"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_10"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_11"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_12"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_13"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_14"
+                }
+            ]
+        },
+        {
+            "key": "spider_jump",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_18"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_19"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_20"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_21"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_22"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_23"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_24"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_25"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_26"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_27"
+                }
+            ]
+        },
+        {
+            "key": "spider_emerge",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 1,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_27"
+                }
+            ]
+        },
+        {
+            "key": "spider_shoot_web",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_36"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_37"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_38"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_39"
+                }
+            ]
+        },
+        {
+            "key": "spider_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_45"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_46"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_47"
+                }
+            ]
+        },
+        {
+            "key": "spider_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_54"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_55"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_56"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_57"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_58"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_59"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_60"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_61"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_62"
+                }
+            ]
+        },
+        {
+            "key": "web",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_63"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_64"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_65"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_66"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_67"
+                },
+                {
+                    "key": "spider",
+                    "frame": "spider_sprite_sheet_68"
+                }
+            ]
+        }
+    ]
+}
