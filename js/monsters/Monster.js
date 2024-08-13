@@ -83,8 +83,8 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('eggplantoAnim', 'assets/monster/eggplant/eggplant_anim.json');
         scene.load.atlas('apple', 'assets/monster/apple/apple.png', 'assets/monster/apple/apple_atlas.json');
         scene.load.animation('appleAnim', 'assets/monster/apple/apple_anim.json');
-        scene.load.atlas('lemon', 'assets/monster/lemon/lemon.png', 'assets/monster/lemon/lemon_atlas.json');
-        scene.load.animation('lemonAnim', 'assets/monster/lemon/lemon_anim.json');
+
+        Arrow.preload(scene);
     }
 
     update() {
