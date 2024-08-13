@@ -53,7 +53,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
 
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
         const randomValue = Math.random();
-        const itemType = randomValue <= 0.2 ? monsterITEM : Item.COIN_ITEM;
+        const itemType = randomValue <= 0.8 ? monsterITEM : Item.COIN_ITEM;
         return itemType;
 
     }
