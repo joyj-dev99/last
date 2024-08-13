@@ -1,5 +1,4 @@
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "../constants.js";
-import Arrow from "../Arrow.js";
 
 export default class Monster extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
