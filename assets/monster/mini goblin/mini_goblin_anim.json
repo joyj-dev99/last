@@ -1,0 +1,228 @@
+{
+    "anims": [
+        {
+            "key": "mini_goblin_idle1",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_0"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_1"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_2"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_3"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_4"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_5"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_6"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_7"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_8"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_9"
+                }
+            ]
+        },
+        {
+            "key": "mini_goblin_idle2",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_11"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_12"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_13"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_14"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_15"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_16"
+                }
+            ]
+        },
+        {
+            "key": "mini_goblin_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_20"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_21"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_22"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_23"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_24"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_25"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_26"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_27"
+                }
+            ]
+        },
+        {
+            "key": "mini_goblin_hammer",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_30"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_31"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_32"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_33"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_34"
+                }
+            ]
+        },
+        {
+            "key": "mini_goblin_idle3",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_40"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_41"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_42"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_43"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_44"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_45"
+                }
+            ]
+        },
+        {
+            "key": "mini_goblin_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_50"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_51"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_52"
+                }
+            ]
+        },
+        {
+            "key": "mini_goblin_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_60"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_61"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_62"
+                },
+                {
+                    "key": "mini_goblin",
+                    "frame": "mini_goblin_sprite_sheet_63"
+                }
+            ]
+        }
+    ]
+}
