@@ -3,6 +3,7 @@ import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYE
 import TextIndicator from "./TextIndicator.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
+import MonsterApple from "./monsters/MonsterApple.js";
 
 export default class Item extends Phaser.Physics.Matter.Sprite {
 
@@ -35,6 +36,14 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         message : '+5 ATK' //Strength (공격력 5 증가) 
     };
 
+    // 사과 시체 아이템 데이터 
+    static Apple_ITEM = {
+        type : 'apple',
+        texture : 'fruit',
+        frame : 4,
+        message : '+1 heart' 
+    };
+
     // Item.setData(this.coinIndicatorText,this.heartIndicator);
     // static setData(textIndicator, heartIndicator){
     //     Item.COIN_ITEM.textIndicator = textIndicator;
@@ -49,6 +58,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         }
         else if(monster instanceof MonsterTomato){
             monsterITEM = Item.TOMATO_ITEM;
+
+        }else if(monster instanceof MonsterApple){
+            monsterITEM = Item.Apple_ITEM;
         }
 
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
@@ -83,7 +95,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         this.setCollidesWith([PLAYER_CATEGORY, TILE_CATEGORY]);
 
         this.itemType = itemType;
-   
+
     }
 
     static preload(scene) {
@@ -110,6 +122,11 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(this.itemType.type == 'eggplant'){
             // 힘 3종류 +5 적용
             player.increaseATK(5);
+
+        }else if(this.itemType.type == 'apple'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
         }
 
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
