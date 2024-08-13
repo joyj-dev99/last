@@ -98,7 +98,7 @@ export default class MainSceneTest extends Phaser.Scene {
         });
 
 
-        // 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
+        // 맵(1) 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
         if (this.mapNumber === 1) {
             // 특정 지점에 센서 생성
             this.startSensor = this.matter.add.rectangle(this.player.x +400, this.player.y - 160, 10, 500, {
@@ -129,6 +129,33 @@ export default class MainSceneTest extends Phaser.Scene {
 
                                 });
                             });
+                        });
+                    }
+                });
+            }); 
+        }
+
+        // 맵(2) 시작 대화
+        if(this.mapNumber === 2){
+            // 특정 지점에 센서 생성
+            this.startSensor = this.matter.add.rectangle(this.player.x +50, this.player.y - 160, 10, 500, {
+                isSensor: true, // 센서로 설정
+                isStatic: true  // 센서는 물리 반응이 필요 없음
+            });
+
+            // 충돌 감지 설정
+            this.matter.world.on('collisionstart', (event) => {
+                event.pairs.forEach(pair => {
+                    if ((pair.bodyA === this.player.body && pair.bodyB === this.startSensor) ||
+                        (pair.bodyB === this.player.body && pair.bodyA === this.startSensor)) {
+                        this.removeSensor(this.startSensor);
+                        // 코드의 위치 이동시키기
+                        this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
+                        
+                        // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
+                        this.chord.showSpeechBubble('이제 본격적으로 출발해봅시다.\n 맥스님, 파이팅!', ()=>{
+
+                            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?');
                         });
                     }
                 });
@@ -394,44 +421,93 @@ export default class MainSceneTest extends Phaser.Scene {
             //맵 1인 경우, 반드시 미트코인이 나온다
             this.itemType = Item.COIN_ITEM;
 
-        }else{
-            // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
-            this.itemType = Item.createItemType(monster);
-        }
+            // 몬스터의 위치에 객체 생성 
+            this.item = new Item({
+                scene: this,
+                x: monster.x,
+                y: monster.y,
+                itemType: this.itemType
+            });
 
-        // 몬스터의 위치에 객체 생성 
-        let item = new Item({
-            scene: this,
-            x: monster.x,
-            y: monster.y,
-            itemType: this.itemType
-        });
+            // 맵(1) 전투 끝난 후 대화
+            // 1초 지연 후에 플레이어 말풍선 생성
+            setTimeout(() => {
+                this.player.showSpeechBubble('뭐야? \n 미트코인이잖아?', () => {
 
-        // 1초 지연 후에 플레이어 말풍선 생성
-        setTimeout(() => {
-            this.player.showSpeechBubble('뭐야? \n 미트코인이잖아?', () => {
+                    this.player.showSpeechBubble('왜 상폐된 코인이 \n 나오는거야? ', () => {
 
-                this.player.showSpeechBubble('왜 상폐된 코인이 \n 나오는거야? ', () => {
+                        this.chord.showSpeechBubble('역시 맥스님! A등급 용병답네요!', () => {
 
-                    this.chord.showSpeechBubble('역시 맥스님! A등급 용병답네요!', () => {
+                            this.player.showSpeechBubble('근데, 너는 지금 내가 \n 몬스터 잡는다고 이 고생인데', () => {
 
-                        this.player.showSpeechBubble('근데, 너는 지금 내가 \n 몬스터 잡는다고 이 고생인데', () => {
+                                this.player.showSpeechBubble('고작 악기 연주나 하고 있어?', () => {
 
-                            this.player.showSpeechBubble('고작 악기 연주나 하고 있어?', () => {
-
-                                this.chord.showSpeechBubble('아무래도 응원가가 \n 있으면 좋으니까요!');
+                                    this.chord.showSpeechBubble('아무래도 응원가가 \n 있으면 좋으니까요!');
+                                });
                             });
                         });
                     });
                 });
+            }, 1000); // 1초 (1000 밀리초) 후에 실행
+
+        }else if(this.mapNumber === 2){
+            // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
+            this.itemType = Item.createItemType(monster);
+
+            // 몬스터의 위치에 객체 생성 
+            this.item = new Item({
+                scene: this,
+                x: monster.x,
+                y: monster.y,
+                itemType: this.itemType
             });
-        }, 1000); // 1초 (1000 밀리초) 후에 실행
+
+            // 몬스터 아이템이 나왔고, 또한 최초인지 확인
+            if(this.itemType === Item.TOMATO_ITEM && !this.firstMonsterItemLogged){
+                    console.log('TOMATO_ITEM이 나왔다');
+
+                    // 맵(2) 끝 대화
+                    setTimeout(() => {
+                        this.chord.showSpeechBubble(' 맥스님, 이 토마토 좀 맛있어 보이네요? ', () => {
+
+                            this.player.showSpeechBubble('윽, 이거 먹어도 되는거 맞지?');
+                        });
+                    }, 1000); // 1초 (1000 밀리초) 후에 실행
+
+                    this.firstMonsterItemLogged = true; // Set the flag to true
+                }
+            else if(this.itemType === Item.Eggplant_ITEM && !this.firstMonsterItemLogged){
+                    console.log('Eggplant_ITEM이 나왔다');
+
+                     // 맵(2) 끝 대화
+                    setTimeout(() => {
+                        this.chord.showSpeechBubble(' 맥스님, 이 가지 좀 맛있어 보이네요? ', () => {
+
+                            this.player.showSpeechBubble('윽, 이거 먹어도 되는거 맞지?');
+                        });
+                    }, 1000); // 1초 (1000 밀리초) 후에 실행
+
+                    this.firstMonsterItemLogged = true; // Set the flag to true
+                }
+
+        }else{
+             // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
+            this.itemType = Item.createItemType(monster);
+
+            // 몬스터의 위치에 객체 생성 
+            this.item = new Item({
+                scene: this,
+                x: monster.x,
+                y: monster.y,
+                itemType: this.itemType
+            });
+        }
 
 
         // 플레이어와 아이템 충돌 이벤트 설정
         const unsubscribe = this.matterCollision.addOnCollideStart({
             objectA: this.player,
-            objectB: item,
+            objectB: this.item,
             callback: eventData => {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 console.log("플레이어와 아이템 충돌");

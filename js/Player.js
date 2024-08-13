@@ -441,6 +441,4 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // SpeechBubble 클래스 인스턴스 생성
         new SpeechBubble(this.scene, contents, onDestroyCallback, 'Max');
     }
-
-    
 }
