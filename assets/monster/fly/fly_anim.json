@@ -1,0 +1,108 @@
+{
+    "anims": [
+        {
+            "key": "fly_flight",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_0"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_1"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_2"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_3"
+                }
+            ]
+        },
+        {
+            "key": "fly_summon_files",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_6"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_7"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_8"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_9"
+                }
+            ]
+        },
+        {
+            "key": "fly_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_12"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_13"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_14"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_15"
+                }
+            ]
+        },
+        {
+            "key": "fly_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_18"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_19"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_20"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_21"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_22"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_23"
+                }
+            ]
+        }
+    ]
+}
