@@ -41,7 +41,7 @@
             ]
         },
         {
-            "key": "lemon_movement",
+            "key": "lemon_move",
             "type": "frames",
             "repeat": -1,
             "frameRate": 12,
