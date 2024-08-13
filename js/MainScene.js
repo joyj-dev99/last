@@ -24,6 +24,7 @@ import {
     OBJECT_CATEGORY,
     PLAYER_ATTACK_CATEGORY
 } from "./constants.js";
+import MonsterApple from "./monsters/MonsterApple.js";
 
 export default class MainSceneTest extends Phaser.Scene {
 
@@ -119,7 +120,11 @@ export default class MainSceneTest extends Phaser.Scene {
             // 특정 지점에 센서 생성
             this.startSensor = this.matter.add.rectangle(this.player.x +400, this.player.y - 160, 10, 500, {
                 isSensor: true, // 센서로 설정
-                isStatic: true  // 센서는 물리 반응이 필요 없음
+                isStatic: true,  // 센서는 물리 반응이 필요 없음
+                collisionFilter: {
+                    category: OBJECT_CATEGORY,
+                    mask: PLAYER_CATEGORY // 플레이어만 충돌하도록 설정
+                }
             });
 
             // 충돌 감지 설정
@@ -156,7 +161,11 @@ export default class MainSceneTest extends Phaser.Scene {
             // 특정 지점에 센서 생성
             this.startSensor = this.matter.add.rectangle(this.player.x +50, this.player.y - 160, 10, 500, {
                 isSensor: true, // 센서로 설정
-                isStatic: true  // 센서는 물리 반응이 필요 없음
+                isStatic: true,  // 센서는 물리 반응이 필요 없음
+                collisionFilter: {
+                    category: OBJECT_CATEGORY,
+                    mask: PLAYER_CATEGORY // 플레이어만 충돌하도록 설정
+                }
             });
 
             // 충돌 감지 설정
@@ -348,7 +357,7 @@ export default class MainSceneTest extends Phaser.Scene {
                         });
                         break;
                     case 'apple':
-                        m = new MonsterTomato({
+                        m = new MonsterApple({
                             scene: this,
                             x: x,
                             y: y,
@@ -378,7 +387,6 @@ export default class MainSceneTest extends Phaser.Scene {
             }
         });
 
-       
         // 플레이어 움직임에 따라 카메라 이동
         this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHigth);
         this.matter.world.setBounds(0, 0, this.mapWidth, this.mapHigth);

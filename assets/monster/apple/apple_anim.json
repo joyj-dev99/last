@@ -41,7 +41,7 @@
             ]
         },
         {
-            "key": "apple_movement",
+            "key": "apple_move",
             "type": "frames",
             "repeat": -1,
             "frameRate": 12,
