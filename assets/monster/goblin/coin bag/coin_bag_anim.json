@@ -1,0 +1,36 @@
+{
+    "anims": [
+        {
+            "key": "thrown_coin_bag",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "coin_bag",
+                    "frame": "coin_bag_sprite_sheet_0"
+                },
+                {
+                    "key": "coin_bag",
+                    "frame": "coin_bag_sprite_sheet_1"
+                },
+                {
+                    "key": "coin_bag",
+                    "frame": "coin_bag_sprite_sheet_2"
+                },
+                {
+                    "key": "coin_bag",
+                    "frame": "coin_bag_sprite_sheet_3"
+                },
+                {
+                    "key": "coin_bag",
+                    "frame": "coin_bag_sprite_sheet_4"
+                },
+                {
+                    "key": "coin_bag",
+                    "frame": "coin_bag_sprite_sheet_5"
+                }
+            ]
+        }
+    ]
+}
