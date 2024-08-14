@@ -1,7 +1,7 @@
 {
     "anims": [
         {
-            "key": "mini_goblin_idle1",
+            "key": "mini_goblin_idle",
             "type": "frames",
             "repeat": -1,
             "frameRate": 8,

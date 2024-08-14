@@ -10,6 +10,13 @@ import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
 import MonsterLemon from "./monsters/MonsterLemon.js";
 import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
+import MonsterFly from "./monsters/MonsterFly.js";
+import MonsterSpider from "./monsters/MonsterSpider.js";
+import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
+import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
+import MonsterGo from "./monsters/MonsterGo.js";
+
+
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
 
@@ -27,6 +34,7 @@ import {
     PLAYER_ATTACK_CATEGORY,
     SENSOR_CATEGORY
 } from "./constants.js";
+
 import MonsterApple from "./monsters/MonsterApple.js";
 import StageManager from "./StageManager.js";
 
@@ -131,10 +139,8 @@ export default class MainSceneTest extends Phaser.Scene {
             loop: true // Enable looping if desired
         });
 
-        if (this.mapNumber < 4) {
-            // 스테이지 진행률 UI
-            this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber - 1);
-        }
+        // 스테이지 진행률 UI
+        this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber - 1);
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
 
@@ -419,7 +425,7 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break; 
-                      
+                        
                     default:
                     // console.log("몬스터 생성 : " + name);
                 }

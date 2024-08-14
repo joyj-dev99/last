@@ -154,7 +154,7 @@
                 {
                  "height":0,
                  "id":6,
-                 "name":"tomato",
+                 "name":"eggplant",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
@@ -166,7 +166,7 @@
                 {
                  "height":0,
                  "id":7,
-                 "name":"tomato",
+                 "name":"mini_goblin",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
@@ -178,7 +178,7 @@
                 {
                  "height":0,
                  "id":8,
-                 "name":"tomato",
+                 "name":"ratfolk",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
@@ -190,7 +190,7 @@
                 {
                  "height":0,
                  "id":9,
-                 "name":"eggplant",
+                 "name":"necromancer",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
@@ -202,7 +202,7 @@
                 {
                  "height":0,
                  "id":10,
-                 "name":"eggplant",
+                 "name":"lemon",
                  "point":true,
                  "rotation":0,
                  "type":"monster",
