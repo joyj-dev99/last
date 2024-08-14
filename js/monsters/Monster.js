@@ -78,6 +78,18 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('appleAnim', 'assets/monster/apple/apple_anim.json');
         scene.load.atlas('lemon', 'assets/monster/lemon/lemon.png', 'assets/monster/lemon/lemon_atlas.json');
         scene.load.animation('lemonAnim', 'assets/monster/lemon/lemon_anim.json');
+        scene.load.atlas('fly', 'assets/monster/fly/fly.png', 'assets/monster/fly/fly_atlas.json');
+        scene.load.animation('flyAnim', 'assets/monster/fly/fly_anim.json');
+        scene.load.atlas('spider', 'assets/monster/spider/spider.png', 'assets/monster/spider/spider_atlas.json');
+        scene.load.animation('spiderAnim', 'assets/monster/spider/spider_anim.json');
+        scene.load.atlas('mini_goblin', 'assets/monster/mini goblin/mini_goblin.png', 'assets/monster/mini goblin/mini_goblin_atlas.json');
+        scene.load.animation('mini_goblinAnim', 'assets/monster/mini goblin/mini_goblin_anim.json');
+        scene.load.atlas('ratfolk', 'assets/monster/ratfolk/ratfolk.png', 'assets/monster/ratfolk/ratfolk_atlas.json');
+        scene.load.animation('ratfolkAnim', 'assets/monster/ratfolk/ratfolk_anim.json');
+        scene.load.atlas('goblin', 'assets/monster/goblin/goblin.png', 'assets/monster/goblin/goblin_atlas.json');
+        scene.load.animation('goblinAnim', 'assets/monster/goblin/goblin_anim.json');
+        scene.load.atlas('necromancer', 'assets/monster/necromancer/necromancer.png', 'assets/monster/necromancer/necromancer_atlas.json');
+        scene.load.animation('necromancerAnim', 'assets/monster/necromancer/necromancer_anim.json');
     }
 
     update() {

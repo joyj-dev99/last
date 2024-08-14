@@ -4,8 +4,25 @@
             "key": "ratfolk_idle",
             "type": "frames",
             "repeat": -1,
-            "frameRate": 12,
-            "frames": []
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_berserker_sprite_sheet_0"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_berserker_sprite_sheet_1"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_berserker_sprite_sheet_2"
+                },
+                {
+                    "key": "ratfolk",
+                    "frame": "ratfolk_berserker_sprite_sheet_3"
+                }
+            ]
         },
         {
             "key": "ratfolk_move",
@@ -15,35 +32,35 @@
             "frames": [
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_8"
+                    "frame": "ratfolk_berserker_sprite_sheet_8"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_9"
+                    "frame": "ratfolk_berserker_sprite_sheet_9"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_10"
+                    "frame": "ratfolk_berserker_sprite_sheet_10"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_11"
+                    "frame": "ratfolk_berserker_sprite_sheet_11"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_12"
+                    "frame": "ratfolk_berserker_sprite_sheet_12"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_13"
+                    "frame": "ratfolk_berserker_sprite_sheet_13"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_14"
+                    "frame": "ratfolk_berserker_sprite_sheet_14"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_15"
+                    "frame": "ratfolk_berserker_sprite_sheet_15"
                 }
             ]
         },
@@ -55,35 +72,35 @@
             "frames": [
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_16"
+                    "frame": "ratfolk_berserker_sprite_sheet_16"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_17"
+                    "frame": "ratfolk_berserker_sprite_sheet_17"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_18"
+                    "frame": "ratfolk_berserker_sprite_sheet_18"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_19"
+                    "frame": "ratfolk_berserker_sprite_sheet_19"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_20"
+                    "frame": "ratfolk_berserker_sprite_sheet_20"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_21"
+                    "frame": "ratfolk_berserker_sprite_sheet_21"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_22"
+                    "frame": "ratfolk_berserker_sprite_sheet_22"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_23"
+                    "frame": "ratfolk_berserker_sprite_sheet_23"
                 }
             ]
         },
@@ -91,39 +108,39 @@
             "key": "ratfolk_attack",
             "type": "frames",
             "repeat": 0,
-            "frameRate": 8,
+            "frameRate": 12,
             "frames": [
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_24"
+                    "frame": "ratfolk_berserker_sprite_sheet_24"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_25"
+                    "frame": "ratfolk_berserker_sprite_sheet_25"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_26"
+                    "frame": "ratfolk_berserker_sprite_sheet_26"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_27"
+                    "frame": "ratfolk_berserker_sprite_sheet_27"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_28"
+                    "frame": "ratfolk_berserker_sprite_sheet_28"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_29"
+                    "frame": "ratfolk_berserker_sprite_sheet_29"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_30"
+                    "frame": "ratfolk_berserker_sprite_sheet_30"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_31"
+                    "frame": "ratfolk_berserker_sprite_sheet_31"
                 }
             ]
         },
@@ -135,19 +152,19 @@
             "frames": [
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_32"
+                    "frame": "ratfolk_berserker_sprite_sheet_32"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_33"
+                    "frame": "ratfolk_berserker_sprite_sheet_33"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_34"
+                    "frame": "ratfolk_berserker_sprite_sheet_34"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_35"
+                    "frame": "ratfolk_berserker_sprite_sheet_35"
                 }
             ]
         },
@@ -159,43 +176,27 @@
             "frames": [
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_0"
+                    "frame": "ratfolk_berserker_sprite_sheet_40"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_1"
+                    "frame": "ratfolk_berserker_sprite_sheet_41"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_2"
+                    "frame": "ratfolk_berserker_sprite_sheet_42"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_3"
+                    "frame": "ratfolk_berserker_sprite_sheet_43"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_40"
+                    "frame": "ratfolk_berserker_sprite_sheet_44"
                 },
                 {
                     "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_41"
-                },
-                {
-                    "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_42"
-                },
-                {
-                    "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_43"
-                },
-                {
-                    "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_44"
-                },
-                {
-                    "key": "ratfolk",
-                    "frame": "ratfolk_sprite_sheet_45"
+                    "frame": "ratfolk_berserker_sprite_sheet_45"
                 }
             ]
         }

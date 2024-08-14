@@ -6,6 +6,11 @@ import MonsterEggplant from "./monsters/MonsterEggplant.js";
 import MonsterApple from "./monsters/MonsterApple.js";
 import MonsterLemon from "./monsters/MonsterLemon.js";
 import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
+import MonsterFly from "./monsters/MonsterFly.js";
+import MonsterSpider from "./monsters/MonsterSpider.js";
+import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
+import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
+
 
 export default class Item extends Phaser.Physics.Matter.Sprite {
 
@@ -71,6 +76,17 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     };
 
 
+    // 호박 시체 아이템 데이터 
+    static MiniGoblin_ITEM = {
+        type : 'pumpkin',
+        texture : 'pumpkin',
+        frame : 0,
+        message : '+5 ATK' ,
+        scale : 0.5,
+        drap_per : 1.0
+    };
+    
+
     // Item.setData(this.coinIndicatorText,this.heartIndicator);
     // static setData(textIndicator, heartIndicator){
     //     Item.COIN_ITEM.textIndicator = textIndicator;
@@ -95,6 +111,16 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(monster instanceof MonsterBossPumpkin){
             monsterITEM = Item.Pumpkin_ITEM;
         }
+        else if(monster instanceof MonsterFly){
+            monsterITEM = Item.COIN_ITEM;
+        }
+        else if(monster instanceof MonsterSpider){
+            monsterITEM = Item.COIN_ITEM;
+        }
+        else if(monster instanceof MonsterMiniGoblin){
+            monsterITEM = Item.MiniGoblin_ITEM;
+        }
+        
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
         const randomValue = Math.random();
         console.log('randomValue : '+randomValue);
@@ -175,6 +201,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             // 체력 +1 적용
             player.increaseATK(5);
         }
+
 
 
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
