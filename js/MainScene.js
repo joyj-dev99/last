@@ -419,7 +419,6 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break; 
-                    
                     default:
                     // console.log("몬스터 생성 : " + name);
                 }
