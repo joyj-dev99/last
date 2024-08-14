@@ -1,0 +1,264 @@
+{
+    "anims": [
+        {
+            "key": "golem_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_0"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_1"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_2"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_3"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_4"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_5"
+                }
+            ]
+        },
+        {
+            "key": "golem_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_14"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_15"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_16"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_17"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_18"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_19"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_20"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_21"
+                }
+            ]
+        },
+        {
+            "key": "golem_attack1",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_28"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_29"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_30"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_31"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_32"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_33"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_34"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_35"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_36"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_37"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_38"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_39"
+                }
+            ]
+        },
+        {
+            "key": "golem_attack2",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_42"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_43"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_44"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_45"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_46"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_47"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_48"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_49"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_50"
+                }
+            ]
+        },
+        {
+            "key": "golem_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_56"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_57"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_58"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_59"
+                }
+            ]
+        },
+        {
+            "key": "golem_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_70"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_71"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_72"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_73"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_74"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_75"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_76"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_77"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_78"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_79"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_80"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_81"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_82"
+                },
+                {
+                    "key": "golem",
+                    "frame": "arcane_golem_tileset_83"
+                }
+            ]
+        }
+    ]
+}
