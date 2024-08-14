@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="17">
+ <tileset firstgid="1" name="Modern_Office_32x32" tilewidth="32" tileheight="32" tilecount="848" columns="16">
+  <image source="../Modern_Office_32x32.png" width="512" height="1696"/>
+  <tile id="263">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="264">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="279">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="280">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="849" name="Room_Builder_Office_32x32" tilewidth="32" tileheight="32" tilecount="224" columns="16">
+  <image source="../Room_Builder_Office_32x32.png" width="512" height="448"/>
+  <tile id="176">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="177">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="178">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="179">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="180">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="181">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="182">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="183">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="184">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="185">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="192">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="193">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="194">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="195">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="196">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="197">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="198">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="199">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="200">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="201">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer id="1" name="floor" width="30" height="10" locked="1">
+  <data encoding="csv">
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
+908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908
+</data>
+ </layer>
+ <layer id="2" name="wall" width="30" height="10" locked="1">
+  <data encoding="csv">
+1025,1027,0,0,1032,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1027,
+1029,1031,0,0,1029,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1031,
+1041,1043,0,0,1048,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1043,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1025,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1027,0,0,0,0,1025,
+1041,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1043,0,0,0,0,1041
+</data>
+ </layer>
+ <layer id="3" name="decor1" width="30" height="10" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+879,879,0,0,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="decor2" width="30" height="10" locked="1">
+  <data encoding="csv">
+0,0,264,265,0,0,0,193,194,0,0,0,0,0,0,0,0,168,169,136,0,0,0,0,0,137,138,0,0,0,
+369,370,264,265,0,0,0,209,210,0,0,0,0,119,0,0,0,184,185,152,0,0,119,0,0,153,154,0,0,0,
+385,386,280,281,0,0,0,167,167,0,0,0,0,135,0,0,0,167,167,0,0,0,135,0,0,167,167,0,0,0,
+401,402,0,0,0,0,0,183,183,0,0,0,0,151,0,0,0,183,183,0,0,0,151,0,0,183,183,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="5" name="object">
+  <object id="4" name="playerStart" x="84" y="108">
+   <point/>
+  </object>
+  <object id="5" name="chordStart" type="chord" x="178" y="114">
+   <point/>
+  </object>
+  <object id="6" name="milestone" x="836" y="274">
+   <point/>
+  </object>
+  <object id="9" name="chordEnd" type="chord" x="894" y="242">
+   <point/>
+  </object>
+  <object id="11" name="chordBattle" type="chord" x="466" y="116">
+   <point/>
+  </object>
+  <object id="13" name="angle" type="monster" x="432" y="198">
+   <point/>
+  </object>
+  <object id="15" name="angle" type="monster" x="510" y="198">
+   <point/>
+  </object>
+ </objectgroup>
+</map>
