@@ -1,0 +1,216 @@
+{
+    "frames": [
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_0",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_1",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 0,
+                "y": 32
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_2",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 64,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_3",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 64,
+                "y": 32
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_4",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 0,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_5",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 64,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_6",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 0,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_7",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 64,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_8",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 128,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_9",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 128,
+                "y": 32
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_10",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 128,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_11",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 128,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_12",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 0,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_13",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 64,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_14",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 128,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "acid_flask_sprite_sheet_64x32_15",
+            "frame": {
+                "w": 64,
+                "h": 32,
+                "x": 0,
+                "y": 160
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}
