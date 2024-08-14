@@ -1,7 +1,7 @@
 import Monster from "./Monster.js";
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "../constants.js";
 
-export default class MonsterGo extends Monster {
+export default class MonsterNecromancer extends Monster {
     constructor(data) {
         let {scene, x, y, player} = data;
         super({

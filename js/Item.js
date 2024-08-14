@@ -10,10 +10,11 @@ import MonsterFly from "./monsters/MonsterFly.js";
 import MonsterSpider from "./monsters/MonsterSpider.js";
 import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
 import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
-// import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
-// 고블린, 네크로멘서 클래스 추가해야 함.
-import MonsterGo from "./monsters/MonsterGo.js";
-
+import MonsterGoblin from "./monsters/MonsterGoblin.js";
+import MonsterNecromancer from "./monsters/MonsterNecromancer.js";
+import MonsterBugbear from "./monsters/MonsterBugbear.js";
+import MonsterAngel from "./monsters/MonsterAngel.js";
+import MonsterGolem from "./monsters/MonsterGolem.js";
 
 export default class Item extends Phaser.Physics.Matter.Sprite {
 
@@ -148,14 +149,22 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(monster instanceof MonsterRatfolk){
             monsterITEM = Item.Ratfolk_ITEM;
         }
-        // 고블린 클래스로 변경해야 함.
-        else if(monster instanceof MonsterGo){
+        else if(monster instanceof MonsterGoblin){
             monsterITEM = Item.Potion_ITEM;
         }
-        // 네크로멘서 클래스로 변경해야 함
-        else if(monster instanceof MonsterGo){
+        else if(monster instanceof MonsterNecromancer){
             monsterITEM = Item.Potion_ITEM;
         }
+        else if(monster instanceof MonsterBugbear){
+            monsterITEM = Item.COIN_ITEM;
+        }
+        else if(monster instanceof MonsterAngel){
+            monsterITEM = Item.COIN_ITEM;
+        }
+        else if(monster instanceof MonsterGolem){
+            monsterITEM = Item.COIN_ITEM;
+        }
+        
         
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
         const randomValue = Math.random();
