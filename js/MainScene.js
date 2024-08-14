@@ -189,8 +189,8 @@ export default class MainSceneTest extends Phaser.Scene {
                 console.log("플레이어와 몬스터 충돌");
                 // console.dir(gameObjectB);
 
-                // 슬래쉬 초기화
-                this.player.resetSlash();
+                // 슬래쉬 제거
+                this.player.removeSlash();
                 // 콤보 초기화
                 this.player.comboState = 0;
 
