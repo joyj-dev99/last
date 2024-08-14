@@ -155,14 +155,18 @@ export default class Tutorial{
                 for (let i = 0; i < 관련된값.anim_keyboards.length; i++) {
                     관련된값.anim_keyboards[i].stop();
                 }
+                console.log('this.이동키조작설명순서[0] : '+this.이동키조작설명순서[0]);
                 console.log('stop');
             }
             else{ 
                 return;
             }
-            
+
+
             this.이동키조작설명순서.splice(0, 1);
             if(this.이동키조작설명순서.length == 0){
+                console.log('0');
+
                 // this.endDirectionControlExplanation();
             }
             else {
@@ -294,12 +298,14 @@ export default class Tutorial{
             anim_keyboard = [this.keyboard_z];
         }
         else if(이동키조작설명값 == ATK3){
-            if(!(Phaser.Input.Keyboard.JustDown(this.zKey)) && this.combo_count == 3){
-                result = false;
+            if(Phaser.Input.Keyboard.JustDown(this.zKey) && this.combo_count >= 6){
+                console.log('atk3 true');
+                result = true;
+
             }
             else{
-                console.log('atk3');
-                result = true;
+                console.log('atk3 false');
+                result = false;
             }
             anim_key = [ATK_ANIMS];
             anim_keyboard = [this.keyboard_z];
@@ -315,6 +321,8 @@ export default class Tutorial{
             anim_keyboard = [this.keyboard_shift];
         }
         
+        console.log('this.combo_count : '+this.combo_count);
+
         return {'result': result, 'anim_keys' : anim_key, 'anim_keyboards' : anim_keyboard};
     }
 
@@ -335,7 +343,6 @@ export default class Tutorial{
 
     startZKeyControlExplanation(scene, sensor_x, sensor_y){
         
-                
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
         // Z 키 입력 설정
@@ -372,7 +379,6 @@ export default class Tutorial{
             repeat : -1
         });
 
-
         // 애니메이션 완료 후 원래 이미지로 돌아가기
         keyboard_z.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
@@ -382,6 +388,7 @@ export default class Tutorial{
         
 
         let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
+        console.log('관련된 값 return 값 : ');
         console.dir(관련된값);
         for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
             관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);

@@ -121,7 +121,6 @@ export default class MainSceneTest extends Phaser.Scene {
         // 맵(1) 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
         if (this.mapNumber === 1) {
 
-
             // 특정 지점에 센서 생성
             this.startSensor = this.matter.add.rectangle(this.player.x +400, this.player.y - 160, 10, 500, {
                 isSensor: true, // 센서로 설정
