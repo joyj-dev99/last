@@ -39,9 +39,8 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = 2;
-        // this.stageNumber = data.stageNumber || 1;
-        this.mapNumber = 1;
+        this.stageNumber = data.stageNumber || 1;
+        this.mapNumber = 2;
         // this.mapNumber = data.mapNumber || 1;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
