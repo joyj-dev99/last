@@ -1,0 +1,320 @@
+{
+    "anims": [
+        {
+            "key": "minotaur_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_0"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_1"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_2"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_3"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_4"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_10"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_11"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_12"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_13"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_14"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_15"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_16"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_17"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_taunt",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_20"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_21"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_22"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_23"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_24"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_attack1",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_30"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_31"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_32"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_33"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_34"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_35"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_36"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_37"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_38"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_attack2",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_40"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_41"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_42"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_43"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_44"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_attack3",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_50"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_51"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_52"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_53"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_54"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_55"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_attack4",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_60"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_61"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_62"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_63"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_64"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_65"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_66"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_67"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_68"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_damage1",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_70"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_71"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_72"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_damage2",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_80"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_81"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_82"
+                }
+            ]
+        },
+        {
+            "key": "minotaur_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_90"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_91"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_92"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_93"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_94"
+                },
+                {
+                    "key": "minotaur",
+                    "frame": "minotaur_sprite_sheet_95"
+                }
+            ]
+        }
+    ]
+}
