@@ -43,10 +43,13 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 가지 시체 아이템 데이터 
     static Eggplant_ITEM = {
         type : 'eggplant',
-        texture : 'fruit',
-        frame : 15,
+        // texture : 'fruit',
+        // frame : 10,
+        texture : 'eggplant',
+        frame : null,
+        scale : 0.66,
         message : '+5 ATK', //Strength (공격력 5 증가) 
-        drap_per : 0.2
+        drap_per : 1.0
     };
 
     // 사과 시체 아이템 데이터 
@@ -199,7 +202,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.image('cheese', 'assets/item/cheese.png');
         scene.load.image('meat', 'assets/item/meat.png');
         scene.load.image('potion', 'assets/item/potion.png');
-        scene.load.spritesheet('eggplant', 'assets/item/eggplant.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.image('eggplant', 'assets/item/eggplant.png');
         // 에셋 추가
     }
 
