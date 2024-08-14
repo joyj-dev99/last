@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "shift_key_anim.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 64,
+				"h": 16
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "shift_key.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 16
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 16
+					}
+				},
+				{
+					"filename": "shift_key2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 16
+					},
+					"frame": {
+						"x": 32,
+						"y": 0,
+						"w": 32,
+						"h": 16
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:4e9c74625e7b2c3948e7dda07b815398:f79853dc94c82bca93d4cbf9c111c06b:00330dad37ece2acd786b566c1b50f1a$"
+	}
+}

@@ -2,6 +2,7 @@ import HeartIndicator from "./HeartIndicator.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import TextIndicator from "./TextIndicator.js";
 import Item from "./Item.js";
+import Tutorial from "./Tutorial.js";
 
 import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
@@ -84,6 +85,7 @@ export default class MainSceneTest extends Phaser.Scene {
         MonsterBossPumpkin.preload(this);
         Chord.preload(this);
         Item.preload(this);
+        Tutorial.preload(this);
 
         ProgressIndicator.preload(this);
         HeartIndicator.preload(this);
@@ -118,6 +120,8 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 맵(1) 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
         if (this.mapNumber === 1) {
+
+
             // 특정 지점에 센서 생성
             this.startSensor = this.matter.add.rectangle(this.player.x +400, this.player.y - 160, 10, 500, {
                 isSensor: true, // 센서로 설정
@@ -155,6 +159,158 @@ export default class MainSceneTest extends Phaser.Scene {
                     }
                 });
             }); 
+
+            let tutorial = new Tutorial();
+
+            let sensor = tutorial.createSensor(this, this.player.x +60, this.player.y - 160, 10, 500);
+            // 센서 생성
+            // 충돌시, 동작
+            // 플레이어와 센서 1 충돌 이벤트 설정
+            const unsubscribe = this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor,
+                callback: eventData => {
+
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서 충돌");
+                    console.dir(bodyB);
+                    console.dir(gameObjectA);
+
+                    // 센서 제거
+                    tutorial.onSensorHit(this, bodyB);
+
+                    // tutorial 에 사용하는 기능들 모두 하나의 클래스 만들어서 작업해야 할 듯
+                    // sensor 달고, 충돌시 tutorial 1,2,3 단계 실행하는 동작 튜토리얼 객체에 실행요청 하는 동작만 mainscene 에 넣어두기
+                    // 키보드 키 생성, 이동 조작방법 설명 시작
+
+                    // 코드? 위치 이동 및 메세지 표시
+                    // 코드의 위치 이동시키기
+                    this.chord.setLocation(170, this.chordBattle.y);
+                    // 이동 방법을 알려드릴게요! 방향키를 눌러보세요!
+                    // this.chord.showSpeechBubble('이동하는 방법을\n알려줄게!');
+                    this.chord.showSpeechBubble('이동 방법을\n알려드릴게요!', () =>{
+                        this.chord.showSpeechBubble('방향키를\n눌러보세요!', () =>{
+                        });
+                    });
+
+
+                    // 이동키 조작 설명 시작.
+                    tutorial.startDirectionControlExplanation(this,this.player.x +50, this.player.y - 160);
+
+                    // 충돌 이벤트 제거
+                    unsubscribe();
+
+
+                }
+            });
+
+            
+            let sensor2 = tutorial.createSensor(this, this.player.x +200, this.player.y - 160, 10, 500);
+            // 충돌시 이동키 설명관련 데이터 삭제
+            // shift, z 한번, z 세번
+
+            // shift를 눌러보세요!
+            // z key를 눌러보세요!
+            // z key를 연속 3번 눌러보세요!
+            const unsubscribe2 = this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor2,
+                callback: eventData => {
+
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서 충돌");
+                    console.dir(bodyB);
+                    console.dir(gameObjectA);
+
+                    // 센서 제거
+                    tutorial.onSensorHit(this, bodyB);
+
+                    // 이동키 조작 설명 끝
+                    tutorial.endDirectionControlExplanation();
+                    // z 키 설명 시작
+                    tutorial.startZKeyControlExplanation(this,this.player.x +50, this.player.y - 160);
+
+                    // 코드의 위치 이동시키기
+                    this.chord.setLocation(270, this.chordBattle.y);
+                    // 이동 방법을 알려드릴게요! 방향키를 눌러보세요!
+                    // this.chord.showSpeechBubble('이동하는 방법을\n알려줄게!');
+                    this.chord.showSpeechBubble('z 키를\n눌러보세요!', () =>{
+                    });
+
+                    // 충돌 이벤트 제거
+                    unsubscribe2();
+
+
+                }
+            });
+
+
+            let sensor3 = tutorial.createSensor(this, this.player.x +300, this.player.y - 160, 10, 500);
+            // 충돌시 이동키 설명관련 데이터 삭제
+            const unsubscribe3 = this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor3,
+                callback: eventData => {
+
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서 충돌");
+                    console.dir(bodyB);
+                    console.dir(gameObjectA);
+
+                    // 센서 제거
+                    tutorial.onSensorHit(this, bodyB);
+                    
+                    
+                    // 이동키 조작 설명 끝
+                    tutorial.endzKeyControlExplanation();
+                    // z 키 설명 시작
+                    tutorial.startshiftKeyControlExplanation(this,this.player.x +50, this.player.y - 160);
+
+                    // 코드의 위치 이동시키기
+                    this.chord.setLocation(350, this.chordBattle.y);
+                    // 이동 방법을 알려드릴게요! 방향키를 눌러보세요!
+                    // this.chord.showSpeechBubble('이동하는 방법을\n알려줄게!');
+                    this.chord.showSpeechBubble('shift 키를\n길게 눌러보세요!', () =>{
+                    });
+
+
+                    // 충돌 이벤트 제거
+                    unsubscribe3();
+
+
+                }
+            });
+
+            
+            let sensor4 = tutorial.createSensor(this, this.player.x +450, this.player.y - 160, 10, 500);
+            // 충돌시 이동키 설명관련 데이터 삭제
+            const unsubscribe4 = this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor4,
+                callback: eventData => {
+
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서 충돌");
+                    console.dir(bodyB);
+                    console.dir(gameObjectA);
+
+                    // 센서 제거
+                    tutorial.onSensorHit(this, bodyB);
+                    tutorial.endshiftKeyControlExplanation();
+                    tutorial.finish(this);
+
+                    // 코드의 위치 이동시키기
+                    this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
+                   this.chord.showSpeechBubble( '이제 배운걸\n써먹어 보자', () => {});
+
+                    // 충돌 이벤트 제거
+                    unsubscribe4();
+
+
+                }
+            });
+
+
         }
 
         // 맵(2) 시작 대화
