@@ -8,15 +8,12 @@ import {
 
 export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
-        let {scene, x, y, texture, frame, player} = data;
-
-        super(scene.matter.world, x, y, texture, frame);
+        let {scene, x, y, player} = data;
+        super(scene.matter.world, x, y, 'pumpkin', 'giant_pumpkin_sprite_sheet_0');
         this.scene = scene;
         this.player = player;
         this.x = x;
         this.y = y;
-        this.texture = 'pumpkin';
-        this.frame = 'pumpkin_idle_01';
         this.monsterType = 'pumpkin';
         this.bodyWidth = 48;
         this.bodyHeight = 42;
@@ -54,7 +51,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         Body.setCentre(this.body, {x: this.centreX, y: this.centreY}, true);
 
         // 애니메이션 재생
-        this.anims.play(`${this.monsterType}_idle`);
+        this.anims.play(`${this.monsterType}_idle`, true);
         console.log("몬스터 생성: ", this.monsterType, x, y);
 
         this.setCollisionCategory(MONSTER_CATEGORY);
@@ -100,7 +97,6 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
     update() {
         //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;
-        console.log('update 1 실행')
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
