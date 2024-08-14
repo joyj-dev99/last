@@ -10,6 +10,9 @@ import MonsterFly from "./monsters/MonsterFly.js";
 import MonsterSpider from "./monsters/MonsterSpider.js";
 import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
 import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
+// import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
+// 고블린, 네크로멘서 클래스 추가해야 함.
+import MonsterGo from "./monsters/MonsterGo.js";
 
 
 export default class Item extends Phaser.Physics.Matter.Sprite {
@@ -76,16 +79,35 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     };
 
 
-    // 호박 시체 아이템 데이터 
+    // 고블린 고기 아이템 데이터 
     static MiniGoblin_ITEM = {
-        type : 'pumpkin',
-        texture : 'pumpkin',
-        frame : 0,
-        message : '+5 ATK' ,
-        scale : 0.5,
-        drap_per : 1.0
+        type : 'mini_goblin_meat',
+        texture : 'meat',
+        frame : null,
+        scale : 0.66,
+        message : '+1 heart' ,
+        drap_per : 1
     };
     
+    // 쥐의 치즈 아이템 데이터 
+    static Ratfolk_ITEM = {
+        type : 'cheese',
+        texture : 'cheese',
+        frame : null,
+        scale : 0.5,
+        message : '+1 heart' ,
+        drap_per : 1
+    };
+    
+    // 물약 아이템 데이터 
+    static Potion_ITEM = {
+        type : 'potion',
+        texture : 'potion',
+        frame : null,
+        scale : 0.66,
+        message : '+5 ATK' ,
+        drap_per : 1
+    };
 
     // Item.setData(this.coinIndicatorText,this.heartIndicator);
     // static setData(textIndicator, heartIndicator){
@@ -119,6 +141,17 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         }
         else if(monster instanceof MonsterMiniGoblin){
             monsterITEM = Item.MiniGoblin_ITEM;
+        }
+        else if(monster instanceof MonsterRatfolk){
+            monsterITEM = Item.Ratfolk_ITEM;
+        }
+        // 고블린 클래스로 변경해야 함.
+        else if(monster instanceof MonsterGo){
+            monsterITEM = Item.Potion_ITEM;
+        }
+        // 네크로멘서 클래스로 변경해야 함
+        else if(monster instanceof MonsterGo){
+            monsterITEM = Item.Potion_ITEM;
         }
         
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
@@ -163,8 +196,11 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.image('coin', 'assets/item/pixel_meat_coin.png');
         scene.load.spritesheet('fruit', 'assets/item/fruits asset.png', { frameWidth: 16, frameHeight: 16 });
         scene.load.image('pumpkin', 'assets/item/pumpkin.png');
-
+        scene.load.image('cheese', 'assets/item/cheese.png');
+        scene.load.image('meat', 'assets/item/meat.png');
+        scene.load.image('potion', 'assets/item/potion.png');
         scene.load.spritesheet('eggplant', 'assets/item/eggplant.png', { frameWidth: 16, frameHeight: 16 });
+        // 에셋 추가
     }
 
     // 아이템 적용 메소드
@@ -198,10 +234,26 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             heartIndicator.setHeart(player.status.nowHeart);
         }
         else if(this.itemType.type == 'pumpkin'){
-            // 체력 +1 적용
+            // 공격력 +5 적용
             player.increaseATK(5);
         }
-
+        // 미니고블린의 고기
+        else if(this.itemType.type == 'mini_goblin_meat'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        // 쥐의 치즈
+        else if(this.itemType.type == 'cheese'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        // 포션 
+        else if(this.itemType.type == 'potion'){
+            // 공격력 +5 적용
+            player.increaseATK(5);
+        }
 
 
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
