@@ -10,6 +10,13 @@ import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
 import MonsterLemon from "./monsters/MonsterLemon.js";
 import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
+import MonsterFly from "./monsters/MonsterFly.js";
+import MonsterSpider from "./monsters/MonsterSpider.js";
+import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
+import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
+import MonsterGo from "./monsters/MonsterGo.js";
+
+
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
 
@@ -27,6 +34,7 @@ import {
     PLAYER_ATTACK_CATEGORY,
     SENSOR_CATEGORY
 } from "./constants.js";
+
 import MonsterApple from "./monsters/MonsterApple.js";
 import StageManager from "./StageManager.js";
 
@@ -40,8 +48,8 @@ export default class MainSceneTest extends Phaser.Scene {
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
         this.stageNumber = data.stageNumber || 1;
-        // this.mapNumber = 4;
-        this.mapNumber = data.mapNumber || 1;
+        this.mapNumber = 2;
+        // this.mapNumber = data.mapNumber || 1;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
@@ -111,10 +119,8 @@ export default class MainSceneTest extends Phaser.Scene {
             loop: true // Enable looping if desired
         });
 
-        if (this.mapNumber < 4) {
-            // 스테이지 진행률 UI
-            this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber - 1);
-        }
+        // 스테이지 진행률 UI
+        this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber - 1);
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
 
@@ -320,6 +326,55 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
+                    case 'fly' : 
+                        m = new MonsterFly({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break;
+                    case 'spider' : 
+                        m = new MonsterSpider({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break;
+                    case 'mini_goblin' : 
+                        m = new MonsterMiniGoblin({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break;
+                    case 'ratfolk' : 
+                        m = new MonsterRatfolk({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                    case 'goblin' : 
+                        m = new MonsterGo({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                    case 'necromancer' : 
+                        m = new MonsterGo({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                        
                     default:
                     // console.log("몬스터 생성 : " + name);
                 }
