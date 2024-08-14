@@ -19,8 +19,8 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.bodyHeight = 42;
         this.centreX = 0;
         this.centreY = -26;
-        this.initHp = 200;
-        this.hp = 200;
+        this.initHp = 250;
+        this.hp = 250;
         this.damage = 0.5;
         this.reach = 30;
         this.speed = 1;
@@ -80,8 +80,15 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.angleStep = 360 / this.totalBullets;
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
+
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
+        // 초기 프레임 설정
+        this.healthBar.setScrollFactor(0);
+        this.healthBarBack.setScrollFactor(0);
+        this.healthBar.setDepth(1001);
+        this.healthBarBack.setDepth(1001);
+
     }
 
     static preload(scene) {
@@ -100,10 +107,10 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.x - 25, this.y + this.displayHeight / 2, 50, 5);
-        let healthWidth = (this.hp / this.initHp) * 50;
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, 240, 15);
+        let healthWidth = (this.hp / this.initHp) * 240;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.x - 25, this.y + this.displayHeight / 2, healthWidth, 5);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
 
         this.bullets.getChildren().forEach(bullet => {
             const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
@@ -114,7 +121,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
 
             }
         });
-        
+
         // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
         if (!this.isBattleStared || this.isHurt) return;
         console.log('update 2 실행')
@@ -138,7 +145,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(monsterVelocity.x, monsterVelocity.y);
         } else {
             this.isMoving = false;
-            this.setVelocity(0,0);
+            this.setVelocity(0, 0);
         }
         // 공격 애니메이션 처리 안됨
         const currentAnimKey = this.anims.currentAnim.key;
