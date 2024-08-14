@@ -9,7 +9,7 @@ export default class MonsterSpider extends Monster {
             x: x,
             y: y,
             texture: 'spider',
-            frame: 'spider_idle_01',//fly_idle_01
+            frame: 'spider_sprite_sheet_0',
             monsterType: 'spider',
             bodyWidth: 14,
             bodyHeight: 14,
