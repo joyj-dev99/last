@@ -159,7 +159,7 @@ export default class MainSceneTest extends Phaser.Scene {
                                 });
                             });
                         })
-                    })
+                    });
                 }
             });
         }
