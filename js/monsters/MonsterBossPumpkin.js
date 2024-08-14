@@ -54,18 +54,20 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         Body.setCentre(this.body, {x: this.centreX, y: this.centreY}, true);
 
         // 애니메이션 재생
-        this.anims.play(`${this.monsterType}_movement`);
+        this.anims.play(`${this.monsterType}_idle`);
         console.log("몬스터 생성: ", this.monsterType, x, y);
 
         this.setCollisionCategory(MONSTER_CATEGORY);
         this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY]);
+
+        this.isBattleStared = false;
 
         this.isMoving = false;
         this.isFollowing = false;
         this.isHurt = false;
         this.isReturning = false;
         this.isAlive = true;
-        this.state = 'movement'; // 현재 상태
+        this.state = 'idle'; // 현재 상태
         // 위치 설정
         this.initialX = x;
         this.initialY = y;
@@ -81,17 +83,8 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.angleStep = 360 / this.totalBullets;
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
-
-        this.attackEvent = this.scene.time.addEvent({
-            delay: 4000,
-            callback: this.attack,
-            callbackScope: this,
-            loop: true
-        });
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
-
-
     }
 
     static preload(scene) {
@@ -105,9 +98,9 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
     }
 
     update() {
-        // 몬스터가 죽었으면 update 실행하지 않음
+        //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;
-
+        console.log('update 1 실행')
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
@@ -115,26 +108,6 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         let healthWidth = (this.hp / this.initHp) * 50;
         this.healthBar.fillStyle(0xff0000);
         this.healthBar.fillRect(this.x - 25, this.y + this.displayHeight / 2, healthWidth, 5);
-
-
-        this.target.x = this.player.x;
-        this.target.y = this.player.y;
-
-        // taget까지 거리 및 속도 계산
-        const speed = this.speed;
-        let monsterVelocity = new Phaser.Math.Vector2();
-        let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
-        let distanceToTarget = toTarget.length();
-        if (distanceToTarget > 5) {
-            toTarget.normalize(); // 벡터를 단위 벡터로 정규화
-            monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
-            if (toTarget.x < 0) {
-                this.setFlipX(true);
-            } else {
-                this.setFlipX(false);
-            }
-            this.setVelocity(monsterVelocity.x, monsterVelocity.y);
-        }
 
         this.bullets.getChildren().forEach(bullet => {
             const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
@@ -145,17 +118,50 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
 
             }
         });
+        
+        // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
+        if (!this.isBattleStared || this.isHurt) return;
+        console.log('update 2 실행')
+        this.target.x = this.player.x;
+        this.target.y = this.player.y;
 
-
-        //
+        // taget까지 거리 및 속도 계산
+        const speed = this.speed;
+        let monsterVelocity = new Phaser.Math.Vector2();
+        let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
+        let distanceToTarget = toTarget.length();
+        if (distanceToTarget > 5) {
+            this.isMoving = true;
+            toTarget.normalize(); // 벡터를 단위 벡터로 정규화
+            monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
+            if (toTarget.x < 0) {
+                this.setFlipX(true);
+            } else {
+                this.setFlipX(false);
+            }
+            this.setVelocity(monsterVelocity.x, monsterVelocity.y);
+        } else {
+            this.isMoving = false;
+            this.setVelocity(0,0);
+        }
         // 공격 애니메이션 처리 안됨
         const currentAnimKey = this.anims.currentAnim.key;
         // 상태 변화 감지 및 애니메이션 재생
-        // if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
-        //     this.anims.play(`${this.monsterType}_move`);
-        // }
+        if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_movement`) {
+            this.anims.play(`${this.monsterType}_movement`);
+        }
 
 
+    }
+
+    startBattle() {
+        this.attackEvent = this.scene.time.addEvent({
+            delay: 4000,
+            callback: this.attack,
+            callbackScope: this,
+            loop: true
+        });
+        this.isBattleStared = true;
     }
 
     actionAmin(state) {
@@ -176,16 +182,16 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
     handleAnimationComplete(animation) {
         if (animation.key === `${this.monsterType}_damage`) {
             this.isHurt = false;
-            this.anims.play(`${this.monsterType}_movement`, true);
+            this.anims.play(`${this.monsterType}_idle`, true);
         } else if (animation.key === `${this.monsterType}_attack`) {
             this.scene.time.delayedCall(100, () => {
                 this.shootShockwave();
-                this.anims.play(`${this.monsterType}_movement`, true);
+                this.anims.play(`${this.monsterType}_idle`, true);
             });
         } else if (animation.key === `${this.monsterType}_spit_seed`) {
             this.scene.time.delayedCall(100, () => {
                 this.shootBullet();
-                this.anims.play(`${this.monsterType}_movement`, true);
+                this.anims.play(`${this.monsterType}_idle`, true);
             });
         } else if (animation.key === `${this.monsterType}_death`) {
             this.destroy();
