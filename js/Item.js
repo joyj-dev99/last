@@ -4,6 +4,8 @@ import TextIndicator from "./TextIndicator.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
 import MonsterApple from "./monsters/MonsterApple.js";
+import MonsterLemon from "./monsters/MonsterLemon.js";
+import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
 
 export default class Item extends Phaser.Physics.Matter.Sprite {
 
@@ -15,7 +17,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scale : 0.5,
         // 상단 누적코인 갯수 표시하는 text 객체
         // textIndicator : this.coinIndicatorText,
-        message : '+10 coin'
+        message : '+10 coin',
+        drap_per : 0.2
     };
 
     // 토마토 시체 아이템 데이터 
@@ -25,7 +28,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         frame : 3,
         // 상단 우측 체력 표시하는 하트 표시 객체
         // heartIndicator : this.heartIndicator,
-        message : '+1 heart'
+        message : '+1 heart',
+        drap_per : 0.2
     };
 
     // 가지 시체 아이템 데이터 
@@ -33,7 +37,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type : 'eggplant',
         texture : 'fruit',
         frame : 15,
-        message : '+5 ATK' //Strength (공격력 5 증가) 
+        message : '+5 ATK', //Strength (공격력 5 증가) 
+        drap_per : 0.2
     };
 
     // 사과 시체 아이템 데이터 
@@ -41,8 +46,30 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type : 'apple',
         texture : 'fruit',
         frame : 4,
-        message : '+1 heart' 
+        message : '+1 heart' ,
+        drap_per : 0.2
     };
+
+
+    // 레몬 시체 아이템 데이터 
+    static Lemon_ITEM = {
+        type : 'lemon',
+        texture : 'fruit',
+        frame : 23,
+        message : '+1 heart' ,
+        drap_per : 0.2
+    };
+
+    // 호박 시체 아이템 데이터 
+    static Pumpkin_ITEM = {
+        type : 'pumpkin',
+        texture : 'pumpkin',
+        frame : 0,
+        message : '+5 ATK' ,
+        scale : 0.5,
+        drap_per : 1.0
+    };
+
 
     // Item.setData(this.coinIndicatorText,this.heartIndicator);
     // static setData(textIndicator, heartIndicator){
@@ -62,10 +89,18 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         }else if(monster instanceof MonsterApple){
             monsterITEM = Item.Apple_ITEM;
         }
-
+        else if(monster instanceof MonsterLemon){
+            monsterITEM = Item.Lemon_ITEM;
+        }
+        else if(monster instanceof MonsterBossPumpkin){
+            monsterITEM = Item.Pumpkin_ITEM;
+        }
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
         const randomValue = Math.random();
-        const itemType = randomValue <= 0.8 ? monsterITEM : Item.COIN_ITEM;
+        console.log('randomValue : '+randomValue);
+        console.log('monsterITEM.drap_per : '+monsterITEM.drap_per);
+
+        const itemType = randomValue <= monsterITEM.drap_per ? monsterITEM : Item.COIN_ITEM;
         return itemType;
 
     }
@@ -101,6 +136,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static preload(scene) {
         scene.load.image('coin', 'assets/item/pixel_meat_coin.png');
         scene.load.spritesheet('fruit', 'assets/item/fruits asset.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.image('pumpkin', 'assets/item/pumpkin.png');
+
+        scene.load.spritesheet('eggplant', 'assets/item/eggplant.png', { frameWidth: 16, frameHeight: 16 });
     }
 
     // 아이템 적용 메소드
@@ -128,6 +166,16 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             player.increaseHeart(1);
             heartIndicator.setHeart(player.status.nowHeart);
         }
+        else if(this.itemType.type == 'lemon'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        else if(this.itemType.type == 'pumpkin'){
+            // 체력 +1 적용
+            player.increaseATK(5);
+        }
+
 
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
             fontFamily: 'GalmuriMono7, sans-serif',
