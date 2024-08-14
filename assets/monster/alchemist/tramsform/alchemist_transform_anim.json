@@ -1,0 +1,64 @@
+{
+    "anims": [
+        {
+            "key": "transform__into__the__minotaur",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_0"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_1"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_2"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_3"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_4"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_5"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_6"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_7"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_8"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_9"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_10"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_11"
+                },
+                {
+                    "key": "alchemist_transform",
+                    "frame": "alchemist_transform_12"
+                }
+            ]
+        }
+    ]
+}
