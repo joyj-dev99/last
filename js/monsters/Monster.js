@@ -90,6 +90,15 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('goblinAnim', 'assets/monster/goblin/goblin_anim.json');
         scene.load.atlas('necromancer', 'assets/monster/necromancer/necromancer.png', 'assets/monster/necromancer/necromancer_atlas.json');
         scene.load.animation('necromancerAnim', 'assets/monster/necromancer/necromancer_anim.json');
+
+        scene.load.atlas('bugbear', 'assets/monster/bugbear/bugbear.png', 'assets/monster/bugbear/bugbear_atlas.json');
+        scene.load.animation('bugbearAnim', 'assets/monster/bugbear/bugbear_anim.json');
+        scene.load.atlas('angel', 'assets/monster/angel/angel.png', 'assets/monster/angel/angel_atlas.json');
+        scene.load.animation('angelAnim', 'assets/monster/angel/angel_anim.json');
+        scene.load.atlas('golem', 'assets/monster/golem/golem.png', 'assets/monster/golem/golem_atlas.json');
+        scene.load.animation('golemAnim', 'assets/monster/golem/golem_anim.json');
+
+
     }
 
     update() {

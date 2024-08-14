@@ -14,8 +14,11 @@ import MonsterFly from "./monsters/MonsterFly.js";
 import MonsterSpider from "./monsters/MonsterSpider.js";
 import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
 import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
-import MonsterGo from "./monsters/MonsterGo.js";
-
+import MonsterGoblin from "./monsters/MonsterGoblin.js";
+import MonsterNecromancer from "./monsters/MonsterNecromancer.js";
+import MonsterBugbear from "./monsters/MonsterBugbear.js";
+import MonsterAngel from "./monsters/MonsterAngel.js";
+import MonsterGolem from "./monsters/MonsterGolem.js";
 
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
@@ -47,9 +50,9 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 2;
-        this.mapNumber = 1;
-        // this.mapNumber = data.mapNumber || 1;
+        this.stageNumber = data.stageNumber || 4;
+        // this.mapNumber = 2;
+        this.mapNumber = data.mapNumber || 3;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
@@ -67,7 +70,7 @@ export default class MainSceneTest extends Phaser.Scene {
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
         this.isInDialogue = true;
 
-        if (this.stageNumber === 1 && this.mapNumber < 3) { // 일반맵
+        if (this.stageNumber === 1 && this.mapNumber <= 3) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
             this.minX = 10;
@@ -81,7 +84,7 @@ export default class MainSceneTest extends Phaser.Scene {
             this.maxX = 406;
             this.minY = 106;
             this.maxY = 438;
-        } else if (this.stageNumber === 2 && this.mapNumber < 3) { // 일반맵
+        } else if (this.stageNumber === 2 && this.mapNumber <= 3) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
             this.minX = 10;
@@ -96,9 +99,25 @@ export default class MainSceneTest extends Phaser.Scene {
             this.minY = 106;
             this.maxY = 438;
         }
+        else if (this.stageNumber === 3 && this.mapNumber <= 3) { // 일반맵
+            this.mapWidth = 960;
+            this.mapHigth = 320;
+            this.minX = 10;
+            this.maxX = 950;
+            this.minY = 96;
+            this.maxY = 240;
+        } else if (this.stageNumber === 3 && this.mapNumber == 4) { // 보스맵
+            this.mapWidth = 480;
+            this.mapHigth = 480;
+            this.minX = 74;
+            this.maxX = 406;
+            this.minY = 106;
+            this.maxY = 438;
+        }
     }
 
     preload() {
+
         this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
         this.load.tilemapTiledJSON("stage_01_01_map", "assets/map/stage_01_01.json");
         this.load.tilemapTiledJSON("stage_01_02_map", "assets/map/stage_01_02.json");
@@ -110,6 +129,15 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_02_02_map", "assets/map/stage_02_02.json");
         this.load.tilemapTiledJSON("stage_02_03_map", "assets/map/stage_02_03.json");
         this.load.tilemapTiledJSON("stage_02_04_map", "assets/map/stage_02_04.json");
+
+        this.load.image("Tileset", "assets/map/Modern_Office_32x32.png");
+        this.load.image("Tileset2", "assets/map/Room_Builder_Office_32x32.png");
+        this.load.image("Tileset3", "assets/map/Lab Tileset.png");
+         
+        this.load.tilemapTiledJSON("stage_03_01_map", "assets/map/stage_03_01.json");
+        this.load.tilemapTiledJSON("stage_03_02_map", "assets/map/stage_03_02.json");
+        this.load.tilemapTiledJSON("stage_03_03_map", "assets/map/stage_03_03.json");
+        this.load.tilemapTiledJSON("stage_03_04_map", "assets/map/stage_03_04.json");
 
         // 배경음악 로드
         this.load.audio("bgm_stage_1", "assets/audio/field_theme_1.wav");
@@ -281,9 +309,73 @@ export default class MainSceneTest extends Phaser.Scene {
             });
 
         }
+        else if (stageNumber === 3 && mapNumber <= 3) {
+            const Tileset = map.addTilesetImage("Modern_Office_32x32", "Tileset");
+            const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "Tileset2");
+            const Tileset3 = map.addTilesetImage("Lab Tileset", "Tileset3");
+
+            const floor = map.createLayer("floor", Tileset2, 0, 0);
+            const wall = map.createLayer("wall", Tileset2, 0, 0);
+            map.createLayer("decor1", Tileset2, 0, 0);
+            map.createLayer("decor2", Tileset, 0, 0);
+            // map.createLayer("decor2", Tileset3, 0, 0);
+
+            // 충돌이 필요한 타일 설정
+            floor.setCollisionByProperty({collides: true});
+            wall.setCollisionByProperty({collides: true});
+            // 타일맵 레이어를 물리적으로 변환
+            this.matter.world.convertTilemapLayer(floor);
+            this.matter.world.convertTilemapLayer(wall);
+            // 충돌 카테고리 설정
+            floor.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+            wall.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+
+        } else if (stageNumber === 3 && mapNumber === 4) {
+
+            const Tileset = map.addTilesetImage("Lab Tileset", "Tileset3");
+
+            const floor = map.createLayer("floor", Tileset, 0, 0);
+            const wall = map.createLayer("wall", Tileset, 0, 0);
+            map.createLayer("decor1", Tileset, 0, 0);
+            // map.createLayer("decor2", Tileset, 0, 0);
+
+            // 충돌이 필요한 타일 설정
+            floor.setCollisionByProperty({collides: true});
+            wall.setCollisionByProperty({collides: true});
+            // 타일맵 레이어를 물리적으로 변환
+            this.matter.world.convertTilemapLayer(floor);
+            this.matter.world.convertTilemapLayer(wall);
+            // 충돌 카테고리 설정
+            floor.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+            wall.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+
+        }
 
         //오브젝트 레이어 관련 코드
         const objectLayer = map.getObjectLayer('object');
+        console.log('map : '+map);
+        console.dir(map);
+        console.log('objectLayer : '+objectLayer);
         objectLayer.objects.forEach(object => {
             // 각 오브젝트의 속성에 접근
             const {x, y, name, type} = object;
@@ -393,8 +485,8 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'mini_goblin' : 
-                        m = new MonsterMiniGoblin({
+                    case 'mini goblin' : 
+                        m = new MonsterMiniGoblin({//MonsterMiniGoblin
                             scene: this,
                             x: x,
                             y: y,
@@ -410,7 +502,7 @@ export default class MainSceneTest extends Phaser.Scene {
                         });
                         break; 
                     case 'goblin' : 
-                        m = new MonsterGo({
+                        m = new MonsterGoblin({//necromancer
                             scene: this,
                             x: x,
                             y: y,
@@ -418,7 +510,31 @@ export default class MainSceneTest extends Phaser.Scene {
                         });
                         break; 
                     case 'necromancer' : 
-                        m = new MonsterGo({
+                        m = new MonsterNecromancer({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                    case 'bugbear' : 
+                        m = new MonsterBugbear({ 
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                    case 'angle' : 
+                        m = new MonsterAngel({ 
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                    case 'golem' : 
+                        m = new MonsterGolem({ 
                             scene: this,
                             x: x,
                             y: y,

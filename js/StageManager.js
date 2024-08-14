@@ -206,6 +206,8 @@ export default class StageManager {
                     this.scene.backgroundMusic.play();
                 }, [], this.scene);
                 this.scene.monsterArr.forEach((monster) => {
+                    console.log('monster : '+monster);
+                    console.log('monster.type : '+monster.monsterType);
                     monster.startBattle();
                 });
             });
@@ -225,6 +227,70 @@ export default class StageManager {
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 4) {
+            this.scene.isInDialogue = true;
+            // 대화
+            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
+                this.scene.isInDialogue = false;
+                // 코드의 위치 이동시키기 & 전투시작
+                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                this.chord.startPlayLute();
+                this.scene.time.delayedCall(1000, () => {
+                    this.scene.backgroundMusic.play();
+                }, [], this.scene);
+                this.scene.monsterArr.forEach((monster) => {
+                    monster.startBattle();
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 1) {
+            this.scene.isInDialogue = true;
+            // 대화
+            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
+                this.scene.isInDialogue = false;
+                // 코드의 위치 이동시키기 & 전투시작
+                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                this.chord.startPlayLute();
+                this.scene.time.delayedCall(1000, () => {
+                    this.scene.backgroundMusic.play();
+                }, [], this.scene);
+                this.scene.monsterArr.forEach((monster) => {
+                    monster.startBattle();
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 2) {
+            this.scene.isInDialogue = true;
+            // 대화
+            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
+                this.scene.isInDialogue = false;
+                // 코드의 위치 이동시키기 & 전투시작
+                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                this.chord.startPlayLute();
+                this.scene.time.delayedCall(1000, () => {
+                    this.scene.backgroundMusic.play();
+                }, [], this.scene);
+                this.scene.monsterArr.forEach((monster) => {
+                    monster.startBattle();
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 3) {
+            this.scene.isInDialogue = true;
+            // 대화
+            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
+                this.scene.isInDialogue = false;
+                // 코드의 위치 이동시키기 & 전투시작
+                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                this.chord.startPlayLute();
+                this.scene.time.delayedCall(1000, () => {
+                    this.scene.backgroundMusic.play();
+                }, [], this.scene);
+                this.scene.monsterArr.forEach((monster) => {
+                    monster.startBattle();
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 4) {
             this.scene.isInDialogue = true;
             // 대화
             this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
@@ -321,6 +387,50 @@ export default class StageManager {
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 4) {
+            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
+                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
+                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
+                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
+                            this.scene.isInDialogue = false;
+                        });
+                    });
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 1) {
+            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
+                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
+                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
+                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
+                            this.scene.isInDialogue = false;
+                        });
+                    });
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 2) {
+            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
+                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
+                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
+                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
+                            this.scene.isInDialogue = false;
+                        });
+                    });
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 3) {
+            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
+                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
+                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
+                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
+                            this.scene.isInDialogue = false;
+                        });
+                    });
+                });
+            });
+        }
+        else if (stageNumber == 3 && mapNumber == 4) {
             this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
                 this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
                     this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
