@@ -56,6 +56,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         this.isHurt = false;
         this.isReturning = false;
         this.isAlive = true;
+        this.isBattleStared = false;
 
         this.state = 'idle'; // 현재 상태
 
@@ -63,14 +64,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         this.initialX = x;
         this.initialY = y;
         this.target = new Phaser.Math.Vector2(this.x, this.y);
-
-
-        this.moveEvent = this.scene.time.addEvent({
-            delay: 2000, // 2초마다
-            callback: this.prepareMove,
-            callbackScope: this,
-            loop: true
-        });
 
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
@@ -88,8 +81,8 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
     }
 
     update() {
-        // 몬스터가 죽었으면 update 실행하지 않음
-        if (!this.isAlive && this.isHurt) return;
+        // 전투 시작 전, 몬스터가 죽었을 때, 데미지 입었을때 update 실행하지 않음
+        if (!this.isBattleStared || !this.isAlive || this.isHurt) return;
         // 플레이어와 몬스터 사이의 거리 계산
         const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.player.x, this.player.y);
         if (distanceToPlayer < this.followDistance) {
@@ -129,6 +122,16 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         } else if (!this.isHurt && !this.isMoving && currentAnimKey !== `${this.monsterType}_idle`) {
             this.anims.play(`${this.monsterType}_idle`);
         }
+    }
+
+    startBattle() {
+        this.moveEvent = this.scene.time.addEvent({
+            delay: 2000, // 2초마다
+            callback: this.prepareMove,
+            callbackScope: this,
+            loop: true
+        });
+        this.isBattleStared = true;
     }
 
     actionAmin(state) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

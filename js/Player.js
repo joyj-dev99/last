@@ -2,7 +2,7 @@ import Arrow from "./Arrow.js";
 import Magic from "./Magic.js";
 import Slash from "./Slash.js";
 import SpeechBubble from "./SpeechBubble.js";
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, MONSTER_ATTACK_CATEGORY} from "./constants.js";
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -34,7 +34,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 충돌체 생성
         this.playerCollider = Bodies.rectangle(this.x, this.y, 18, 20,{ 
             isSensor: false, // 실제 물리적 충돌을 일으킴
-            label: 'playerCollider' 
+            label: 'playerCollider',
+            collisionFilter: {
+                category: PLAYER_CATEGORY, // 현재 객체 카테고리
+                mask: MONSTER_CATEGORY | OBJECT_CATEGORY | TILE_CATEGORY | MONSTER_ATTACK_CATEGORY | SENSOR_CATEGORY //충돌할 대상 카테고리
+            }
         });
 
         // this.playerCollider 를 현재 게임 객체의 물리적 바디로 설정
@@ -76,11 +80,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 애니메이션 완료 이벤트 리스너 추가
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
-
-        // 충돌 카테고리 설정
-        this.setCollisionCategory(PLAYER_CATEGORY); //현재 객체의 충돌 카테고리를 설정
-        this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY, MONSTER_ATTACK_CATEGORY]); // 이 객체가 충돌할 대상 카테고리를 설정
-
 
     }
 
@@ -273,8 +272,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 구르기 애니메이션 재생
             this.anims.play('player_roll', true);
 
-            // 구르기 중 타일 충돌 비활성화
-            this.setCollidesWith([TILE_CATEGORY]);
+            // 구르기 중 충돌 비활성화
+            this.setCollidesWith([TILE_CATEGORY, SENSOR_CATEGORY]);
 
             // 계산된 목표 좌표 (구르기 방향에 따른 위치)
             let targetX = this.x + playerVelocity.x * 30;
@@ -303,7 +302,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                     });
 
                     // 구르기 후 충돌 재활성화
-                    this.setCollidesWith([MONSTER_CATEGORY, TILE_CATEGORY]);
+                    this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY]); 
                 }
             });
         }
@@ -404,10 +403,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if( animation.key == 'player_roll'){
             this.isRolling = false;
             this.anims.play('player_idle', true);
-
-            // 충돌 다시 활성화
-            this.setCollidesWith([MONSTER_CATEGORY, TILE_CATEGORY]);
-
         }
         else if( animation.key === 'player_sword_1' ||
             animation.key === 'player_sword_2' ||
@@ -438,5 +433,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // SpeechBubble 클래스 인스턴스 생성
         new SpeechBubble(this.scene, contents, onDestroyCallback, 'Max');
+    }
+
+    stop() {
+        this.isMoving = false;
+        this.setVelocity(0, 0);
+        this.anims.play('player_idle', true);
     }
 }
