@@ -131,34 +131,49 @@ export default class MainSceneTest extends Phaser.Scene {
                 }
             });
 
+            // 맵(1) 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
+        if (this.mapNumber === 1) {
+            // 특정 지점에 센서 생성
+            this.startSensor = this.matter.add.rectangle(600, this.player.y - 160, 10, 500, {
+                isSensor: true, // 센서로 설정
+                isStatic: true,
+                collisionFilter: {
+                    category: SENSOR_CATEGORY,
+                    mask: PLAYER_CATEGORY // 플레이어만 충돌하도록 설정
+                }
+            });
+        
             // 충돌 감지 설정
-            this.matter.world.on('collisionstart', (event) => {
-                event.pairs.forEach(pair => {
-                    if ((pair.bodyA === this.player.body && pair.bodyB === this.startSensor) ||
-                        (pair.bodyB === this.player.body && pair.bodyA === this.startSensor)) {
-                        this.removeSensor(this.startSensor);
-                        // 코드의 위치 이동시키기
-                        this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
-                        
-                        // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
-                        this.player.showSpeechBubble('뭐야,토마토 괴물이잖아?', ()=>{
-
-                            this.chord.showSpeechBubble('볼프강 박사가 무슨생체실험을 했다나봐요', ()=>{
-
-                                this.player.showSpeechBubble(' 생체실험으로 몬스터가? 완전 미쳤군', ()=>{
-
-                                    this.chord.showSpeechBubble('앞으로 점점 더 많아진대요 :)', ()=>{
-
-                                        this.chord.showSpeechBubble('주위의 몬스터를 처리해야 \n 볼프강 박사가 있는 곳으로 갈 수 있어요!');
+            this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: this.startSensor,
+                callback: eventData => {
+                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                    this.isInDialogue = true;
+                    this.player.stop();
+                    this.matter.world.remove(this.startSensor); // 센서 삭제
+                    // 대화
+                    // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
+                    this.player.showSpeechBubble('토마토? 아니 몬스터인가.', ()=>{
+                        this.player.showSpeechBubble('저런 건 처음보는데…', () => {
+                            this.chord.showSpeechBubble('얼마전부터 이 근방에 농작물처럼 생긴 몬스터가 나타나기 시작했다고 들었어요.', ()=>{
+                                this.player.showSpeechBubble('한시가 급한데, 이상한 몬스터까지 나타나다니. 미치겠군.', ()=>{
+                                    this.chord.showSpeechBubble('어쩌죠? 볼프강 박사가 있는 곳으로 가려면 이 길을 꼭 지나야 해요.', ()=>{
+                                        this.player.showSpeechBubble('흥. 이정돈 별거 아니라고!', () => {
+                                            this.isInDialogue = false;
+                                            // 코드의 위치 이동시키기
+                                            this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
+                                            this.monsterArr.forEach((monster) => {
+                                                monster.startBattle();
+                                            });
+                                        });
                                     });
-
                                 });
                             });
                         });
-                    }
-                });
-            }); 
-
+                    });
+                }
+            });
         }
 
         // 맵(2) 시작 대화
