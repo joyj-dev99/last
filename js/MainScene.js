@@ -23,7 +23,8 @@ import {
     MONSTER_CATEGORY,
     TILE_CATEGORY,
     OBJECT_CATEGORY,
-    PLAYER_ATTACK_CATEGORY
+    PLAYER_ATTACK_CATEGORY,
+    SENSOR_CATEGORY
 } from "./constants.js";
 import MonsterApple from "./monsters/MonsterApple.js";
 
@@ -52,6 +53,9 @@ export default class MainSceneTest extends Phaser.Scene {
         // 현재 스테이지에서 전투가 끝난 후 코드의 위치(x,y)를 담은 객체;
         this.chordEnd = {x: 0, y: 0};
 
+        // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
+        this.isInDialogue = false;
+
         if (this.mapNumber < 3) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
@@ -77,7 +81,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_01_04_map", "assets/map/stage_01_04.json");
 
         // 배경음악 로드
-        this.load.audio("backgroundMusic", "assets/audio/field_theme_1.wav");
+        this.load.audio("bgm_stage_1", "assets/audio/field_theme_1.wav");
 
         Player.preload(this);
         Monster.preload(this);
@@ -93,13 +97,12 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     create() {
-
         // 씬이 시작될때 페이드인 효과 적용
         this.cameras.main.fadeIn(1000, 0, 0, 0);
         this.setupWorld(this.stageNumber, this.mapNumber);
 
         // Play background music
-        this.backgroundMusic = this.sound.add('backgroundMusic', {
+        this.backgroundMusic = this.sound.add(`bgm_stage_${this.stageNumber}`, {
             volume: 0.3, // Set the volume (0 to 1)
             loop: true // Enable looping if desired
         });
@@ -119,42 +122,46 @@ export default class MainSceneTest extends Phaser.Scene {
         // 맵(1) 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
         if (this.mapNumber === 1) {
             // 특정 지점에 센서 생성
-            this.startSensor = this.matter.add.rectangle(this.player.x +400, this.player.y - 160, 10, 500, {
+            this.startSensor = this.matter.add.rectangle(600, this.player.y - 160, 10, 500, {
                 isSensor: true, // 센서로 설정
-                isStatic: true,  // 센서는 물리 반응이 필요 없음
+                isStatic: true,
                 collisionFilter: {
-                    category: OBJECT_CATEGORY,
+                    category: SENSOR_CATEGORY,
                     mask: PLAYER_CATEGORY // 플레이어만 충돌하도록 설정
                 }
             });
-
+        
             // 충돌 감지 설정
-            this.matter.world.on('collisionstart', (event) => {
-                event.pairs.forEach(pair => {
-                    if ((pair.bodyA === this.player.body && pair.bodyB === this.startSensor) ||
-                        (pair.bodyB === this.player.body && pair.bodyA === this.startSensor)) {
-                        this.removeSensor(this.startSensor);
-                        // 코드의 위치 이동시키기
-                        this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
-                        
-                        // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
-                        this.player.showSpeechBubble('뭐야,토마토 괴물이잖아?', ()=>{
-
-                            this.chord.showSpeechBubble('볼프강 박사가 무슨생체실험을 했다나봐요', ()=>{
-
-                                this.player.showSpeechBubble(' 생체실험으로 몬스터가? 완전 미쳤군', ()=>{
-
-                                    this.chord.showSpeechBubble('앞으로 점점 더 많아진대요 :)', ()=>{
-
-                                        this.chord.showSpeechBubble('주위의 몬스터를 처리해야 \n 볼프강 박사가 있는 곳으로 갈 수 있어요!');
+            this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: this.startSensor,
+                callback: eventData => {
+                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                    this.isInDialogue = true;
+                    this.player.stop();
+                    this.matter.world.remove(this.startSensor); // 센서 삭제
+                    // 대화
+                    // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
+                    this.player.showSpeechBubble('토마토? 아니 몬스터인가.', ()=>{
+                        this.player.showSpeechBubble('저런 건 처음보는데…', () => {
+                            this.chord.showSpeechBubble('얼마전부터 이 근방에 농작물처럼 생긴 몬스터가 나타나기 시작했다고 들었어요.', ()=>{
+                                this.player.showSpeechBubble('한시가 급한데, 이상한 몬스터까지 나타나다니. 미치겠군.', ()=>{
+                                    this.chord.showSpeechBubble('어쩌죠? 볼프강 박사가 있는 곳으로 가려면 이 길을 꼭 지나야 해요.', ()=>{
+                                        this.player.showSpeechBubble('흥. 이정돈 별거 아니라고!', () => {
+                                            this.isInDialogue = false;
+                                            // 코드의 위치 이동시키기
+                                            this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
+                                            this.monsterArr.forEach((monster) => {
+                                                monster.startBattle();
+                                            });
+                                        });
                                     });
-
                                 });
                             });
-                        });
-                    }
-                });
-            }); 
+                        })
+                    });
+                }
+            });
         }
 
         // 맵(2) 시작 대화
@@ -170,22 +177,27 @@ export default class MainSceneTest extends Phaser.Scene {
             });
 
             // 충돌 감지 설정
-            this.matter.world.on('collisionstart', (event) => {
-                event.pairs.forEach(pair => {
-                    if ((pair.bodyA === this.player.body && pair.bodyB === this.startSensor) ||
-                        (pair.bodyB === this.player.body && pair.bodyA === this.startSensor)) {
-                        this.removeSensor(this.startSensor);
-                        // 코드의 위치 이동시키기
-                        this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
-                        
-                        // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
-                        this.chord.showSpeechBubble('이제 본격적으로 출발해봅시다.\n 맥스님, 파이팅!', ()=>{
-
-                            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?');
+            this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: this.startSensor,
+                callback: eventData => {
+                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                    this.isInDialogue = true;
+                    this.player.stop();
+                    this.matter.world.remove(this.startSensor); // 센서 삭제
+                    // 대화
+                    this.chord.showSpeechBubble('이제 본격적으로 출발해봅시다.\n 맥스님, 파이팅!', ()=>{
+                        this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
+                            // 코드의 위치 이동시키기
+                            this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
+                            this.isInDialogue = false;
+                            this.monsterArr.forEach((monster) => {
+                                monster.startBattle();
+                            });
                         });
-                    }
-                });
-            }); 
+                    });
+                }
+            });
         }
 
 
@@ -258,6 +270,7 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     update() {
+        if (this.isInDialogue) return;
         this.player.update();
         this.heartIndicator.setHeart(this.player.status.nowHeart);
         this.monsterArr.forEach((monster) => {
@@ -409,6 +422,42 @@ export default class MainSceneTest extends Phaser.Scene {
 
     }
 
+    removeMonsterFromArr(monster) {
+        const index = this.monsterArr.indexOf(monster);
+        if (index > -1) {
+            this.monsterArr.splice(index, 1);
+        }
+        // 배열이 비었으면 전투 종료 메서드 실행
+        if (this.monsterArr.length === 0) {
+            this.onBattleEnd(this.stageNumber, this.mapNumber);
+        }
+    }
+
+    // 전투 종료시 실행될 메서드
+    onBattleEnd(stageNumber, mapNumber) {
+        this.isInDialogue = true;
+        this.player.stop();
+        this.chord.setLocation(this.chordEnd.x, this.chordEnd.y);
+        if (stageNumber === 1 && mapNumber === 1) {
+            this.player.showSpeechBubble('뭐야? \n 미트코인이잖아?', () => {
+                this.player.showSpeechBubble('몬스터가 왜 미트코인을 가지고 있는거지?', () => {
+                    this.chord.showSpeechBubble('역시 맥스님! A등급 용병은 다르군요!', () => {
+                        this.player.showSpeechBubble('그나저나 너는 지금 내가 몬스터 잡는 동안', () => {
+                            this.player.showSpeechBubble('고작 악기 연주나 하고 있어?', () => {
+                                this.chord.showSpeechBubble('아무래도 응원가가 \n 있으면 좋으니까요!', () => {
+                                    this.isInDialogue = false;
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        } else if (stageNumber === 1 && mapNumber === 2) {
+
+        }
+        
+    }
+
     // 동적으로 생성된 플레이어 공격에 충돌 이벤트 추가
     setCollisionOfPlayerAttack(attack) {
         this.matterCollision.addOnCollideStart({
@@ -422,7 +471,7 @@ export default class MainSceneTest extends Phaser.Scene {
                     if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
-                        this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
+                        this.removeMonsterFromArr(gameObjectA);
                     }
                     gameObjectB.destroy(); // 화살 제거
 
@@ -432,7 +481,7 @@ export default class MainSceneTest extends Phaser.Scene {
                     if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
-                        this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
+                        this.removeMonsterFromArr(gameObjectA);
                     }
                 } else if (gameObjectB instanceof Magic) {
                     console.log("몬스터가 마법에 맞음");
@@ -440,7 +489,7 @@ export default class MainSceneTest extends Phaser.Scene {
                     if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
-                        this.monsterArr = this.monsterArr.filter(item => item !== gameObjectA);
+                        this.removeMonsterFromArr(gameObjectA);
                     }
                 }
             }
@@ -448,7 +497,6 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     iteamDrop(monster) {
-
         if (this.mapNumber === 1) {
             //맵 1인 경우, 반드시 미트코인이 나온다
             this.itemType = Item.COIN_ITEM;
@@ -461,28 +509,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 itemType: this.itemType
             });
 
-            // 맵(1) 전투 끝난 후 대화
-            // 1초 지연 후에 플레이어 말풍선 생성
-            setTimeout(() => {
-                this.player.showSpeechBubble('뭐야? \n 미트코인이잖아?', () => {
-
-                    this.player.showSpeechBubble('왜 상폐된 코인이 \n 나오는거야? ', () => {
-
-                        this.chord.showSpeechBubble('역시 맥스님! A등급 용병답네요!', () => {
-
-                            this.player.showSpeechBubble('근데, 너는 지금 내가 \n 몬스터 잡는다고 이 고생인데', () => {
-
-                                this.player.showSpeechBubble('고작 악기 연주나 하고 있어?', () => {
-
-                                    this.chord.showSpeechBubble('아무래도 응원가가 \n 있으면 좋으니까요!');
-                                });
-                            });
-                        });
-                    });
-                });
-            }, 1000); // 1초 (1000 밀리초) 후에 실행
-
-        }else if(this.mapNumber === 2){
+        } else if(this.mapNumber === 2){
             // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
             this.itemType = Item.createItemType(monster);
 
