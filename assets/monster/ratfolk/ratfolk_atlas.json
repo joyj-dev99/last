@@ -1,7 +1,7 @@
 {
     "frames": [
         {
-            "filename": "ratfolk_sprite_sheet_0",
+            "filename": "ratfolk_berserker_sprite_sheet_0",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -14,7 +14,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_1",
+            "filename": "ratfolk_berserker_sprite_sheet_1",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -27,7 +27,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_2",
+            "filename": "ratfolk_berserker_sprite_sheet_2",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -40,7 +40,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_3",
+            "filename": "ratfolk_berserker_sprite_sheet_3",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -53,7 +53,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_4",
+            "filename": "ratfolk_berserker_sprite_sheet_8",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -66,7 +66,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_5",
+            "filename": "ratfolk_berserker_sprite_sheet_9",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -79,7 +79,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_6",
+            "filename": "ratfolk_berserker_sprite_sheet_10",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -92,7 +92,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_7",
+            "filename": "ratfolk_berserker_sprite_sheet_11",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -105,7 +105,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_8",
+            "filename": "ratfolk_berserker_sprite_sheet_12",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -118,7 +118,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_9",
+            "filename": "ratfolk_berserker_sprite_sheet_13",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -131,7 +131,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_10",
+            "filename": "ratfolk_berserker_sprite_sheet_14",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -144,7 +144,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_11",
+            "filename": "ratfolk_berserker_sprite_sheet_15",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -157,7 +157,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_12",
+            "filename": "ratfolk_berserker_sprite_sheet_16",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -170,7 +170,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_13",
+            "filename": "ratfolk_berserker_sprite_sheet_17",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -183,7 +183,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_14",
+            "filename": "ratfolk_berserker_sprite_sheet_18",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -196,7 +196,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_15",
+            "filename": "ratfolk_berserker_sprite_sheet_19",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -209,7 +209,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_16",
+            "filename": "ratfolk_berserker_sprite_sheet_20",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -222,7 +222,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_17",
+            "filename": "ratfolk_berserker_sprite_sheet_21",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -235,7 +235,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_18",
+            "filename": "ratfolk_berserker_sprite_sheet_22",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -248,7 +248,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_19",
+            "filename": "ratfolk_berserker_sprite_sheet_23",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -261,7 +261,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_20",
+            "filename": "ratfolk_berserker_sprite_sheet_24",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -274,7 +274,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_21",
+            "filename": "ratfolk_berserker_sprite_sheet_25",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -287,7 +287,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_22",
+            "filename": "ratfolk_berserker_sprite_sheet_26",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -300,7 +300,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_23",
+            "filename": "ratfolk_berserker_sprite_sheet_27",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -313,7 +313,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_24",
+            "filename": "ratfolk_berserker_sprite_sheet_28",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -326,7 +326,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_25",
+            "filename": "ratfolk_berserker_sprite_sheet_29",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -339,7 +339,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_26",
+            "filename": "ratfolk_berserker_sprite_sheet_30",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -352,7 +352,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_27",
+            "filename": "ratfolk_berserker_sprite_sheet_31",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -365,7 +365,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_28",
+            "filename": "ratfolk_berserker_sprite_sheet_32",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -378,7 +378,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_29",
+            "filename": "ratfolk_berserker_sprite_sheet_33",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -391,7 +391,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_30",
+            "filename": "ratfolk_berserker_sprite_sheet_34",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -404,7 +404,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_31",
+            "filename": "ratfolk_berserker_sprite_sheet_35",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -417,7 +417,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_32",
+            "filename": "ratfolk_berserker_sprite_sheet_40",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -430,7 +430,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_33",
+            "filename": "ratfolk_berserker_sprite_sheet_41",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -443,7 +443,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_34",
+            "filename": "ratfolk_berserker_sprite_sheet_42",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -456,7 +456,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_35",
+            "filename": "ratfolk_berserker_sprite_sheet_43",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -469,7 +469,7 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_36",
+            "filename": "ratfolk_berserker_sprite_sheet_44",
             "frame": {
                 "w": 64,
                 "h": 32,
@@ -482,142 +482,12 @@
             }
         },
         {
-            "filename": "ratfolk_sprite_sheet_37",
+            "filename": "ratfolk_berserker_sprite_sheet_45",
             "frame": {
                 "w": 64,
                 "h": 32,
                 "x": 256,
                 "y": 160
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_38",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 256,
-                "y": 192
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_39",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 256,
-                "y": 224
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_40",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 0,
-                "y": 256
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_41",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 64,
-                "y": 256
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_42",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 128,
-                "y": 256
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_43",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 192,
-                "y": 256
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_44",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 256,
-                "y": 256
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_45",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 0,
-                "y": 288
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_46",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 64,
-                "y": 288
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "ratfolk_sprite_sheet_47",
-            "frame": {
-                "w": 64,
-                "h": 32,
-                "x": 128,
-                "y": 288
             },
             "anchor": {
                 "x": 0.5,
