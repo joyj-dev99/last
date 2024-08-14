@@ -21,6 +21,7 @@ export default class SpeechBubble extends Phaser.GameObjects.Container{
 
         // 스크롤에 영향을 받지 않도록 설정
         this.setScrollFactor(0);
+        this.setDepth(200);
 
         // 씬에 추가
         this.scene.add.existing(this);
