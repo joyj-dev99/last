@@ -1,3 +1,4 @@
+import {PLAYER_CATEGORY, OBJECT_CATEGORY} from "../constants.js";
 import SpeechBubble from "../SpeechBubble.js";
 
 export default class Chord extends Phaser.Physics.Matter.Sprite {
@@ -15,7 +16,11 @@ export default class Chord extends Phaser.Physics.Matter.Sprite {
         const chordCollider = Bodies.rectangle(this.x, this.y, 32, 28, { 
             isSensor: false,
             isStatic: true,
-            label: 'chord'
+            label: 'chord',
+            collisionFilter: {
+                category: OBJECT_CATEGORY, // 현재 객체 카테고리
+                mask: PLAYER_CATEGORY //충돌할 대상 카테고리
+            }
         });
         this.setExistingBody(chordCollider);
 

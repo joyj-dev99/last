@@ -1,4 +1,5 @@
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY, SENSOR_CATEGORY} from "./constants.js";
+
 const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right', 
         UPLEFT = 'up_left', UPRIGHT = 'up_right', 
         DOWNLEFT = 'down_left', DOWNRIGHT = 'down_right',
@@ -467,7 +468,7 @@ export default class Tutorial{
             isSensor: true, // 센서로 설정
             isStatic: true,  // 센서는 물리 반응이 필요 없음
             collisionFilter: {
-                category: OBJECT_CATEGORY,
+                category: SENSOR_CATEGORY,
                 mask: PLAYER_CATEGORY // 플레이어만 충돌하도록 설정
             }
         });

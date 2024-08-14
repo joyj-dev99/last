@@ -28,6 +28,7 @@ import {
     SENSOR_CATEGORY
 } from "./constants.js";
 import MonsterApple from "./monsters/MonsterApple.js";
+import StageManager from "./StageManager.js";
 
 export default class MainSceneTest extends Phaser.Scene {
 
@@ -55,7 +56,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.chordEnd = {x: 0, y: 0};
 
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
-        this.isInDialogue = false;
+        this.isInDialogue = true;
 
         if (this.mapNumber < 3) { // 일반맵
             this.mapWidth = 960;
@@ -114,94 +115,13 @@ export default class MainSceneTest extends Phaser.Scene {
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
 
+        this.stageManager = new StageManager(this, this.player, this.chord);
         //페이드인 완료 후 게임 실행
         this.cameras.main.once('camerafadeincomplete', (camera) => {
-            this.chord.startPlayLute();
-            this.backgroundMusic.play();
+            this.time.delayedCall(1000, () => {
+                this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
+            }, [], this);
         });
-
-
-        // 맵(1) 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
-        if (this.mapNumber === 1) {
-
-            // 특정 지점에 센서 생성
-            this.startSensor = this.matter.add.rectangle(600, this.player.y - 160, 10, 500, {
-                isSensor: true, // 센서로 설정
-                isStatic: true,
-                collisionFilter: {
-                    category: SENSOR_CATEGORY,
-                    mask: PLAYER_CATEGORY // 플레이어만 충돌하도록 설정
-                }
-            });
-        
-            // 충돌 감지 설정
-            this.matterCollision.addOnCollideStart({
-                objectA: this.player,
-                objectB: this.startSensor,
-                callback: eventData => {
-                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                    this.isInDialogue = true;
-                    this.player.stop();
-                    this.matter.world.remove(this.startSensor); // 센서 삭제
-                    // 대화
-                    // 플레이어 말풍선을 표시하고, 클릭 후 코드 말풍선을 표시하도록 콜백 설정
-                    this.player.showSpeechBubble('토마토? 아니 몬스터인가.', ()=>{
-                        this.player.showSpeechBubble('저런 건 처음보는데…', () => {
-                            this.chord.showSpeechBubble('얼마전부터 이 근방에 농작물처럼 생긴 몬스터가 나타나기 시작했다고 들었어요.', ()=>{
-                                this.player.showSpeechBubble('한시가 급한데, 이상한 몬스터까지 나타나다니. 미치겠군.', ()=>{
-                                    this.chord.showSpeechBubble('어쩌죠? 볼프강 박사가 있는 곳으로 가려면 이 길을 꼭 지나야 해요.', ()=>{
-                                        this.player.showSpeechBubble('흥. 이정돈 별거 아니라고!', () => {
-                                            this.isInDialogue = false;
-                                            // 코드의 위치 이동시키기
-                                            this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
-                                            this.monsterArr.forEach((monster) => {
-                                                monster.startBattle();
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        })
-                    });
-                }
-            });
-        }
-
-        // 맵(2) 시작 대화
-        if(this.mapNumber === 2){
-            // 특정 지점에 센서 생성
-            this.startSensor = this.matter.add.rectangle(this.player.x +50, this.player.y - 160, 10, 500, {
-                isSensor: true, // 센서로 설정
-                isStatic: true,  // 센서는 물리 반응이 필요 없음
-                collisionFilter: {
-                    category: OBJECT_CATEGORY,
-                    mask: PLAYER_CATEGORY // 플레이어만 충돌하도록 설정
-                }
-            });
-
-            // 충돌 감지 설정
-            this.matterCollision.addOnCollideStart({
-                objectA: this.player,
-                objectB: this.startSensor,
-                callback: eventData => {
-                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                    this.isInDialogue = true;
-                    this.player.stop();
-                    this.matter.world.remove(this.startSensor); // 센서 삭제
-                    // 대화
-                    this.chord.showSpeechBubble('이제 본격적으로 출발해봅시다.\n 맥스님, 파이팅!', ()=>{
-                        this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
-                            // 코드의 위치 이동시키기
-                            this.chord.setLocation(this.chordBattle.x, this.chordBattle.y);
-                            this.isInDialogue = false;
-                            this.monsterArr.forEach((monster) => {
-                                monster.startBattle();
-                            });
-                        });
-                    });
-                }
-            });
-        }
 
 
         // 플레이어와 몬스터 충돌 이벤트 설정
@@ -432,33 +352,10 @@ export default class MainSceneTest extends Phaser.Scene {
         }
         // 배열이 비었으면 전투 종료 메서드 실행
         if (this.monsterArr.length === 0) {
-            this.onBattleEnd(this.stageNumber, this.mapNumber);
+            this.time.delayedCall(1000, () => {
+                this.stageManager.setStageEnd(this.stageNumber, this.mapNumber);
+            }, [], this);
         }
-    }
-
-    // 전투 종료시 실행될 메서드
-    onBattleEnd(stageNumber, mapNumber) {
-        this.isInDialogue = true;
-        this.player.stop();
-        this.chord.setLocation(this.chordEnd.x, this.chordEnd.y);
-        if (stageNumber === 1 && mapNumber === 1) {
-            this.player.showSpeechBubble('뭐야? \n 미트코인이잖아?', () => {
-                this.player.showSpeechBubble('몬스터가 왜 미트코인을 가지고 있는거지?', () => {
-                    this.chord.showSpeechBubble('역시 맥스님! A등급 용병은 다르군요!', () => {
-                        this.player.showSpeechBubble('그나저나 너는 지금 내가 몬스터 잡는 동안', () => {
-                            this.player.showSpeechBubble('고작 악기 연주나 하고 있어?', () => {
-                                this.chord.showSpeechBubble('아무래도 응원가가 \n 있으면 좋으니까요!', () => {
-                                    this.isInDialogue = false;
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        } else if (stageNumber === 1 && mapNumber === 2) {
-
-        }
-        
     }
 
     // 동적으로 생성된 플레이어 공격에 충돌 이벤트 추가
@@ -511,47 +408,6 @@ export default class MainSceneTest extends Phaser.Scene {
                 y: monster.y,
                 itemType: this.itemType
             });
-
-        } else if(this.mapNumber === 2){
-            // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
-            this.itemType = Item.createItemType(monster);
-
-            // 몬스터의 위치에 객체 생성 
-            this.item = new Item({
-                scene: this,
-                x: monster.x,
-                y: monster.y,
-                itemType: this.itemType
-            });
-
-            // 몬스터 아이템이 나왔고, 또한 최초인지 확인
-            if(this.itemType === Item.TOMATO_ITEM && !this.firstMonsterItemLogged){
-                    console.log('TOMATO_ITEM이 나왔다');
-
-                    // 맵(2) 끝 대화
-                    setTimeout(() => {
-                        this.chord.showSpeechBubble(' 맥스님, 이 토마토 좀 맛있어 보이네요? ', () => {
-
-                            this.player.showSpeechBubble('윽, 이거 먹어도 되는거 맞지?');
-                        });
-                    }, 1000); // 1초 (1000 밀리초) 후에 실행
-
-                    this.firstMonsterItemLogged = true; // Set the flag to true
-                }
-            else if(this.itemType === Item.Eggplant_ITEM && !this.firstMonsterItemLogged){
-                    console.log('Eggplant_ITEM이 나왔다');
-
-                     // 맵(2) 끝 대화
-                    setTimeout(() => {
-                        this.chord.showSpeechBubble(' 맥스님, 이 가지 좀 맛있어 보이네요? ', () => {
-
-                            this.player.showSpeechBubble('윽, 이거 먹어도 되는거 맞지?');
-                        });
-                    }, 1000); // 1초 (1000 밀리초) 후에 실행
-
-                    this.firstMonsterItemLogged = true; // Set the flag to true
-                }
-
         }else{
              // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
             this.itemType = Item.createItemType(monster);
