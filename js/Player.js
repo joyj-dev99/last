@@ -62,8 +62,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 칼 휘두르기 콤보 단계 추적 변수
         this.comboState = 0; 
-        // 현재 칼 휘두르기 상태 변수
-        this.isSwinging = false;
         
         // 초기 방향 설정
         this.isLookingRight = true;
@@ -107,10 +105,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         let playerVelocity = new Phaser.Math.Vector2();
 
         // 제자리
-        // 플레이어가 움직이지 않고, 칼 휘두르기도 없으며, 구르는 상태도 아니고, 몬스터에 의해 맞지 않는
+        // 플레이어가 움직이지 않고, 칼 휘두르기(슬래쉬)가 null이며, 구르는 상태도 아니고, 몬스터에 의해 맞지 않는
         // 수명이 0보다 커야함
         // 완료된 애니메이션이 idle 이 아닌 경우에 실행됨
-        if (!this.isMoving && !this.isSwinging && !this.isRolling && !this.hitByMonster && this.anims.currentAnim.key !== 'player_idle'
+        if (!this.isMoving && this.slash === null && !this.isRolling && !this.hitByMonster && this.anims.currentAnim.key !== 'player_idle'
             && this.status.nowHeart > 0
         ) {
             this.anims.play('player_idle', true);
@@ -119,29 +117,28 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
        // 칼 휘두르기
         // z키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
         if (Phaser.Input.Keyboard.JustDown(this.zKey)) {
-
-            //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
-            if(this.comboState === 0 && !this.isSwinging){ 
-                this.swingSword(1);
-                this.scene.setCollisionOfPlayerAttack(this.slash);
-
-            //두 번째와 세 번째 단계는 스윙이 진행 중일 때 입력 허용
-            }else if(this.isSwinging){  
-                switch (this.comboState) {
-                    case 1:
-                this.swingSword(2);
-                this.scene.setCollisionOfPlayerAttack(this.slash);
-                    break;
-                    case 2:
-                this.swingSword(3);
-                this.scene.setCollisionOfPlayerAttack(this.slash);
-                    break;
-                }
+            
+            // 구르기 중 슬래쉬 실행
+            if(this.isRolling){
+                this.cancelRoll(); // 구르기를 즉시 중단
             }
+            this.handlSlash(); // 슬래쉬 동작 처리
+        
         }
 
         // x키 누르면 해당 방향으로 활 쏘기
         if (Phaser.Input.Keyboard.JustDown(this.xKey)) {
+
+            // 구르기 중 슬래쉬 실행
+            if(this.isRolling){
+                this.cancelRoll(); // 구르기를 즉시 중단
+            }
+
+            //검 공격 콤보 상태 초기화
+            this.resetComboState();
+            // 슬래쉬 객체 제거
+            this.removeSlash();
+
             this.anims.play('player_bow');
             let arrow = new Arrow({
                 scene: this.scene,
@@ -153,6 +150,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         //c키 누르면 마법 생성.
         if (Phaser.Input.Keyboard.JustDown(this.cKey)) {
+
+            // 구르기 중 슬래쉬 실행
+            if(this.isRolling){
+                this.cancelRoll(); // 구르기를 즉시 중단
+            }
+
+            //검 공격 콤보 상태 초기화
+            this.resetComboState();
+            // 슬래쉬 객체 제거
+            this.removeSlash();
+
             this.anims.play('player_spell');
             let magic = new Magic({
                 scene : this.scene
@@ -168,7 +176,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 8방향 이동 입력 처리
             this.handleArrowKeyInput(playerVelocity, speed);
             
-            if(this.isSwinging){ // 검을 휘두르는 동안에
+            if(this.slash){ // 이 지점에서 this.slash가 여전히 존재하는지 확인
                 const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
                 // 플레이어 위치에 slash 객체 동기화
                 this.slash.setPosition(this.x + offsetX, this.y);
@@ -176,7 +184,32 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
+
+                // 슬래쉬 객체 제거
+                this.removeSlash();
+
                 this.startRoll(playerVelocity);
+            }
+        }
+    }
+
+    handlSlash(){
+        //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
+        if(this.comboState === 0){ 
+            this.swingSword(1);
+            this.scene.setCollisionOfPlayerAttack(this.slash);
+
+        //두 번째와 세 번째 단계는 스윙이 진행 중일 때 입력 허용
+        }else{  
+            switch (this.comboState) {
+                case 1:
+            this.swingSword(2);
+            this.scene.setCollisionOfPlayerAttack(this.slash);
+                break;
+                case 2:
+            this.swingSword(3);
+            this.scene.setCollisionOfPlayerAttack(this.slash);
+                break;
             }
         }
     }
@@ -254,8 +287,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             playerVelocity.normalize().scale(speed);
             this.setVelocity(playerVelocity.x, playerVelocity.y);
-            if (this.anims.currentAnim.key !== 'player_run' && !this.isSwinging) {
-                 //검을 휘두르지 않을때만 달리기 애니메이션을 실행한다
+            if (this.anims.currentAnim.key !== 'player_run' && this.slash === null) {
+                 //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
                 this.anims.play('player_run', true);
             }
         } else {
@@ -263,8 +296,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
     
+    resetComboState(){
+        // 다른 동작이 시작될때는, 콤보 상태를 초기화
+        this.comboState = 0;
+    }
 
     startRoll(playerVelocity) {
+
+        // 구르기가 시작될 때 콤보 상태를 초기화
+        this.resetComboState();
+
         // 이동중일때만, 구르기 시작가능
         if (this.isMoving) {
             this.isRolling = true;
@@ -307,6 +348,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             });
         }
     }
+
+    cancelRoll() {
+        this.isRolling = false;
+        this.anims.stop('player_roll'); // 구르기 애니메이션을 중단
+        this.setVelocity(0, 0); // 구르기 속도를 중단
+        this.setCollidesWith([MONSTER_CATEGORY, TILE_CATEGORY]); // 충돌 재설정
+    }
+
     swingSword(stage) {
         const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
 
@@ -315,11 +364,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.slash = new Slash(this.scene, this.x + offsetX, this.y); // 플레이어에 상대적인 위치
         this.slash.setFlipX(!this.isLookingRight);
 
-        // 단계에 따른 애니메이션 재생zzzz
+        // 단계에 따른 애니메이션 재생
         const swordAnimKey = `player_sword_${stage}`;
         this.anims.play(swordAnimKey, true);
 
-        this.isSwinging = true;
         this.comboState = stage;
         console.log(`칼 휘두르기 ${stage}단계`);
         this.scene.sound.play('sound_player_sword_1');
@@ -328,7 +376,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     removeSlash() {
         if (this.slash) {
-            this.slash.destroy();
+            this.slash.destroy();  // 객체를 제거
+            this.slash = null;     // 참조를 명시적으로 null로 설정
         }
     }
 
@@ -408,8 +457,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             animation.key === 'player_sword_2' ||
             animation.key === 'player_sword_3'){
 
-            // 슬래쉬 초기화
-            this.resetSlash();
+            // 슬래쉬 객체 제거
+            this.removeSlash();
 
             // 일정 시간 내에 입력 없으면, 콤보 초기화
             this.scene.time.delayedCall(500, () => {
@@ -418,15 +467,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             });
             this.anims.play('player_idle', true);
         }
-    }
-
-    // 칼을 휘두르는 도중에 몬스터에게 맞았을떄 실행하는 코드
-    // 슬래쉬 초기화
-    resetSlash(){
-            // 해당 칼 휘두르는 동작 중지
-            this.isSwinging = false;
-            // 슬래쉬 객체 제거
-            this.removeSlash();
     }
 
     showSpeechBubble(contents, onDestroyCallback) {
