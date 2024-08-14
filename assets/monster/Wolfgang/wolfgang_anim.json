@@ -1,0 +1,396 @@
+{
+    "anims": [
+        {
+            "key": "wolfgang_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_0"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_1"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_2"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_3"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_8"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_9"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_10"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_11"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_12"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_13"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_14"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_15"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_button_press",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_16"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_17"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_18"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_19"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_20"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_21"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_22"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_23"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_laugh",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_24"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_25"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_32"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_33"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_34"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_35"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_40"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_41"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_42"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_43"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_44"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_45"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_grab_purple_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_48"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_49"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_50"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_51"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_52"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_53"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_54"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_55"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_throw_purple_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_56"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_57"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_58"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_59"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_60"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_61"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_grab_green_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_64"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_65"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_66"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_67"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_68"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_69"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_70"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_71"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_throw_green_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_72"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_73"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_74"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_75"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_76"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_77"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_grab_red_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_80"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_81"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_82"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_83"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_84"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_85"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_86"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_87"
+                }
+            ]
+        },
+        {
+            "key": "wolfgang_throw_red_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_88"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_89"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_90"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_91"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_92"
+                },
+                {
+                    "key": "wolfgang",
+                    "frame": "wolfgang_sprite_sheet_93"
+                }
+            ]
+        }
+    ]
+}

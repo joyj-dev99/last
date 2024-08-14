@@ -1,0 +1,76 @@
+{
+    "anims": [
+        {
+            "key": "poison_cloud__flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_0"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_1"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_2"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_3"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_4"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_5"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_6"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_7"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_8"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_9"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_10"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_11"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_12"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_13"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_14"
+                },
+                {
+                    "key": "poison_cloud",
+                    "frame": "poison_cloud_flask_sprite_sheet_128x64_15"
+                }
+            ]
+        }
+    ]
+}

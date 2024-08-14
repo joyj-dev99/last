@@ -1,0 +1,52 @@
+{
+    "anims": [
+        {
+            "key": "explode_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_0"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_1"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_2"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_3"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_4"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_5"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_6"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_7"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_8"
+                },
+                {
+                    "key": "explode_flask",
+                    "frame": "explode_flask_64x64_9"
+                }
+            ]
+        }
+    ]
+}
