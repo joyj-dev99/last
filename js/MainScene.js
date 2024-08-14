@@ -2,6 +2,7 @@ import HeartIndicator from "./HeartIndicator.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import TextIndicator from "./TextIndicator.js";
 import Item from "./Item.js";
+import Tutorial from "./Tutorial.js";
 
 import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
@@ -88,6 +89,7 @@ export default class MainSceneTest extends Phaser.Scene {
         MonsterBossPumpkin.preload(this);
         Chord.preload(this);
         Item.preload(this);
+        Tutorial.preload(this);
 
         ProgressIndicator.preload(this);
         HeartIndicator.preload(this);
@@ -121,6 +123,7 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 맵(1) 튜토리얼 끝난 후, 코드 자리 이동 및 플레이어 말풍선
         if (this.mapNumber === 1) {
+
             // 특정 지점에 센서 생성
             this.startSensor = this.matter.add.rectangle(600, this.player.y - 160, 10, 500, {
                 isSensor: true, // 센서로 설정
