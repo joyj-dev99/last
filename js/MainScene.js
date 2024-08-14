@@ -67,14 +67,28 @@ export default class MainSceneTest extends Phaser.Scene {
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
         this.isInDialogue = true;
 
-        if (this.mapNumber < 3) { // 일반맵
+        if (this.stageNumber === 1 && this.mapNumber < 3) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
             this.minX = 10;
             this.maxX = 950;
             this.minY = 96;
             this.maxY = 240;
-        } else if (this.mapNumber == 4) { // 보스맵
+        } else if (this.stageNumber === 1 && this.mapNumber == 4) { // 보스맵
+            this.mapWidth = 480;
+            this.mapHigth = 480;
+            this.minX = 74;
+            this.maxX = 406;
+            this.minY = 106;
+            this.maxY = 438;
+        } else if (this.stageNumber === 2 && this.mapNumber < 3) { // 일반맵
+            this.mapWidth = 960;
+            this.mapHigth = 320;
+            this.minX = 10;
+            this.maxX = 950;
+            this.minY = 96;
+            this.maxY = 240;
+        } else if (this.stageNumber === 2 && this.mapNumber == 4) { // 보스맵
             this.mapWidth = 480;
             this.mapHigth = 480;
             this.minX = 74;
@@ -90,6 +104,12 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_01_02_map", "assets/map/stage_01_02.json");
         this.load.tilemapTiledJSON("stage_01_03_map", "assets/map/stage_01_03.json");
         this.load.tilemapTiledJSON("stage_01_04_map", "assets/map/stage_01_04.json");
+
+        this.load.image("dungeonTileset", "assets/map/Royal Dungeon Tileset.png");
+        this.load.tilemapTiledJSON("stage_02_01_map", "assets/map/stage_02_01.json");
+        this.load.tilemapTiledJSON("stage_02_02_map", "assets/map/stage_02_02.json");
+        this.load.tilemapTiledJSON("stage_02_03_map", "assets/map/stage_02_03.json");
+        this.load.tilemapTiledJSON("stage_02_04_map", "assets/map/stage_02_04.json");
 
         // 배경음악 로드
         this.load.audio("bgm_stage_1", "assets/audio/field_theme_1.wav");
@@ -114,7 +134,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.setupWorld(this.stageNumber, this.mapNumber);
 
         // Play background music
-        this.backgroundMusic = this.sound.add(`bgm_stage_${this.stageNumber}`, {
+        this.backgroundMusic = this.sound.add(`bgm_stage_1`, {
             volume: 0.3, // Set the volume (0 to 1)
             loop: true // Enable looping if desired
         });
@@ -212,24 +232,55 @@ export default class MainSceneTest extends Phaser.Scene {
 
     setupWorld(stageNumber, mapNumber) {
         const map = this.make.tilemap({key: `stage_0${stageNumber}_0${mapNumber}_map`});
-        const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
 
-        const floor = map.createLayer("floor", forestTileset, 0, 0);
-        map.createLayer("cliff", forestTileset, 0, 0);
-        map.createLayer("decor1", forestTileset, 0, 0);
-        map.createLayer("decor2", forestTileset, 0, 0);
+        if (stageNumber === 1) {
+            const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
 
-        // 충돌이 필요한 타일 설정
-        floor.setCollisionByProperty({collides: true});
-        // 타일맵 레이어를 물리적으로 변환
-        this.matter.world.convertTilemapLayer(floor);
-        // 충돌 카테고리 설정
-        floor.forEachTile(tile => {
-            if (tile.physics.matterBody) {
-                tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-            }
-        });
+            const floor = map.createLayer("floor", forestTileset, 0, 0);
+            map.createLayer("cliff", forestTileset, 0, 0);
+            map.createLayer("decor1", forestTileset, 0, 0);
+            map.createLayer("decor2", forestTileset, 0, 0);
+
+            // 충돌이 필요한 타일 설정
+            floor.setCollisionByProperty({collides: true});
+            // 타일맵 레이어를 물리적으로 변환
+            this.matter.world.convertTilemapLayer(floor);
+            // 충돌 카테고리 설정
+            floor.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+        } else if (stageNumber === 2) {
+            const dungeonTileset = map.addTilesetImage("Royal Dungeon Tileset", "dungeonTileset");
+
+            const floor = map.createLayer("floor", dungeonTileset, 0, 0);
+            const wall = map.createLayer("wall", dungeonTileset, 0, 0);
+            map.createLayer("decor1", dungeonTileset, 0, 0);
+            map.createLayer("decor2", dungeonTileset, 0, 0);
+
+            // 충돌이 필요한 타일 설정
+            floor.setCollisionByProperty({collides: true});
+            wall.setCollisionByProperty({collides: true});
+            // 타일맵 레이어를 물리적으로 변환
+            this.matter.world.convertTilemapLayer(floor);
+            this.matter.world.convertTilemapLayer(wall);
+            // 충돌 카테고리 설정
+            floor.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+            wall.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+
+        }
 
         //오브젝트 레이어 관련 코드
         const objectLayer = map.getObjectLayer('object');
