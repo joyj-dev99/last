@@ -1,0 +1,156 @@
+{
+    "anims": [
+        {
+            "key": "pumpkin_spit_seed",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_0"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_1"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_2"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_3"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_4"
+                }
+            ]
+        },
+        {
+            "key": "pumpkin_float",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_15"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_16"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_17"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_18"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_19"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_20"
+                }
+            ]
+        },
+        {
+            "key": "pumpkin_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_30"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_31"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_32"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_33"
+                }
+            ]
+        },
+        {
+            "key": "pumpkin_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_45"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_46"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_47"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_48"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_49"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_50"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_51"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_52"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_53"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_54"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_55"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_56"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_57"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_58"
+                },
+                {
+                    "key": "pumpkin(2)",
+                    "frame": "giant_pumpkin_sprite_sheet(2)_59"
+                }
+            ]
+        }
+    ]
+}
