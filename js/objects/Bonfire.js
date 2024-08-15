@@ -1,3 +1,5 @@
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY} from "../constants.js";
+
 export default class Bonfire extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y} = data;
@@ -17,7 +19,11 @@ export default class Bonfire extends Phaser.Physics.Matter.Sprite {
         const bonfireCollider = Bodies.circle(this.x, this.y, 18, { 
             isSensor: false,
             isStatic: true,
-            label: 'bonfire' 
+            label: 'bonfire',
+            collisionFilter: {
+                category: OBJECT_CATEGORY, // 현재 객체 카테고리
+                mask: PLAYER_CATEGORY, MONSTER_CATEGORY
+            } 
         });
         this.setExistingBody(bonfireCollider);
 
@@ -30,5 +36,22 @@ export default class Bonfire extends Phaser.Physics.Matter.Sprite {
         scene.load.atlas('bonfire', 'assets/objects/bonfire/bonfire.png', 'assets/objects/bonfire/bonfire_atlas.json');
         // 애니메이션을 정의해놓은 json 파일을 통해 애니메이션 로드 + 생성
         scene.load.animation('bonfireAnim', 'assets/objects/bonfire/bonfire_anim.json');
+        scene.load.spritesheet('keybordImg', 'assets/ui/Keyboard Letters and Symbols.png', { frameWidth: 16, frameHeight: 16 });
+    }
+
+    // 상호작용 가능 표시를 보여주는 메서드
+    showInteractPrompt() {
+        if (!this.interativeKeyImg) {
+            this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keybordImg', 20);
+            this.interativeKeyImg.setOrigin(0.5);
+        }
+    }
+
+    // 상호작용 가능 표시를 숨기는 메서드
+    hideInteractPrompt() {
+        if (this.interativeKeyImg) {
+            this.interativeKeyImg.destroy();
+            this.interativeKeyImg = null;
+        }
     }
 }
