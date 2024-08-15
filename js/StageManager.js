@@ -387,12 +387,10 @@ export default class StageManager {
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 3) {
-            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
-                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
-                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
-                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
-                            this.scene.isInDialogue = false;
-                        });
+            this.chord.showSpeechBubble('쥐는 치즈를 좋아해~', () => {
+                this.player.showSpeechBubble('이봐 코드! 이제 다 온거냐?', () => {
+                    this.chord.showSpeechBubble('네! 한 층만 더 위로 올라가면 지상으로 나갈 수 있어요!', () => {
+                        this.scene.isInDialogue = false;
                     });
                 });
             });
