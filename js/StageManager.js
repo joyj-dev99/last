@@ -182,48 +182,60 @@ export default class StageManager {
         } else if (stageNumber == 2 && mapNumber == 1) {
             this.scene.isInDialogue = true;
             // 대화
-            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
-                this.scene.isInDialogue = false;
-                // 코드의 위치 이동시키기 & 전투시작
-                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
-                this.chord.startPlayLute();
-                this.scene.time.delayedCall(1000, () => {
-                    this.scene.backgroundMusic.play();
-                }, [], this.scene);
-                this.scene.monsterArr.forEach((monster) => {
-                    monster.startBattle();
+            this.player.showSpeechBubble('과거에 감옥으로 썼던 곳인가 보군.', () => {
+                this.chord.showSpeechBubble('으악! 맥스님, 거미랑 파리가 너무 많아요!', () => {
+                    this.player.showSpeechBubble('시끄러워...', () => {
+                        this.scene.isInDialogue = false;
+                        // 코드의 위치 이동시키기 & 전투시작
+                        this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                        this.chord.startPlayLute();
+                        this.scene.time.delayedCall(1000, () => {
+                            this.scene.backgroundMusic.play();
+                        }, [], this.scene);
+                        this.scene.monsterArr.forEach((monster) => {
+                            monster.startBattle();
+                        });
+                    });
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 2) {
             this.scene.isInDialogue = true;
             // 대화
-            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
-                this.scene.isInDialogue = false;
-                // 코드의 위치 이동시키기 & 전투시작
-                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
-                this.chord.startPlayLute();
-                this.scene.time.delayedCall(1000, () => {
-                    this.scene.backgroundMusic.play();
-                }, [], this.scene);
-                this.scene.monsterArr.forEach((monster) => {
-                    console.log('monster : '+monster);
-                    console.log('monster.type : '+monster.monsterType);
-                    monster.startBattle();
+            this.player.showSpeechBubble('저건... 고블린?', () => {
+                this.player.showSpeechBubble('원래 고블린이 건물 안에 살던가?', () => {
+                    this.chord.showSpeechBubble('그럴리가요. 뭔가 이상하네요.', () => {
+                        this.chord.showSpeechBubble('아무래도 조심하는게 좋을 거 같아요, 맥스님.', () => {
+                            this.scene.isInDialogue = false;
+                            // 코드의 위치 이동시키기 & 전투시작
+                            this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                            this.chord.startPlayLute();
+                            this.scene.time.delayedCall(1000, () => {
+                                this.scene.backgroundMusic.play();
+                            }, [], this.scene);
+                            this.scene.monsterArr.forEach((monster) => {
+                                monster.startBattle();
+                            });
+                        });
+                    });
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 3) {
             this.scene.isInDialogue = true;
             // 대화
-            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
-                this.scene.isInDialogue = false;
-                // 코드의 위치 이동시키기 & 전투시작
-                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
-                this.chord.startPlayLute();
-                this.scene.time.delayedCall(1000, () => {
-                    this.scene.backgroundMusic.play();
-                }, [], this.scene);
-                this.scene.monsterArr.forEach((monster) => {
-                    monster.startBattle();
+            this.chord.showSpeechBubble('으악!!!!!! 쥐다!!!!!', () => {
+                this.player.showSpeechBubble('그냥 쥐라고 하기엔 너무 큰거 아냐?', () => {
+                    this.chord.showSpeechBubble('여기서 무슨 일이 벌어지고 있긴 한가보군.', () => {
+                        this.scene.isInDialogue = false;
+                        // 코드의 위치 이동시키기 & 전투시작
+                        this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                        this.chord.startPlayLute();
+                        this.scene.time.delayedCall(1000, () => {
+                            this.scene.backgroundMusic.play();
+                        }, [], this.scene);
+                        this.scene.monsterArr.forEach((monster) => {
+                            monster.startBattle();
+                        });
+                    });
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 4) {
@@ -357,32 +369,28 @@ export default class StageManager {
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 1) {
-            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
-                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
-                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
-                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
+            this.chord.showSpeechBubble('맥스님, 정말 대단하세요!', () => {
+                this.player.showSpeechBubble('흥. 그런데 여긴 아무도 없나?', () => {
+                    this.chord.showSpeechBubble('이 지하감옥은 예전에 영주였던 귀족나리가\n죽은 후로 게속 방치되고 있다고 들었어요.', () => {
+                        this.chord.showSpeechBubble('덕분에 마을을 오가는 지름길로 잘 쓰고 있죠. 히힛.', () => {
                             this.scene.isInDialogue = false;
                         });
                     });
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 2) {
-            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
-                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
-                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
-                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
-                            this.scene.isInDialogue = false;
-                        });
+            this.chord.showSpeechBubble('맥스 님, 정말 멋지십니다! 딸랑딸랑~', () => {
+                this.player.showSpeechBubble('...후', () => {
+                    this.chord.showSpeechBubble('고블린 고기가 정말 별미라고 하던데... 기회가 되면 꼭 드셔보세요!', () => {
+                        this.scene.isInDialogue = false;
                     });
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 3) {
-            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
-                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
-                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
-                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
-                            this.scene.isInDialogue = false;
-                        });
+            this.chord.showSpeechBubble('쥐는 치즈를 좋아해~', () => {
+                this.player.showSpeechBubble('이봐 코드! 이제 다 온거냐?', () => {
+                    this.chord.showSpeechBubble('네! 한 층만 더 위로 올라가면 지상으로 나갈 수 있어요!', () => {
+                        this.scene.isInDialogue = false;
                     });
                 });
             });
