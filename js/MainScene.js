@@ -145,6 +145,7 @@ export default class MainSceneTest extends Phaser.Scene {
         MonsterBossPumpkin.preload(this);
         MonsterBossGoblin.preload(this);
         MonsterBossNecromancer.preload(this);
+        MonsterApple.preload(this);
         Chord.preload(this);
         Item.preload(this);
         Tutorial.preload(this);
