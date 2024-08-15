@@ -225,7 +225,6 @@ export default class MainSceneTest extends Phaser.Scene {
                 this.backgroundMusic.stop();
             }
         }
-
         if (this.milestone) {
             // 플레이어와 표지판 충돌 이벤트 설정
             this.matterCollision.addOnCollideStart({
