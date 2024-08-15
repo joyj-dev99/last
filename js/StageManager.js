@@ -1,12 +1,11 @@
 import Tutorial from "./Tutorial.js";
-import Dialog from "./Dialog.js";
 
 export default class StageManager {
-    constructor(scene, player, chord) {
+    constructor(scene, player, chord, dialog) {
         this.scene = scene;
         this.player = player;
         this.chord = chord;
-        this.dialog = new Dialog(scene, scene.scale.width, scene.scale.height * 0.3);
+        this.dialog = dialog;
     }
 
     setStageStart(stageNumber, mapNumber) {
@@ -39,7 +38,8 @@ export default class StageManager {
                     const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                     console.log("플레이어와 센서2 충돌");
                     this.scene.isInDialogue = true;
-                    this.player.stop();
+                    this.player.stopMove
+        ();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
                     // 이동키 조작 설명 끝
@@ -69,7 +69,8 @@ export default class StageManager {
                     const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                     console.log("플레이어와 센서3 충돌");
                     this.scene.isInDialogue = true;
-                    this.player.stop();
+                    this.player.stopMove
+        ();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
                     // 이동키 조작 설명 끝
@@ -100,7 +101,8 @@ export default class StageManager {
                     const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                     console.log("플레이어와 센서4 충돌");
                     this.scene.isInDialogue = true;
-                    this.player.stop();
+                    this.player.stopMove
+        ();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
                     tutorial.endshiftKeyControlExplanation();
@@ -277,7 +279,7 @@ export default class StageManager {
 
     setStageEnd(stageNumber, mapNumber) {
         this.scene.isInDialogue = true;
-        this.player.stop();
+        this.player.stopMove();
         this.chord.setLocation(this.scene.chordEnd.x, this.scene.chordEnd.y);
         let dialogueMessages;
         if (stageNumber == 1 && mapNumber == 1) {

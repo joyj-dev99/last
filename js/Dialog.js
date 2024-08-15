@@ -1,7 +1,7 @@
 /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
 const UI_TEXT_STYLE = Object.freeze({
     // fontFamily: KENNEY_FUTURE_NARROW_FONT_NAME,
-    color: 'white',
+    color: 'black',
     fontSize: '20px',
     wordWrap: { width: 0 },
 });
@@ -59,29 +59,34 @@ export default class Dialog  {
 
         // 컨테이너 및 UI 요소 설정
         const panel = this.#scene.add
-            .rectangle(0, 0, this.#width, this.#height, '#ffffff', 0.8)
+            .rectangle(0, 0, this.#width, this.#height, 0xffffff, 0.8)
             .setOrigin(0)
             .setStrokeStyle(8,'#000000', 1);
         this.#container = this.#scene.add.container(0, 0, [panel]);
         
+        // 모든 요소에 setScrollFactor(0) 적용
+        panel.setScrollFactor(0);
+
         // 이름 텍스트 객체 추가
         this.#nameText = this.#scene.add.text(90, 10, '', {
             fontFamily: 'Arial',
-            fontSize: '20px',
-            color: 'yellow'
-        });
+            fontSize: '15px',
+            color: 'black'
+        }).setScrollFactor(0);
         this.#container.add(this.#nameText);
 
         // 초상화 이미지 객체 추가
-        this.#portrait = this.#scene.add.image(50, this.#height / 2, null).setScale(0.4).setVisible(false);
+        this.#portrait = this.#scene.add.image(50, this.#height / 2, null).setScale(0.4).setVisible(false).setScrollFactor(0);
         this.#container.add(this.#portrait);
 
         // 대화 텍스트 객체 추가
-        this.#uiText = this.#scene.add.text(90, 40, '', {
+        this.#uiText = this.#scene.add.text(90, 30, '', {
             ...UI_TEXT_STYLE,
-            ...{ wordWrap: { width: this.#width - 100 }, fontSize: '18px' },
-        });
+            ...{ wordWrap: { width: this.#width - 100 }, fontSize: '15px' },
+        }).setScrollFactor(0);
         this.#container.add(this.#uiText);
+
+        this.#container.setScrollFactor(0); // 컨테이너 자체에도 적용
         
         this.hideDialogModal();
 
@@ -142,9 +147,12 @@ export default class Dialog  {
         this.#messagesToShow = [...messages];
         this.onCompleteCallback = onComplete || null;
 
-        const { x, bottom } = this.#scene.cameras.main.worldView;
-        const startX = x + this.#padding;
-        const startY = bottom - this.#height - this.#padding / 2;
+        const screenWidth = this.#scene.scale.width;
+        const screenHeight = this.#scene.scale.height;
+
+        // 대화창을 화면 하단 중앙에 고정
+        const startX = (screenWidth - this.#width) / 2;
+        const startY = screenHeight - this.#height - this.#padding;
 
         this.#container.setPosition(startX, startY);
         this.#container.setAlpha(1);
@@ -157,13 +165,6 @@ export default class Dialog  {
      * @returns {void}
      */
     showNextMessage() {
-        // 만약 메시지 애니메이션이 재생 중이라면, 전체 메시지를 한 번에 표시
-        if (this.#textAnimationPlaying) {
-            this.#uiText.setText(this.#currentMessage.message); // 전체 메시지를 한 번에 표시
-            this.#textAnimationPlaying = false;
-            return;
-        }
-
         if (this.#messagesToShow.length === 0) {
             // 더 이상 메시지가 남아 있지 않으면 애니메이션을 멈추고 대화 종료를 대기
             this.#textAnimationPlaying = false;
@@ -242,7 +243,12 @@ export default class Dialog  {
     onSpaceKeyPressed() {
         if (this.#textAnimationPlaying) {
             // 현재 텍스트 애니메이션을 중단하고 전체 메시지를 표시
-            this.showNextMessage(); 
+            if (this.#uiText.timer) {
+                this.#uiText.timer.remove(false);
+                this.#uiText.timer = null;
+            }
+            this.#uiText.setText(this.#currentMessage.message); // 전체 메시지를 한 번에 표시
+            this.#textAnimationPlaying = false;
         } else if (this.moreMessagesToShow) {
             // 애니메이션이 끝난 후 스페이스바를 누르면 다음 메시지로 넘어감
             this.showNextMessage();
