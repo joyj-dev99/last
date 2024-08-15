@@ -90,7 +90,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         frame : null,
         scale : 0.66,
         message : '+1 heart' ,
-        drap_per : 1
+        drap_per : 0.5
     };
     
     // 쥐의 치즈 아이템 데이터 
@@ -100,17 +100,45 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         frame : null,
         scale : 0.5,
         message : '+1 heart' ,
-        drap_per : 1
+        drap_per : 0.5
     };
     
     // 물약 아이템 데이터 
-    static Potion_ITEM = {
+    static Blue_Potion_ITEM = {
         type : 'potion',
         texture : 'potion',
-        frame : null,
+        frame : 0,
         scale : 0.66,
         message : '+5 ATK' ,
-        drap_per : 1
+        drap_per : 0.5
+    };
+    // 물약 아이템 데이터 
+    static Yellow_Potion_ITEM = {
+        type : 'potion',
+        texture : 'potion',
+        frame : 1,
+        scale : 0.66,
+        message : '+5 ATK' ,
+        drap_per : 0.5
+    };
+    // 물약 아이템 데이터 
+    static Red_Potion_ITEM = {
+        type : 'potion',
+        texture : 'potion',
+        frame : 2,
+        scale : 0.66,
+        message : '+5 ATK' ,
+        drap_per : 0.5
+    };
+
+    // 하트 아이템 데이터 
+    static Heart_ITEM = {
+        type : 'heart',
+        texture : 'heart',
+        frame : null,
+        scale : 0.5,
+        message : '+1 heart' ,
+        drap_per : 0.5
     };
 
     // Item.setData(this.coinIndicatorText,this.heartIndicator);
@@ -156,15 +184,17 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             monsterITEM = Item.Blue_Potion_ITEM;
         }
         else if(monster instanceof MonsterBugbear){
-            monsterITEM = Item.COIN_ITEM;
+            monsterITEM = Item.Yellow_Potion_ITEM;
         }
         else if(monster instanceof MonsterAngel){
-            monsterITEM = Item.COIN_ITEM;
+            monsterITEM = Item.Heart_ITEM;
         }
         else if(monster instanceof MonsterGolem){
+            monsterITEM = Item.Red_Potion_ITEM;
+        }
+        else{
             monsterITEM = Item.COIN_ITEM;
         }
-        
         
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
         const randomValue = Math.random();
@@ -210,7 +240,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.image('pumpkin', 'assets/item/pumpkin.png');
         scene.load.image('cheese', 'assets/item/cheese.png');
         scene.load.image('meat', 'assets/item/meat.png');
-        scene.load.image('potion', 'assets/item/potion.png');
+        scene.load.image('heart', 'assets/item/heart.png');
+        scene.load.spritesheet('potion', 'assets/item/potion.png', { frameWidth: 24, frameHeight: 24 });
         scene.load.image('eggplant', 'assets/item/eggplant.png');
         // 에셋 추가
     }
@@ -266,12 +297,18 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             // 공격력 +5 적용
             player.increaseATK(5);
         }
-
-
+        // 미니고블린의 고기
+        else if(this.itemType.type == 'heart'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
             fontFamily: 'GalmuriMono7, sans-serif',
             fontSize: '8px', //8배수 단위로 늘어나야 잘 보임
-            fill: '#FFFFFF',
+            // fill: '#FFFFFF',
+            fill: '#000000',
             resolution:2
         });
 
