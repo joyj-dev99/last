@@ -50,8 +50,8 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 1;
-        this.mapNumber = data.mapNumber || 1;
+        this.stageNumber = data.stageNumber || 2;
+        this.mapNumber = data.mapNumber || 4;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
@@ -144,6 +144,8 @@ export default class MainSceneTest extends Phaser.Scene {
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
+        MonsterBossGoblin.preload(this);
+        MonsterBossNecromancer.preload(this);
         Chord.preload(this);
         Item.preload(this);
         Tutorial.preload(this);
@@ -676,23 +678,26 @@ export default class MainSceneTest extends Phaser.Scene {
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
 
-                // 충돌하면 총알 제거
-                gameObjectB.destroy();
-
-                // 충돌 후 애니메이션 재생 하고 소멸
-                let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
-                egg_hit_anim.setBody({width: 1, height: 1})
-                egg_hit_anim.setSensor(true)
-                egg_hit_anim.play('eggplant_egg_hit');
-                this.time.delayedCall(600, () => {
-                    egg_hit_anim.destroy();
-                });
+                // 네크로맨서의 레이저빔은 사라지지 않고 유지되게 만드려고
+                if (gameObjectB.texture.key === 'necromancer_beam') {
+                //     pass
+                } else {
+                    gameObjectB.destroy();
+                    // 충돌 후 애니메이션 재생 하고 소멸
+                    let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
+                    egg_hit_anim.setBody({width: 1, height: 1})
+                    egg_hit_anim.setSensor(true)
+                    egg_hit_anim.play('eggplant_egg_hit');
+                    this.time.delayedCall(600, () => {
+                        egg_hit_anim.destroy();
+                    });
+                }
             }
         });
     }
 
 
-    setCollisionOfMonsterPumpkinShockwave(attack) {
+    setCollisionOfMonsterShockwave(attack) {
         this.matterCollision.addOnCollideStart({
             objectA: this.player, // 플레이어
             objectB: attack, // 공격 객체 쇼크웨이브
@@ -718,9 +723,13 @@ export default class MainSceneTest extends Phaser.Scene {
         });
     }
 
-
-    removeSensor(sensor) {
-        // 센서를 물리 세계에서 제거
-        this.matter.world.remove(sensor);
+    doMakeGoblin(){
+        let m = new MonsterBossGoblin({
+            scene: this,
+            x: this.x,
+            y: this.y,
+            player: this.player // 플레이어 객체 전달
+        });
+        this.monsterArr.push(m);
     }
 }

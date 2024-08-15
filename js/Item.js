@@ -10,8 +10,8 @@ import MonsterFly from "./monsters/MonsterFly.js";
 import MonsterSpider from "./monsters/MonsterSpider.js";
 import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
 import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
-import MonsterGoblin from "./monsters/MonsterGoblin.js";
-import MonsterNecromancer from "./monsters/MonsterNecromancer.js";
+import MonsterBossGoblin from "./monsters/MonsterBossGoblin.js";
+import MonsterBossNecromancer from "./monsters/MonsterBossNecromancer.js";
 import MonsterBugbear from "./monsters/MonsterBugbear.js";
 import MonsterAngel from "./monsters/MonsterAngel.js";
 import MonsterGolem from "./monsters/MonsterGolem.js";
@@ -149,10 +149,10 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(monster instanceof MonsterRatfolk){
             monsterITEM = Item.Ratfolk_ITEM;
         }
-        else if(monster instanceof MonsterGoblin){
+        else if(monster instanceof MonsterBossGoblin){
             monsterITEM = Item.Potion_ITEM;
         }
-        else if(monster instanceof MonsterNecromancer){
+        else if(monster instanceof MonsterBossNecromancer){
             monsterITEM = Item.Potion_ITEM;
         }
         else if(monster instanceof MonsterBugbear){
