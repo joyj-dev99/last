@@ -10,8 +10,8 @@ const UP_ANIMS = 'up_key', DOWN_ANIMS = 'down_key', LEFT_ANIMS = 'left_key', RIG
 
 export default class Tutorial{
 
-    constructor() {
-
+    constructor(player) {
+        this.player = player;
     }
     
     static preload(scene) {
@@ -30,10 +30,10 @@ export default class Tutorial{
     }
 
     // 방향키 조작법 설명 시작
-    startDirectionControlExplanation(scene, sensor_x, sensor_y, player){
+    startDirectionControlExplanation(scene, sensor_x, sensor_y){
 
         // x = 200 에 고정된 보이지 않는 경계 생성
-        const boundary = scene.matter.add.rectangle(200, scene.scale.height / 2, 10, scene.scale.height, {
+        this.boundary = scene.matter.add.rectangle(200, scene.scale.height / 2, 10, scene.scale.height, {
             isStatic: true, // 이 속성으로 경계가 움직이지 않도록 설정
             isSensor: false, // 센서가 아니라 실제로 충돌하는 객체로 만듦
             collisionFilter:{
@@ -43,7 +43,7 @@ export default class Tutorial{
         });
 
         // Matter 월드에 이 경계를 추가
-        scene.matter.world.add(boundary);
+        scene.matter.world.add(this.boundary);
         
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
@@ -158,12 +158,12 @@ export default class Tutorial{
             keyboard_right.setTexture('keyboard', 3); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
         }, this);
         
-        // 키를 누를때, 기준으로 이동키조작설명순서의 원소의 갯수가 0이 아니라
-        // 원소의 갯수가 1일때 (마지막일때)와 마지막이 아닐때로 나누어야 함
-                this.keyHandler = event => {
+
+            this.keyHandler = event => {
             // 이벤트 핸들러 로직
             // event는 키보드 이벤트 객체입니다.
             console.log('Key pressed: down? ' + event.key); // 누른 키를 출력합니다.
+
 
             let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
             if(관련된값.result === true){
@@ -183,19 +183,22 @@ export default class Tutorial{
             if(this.이동키조작설명순서.length == 0){
                 console.log('조작키 설명 완료');
 
-                //오른쪽 사인 생성
-                this.createRightSign(scene, player.x + 30, player.y -30);
+               // 0.5초 후에 오른쪽 사인 생성
+                setTimeout(() => {
+                    this.createRightSign(scene, this.player.x + 30, this.player.y - 30);
 
-                // 경계를 제거하여 이동 허용
-                scene.matter.world.remove(boundary);
-                // 물리엔진 갱신
-                scene.matter.world.engine.world.bodies = scene.matter.world.engine.world.bodies.filter(body => body !== boundary);
-                //조작키 제거
-                this.removeKey();
+                    // 경계를 제거하여 이동 허용
+                    scene.matter.world.remove(this.boundary);
 
+                    // 물리엔진 갱신
+                    scene.matter.world.engine.world.bodies = scene.matter.world.engine.world.bodies.filter(body => body !== this.boundary);
+
+                    // 조작키 제거
+                    this.removeKey();
+                }, 1000);
                 
             }
-            else {
+            else {                
                 console.log('조작키 설명 남음');
 
                 let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
@@ -317,15 +320,13 @@ export default class Tutorial{
         }
         else if(이동키조작설명값 == ATK){
             if(!(Phaser.Input.Keyboard.JustDown(this.zKey))){
-                result = false;
+                result = true;
             }
             else{
-                this.combo_count = 0;
                 result = true;
             }
             anim_key = [ATK_ANIMS];
             anim_keyboard = [this.keyboard_z];
-            console.log('this.combo_count : '+this.combo_count);
         }
         else if(이동키조작설명값 == SHIFT){
             if(!(Phaser.Input.Keyboard.JustDown(this.shiftKey))){
@@ -358,6 +359,10 @@ export default class Tutorial{
         if(this.keyboard_z){
             this.keyboard_z.destroy();
         }
+        if(this.keyboard_shift){
+            this.keyboard_shift.destroy();
+        }
+        
         // // 나중에 이벤트 리스너를 제거합니다.
         // scene.input.keyboard.off('keydown', this.keyHandler);
 
@@ -394,7 +399,6 @@ export default class Tutorial{
         let cursors = scene.input.keyboard.createCursorKeys();
         // Z 키 입력 설정
         this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        this.combo_count = 0;
 
         let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+15, sensor_y+190, 'keyboard', 41);
         keyboard_z.setScale(2);

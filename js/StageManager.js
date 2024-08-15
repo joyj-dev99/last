@@ -9,7 +9,8 @@ export default class StageManager {
 
     setStageStart(stageNumber, mapNumber) {
         if (stageNumber == 1 && mapNumber == 1) {
-            let tutorial = new Tutorial();
+
+            let tutorial = new Tutorial(this.player);
             
             // 첫번째는 센서 없이 바로 시작
             this.scene.isInDialogue = true;
@@ -69,9 +70,6 @@ export default class StageManager {
                     tutorial.onSensorHit(this.scene, bodyB);
                     // 오른쪽 사인 제거
                     tutorial.removeRightSign();
-
-                    // 조작키 제거
-                    tutorial.endzKeyControlExplanation();
                 
                     // 코드의 위치 이동시키기
                     this.chord.setLocation(this.player.x, this.player.y - 50);

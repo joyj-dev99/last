@@ -117,7 +117,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
        // 칼 휘두르기
         // z키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
         if (Phaser.Input.Keyboard.JustDown(this.zKey)) {
-            
             // 구르기 중 슬래쉬 실행
             if(this.isRolling){
                 this.cancelRoll(); // 구르기를 즉시 중단
