@@ -12,6 +12,7 @@ export default class Tutorial{
 
     constructor(player) {
         this.player = player;
+        console.log('튜토리얼 객체 생성');
     }
     
     static preload(scene) {
