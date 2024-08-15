@@ -301,7 +301,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             if (this.anims.currentAnim.key !== 'player_run' && this.slash === null) {
                  //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
                 this.anims.play('player_run', true);
-                // this.scene.sound.play('sound_player_move');
+                console.log('달리기 애니메이션 실행');
             }
         } else {
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
