@@ -383,6 +383,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     takeDamage(amount) {
+        this.removeSlash();
+
         if (this.isRolling) return;
         this.hitByMonster = true;
         this.status.nowHeart -= amount;
@@ -394,6 +396,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         }else{
             this.anims.play('player_damage');
+            
         }
         
         console.log('player takeDamage, hp : ', this.status.nowHeart);
@@ -419,6 +422,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.scene.time.delayedCall(200, () => {
             this.setVelocity(0, 0);
             this.hitByMonster = false;
+            this.anims.chain('player_idle'); // Automatically transition to idle after damage animation
         });
     }
 
