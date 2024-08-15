@@ -148,7 +148,8 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
-
+        this.load.audio("forest_default", "assets/audio/background/forest/forest_default.mp3");
+        this.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
 
         Player.preload(this);
         Monster.preload(this);
