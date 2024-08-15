@@ -86,10 +86,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('mini_goblinAnim', 'assets/monster/mini goblin/mini_goblin_anim.json');
         scene.load.atlas('ratfolk', 'assets/monster/ratfolk/ratfolk.png', 'assets/monster/ratfolk/ratfolk_atlas.json');
         scene.load.animation('ratfolkAnim', 'assets/monster/ratfolk/ratfolk_anim.json');
-        scene.load.atlas('goblin', 'assets/monster/goblin/goblin.png', 'assets/monster/goblin/goblin_atlas.json');
-        scene.load.animation('goblinAnim', 'assets/monster/goblin/goblin_anim.json');
-        scene.load.atlas('necromancer', 'assets/monster/necromancer/necromancer.png', 'assets/monster/necromancer/necromancer_atlas.json');
-        scene.load.animation('necromancerAnim', 'assets/monster/necromancer/necromancer_anim.json');
 
         scene.load.atlas('bugbear', 'assets/monster/bugbear/bugbear.png', 'assets/monster/bugbear/bugbear_atlas.json');
         scene.load.animation('bugbearAnim', 'assets/monster/bugbear/bugbear_anim.json');
@@ -97,7 +93,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('angelAnim', 'assets/monster/angel/angel_anim.json');
         scene.load.atlas('golem', 'assets/monster/golem/golem.png', 'assets/monster/golem/golem_atlas.json');
         scene.load.animation('golemAnim', 'assets/monster/golem/golem_anim.json');
-
 
     }
 
