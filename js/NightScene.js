@@ -32,7 +32,7 @@ export default class NightScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_02_night_map", "assets/map/stage_02_night.json");
 
         // 배경음악 로드
-        this.load.audio("nightMusic", "assets/audio/night_theme_1.wav");
+        this.load.audio("night_default", "assets/audio/background/night/night_default.mp3");
 
         Player.preload(this);
         Bonfire.preload(this);
@@ -115,7 +115,7 @@ export default class NightScene extends Phaser.Scene {
         });
 
          // Play background music
-        this.backgroundMusic = this.sound.add('nightMusic', {
+        this.backgroundMusic = this.sound.add('night_default', {
             volume: 0.3, // Set the volume (0 to 1)
             loop: true // Enable looping if desired
         });

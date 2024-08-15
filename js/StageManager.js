@@ -10,6 +10,14 @@ export default class StageManager {
         }
     }
 
+    static preload(scene){
+        scene.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
+        scene.load.audio("dungeon_default", "assets/audio/background/dungeon/dungeon_default.mp3");
+        scene.load.audio("dungeon_boss", "assets/audio/background/dungeon/dungeon_boss.mp3");
+        scene.load.audio("room_default", "assets/audio/background/room/room_default.mp3");
+        scene.load.audio("room_boss", "assets/audio/background/room/room_boss.mp3");
+    }
+
     setStageStart(stageNumber, mapNumber) {
         if (stageNumber == 1 && mapNumber == 1) {
             let tutorial = new Tutorial(this.player);
@@ -177,6 +185,10 @@ export default class StageManager {
                                 // 코드의 위치 이동시키기 & 전투시작
                                 this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                                 this.chord.startPlayLute();
+                                this.scene.backgroundMusic = this.scene.sound.add('forest_boss', {
+                                    volume: 0.3, // Set the volume (0 to 1)
+                                    loop: true // Enable looping if desired
+                                });
                                 this.scene.time.delayedCall(1000, () => {
                                     this.scene.backgroundMusic.play();
                                 }, [], this.scene);
@@ -198,6 +210,10 @@ export default class StageManager {
                         // 코드의 위치 이동시키기 & 전투시작
                         this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                         this.chord.startPlayLute();
+                        this.scene.backgroundMusic = this.scene.sound.add('dungeon_default', {
+                            volume: 0.3, // Set the volume (0 to 1)
+                            loop: true // Enable looping if desired
+                        });
                         this.scene.time.delayedCall(1000, () => {
                             this.scene.backgroundMusic.play();
                         }, [], this.scene);
@@ -218,6 +234,10 @@ export default class StageManager {
                             // 코드의 위치 이동시키기 & 전투시작
                             this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                             this.chord.startPlayLute();
+                            this.scene.backgroundMusic = this.scene.sound.add('dungeon_default', {
+                                volume: 0.3, // Set the volume (0 to 1)
+                                loop: true // Enable looping if desired
+                            });
                             this.scene.time.delayedCall(1000, () => {
                                 this.scene.backgroundMusic.play();
                             }, [], this.scene);
@@ -238,6 +258,10 @@ export default class StageManager {
                         // 코드의 위치 이동시키기 & 전투시작
                         this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                         this.chord.startPlayLute();
+                        this.scene.backgroundMusic = this.scene.sound.add('dungeon_default', {
+                            volume: 0.3, // Set the volume (0 to 1)
+                            loop: true // Enable looping if desired
+                        });
                         this.scene.time.delayedCall(1000, () => {
                             this.scene.backgroundMusic.play();
                         }, [], this.scene);
@@ -261,6 +285,10 @@ export default class StageManager {
                             // 코드의 위치 이동시키기 & 전투시작
                             this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                             this.chord.startPlayLute();
+                            this.scene.backgroundMusic = this.scene.sound.add('dungeon_boss', {
+                                volume: 0.3, // Set the volume (0 to 1)
+                                loop: true // Enable looping if desired
+                            });
                             this.scene.time.delayedCall(1000, () => {
                                 this.scene.backgroundMusic.play();
                             }, [], this.scene);
@@ -280,6 +308,10 @@ export default class StageManager {
                 // 코드의 위치 이동시키기 & 전투시작
                 this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                 this.chord.startPlayLute();
+                this.scene.backgroundMusic = this.scene.sound.add('room_default', {
+                    volume: 0.3, // Set the volume (0 to 1)
+                    loop: true // Enable looping if desired
+                });
                 this.scene.time.delayedCall(1000, () => {
                     this.scene.backgroundMusic.play();
                 }, [], this.scene);
@@ -296,6 +328,10 @@ export default class StageManager {
                 // 코드의 위치 이동시키기 & 전투시작
                 this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                 this.chord.startPlayLute();
+                this.scene.backgroundMusic = this.scene.sound.add('room_default', {
+                    volume: 0.3, // Set the volume (0 to 1)
+                    loop: true // Enable looping if desired
+                });
                 this.scene.time.delayedCall(1000, () => {
                     this.scene.backgroundMusic.play();
                 }, [], this.scene);
@@ -312,6 +348,10 @@ export default class StageManager {
                 // 코드의 위치 이동시키기 & 전투시작
                 this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                 this.chord.startPlayLute();
+                this.scene.backgroundMusic = this.scene.sound.add('room_default', {
+                    volume: 0.3, // Set the volume (0 to 1)
+                    loop: true // Enable looping if desired
+                });
                 this.scene.time.delayedCall(1000, () => {
                     this.scene.backgroundMusic.play();
                 }, [], this.scene);
@@ -328,6 +368,10 @@ export default class StageManager {
                 // 코드의 위치 이동시키기 & 전투시작
                 this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
                 this.chord.startPlayLute();
+                this.scene.backgroundMusic = this.scene.sound.add('room_boss', {
+                    volume: 0.3, // Set the volume (0 to 1)
+                    loop: true // Enable looping if desired
+                });
                 this.scene.time.delayedCall(1000, () => {
                     this.scene.backgroundMusic.play();
                 }, [], this.scene);

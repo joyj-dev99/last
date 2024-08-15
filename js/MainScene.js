@@ -140,7 +140,9 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_03_04_map", "assets/map/stage_03_04.json");
 
         // 배경음악 로드
-        this.load.audio("bgm_stage_1", "assets/audio/field_theme_1.wav");
+        this.load.audio("forest_default", "assets/audio/background/forest/forest_default.mp3");
+        this.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
+        
 
         Player.preload(this);
         Monster.preload(this);
@@ -157,6 +159,8 @@ export default class MainSceneTest extends Phaser.Scene {
 
         Milestone.preload(this);
         SpeechBubble.preload(this);
+
+        StageManager.preload(this);
     }
 
     create() {
@@ -165,7 +169,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.setupWorld(this.stageNumber, this.mapNumber);
 
         // Play background music
-        this.backgroundMusic = this.sound.add(`bgm_stage_1`, {
+        this.backgroundMusic = this.sound.add(`forest_default`, {
             volume: 0.3, // Set the volume (0 to 1)
             loop: true // Enable looping if desired
         });
