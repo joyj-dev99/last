@@ -394,7 +394,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if(this.status.nowHeart === 0){
             console.log("플레이어 죽음");
             this.anims.play('player_death');
-            this.handlePlayerDeath();
+            this.scene.sound.play('sound_player_death');
+
+
+
         }else{
             this.anims.play('player_damage');
             
