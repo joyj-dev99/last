@@ -225,7 +225,7 @@ export default class StageManager {
             const dialogueMessages = [
                 {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '누구냐! 감히 우리 베이비들에게 손을 대다니!'},
                 {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '대가를 치르게 해주마!'},
-                {name : '고블린', portrait : 'NecromancerPotrait', message : '우어어어'},
+                {name : '고블린', portrait : null, message : '우어어어'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '그.. 베이비가, 고블린은 아니겠지?'},
                 {name : '코드', portrait : 'ChordPotrait', message : '음. 사람마다 취향이 다를 수도 있죠..하하..'},
             ];
@@ -242,7 +242,7 @@ export default class StageManager {
                 {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 여기가 볼프강 박사가 있는 연구소예요!'},
                 {name : '코드', portrait : 'ChordPotrait', message : '그 사람 주변에는 항상 호위무사가 있는데…'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '저거 말하는거냐?'},
-                {name : '도깨비', portrait : 'NecromancerPotrait', message : '침입자. 죽인다.'},
+                {name : '도깨비', portrait : null, message : '침입자. 죽인다.'},
             ];
             // 메시지 표시가 끝난 후 콜백 처리
             this.dialog.showDialogModal(dialogueMessages, () => {
@@ -254,7 +254,7 @@ export default class StageManager {
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 저기 위에 뭐가 있어요? 저건.. 천사?'},
-                {name : '천사', portrait : 'NecromancerPotrait', message : '침입자인가. 신의 심판이 두렵지 않나?'},
+                {name : '천사', portrait : null, message : '침입자인가. 신의 심판이 두렵지 않나?'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '저것도 몬스터인가? 그렇다기엔 너무 인간처럼 생겼는데.'},
             ];
             // 메시지 표시가 끝난 후 콜백 처리
@@ -266,7 +266,7 @@ export default class StageManager {
             this.setBGM('room_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
-                {name : '골렘', portrait : 'NecromancerPotrait', message : '침입자는 처단한다.'},
+                {name : '골렘', portrait : null, message : '침입자는 처단한다.'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '이제는 골렘까지?'},
                 {name : '코드', portrait : 'ChordPotrait', message : '조금만 더 가면 중앙 연구실이예요!'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '칫. 일단 가보자!'},
@@ -280,9 +280,9 @@ export default class StageManager {
             this.setBGM('room_boss');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
-                {name : '볼프강', portrait : 'NecromancerPotrait', message : '오, 맥스. 드디어 왔구나.'},
-                {name : '볼프강', portrait : 'NecromancerPotrait', message : '내 연구의 결실을 확인할 시간이야!'},
-                {name : '조수', portrait : 'NecromancerPotrait', message : '기다리고 있었어요, 맥스.'},
+                {name : '볼프강', portrait : null, message : '오, 맥스. 드디어 왔구나.'},
+                {name : '볼프강', portrait : null, message : '내 연구의 결실을 확인할 시간이야!'},
+                {name : '조수', portrait : null, message : '기다리고 있었어요, 맥스.'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '볼프강! 내 피같은 돈 돌려받으러 왔다!'},
             ];
             // 메시지 표시가 끝난 후 콜백 처리
@@ -399,12 +399,12 @@ export default class StageManager {
         }
         else if (stageNumber == 3 && mapNumber == 4) {
             dialogueMessages = [
-                {name : '볼프강', portrait : 'NecromancerPotrait', message : '크윽. 분하다... 내 꿈이... 연구의 끝을 볼 수 있었는데...'},
+                {name : '볼프강', portrait : null, message : '크윽. 분하다... 내 꿈이... 연구의 끝을 볼 수 있었는데...'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '돈 내놔. 사기꾼 자식아!'},
-                {name : '볼프강', portrait : 'NecromancerPotrait', message : '돈? 무슨 돈을 말하는거지?'},
+                {name : '볼프강', portrait : null, message : '돈? 무슨 돈을 말하는거지?'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '니가 미트코인 상장폐지 시키고 꿀꺽한 내 돈 말이야!'},
-                {name : '볼프강', portrait : 'NecromancerPotrait', message : '언제적 이야기를 하는지 모르겠군…'},
-                {name : '볼프강', portrait : 'NecromancerPotrait', message : '그건 이미 연구비로 다 썼어. 남은 돈은 없다.'},
+                {name : '볼프강', portrait : null, message : '언제적 이야기를 하는지 모르겠군…'},
+                {name : '볼프강', portrait : null, message : '그건 이미 연구비로 다 썼어. 남은 돈은 없다.'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '뭐??'},
                 {name : '코드', portrait : 'ChordPotrait', message : '저런...'},
             ];
@@ -414,6 +414,12 @@ export default class StageManager {
             this.scene.isInDialogue = false;
             if (stageNumber == 3 && mapNumber == 4) {
                 // 엔딩씬 보여주기.
+                this.scene.cameras.main.fadeOut(3000, 0, 0, 0); // 2초 동안 까맣게 페이드 아웃
+                this.scene.backgroundMusic.stop();
+                this.scene.cameras.main.once('camerafadeoutcomplete', () => {
+                    const result = 'clear';
+                    this.scene.scene.start('BattleResultScene', result);
+                });
             }
         });
     }

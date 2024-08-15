@@ -137,7 +137,7 @@ export default class NightScene extends Phaser.Scene {
             console.log('Moving to the next map...');
             const stageNumber = this.stageNumber + 1;
             const mapNumber = 1;
-            const playerStatus = this.player.status;
+            const playerStatus = this.playerStatus;
 
             this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
             this.backgroundMusic.stop();

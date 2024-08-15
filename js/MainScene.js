@@ -8,6 +8,7 @@ import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
 import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
+import MonsterApple from "./monsters/MonsterApple.js";
 import MonsterLemon from "./monsters/MonsterLemon.js";
 import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
 import MonsterFly from "./monsters/MonsterFly.js";
@@ -30,6 +31,7 @@ import Slash from "./Slash.js";
 import Magic from "./Magic.js";
 
 import Dialog from "./Dialog.js";
+import StageManager from "./StageManager.js";
 
 import {
     PLAYER_CATEGORY,
@@ -40,9 +42,6 @@ import {
     SENSOR_CATEGORY,
     MONSTER_ATTACK_CATEGORY
 } from "./constants.js";
-
-import MonsterApple from "./monsters/MonsterApple.js";
-import StageManager from "./StageManager.js";
 
 export default class MainSceneTest extends Phaser.Scene {
 
@@ -173,10 +172,10 @@ export default class MainSceneTest extends Phaser.Scene {
         this.setupWorld(this.stageNumber, this.mapNumber);
 
         this.getItemSound = this.sound.add(`get_item`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.7 // Set the volume (0 to 1)
         });
         this.coinDropSound = this.sound.add(`coin_drop`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.4 // Set the volume (0 to 1)
         });
         this.potionDropSound = this.sound.add(`potion_drop`, {
             volume: 0.5 // Set the volume (0 to 1)
@@ -227,10 +226,12 @@ export default class MainSceneTest extends Phaser.Scene {
                 this.player.comboState = 0;
 
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
-                if (gameObjectB.isAlive) {
+                if (gameObjectB.isAlive && this.player.isAlive) {
                     gameObjectB.actionAmin('attack');
                     this.player.takeDamage(gameObjectB.damage);
-                    this.player.applyKnockback(gameObjectB);
+                    if (this.player.isAlive) {
+                        this.player.applyKnockback(gameObjectB);
+                    }
                 }
             }
         });
@@ -282,9 +283,9 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     update() {
-        if (this.isInDialogue) return;
-        this.player.update();
         this.heartIndicator.setHeart(this.player.status.nowHeart);
+        if (this.isInDialogue || !this.player.isAlive) return;
+        this.player.update();
         this.monsterArr.forEach((monster) => {
             monster.update();
         });
@@ -617,7 +618,6 @@ export default class MainSceneTest extends Phaser.Scene {
 
     removeMonsterFromArr(monster) {
         this.monsterDeath2Sound.play();
-
 
         const index = this.monsterArr.indexOf(monster);
         if (index > -1) {

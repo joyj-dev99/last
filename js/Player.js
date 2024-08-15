@@ -76,9 +76,34 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.isRolling = false;
         this.hitByMonster = false;
 
+        this.isAlive = true;
+
         // 애니메이션 완료 이벤트 리스너 추가
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
+
+        this.soundSword = this.scene.sound.add(`sound_player_hit`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.soundMove = this.scene.sound.add(`sound_player_move`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+        this.soundDeath = this.scene.sound.add(`sound_player_death`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+        this.soundDamage = this.scene.sound.add(`sound_player_damage`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+        this.soundBow = this.scene.sound.add(`sound_player_bow`, {
+            volume: 0.4 // Set the volume (0 to 1)
+        });
+        this.soundSpell = this.scene.sound.add(`sound_player_spell`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+        this.soundRoll = this.scene.sound.add(`sound_player_roll`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+
 
     }
 
@@ -88,16 +113,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('playerAnim', 'assets/player/player_anim.json');
         
         // Preload the sound effect for sword action
-        scene.load.audio('sound_player_sword_1', 'assets/audio/sound_player_sword_1.wav');
         scene.load.audio('sound_player_hit', 'assets/audio/sound_player_hit.mp3');
         scene.load.audio('sound_player_move', 'assets/audio/sound_player_move.mp3');
         scene.load.audio('sound_player_death', 'assets/audio/sound_player_death.mp3');
         scene.load.audio('sound_player_damage', 'assets/audio/sound_player_damage.mp3');
 
-        scene.load.audio('sound_male_hurt', 'assets/audio/sound_male_hurt.wav');
         scene.load.audio('sound_player_bow', 'assets/audio/sound_player_bow.mp3');
         scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.mp3');
-        scene.load.audio('sound_player_teleport', 'assets/audio/sound_player_teleport.wav');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
 
         Slash.preload(scene);
@@ -106,6 +128,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     update() {
+        if (!this.isAlive) return;
         const speed = 3.5;
         let playerVelocity = new Phaser.Math.Vector2();
 
@@ -113,7 +136,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어가 움직이지 않고, 칼 휘두르기(슬래쉬)가 null이며, 구르는 상태도 아니고, 몬스터에 의해 맞지 않는
         // 수명이 0보다 커야함
         // 완료된 애니메이션이 idle 이 아닌 경우에 실행됨
-        if (!this.isMoving && this.slash === null && !this.isRolling && !this.hitByMonster && this.anims.currentAnim.key !== 'player_idle'
+        if (this.isAlive && !this.isMoving && this.slash === null && !this.isRolling && !this.hitByMonster && this.anims.currentAnim.key !== 'player_idle'
             && this.status.nowHeart > 0
         ) {
             this.anims.play('player_idle', true);
@@ -145,7 +168,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.removeSlash();
 
             this.anims.play('player_bow');
-            this.scene.sound.play('sound_player_bow');
+            this.soundBow.play();
 
             let arrow = new Arrow({
                 scene: this.scene,
@@ -169,7 +192,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.removeSlash();
 
             this.anims.play('player_spell');
-            this.scene.sound.play('sound_player_spell');
+            this.soundSpell.play();
 
             let magic = new Magic({
                 scene : this.scene
@@ -325,7 +348,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             // 구르기 애니메이션 재생
             this.anims.play('player_roll', true);
-            this.scene.sound.play('sound_player_roll');
+            this.soundRoll.play();
 
             // 구르기 중 충돌 비활성화
             this.setCollidesWith([TILE_CATEGORY, SENSOR_CATEGORY]);
@@ -384,9 +407,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         this.comboState = stage;
         console.log(`칼 휘두르기 ${stage}단계`);
-        // this.scene.sound.play('sound_player_sword_1');
-        this.scene.sound.play('sound_player_hit');
-
+        this.soundSword.play();
     }
 
     removeSlash() {
@@ -403,20 +424,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.hitByMonster = true;
         this.status.nowHeart -= amount;
         this.status.nowHeart = this.status.nowHeart < 0 ? 0 : this.status.nowHeart;
-
+        console.log('player takeDamage, hp : ', this.status.nowHeart);
+        
         if(this.status.nowHeart === 0){
+            this.isAlive = false;
+            this.scene.time.removeAllEvents();
             console.log("플레이어 죽음");
             this.anims.play('player_death');
-            this.scene.sound.play('sound_player_death');
-
-
-        }else{
+            this.soundDeath.play();
+            this.handlePlayerDeath();
+            return 'death';
+        } else{
             this.anims.play('player_damage');
-            this.scene.sound.play('sound_player_damage');
-
+            this.soundDamage.play();
         }
         
-        console.log('player takeDamage, hp : ', this.status.nowHeart);
+       
     }
 
     /** 
@@ -439,7 +462,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.scene.time.delayedCall(200, () => {
             this.setVelocity(0, 0);
             this.hitByMonster = false;
-            this.anims.chain('player_idle'); // Automatically transition to idle after damage animation
+            if (this.isAlive) {
+                this.anims.chain('player_idle'); // Automatically transition to idle after damage animation
+            }
         });
     }
 
@@ -488,17 +513,20 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.comboState = 0;
             });
             this.anims.play('player_idle', true);
+        } else if (animation.key === 'player_bow' ||
+            animation.key === 'player_spell' ||
+            animation.key === 'player_damage'
+        ) {
+            this.anims.play('player_idle', true);
         }
     }
 
     handlePlayerDeath() {
-        this.scene.monsterArr.forEach(monster => {
-            monster.destroy();
-        });
-        this.scene.cameras.main.fadeOut(2000, 0, 0, 0); // 2초 동안 까맣게 페이드 아웃
-
+        this.scene.cameras.main.fadeOut(3000, 0, 0, 0); // 2초 동안 까맣게 페이드 아웃
+        this.scene.backgroundMusic.stop();
         this.scene.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.scene.start('BattleResultScene');
+            const result = 'death';
+            this.scene.scene.start('BattleResultScene', {result});
         });
     }
 

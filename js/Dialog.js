@@ -86,6 +86,14 @@ export default class Dialog  {
         }).setScrollFactor(0);
         this.#container.add(this.#uiText);
 
+        // 대화창의 depth를 플레이어보다 높게 설정
+        const dialogDepth = 101;
+        this.#container.setDepth(dialogDepth);
+        this.#nameText.setDepth(dialogDepth);
+        this.#portrait.setDepth(dialogDepth);
+        this.#uiText.setDepth(dialogDepth);
+
+
         this.#container.setScrollFactor(0); // 컨테이너 자체에도 적용
         
         this.hideDialogModal();
@@ -102,9 +110,9 @@ export default class Dialog  {
     }
 
     static preload(scene) {
-        scene.load.image('MaxPotrait', 'assets/intro/max_normal.png'); 
-        scene.load.image('ChordPotrait', 'assets/intro/chord_normal.png'); 
-        scene.load.image('NecromancerPotrait', 'assets/npc/necromancer.png'); 
+        scene.load.image('MaxPotrait', 'assets/npc/potrait/max.png'); 
+        scene.load.image('ChordPotrait', 'assets/npc/potrait/chord.png'); 
+        scene.load.image('NecromancerPotrait', 'assets/npc/potrait/necromancer.png'); 
     }
 
     /** @type {boolean} */
@@ -174,7 +182,12 @@ export default class Dialog  {
         this.#currentMessage = { name, portrait, message }; // 현재 메시지 저장
 
         this.#nameText.setText(name);
-        this.#portrait.setTexture(portrait).setVisible(true);
+        // portrait 값이 null이면 초상화 숨기기, 그렇지 않으면 표시
+        if (portrait) {
+            this.#portrait.setTexture(portrait).setVisible(true);
+        } else {
+            this.#portrait.setVisible(false);
+        }
 
         this.#uiText.setText('').setAlpha(1);
         
