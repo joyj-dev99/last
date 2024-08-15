@@ -29,7 +29,7 @@
             ]
         },
         {
-            "key": "angle_move",
+            "key": "angel_move",
             "type": "frames",
             "repeat": -1,
             "frameRate": 10,
