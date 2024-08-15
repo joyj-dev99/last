@@ -13,6 +13,7 @@ export const OBJECT_CATEGORY = 0x0008;            // 8
 export const PLAYER_ATTACK_CATEGORY = 0x0010;     // 16 (2^4)
 export const MONSTER_ATTACK_CATEGORY = 0x0020;    // 32 (2^5)
 export const SENSOR_CATEGORY = 0x0040;            // 64 (2^6)
+export const BOUNDARY_CATEGORY = 0x0080;
 
 /* 충돌 그룹이란?
 특정 객체 간의 충돌 여부를 보다 강력하게 제어

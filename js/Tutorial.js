@@ -1,16 +1,16 @@
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY, SENSOR_CATEGORY} from "./constants.js";
-
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY, SENSOR_CATEGORY, BOUNDARY_CATEGORY} from "./constants.js";
 const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right', 
         UPLEFT = 'up_left', UPRIGHT = 'up_right', 
         DOWNLEFT = 'down_left', DOWNRIGHT = 'down_right',
-        ATK1 = 'attack1', ATK3 = 'attack3', SHIFT = 'shift';
+        ATK1 = 'attack1', SHIFT = 'shift';
 
 const UP_ANIMS = 'up_key', DOWN_ANIMS = 'down_key', LEFT_ANIMS = 'left_key', RIGHT_ANIMS = 'right_key', 
         ATK_ANIMS = 'z_key', SHIFT_ANIMS = 'shift_key_anim';
 
 export default class Tutorial{
 
-    constructor() {
+    constructor(player) {
+        this.player = player;
         console.log('튜토리얼 객체 생성');
     }
     
@@ -26,11 +26,26 @@ export default class Tutorial{
         scene.load.atlas('right_key', 'assets/tutorial/keyboard/right_key.png', 'assets/tutorial/keyboard/right_key_anim.json');
         scene.load.atlas('z_key', 'assets/tutorial/keyboard/z_key.png', 'assets/tutorial/keyboard/z_key_anim.json');
         scene.load.atlas('shift_key_anim', 'assets/tutorial/keyboard/shift_key.png', 'assets/tutorial/keyboard/shift_key_anim.json');
+        scene.load.image('right_sign', 'assets/tutorial/sign/right_sign-removebg-preview.png' );
 
     }
 
     // 방향키 조작법 설명 시작
     startDirectionControlExplanation(scene, sensor_x, sensor_y){
+
+         // x = 200 에 고정된 보이지 않는 경계 생성
+        this.boundary = scene.matter.add.rectangle(200, scene.scale.height / 2, 10, scene.scale.height, {
+            isStatic: true, // 이 속성으로 경계가 움직이지 않도록 설정
+            isSensor: false, // 센서가 아니라 실제로 충돌하는 객체로 만듦
+            collisionFilter:{
+                category: BOUNDARY_CATEGORY,
+                mask: PLAYER_CATEGORY
+            }
+        });
+
+        // Matter 월드에 이 경계를 추가
+        scene.matter.world.add(this.boundary);
+
         console.log('방향키 조작방법 시작');
         
         
@@ -60,7 +75,7 @@ export default class Tutorial{
         this.keyboard_left = keyboard_left;
         this.keyboard_right = keyboard_right;    
 
-        this.이동키조작설명순서 = [UP,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT];//,[UP,LEFT],[UP,RIGHT],[DOWN,LEFT],[DOWN,RIGHT]
+        this.이동키조작설명순서 = [RIGHT,UP,LEFT,DOWN,UPRIGHT,UPLEFT,DOWNLEFT,DOWNRIGHT];
 
         scene.anims.create({
             key:UP_ANIMS,
@@ -168,13 +183,23 @@ export default class Tutorial{
 
             this.이동키조작설명순서.splice(0, 1);
             if(this.이동키조작설명순서.length == 0){
-                console.log('0');
+                console.log('조작키 설명 완료');
 
-                // this.endDirectionControlExplanation();
+               // 0.5초 후에 오른쪽 사인 생성
+                setTimeout(() => {
+                    this.createRightSign(scene, this.player.x + 30, this.player.y - 30);
+
+                    // 경계를 제거하여 이동 허용
+                    scene.matter.world.remove(this.boundary);
+
+                    // 물리엔진 갱신
+                    scene.matter.world.engine.world.bodies = scene.matter.world.engine.world.bodies.filter(body => body !== this.boundary);
+
+                }, 1000);
+
             }
-            else {
-                console.log('not 0');
-
+            else {                
+                console.log('조작키 설명 남음');
                 let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
                 for (let i = 0; i < 관련된값.anim_keyboards.length; i++) {
                     console.log('anim_keys');
@@ -201,13 +226,6 @@ export default class Tutorial{
         let anim_key = [];
         let anim_keyboard = [];
         let result;
-
-        if(이동키조작설명값 == ATK3){
-            this.combo_count++;
-        }
-        else{
-            this.combo_count = 0;
-        }
 
         if(이동키조작설명값 == UP){
             if(!(cursors.up.isDown && !cursors.down.isDown && !cursors.left.isDown && !cursors.right.isDown)){
@@ -300,19 +318,6 @@ export default class Tutorial{
             anim_key = [ATK_ANIMS];
             anim_keyboard = [this.keyboard_z];
         }
-        else if(이동키조작설명값 == ATK3){
-            if(Phaser.Input.Keyboard.JustDown(this.zKey) && this.combo_count >= 6){
-                console.log('atk3 true');
-                result = true;
-
-            }
-            else{
-                console.log('atk3 false');
-                result = false;
-            }
-            anim_key = [ATK_ANIMS];
-            anim_keyboard = [this.keyboard_z];
-        }
         else if(이동키조작설명값 == SHIFT){
             if(!(Phaser.Input.Keyboard.JustDown(this.shiftKey))){
                 result = false;
@@ -333,10 +338,18 @@ export default class Tutorial{
     endDirectionControlExplanation(){
         console.log('방향키 조작방법 끝');
         // 메모리에서 완전히 제거
-        this.keyboard_up.destroy();
-        this.keyboard_down.destroy();
-        this.keyboard_left.destroy();
-        this.keyboard_right.destroy();
+        if(this.keyboard_up){
+            this.keyboard_up.destroy();
+        }
+        if(this.keyboard_down){
+            this.keyboard_down.destroy();
+        }
+        if(this.keyboard_left){
+            this.keyboard_left.destroy();
+        }
+        if(this.keyboard_right){
+            this.keyboard_right.destroy();
+        }
 
         // // 나중에 이벤트 리스너를 제거합니다.
         // scene.input.keyboard.off('keydown', this.keyHandler);
@@ -344,6 +357,33 @@ export default class Tutorial{
         // // 나중에 이벤트 리스너를 제거합니다.
         // scene.input.keyboard.off('keyup', this.keyHandler);
     }
+
+    endzKeyControlExplanation(){
+        console.log('z키 조작방법 끝');
+        this.keyboard_z.destroy();
+    }
+
+
+    // 오른쪽으로 이동하는 sign 객체 만들기
+    createRightSign(scene, x, y) {
+        // 'right_sign' 이미지를 특정 x, y 좌표에 생성
+        this.rightSign = scene.add.image(x, y, 'right_sign');
+
+        // 필요한 경우 추가 설정 (예: 크기 조정, 회전 등)
+        this.rightSign.setScale(0.1);  // 이미지를 크기 조정 (필요에 따라 값 조정)
+        this.rightSign.setOrigin(0.5, 0.5); // 이미지의 중심을 기준으로 설정
+
+        return this.rightSign;
+    }
+
+    // 오른쪽으로 이동하는 sign 객체 제거하기
+    removeRightSign() {
+        if (this.rightSign) { // rightSign이 존재하는지 확인
+            this.rightSign.destroy(); // 게임 씬에서 객체 제거
+            this.rightSign = null; // 참조 해제
+        }
+    }
+
 
     startZKeyControlExplanation(scene, sensor_x, sensor_y){
         console.log('z키 조작방법 시작');
@@ -369,7 +409,7 @@ export default class Tutorial{
         //     anim_key : 'z_key'
         // };
 
-        this.이동키조작설명순서 = [ATK1,ATK3];
+        this.이동키조작설명순서 = [ATK1];
 
         scene.anims.create({
             key:'z_key',

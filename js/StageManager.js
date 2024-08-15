@@ -12,7 +12,7 @@ export default class StageManager {
 
     setStageStart(stageNumber, mapNumber) {
         if (stageNumber == 1 && mapNumber == 1) {
-            let tutorial = new Tutorial();
+            let tutorial = new Tutorial(this.player);
             
             // 첫번째는 센서 없이 바로 시작
             this.scene.isInDialogue = true;
@@ -21,11 +21,11 @@ export default class StageManager {
                 this.chord.showSpeechBubble('방향키를\n눌러보세요!', () =>{
                     this.scene.isInDialogue = false;
                     // 이동키 조작 설명 시작.
-                    tutorial.startDirectionControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
+                    tutorial.startDirectionControlExplanation(this.scene, 250, this.player.y - 160, this.player)
                 });
             });
             
-            let sensor2 = tutorial.createSensor(this.scene, this.player.x +200, this.player.y - 160, 10, 500);
+            let sensor2 = tutorial.createSensor(this.scene, 280, this.player.y - 160, 10, 500);
             // 충돌시 이동키 설명관련 데이터 삭제
             // shift, z 한번, z 세번
 
@@ -42,6 +42,8 @@ export default class StageManager {
                     this.player.stop();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
                     // 이동키 조작 설명 끝
                     tutorial.endDirectionControlExplanation();
 
@@ -70,6 +72,8 @@ export default class StageManager {
                     this.player.stop();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
                     // 이동키 조작 설명 끝
                     tutorial.endzKeyControlExplanation();
                 
@@ -100,6 +104,8 @@ export default class StageManager {
                     this.player.stop();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
                     tutorial.endshiftKeyControlExplanation();
                     tutorial.finish(this.scene);
 
