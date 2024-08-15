@@ -183,11 +183,17 @@ export default class Tutorial{
             if(this.이동키조작설명순서.length == 0){
                 console.log('조작키 설명 완료');
 
+                //오른쪽 사인 생성
+                this.createRightSign(scene, player.x + 30, player.y -30);
+
                 // 경계를 제거하여 이동 허용
                 scene.matter.world.remove(boundary);
                 // 물리엔진 갱신
                 scene.matter.world.engine.world.bodies = scene.matter.world.engine.world.bodies.filter(body => body !== boundary);
-                this.endDirectionControlExplanation();
+                //조작키 제거
+                this.removeKey();
+
+                
             }
             else {
                 console.log('조작키 설명 남음');
@@ -335,20 +341,31 @@ export default class Tutorial{
         return {'result': result, 'anim_keys' : anim_key, 'anim_keyboards' : anim_keyboard};
     }
 
-    // 방향키 조작법 설명 끝
-    endDirectionControlExplanation(){
+    removeKey(){
         // 메모리에서 완전히 제거
-        this.keyboard_up.destroy();
-        this.keyboard_down.destroy();
-        this.keyboard_left.destroy();
-        this.keyboard_right.destroy();
-
+        if(this.keyboard_up){
+            this.keyboard_up.destroy();
+        }
+        if(this.keyboard_down){
+            this.keyboard_down.destroy();
+        }
+        if(this.keyboard_left){
+            this.keyboard_left.destroy();
+        }
+        if(this.keyboard_right){
+            this.keyboard_right.destroy();
+        }
+        if(this.keyboard_z){
+            this.keyboard_z.destroy();
+        }
         // // 나중에 이벤트 리스너를 제거합니다.
         // scene.input.keyboard.off('keydown', this.keyHandler);
 
         // // 나중에 이벤트 리스너를 제거합니다.
         // scene.input.keyboard.off('keyup', this.keyHandler);
     }
+
+
 
     // 오른쪽으로 이동하는 sign 객체 만들기
     createRightSign(scene, x, y) {
@@ -358,7 +375,7 @@ export default class Tutorial{
         // 필요한 경우 추가 설정 (예: 크기 조정, 회전 등)
         this.rightSign.setScale(0.1);  // 이미지를 크기 조정 (필요에 따라 값 조정)
         this.rightSign.setOrigin(0.5, 0.5); // 이미지의 중심을 기준으로 설정
-    
+
         return this.rightSign;
     }
 
@@ -414,10 +431,6 @@ export default class Tutorial{
             관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
         }
         
-    }
-
-    endzKeyControlExplanation(){
-        this.keyboard_z.destroy();
     }
 
     startshiftKeyControlExplanation(scene, sensor_x, sensor_y){
