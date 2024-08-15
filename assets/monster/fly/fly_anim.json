@@ -1,10 +1,34 @@
 {
     "anims": [
         {
-            "key": "fly_flight",
+            "key": "fly_idle",
             "type": "frames",
             "repeat": -1,
-            "frameRate": 8,
+            "frameRate": 7,
+            "frames": [
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_0"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_1"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_2"
+                },
+                {
+                    "key": "fly",
+                    "frame": "giant_fly_sprite_sheet_3"
+                }
+            ]
+        },
+        {
+            "key": "fly_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
             "frames": [
                 {
                     "key": "fly",
@@ -27,8 +51,8 @@
         {
             "key": "fly_summon_files",
             "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
+            "repeat": 0,
+            "frameRate": 8,
             "frames": [
                 {
                     "key": "fly",
@@ -52,7 +76,7 @@
             "key": "fly_damage",
             "type": "frames",
             "repeat": 0,
-            "frameRate": 6,
+            "frameRate": 8,
             "frames": [
                 {
                     "key": "fly",
@@ -76,7 +100,7 @@
             "key": "fly_death",
             "type": "frames",
             "repeat": 0,
-            "frameRate": 10,
+            "frameRate": 8,
             "frames": [
                 {
                     "key": "fly",
