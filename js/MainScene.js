@@ -14,6 +14,8 @@ import MonsterFly from "./monsters/MonsterFly.js";
 import MonsterSpider from "./monsters/MonsterSpider.js";
 import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
 import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
+import MonsterBossGoblin from "./monsters/MonsterBossGoblin.js";
+import MonsterBossNecromancer from "./monsters/MonsterBossNecromancer.js";
 import MonsterBugbear from "./monsters/MonsterBugbear.js";
 import MonsterAngel from "./monsters/MonsterAngel.js";
 import MonsterGolem from "./monsters/MonsterGolem.js";
@@ -498,6 +500,22 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break; 
+                    case 'goblin' :
+                        m = new MonsterBossGoblin({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break;
+                    case 'necromancer':
+                        m = new MonsterBossNecromancer({
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break;
                     case 'bugbear' : 
                         m = new MonsterBugbear({ 
                             scene: this,
