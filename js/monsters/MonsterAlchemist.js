@@ -15,18 +15,18 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
         this.x = x;
         this.y = y;
         this.monsterType = 'alchemist';
-        this.bodyWidth = 48;
-        this.bodyHeight = 42;
+        this.bodyWidth = 16;
+        this.bodyHeight = 16;
         this.centreX = 0;
-        this.centreY = -26;
+        this.centreY = -6;
         this.initHp = 250;
         this.hp = 250;
         this.damage = 0.5;
         this.reach = 30;
         this.speed = 1;
-        this.oneMove = 10;
+        this.oneMove = 20;
         this.speed = 1;
-        this.maxMove = 10;
+        this.maxMove = 50;
         this.followDistance = 400;
         this.scene.add.existing(this);
 
@@ -65,19 +65,31 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
         this.isReturning = false;
         this.isAlive = true;
         this.state = 'idle'; // 현재 상태
+
+
         // 위치 설정
         this.initialX = x;
         this.initialY = y;
         this.target = new Phaser.Math.Vector2(this.x, this.y);
-        //
+
+
+        
         this.bullets = this.scene.add.group();
         this.isShoting = true;
         this.shotingRate = 3000; // 발사 간격 (밀리초)
-        this.bulletSpeed = 3;
+        this.bulletSpeed = 2;
         this.bulletDuration = 2000;
-        this.bulletDistance = 400;
-        this.totalBullets = 36;
-        this.angleStep = 360 / this.totalBullets;
+        this.bulletDistance = 200;
+
+        // //
+        // this.bullets = this.scene.add.group();
+        // this.isShoting = true;
+        // this.shotingRate = 3000; // 발사 간격 (밀리초)
+        // this.bulletSpeed = 3;
+        // this.bulletDuration = 2000;
+        // this.bulletDistance = 400;
+        // this.totalBullets = 36;
+        // this.angleStep = 360 / this.totalBullets;
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
@@ -89,9 +101,9 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
         this.healthBar.setDepth(1001);
         this.healthBarBack.setDepth(1001);
 
-        this.flag = '대기';
-        this.count = 0;
-        // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
+        // this.flag = '대기';
+        // this.count = 0;
+        // // 변신 애니메이션 끝나고 호출되는 함수 설정
         this.on('animationcomplete', this.handleAnimationComplete2, this);
 
     }
@@ -107,20 +119,15 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
         scene.load.atlas('alchemist', 'assets/monster/alchemist/alchemist.png', 'assets/monster/alchemist/alchemist_atlas.json');
         scene.load.animation('alchemistAnim', 'assets/monster/alchemist/alchemist_anim.json');
 
-        // scene.load.atlas('pumpkin', 'assets/monster/pumpkin/pumpkin.png', 'assets/monster/pumpkin/pumpkin_atlas.json');
-        // scene.load.animation('pumpkinAnim', 'assets/monster/pumpkin/pumpkin_anim.json');
-
-        // scene.load.atlas('seed', 'assets/monster/pumpkin/seed/seed.png', 'assets/monster/pumpkin/seed/seed_atlas.json');
-        // scene.load.animation('seedAnim', 'assets/monster/pumpkin/seed/seed_anim.json');
-
-        // scene.load.image('shockwave', 'assets/monster/pumpkin/shockwave.png');
     }
 
-
-    
     handleAnimationComplete2(animation) {
+
         this.flag = '완료';
         console.log('변신 완료');
+        this.isBattleStared = true;
+        this.isHurt = false;
+
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.off('animationcomplete', this.handleAnimationComplete2, this);
     }
@@ -132,26 +139,14 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
 
     update() {
 
-
-        if(this.flag === '대기'){
-            this.count++;
-            console.log('대기');
-            if(this.count == 500){
-                this.flag = '변신시작';
-            }
-        }
-        else if(this.flag === '변신시작'){
-            this.flag = '변신중';
+        if(this.monsterType == 'alchemist' && this.initHp / 2 >= this.hp){
             this.monsterType = 'minotaur';
             this.변신();
             return;
         }
-        else if(this.flag === '변신중'){
-            return;
-        }
 
 
-        //몬스터가 죽었으면 update 실행하지 않음
+        // 몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;
         this.healthBarBack.clear();
         this.healthBar.clear();
@@ -161,15 +156,19 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
         this.healthBar.fillStyle(0xff0000);
         this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
 
-        this.bullets.getChildren().forEach(bullet => {
-            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
-            const elapsedTime = this.scene.time.now - bullet.creationTime;
-            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
-                // this.bullets.remove(bullet, true, true);
-                bullet.destroy();
+        // this.bullets.getChildren().forEach(bullet => {
+        //     const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
+        //     const elapsedTime = this.scene.time.now - bullet.creationTime;
+        //     if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
+        //         // this.bullets.remove(bullet, true, true);
+        //         bullet.destroy();
+        //     }
+        // });
 
-            }
-        });
+        console.log('update 2 실행1')
+
+        console.log('this.isBattleStared : '+this.isBattleStared)
+        console.log('this.isHurt : '+this.isHurt)
 
         // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
         if (!this.isBattleStared || this.isHurt) return;
@@ -196,20 +195,93 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
             this.isMoving = false;
             this.setVelocity(0, 0);
         }
+
+
         // 공격 애니메이션 처리 안됨
         const currentAnimKey = this.anims.currentAnim.key;
-        // 상태 변화 감지 및 애니메이션 재생
-        if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
-            this.anims.play(`${this.monsterType}_move`);
+        console.log('currentAnimKey : '+currentAnimKey);
+
+        if(currentAnimKey == 'transform__into__the__minotaur'){
+            return;
         }
 
+        // isMoving 에 따른 move, idle 애니메이션 실행
+        if (!this.isHurt && this.isMoving && !(currentAnimKey == `${this.monsterType}_move` || currentAnimKey ==`${this.monsterType}_throw_flask` || currentAnimKey ==`${this.monsterType}_attack1`)) {
+            // this.anims.play(`${this.monsterType}_move`);
+            const randomValue = Math.random();
+                if(randomValue <= 0.1){
+                    // this.setStatic(true);
+                    if('alchemist'){
+                        this.anims.play(`${this.monsterType}_throw_flask`);
+                    }
+                    else{
+                        this.anims.play(`${this.monsterType}_attack1`);
+                    }
+                }
+                else{
+                    this.anims.play(`${this.monsterType}_move`);
+                }
+
+        } else if (!this.isHurt && !this.isMoving && currentAnimKey !== `${this.monsterType}_idle`) {
+            this.anims.play(`${this.monsterType}_idle`);
+        }
+        else if (!this.isHurt && this.isMoving && (currentAnimKey == `${this.monsterType}_move`)){
+            const randomValue = Math.random();
+                if(randomValue <= 0.01){
+                    // this.setStatic(true);
+                    // 물약 던지는 모션 추가
+                    this.shootBullet(this.player);
+                    this.anims.play(`${this.monsterType}_throw_flask`);
+                }
+                else{
+                    // this.anims.play(`${this.monsterType}_move`);
+                }
+
+        }
+
+        this.bullets.getChildren().forEach(bullet => {
+            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
+            const elapsedTime = this.scene.time.now - bullet.creationTime;
+            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
+                // this.bullets.remove(bullet, true, true);
+                bullet.destroy();
+            }
+        });
+
+
+    }
+
+    shootBullet(player) {
+        const angle = Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y);
+        let bullet = this.scene.matter.add.image(this.x, this.y, 'alchemist', 'alchemist_sprite_sheet_56');
+        bullet.setBody({
+            type: 'circle',
+            radius: 5, // 반지름을 작게 설정하여 충돌 범위 축소
+        });
+        bullet.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
+        bullet.setCollidesWith([PLAYER_CATEGORY]);
+        bullet.setFixedRotation();
+        bullet.setFrictionAir(0);
+        bullet.setAngle(Phaser.Math.RadToDeg(angle));
+        bullet.setVelocity(Math.cos(angle) * this.bulletSpeed, Math.sin(angle) * this.bulletSpeed);
+        bullet.startX = this.x;
+        bullet.startY = this.y;
+        bullet.damage = 0.5;
+        bullet.creationTime = this.scene.time.now;
+        this.bullets.add(bullet);
+        this.scene.setCollisionOfMonsterAttack(bullet);
+
+        // // 몇초마다 한번씩 발사하도록 하는 변수
+        // this.scene.time.delayedCall(this.shotingRate, () => {
+        //     this.isShoting = true;
+        // });
 
     }
 
     startBattle() {
         this.attackEvent = this.scene.time.addEvent({
             delay: 4000,
-            callback: this.attack,
+            callback: this.prepareMove,
             callbackScope: this,
             loop: true
         });
@@ -217,47 +289,102 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
     }
 
     actionAmin(state) {
+
+        console.log('actionAmin');
         this.state = state;
-        if (state === 'attack') {
-            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
-            this.anims.play(`${this.monsterType}_attack`, true);
-            // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
-            // this.scene.time.delayedCall(1500, () => {
-            //     this.setStatic(false);
-            // });
+ 
+        if (state === 'attack') {                                                                             
+         
+            if(this.monsterType == 'minotaur'){
+                // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
+                this.anims.play(`${this.monsterType}_attack1`, true);
+            }
+      
         }
-        if (state === 'damage') {
-            this.anims.play(`${this.monsterType}_damage`, true);
-        }
+        // if (state === 'damage') {
+        //     this.anims.play(`${this.monsterType}_damage`, true);
+        // }
+
     }
 
     handleAnimationComplete(animation) {
+
+
+        if (animation.key === 'transform__into__the__minotaur') {
+            this.isHurt = false;
+            // this.anims.play(`${this.monsterType}_idle`, true);
+        }
         if (animation.key === `${this.monsterType}_damage`) {
             this.isHurt = false;
             this.anims.play(`${this.monsterType}_idle`, true);
-        } else if (animation.key === `${this.monsterType}_attack`) {
+        }
+        if (animation.key === `${this.monsterType}_damage1`) {
+            this.isHurt = false;
+            this.anims.play(`${this.monsterType}_idle`, true);
+        }
+        // else if (animation.key === `${this.monsterType}_move`) {
+        //     this.scene.time.delayedCall(100, () => {
+        //         // this.shootShockwave();
+        //         this.anims.play(`${this.monsterType}_idle`, true);
+        //     });
+        // } 
+        else if (animation.key === `${this.monsterType}_attack`) {
             this.scene.time.delayedCall(100, () => {
-                this.shootShockwave();
+                // this.shootShockwave();
                 this.anims.play(`${this.monsterType}_idle`, true);
             });
-        } else if (animation.key === `${this.monsterType}_spit_seed`) {
+        } else if (animation.key === `${this.monsterType}_throw_flask`) {
             this.scene.time.delayedCall(100, () => {
-                this.shootBullet();
+                // this.shootBullet();
                 this.anims.play(`${this.monsterType}_idle`, true);
             });
         } else if (animation.key === `${this.monsterType}_death`) {
             this.destroy();
         }
+
+
+        
     }
 
-    attack() {
-        this.setStatic(true);
-        if (this.initHp / 2 >= this.hp) {
-            this.anims.play(`${this.monsterType}_spit_seed`);
+
+    prepareMove() {
+        // this.setStatic(false);
+          // this.scene.time.delayedCall(1500, () => {
+            //     this.setStatic(false);
+            // });
+        //몬스터가 플레이어를 따라다니고 있을 때, 원래 위치로 돌아가고 있을 때는 좌표 계산 안함
+        if (this.isFollowing && this.isReturning) return;
+        // 만약 초기 위치에서 너무 많이 떨어진 경우 다시 초기 위치로 돌아가야 함
+        if (Phaser.Math.Distance.Between(this.initialX, this.initialY, this.x, this.y) > this.maxMove) {
+            // console.log("돌아가야해 : ", this.x, this.y)
+            this.target.x = this.initialX;
+            this.target.y = this.initialY;
+            this.isReturning = true;
         } else {
-            this.anims.play(`${this.monsterType}_attack`);
+            this.isReturning = false;
+            const directions = [
+                {x: -1, y: 0},  // left
+                {x: 1, y: 0},   // right
+                {x: 0, y: -1},  // up
+                {x: 0, y: 1},   // down
+                {x: -1, y: -1}, // up-left
+                {x: 1, y: -1},  // up-right
+                {x: -1, y: 1},  // down-left
+                {x: 1, y: 1}    // down-right
+            ];
+
+            const direction = Phaser.Math.RND.pick(directions);
+            let newX = this.target.x + direction.x * this.oneMove;
+            let newY = this.target.y + direction.y * this.oneMove;
+
+            if (Phaser.Math.Distance.Between(this.initialX, this.initialY, newX, newY) < this.maxMove) {
+                this.target.x = newX;
+                this.target.y = newY;
+            }
         }
+        // console.log('몬스터 타겟 위치 설정 : ', this.target.x, this.target.y);
     }
+
 
     takeDamage(amount) {
         console.log('takeDamage 실행됨', this.monsterType, amount);
@@ -267,6 +394,7 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
 
         if (this.hp > 0) {
             this.anims.play(`${this.monsterType}_damage`, true);
+            // this.applyKnockback(gameObject);
         } else {
             this.setCollidesWith([TILE_CATEGORY]);
             this.isAlive = false;
@@ -302,64 +430,6 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
         this.scene.time.delayedCall(200, () => {
             this.setVelocity(0, 0);
             this.isHurt = false;
-        });
-    }
-
-    shootShockwave() {
-        // 충격파 생성
-        const shockwave = this.scene.matter.add.image(this.x, this.y, 'shockwave', null, {
-            shape: 'circle'
-        });
-        shockwave.setStatic(true);
-        shockwave.setScale(0.001);
-        shockwave.setAlpha(1);
-        shockwave.damage = 0.5;
-        // 충돌 카테고리 설정
-        shockwave.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
-        shockwave.setCollidesWith([PLAYER_CATEGORY]);
-        // 충격파 확장 애니메이션
-        this.scene.tweens.add({
-            targets: shockwave,
-            scaleX: 0.3,
-            scaleY: 0.3,
-            alpha: 0, // 점점 투명해짐
-            duration: 500,
-            onComplete: () => {
-                shockwave.destroy(); // 애니메이션이 끝나면 충격파 제거
-                this.setStatic(false);
-            }
-        });
-        this.scene.setCollisionOfMonsterPumpkinShockwave(shockwave);
-
-    }
-
-    shootBullet() {
-        this.setStatic(true);
-        for (let i = 0; i < this.totalBullets; i++) {
-            // const angle = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y);
-            const angle = Phaser.Math.DegToRad(i * this.angleStep);
-            let bullet = this.scene.matter.add.image(this.x, this.y, 'seed', 'seed_sprite_sheet_0');
-            bullet.setBody({
-                type: 'circle',
-                radius: 5, // 반지름을 작게 설정하여 충돌 범위 축소
-            });
-            bullet.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
-            bullet.setCollidesWith([PLAYER_CATEGORY]);
-            bullet.setFixedRotation();
-            bullet.setFrictionAir(0);
-            bullet.setAngle(Phaser.Math.RadToDeg(angle));
-            bullet.setVelocity(Math.cos(angle) * this.bulletSpeed, Math.sin(angle) * this.bulletSpeed);
-            bullet.startX = this.x;
-            bullet.startY = this.y;
-            bullet.damage = 0.5;
-            bullet.creationTime = this.scene.time.now;
-            this.bullets.add(bullet);
-            this.scene.setCollisionOfMonsterAttack(bullet);
-        }
-        // 몇초마다 한번씩 발사하도록 하는 변수
-        this.scene.time.delayedCall(1000, () => {
-            this.setStatic(false);
-
         });
     }
 

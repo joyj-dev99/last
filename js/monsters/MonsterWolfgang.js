@@ -25,5 +25,33 @@ export default class MonsterWolfgang extends Monster {
             followDistance : 70,
             player: player
         });
+
+        this.healthBarBack = this.scene.add.graphics();
+        this.healthBar = this.scene.add.graphics();
+        // 초기 프레임 설정
+        this.healthBar.setScrollFactor(0);
+        this.healthBarBack.setScrollFactor(0);
+        this.healthBar.setDepth(1001);
+        this.healthBarBack.setDepth(1001);
+
+        
     }
+
+
+    update(){
+
+        super.update();
+
+        this.healthBarBack.clear();
+        this.healthBar.clear();
+        this.healthBarBack.fillStyle(0x000000);
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, 240, 15);
+        let healthWidth = (this.hp / this.initHp) * 240;
+        this.healthBar.fillStyle(0xff0000);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
+
+    }
+
+
+
 }

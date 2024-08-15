@@ -192,7 +192,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(monster instanceof MonsterGolem){
             monsterITEM = Item.Red_Potion_ITEM;
         }
-        
+        else{
+            monsterITEM = Item.COIN_ITEM;
+        }
         
         // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
         const randomValue = Math.random();
