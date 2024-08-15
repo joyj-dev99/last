@@ -6,7 +6,7 @@ import {
     PLAYER_ATTACK_CATEGORY, MONSTER_ATTACK_CATEGORY
 } from "../constants.js";
 
-export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
+export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y, player} = data;
         super(scene.matter.world, x, y, 'necromancer', 'necromancer_sprite_sheet_0');
@@ -80,8 +80,18 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.angleStep = 360 / this.totalBullets;
         this.recoveryHp = 0;
 
+        this.isOneTimeRecall = true;
+
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
+
+        this.scene.add.text(this.scene.sys.game.config.width / 4 + 120, 5, `네크로맨서`, {
+            fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '12px',
+            fill: '#000',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            padding: {x: 10}
+        }).setScrollFactor(0).setDepth(1001);
 
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
@@ -106,10 +116,10 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, 240, 15);
-        let healthWidth = (this.hp / this.initHp) * 240;
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 + 120, 20, 120, 15);
+        let healthWidth = (this.hp / this.initHp) * 120;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 + 120, 20, healthWidth, 15);
 
         this.bullets.getChildren().forEach(bullet => {
             const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
@@ -132,7 +142,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         let monsterVelocity = new Phaser.Math.Vector2();
         let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
         let distanceToTarget = toTarget.length();
-        if (distanceToTarget > 120) {
+        if (distanceToTarget > 150) {
             this.isMoving = true;
             toTarget.normalize(); // 벡터를 단위 벡터로 정규화
             monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
@@ -148,14 +158,14 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
             const dx = this.x - this.player.x;
             const dy = this.y - this.player.y;
             if (dx > 0) {
-                this.setVelocityX(speed * 3);
+                this.setVelocityX(speed *4);
             } else {
-                this.setVelocityX(-speed * 3);
+                this.setVelocityX(-speed * 4);
             }
             if (dy > 0) {
-                this.setVelocityY(speed * 3);
+                this.setVelocityY(speed * 4);
             } else {
-                this.setVelocityY(-speed * 3);
+                this.setVelocityY(-speed * 4);
             }
         }
 
@@ -222,9 +232,11 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
 
     attack() {
         this.setStatic(true);
-        if (this.initHp / 2 >= this.hp) {
+        if (this.initHp / 2 >= this.hp && this.isOneTimeRecall && this.anims.currentAnim.key === `${this.monsterType}_move`) {
+            this.isOneTimeRecall = false;
+            this.hp = this.hp + this.initHp / 3;
             this.anims.play(`${this.monsterType}_attack1`);
-        } else {
+        } else if (this.isOneTimeRecall === false) {
             this.anims.play(`${this.monsterType}_attack2`);
             this.shootBullet();
         }

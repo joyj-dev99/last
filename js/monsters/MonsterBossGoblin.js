@@ -55,7 +55,7 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         console.log("몬스터 생성: ", this.monsterType, x, y);
 
         this.setCollisionCategory(MONSTER_CATEGORY);
-        this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY]);
+        this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY,TILE_CATEGORY]);
 
         this.isBattleStared = false;
 
@@ -83,6 +83,15 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
+        this.scene.add.text(this.scene.sys.game.config.width / 4 - 30, 5, `고블린`, {
+            fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '12px',
+            fill: '#000',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            padding: {x: 10}
+        }).setScrollFactor(0).setDepth(1001);
+
+
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
         // 초기 프레임 설정
@@ -109,10 +118,10 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, 240, 15);
-        let healthWidth = (this.hp / this.initHp) * 240;
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 30, 20, 120, 15);
+        let healthWidth = (this.hp / this.initHp) * 120;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 30, 20, healthWidth, 15);
 
         this.bullets.getChildren().forEach(bullet => {
             const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);

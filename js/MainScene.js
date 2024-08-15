@@ -97,8 +97,7 @@ export default class MainSceneTest extends Phaser.Scene {
             this.maxX = 406;
             this.minY = 106;
             this.maxY = 438;
-        }
-        else if (this.stageNumber === 3 && this.mapNumber <= 3) { // 일반맵
+        } else if (this.stageNumber === 3 && this.mapNumber <= 3) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
             this.minX = 10;
@@ -132,7 +131,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.image("Tileset", "assets/map/Modern_Office_32x32.png");
         this.load.image("Tileset2", "assets/map/Room_Builder_Office_32x32.png");
         this.load.image("Tileset3", "assets/map/Lab Tileset.png");
-         
+
         this.load.tilemapTiledJSON("stage_03_01_map", "assets/map/stage_03_01.json");
         this.load.tilemapTiledJSON("stage_03_02_map", "assets/map/stage_03_02.json");
         this.load.tilemapTiledJSON("stage_03_03_map", "assets/map/stage_03_03.json");
@@ -309,8 +308,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 }
             });
 
-        }
-        else if (stageNumber === 3 && mapNumber <= 3) {
+        } else if (stageNumber === 3 && mapNumber <= 3) {
             const Tileset = map.addTilesetImage("Modern_Office_32x32", "Tileset");
             const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "Tileset2");
             const Tileset3 = map.addTilesetImage("Lab Tileset", "Tileset3");
@@ -374,9 +372,9 @@ export default class MainSceneTest extends Phaser.Scene {
 
         //오브젝트 레이어 관련 코드
         const objectLayer = map.getObjectLayer('object');
-        console.log('map : '+map);
+        console.log('map : ' + map);
         console.dir(map);
-        console.log('objectLayer : '+objectLayer);
+        console.log('objectLayer : ' + objectLayer);
         objectLayer.objects.forEach(object => {
             // 각 오브젝트의 속성에 접근
             const {x, y, name, type} = object;
@@ -462,7 +460,7 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'pumpkin' : 
+                    case 'pumpkin' :
                         m = new MonsterBossPumpkin({
                             scene: this,
                             x: x,
@@ -470,7 +468,7 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'fly' : 
+                    case 'fly' :
                         m = new MonsterFly({
                             scene: this,
                             x: x,
@@ -478,7 +476,7 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'spider' : 
+                    case 'spider' :
                         m = new MonsterSpider({
                             scene: this,
                             x: x,
@@ -486,7 +484,7 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'mini goblin' : 
+                    case 'mini goblin' :
                         m = new MonsterMiniGoblin({//MonsterMiniGoblin
                             scene: this,
                             x: x,
@@ -494,14 +492,14 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'ratfolk' : 
+                    case 'ratfolk' :
                         m = new MonsterRatfolk({
                             scene: this,
                             x: x,
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
-                        break; 
+                        break;
                     case 'goblin' :
                         m = new MonsterBossGoblin({
                             scene: this,
@@ -518,31 +516,31 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break;
-                    case 'bugbear' : 
-                        m = new MonsterBugbear({ 
+                    case 'bugbear' :
+                        m = new MonsterBugbear({
                             scene: this,
                             x: x,
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
-                        break; 
-                    case 'angle' : 
-                        m = new MonsterAngel({ 
+                        break;
+                    case 'angle' :
+                        m = new MonsterAngel({
                             scene: this,
                             x: x,
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
-                        break; 
-                    case 'golem' : 
-                        m = new MonsterGolem({ 
+                        break;
+                    case 'golem' :
+                        m = new MonsterGolem({
                             scene: this,
                             x: x,
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
-                        break; 
-                        
+                        break;
+
                     default:
                     // console.log("몬스터 생성 : " + name);
                 }
@@ -626,7 +624,7 @@ export default class MainSceneTest extends Phaser.Scene {
         if (this.mapNumber === 1) {
             //맵 1인 경우, 반드시 미트코인이 나온다
             this.itemType = Item.COIN_ITEM;
-        
+
             // 몬스터의 위치에 객체 생성 
             this.item = new Item({
                 scene: this,
@@ -634,8 +632,8 @@ export default class MainSceneTest extends Phaser.Scene {
                 y: monster.y,
                 itemType: this.itemType
             });
-        }else{
-             // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
+        } else {
+            // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
             this.itemType = Item.createItemType(monster);
 
             // 몬스터의 위치에 객체 생성 
@@ -680,7 +678,7 @@ export default class MainSceneTest extends Phaser.Scene {
 
                 // 네크로맨서의 레이저빔은 사라지지 않고 유지되게 만드려고
                 if (gameObjectB.texture.key === 'necromancer_beam') {
-                //     pass
+                    //     pass
                 } else {
                     gameObjectB.destroy();
                     // 충돌 후 애니메이션 재생 하고 소멸
@@ -723,13 +721,21 @@ export default class MainSceneTest extends Phaser.Scene {
         });
     }
 
-    doMakeGoblin(){
-        let m = new MonsterBossGoblin({
-            scene: this,
-            x: this.x,
-            y: this.y,
-            player: this.player // 플레이어 객체 전달
-        });
-        this.monsterArr.push(m);
+    doMakeGoblin() {
+        const type = this.monsterArr.find(t => t.monsterType === 'goblin');
+        if (type === undefined) {
+            let m = new MonsterBossGoblin({
+                scene: this,
+                x: 250,
+                y: 250,
+                player: this.player // 플레이어 객체 전달
+            });
+            m.setCollisionCategory(MONSTER_CATEGORY);
+            m.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY, TILE_CATEGORY]);
+            this.monsterArr.push(m);
+            m.startBattle();
+        }
+
+
     }
 }
