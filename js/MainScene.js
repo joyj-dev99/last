@@ -54,7 +54,7 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 3;
+        this.stageNumber = data.stageNumber || 2;
         this.mapNumber = data.mapNumber || 4;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
@@ -148,7 +148,8 @@ export default class MainSceneTest extends Phaser.Scene {
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
-        MonsterAlchemist.preload(this);
+        MonsterBossGoblin.preload(this);
+        MonsterBossNecromancer.preload(this);
 
         Chord.preload(this);
         Item.preload(this);
@@ -254,33 +255,6 @@ export default class MainSceneTest extends Phaser.Scene {
                 }
             });
         }
-
-        // // 플레이어와 표지판 충돌 이벤트 설정
-        // this.matterCollision.addOnCollideStart({
-        //     objectA: this.player,
-        //     objectB: this.milestone,
-        //     callback: eventData => {
-        //         const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-        //         console.log("플레이어와 표지판 충돌");
-        //         // 상호작용 가능 키 표시
-        //         gameObjectB.showInteractPrompt();
-        //         // 키보드 입력 이벤트 설정
-        //         this.input.keyboard.on('keydown-E', goToNextHandler);
-        //     }
-        // });
-
-        // this.matterCollision.addOnCollideEnd({
-        //     objectA: this.player,
-        //     objectB: this.milestone,
-        //     callback: eventData => {
-        //         const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-        //         console.log("플레이어와 표지판 떨어짐");
-        //         // 상호작용 가능 키 숨기기
-        //         gameObjectB.hideInteractPrompt();
-        //         // 키보드 입력 이벤트 해제
-        //         this.input.keyboard.off('keydown-E', goToNextHandler);
-        //     }
-        // });
 
     }
 
