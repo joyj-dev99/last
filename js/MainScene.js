@@ -140,9 +140,14 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_03_04_map", "assets/map/stage_03_04.json");
 
         // 배경음악 로드
-        this.load.audio("forest_default", "assets/audio/background/forest/forest_default.mp3");
-        this.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
-        
+        this.load.audio("bgm_stage_1", "assets/audio/field_theme_1.wav");
+        this.load.audio("get_item", "assets/audio/get_item.wav");
+        this.load.audio("coin_drop", "assets/audio/coin_drop.wav");
+        this.load.audio("potion_drop", "assets/audio/potion_drop.wav");
+        this.load.audio("monster_damage1", "assets/audio/monster_damage1.wav");
+        this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
+        this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
+        this.load.audio("small_shot", "assets/audio/small_shot.wav");
 
         Player.preload(this);
         Monster.preload(this);
