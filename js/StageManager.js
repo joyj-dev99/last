@@ -5,6 +5,9 @@ export default class StageManager {
         this.scene = scene;
         this.player = player;
         this.chord = chord;
+        if (this.scene.necromancer) {
+            this.necromancer = this.scene.necromancer;
+        }
     }
 
     setStageStart(stageNumber, mapNumber) {
@@ -241,16 +244,25 @@ export default class StageManager {
         } else if (stageNumber == 2 && mapNumber == 4) {
             this.scene.isInDialogue = true;
             // 대화
-            this.player.showSpeechBubble('이번엔 토마토랑 가지냐?', () => {
-                this.scene.isInDialogue = false;
-                // 코드의 위치 이동시키기 & 전투시작
-                this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
-                this.chord.startPlayLute();
-                this.scene.time.delayedCall(1000, () => {
-                    this.scene.backgroundMusic.play();
-                }, [], this.scene);
-                this.scene.monsterArr.forEach((monster) => {
-                    monster.startBattle();
+            console.log(this.necromancer);
+            
+            
+            this.necromancer.showSpeechBubble('누구냐! 감히 우리 베이비들에게 손을 대다니!', () => {
+                this.necromancer.showSpeechBubble('대가를 치르게 해주마!', () => {
+                    this.player.showSpeechBubble('그.. 베이비가, 고블린은 아니겠지?', () => {
+                        this.chord.showSpeechBubble('음. 사람마다 취향이 다를 수도 있죠..하하..', () => {
+                            this.scene.isInDialogue = false;
+                            // 코드의 위치 이동시키기 & 전투시작
+                            this.chord.setLocation(this.scene.chordBattle.x, this.scene.chordBattle.y);
+                            this.chord.startPlayLute();
+                            this.scene.time.delayedCall(1000, () => {
+                                this.scene.backgroundMusic.play();
+                            }, [], this.scene);
+                            this.scene.monsterArr.forEach((monster) => {
+                                monster.startBattle();
+                            });
+                        });
+                    });
                 });
             });
         }
@@ -395,11 +407,23 @@ export default class StageManager {
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 4) {
-            this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
-                this.player.showSpeechBubble('지름길인가? 이런 길을 잘도 알고 있군.', () => {
-                    this.chord.showSpeechBubble('하핫. 이제 어두워지니까 조금만 더 가서 야영할까요?', () => {
-                        this.chord.showSpeechBubble('주변에 불 피울 것 좀 찾아볼게요!', () => {
-                            this.scene.isInDialogue = false;
+            this.necromancer.showSpeechBubble('큭… 안돼… 마이 베이비…', () => {
+                this.player.showSpeechBubble('이봐. 너. 볼프강 박사를 알고 있나?', () => {
+                    this.necromancer.showSpeechBubble('볼프강! 내 둘도 없는 친우지!', () => {
+                        this.necromancer.showSpeechBubble('다시 보니 네놈 코드로구나! 볼프강을 배신한거냐?', () => {
+                            this.chord.showSpeechBubble('배신이라뇨! 애초에 전 돈 받은 만큼 일한 것 뿐 이라구요!', () => {
+                                this.player.showSpeechBubble('일? 날 상대로 사기친 일을 말하는거냐?', () => {
+                                    this.chord.showSpeechBubble('아이고, 맥스님. 저도 정말 미트코인이 사기일줄 몰랐다니까요!', () => {
+                                        this.player.showSpeechBubble('그렇다고치고. 이봐, 볼프강은 어디있지?', () => {
+                                            this.necromancer.showSpeechBubble('뭐야, 볼프강의 손님이었나?', () => {
+                                                this.necromancer.showSpeechBubble('볼프강은 언제나처럼 연구소에 있을거다. 썩 가버려.', () => {
+                                                    this.scene.isInDialogue = false;
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
                         });
                     });
                 });

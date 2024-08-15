@@ -6,7 +6,9 @@ import {
     PLAYER_ATTACK_CATEGORY, MONSTER_ATTACK_CATEGORY
 } from "../constants.js";
 
-export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
+import SpeechBubble from "../SpeechBubble.js";
+
+export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y, player} = data;
         super(scene.matter.world, x, y, 'necromancer', 'necromancer_sprite_sheet_0');
@@ -304,6 +306,12 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.scene.time.delayedCall(2600, () => {
             this.setStatic(false);
         });
+    }
+
+    showSpeechBubble(contents, onDestroyCallback) {
+
+        // SpeechBubble 클래스 인스턴스 생성
+        new SpeechBubble(this.scene, contents, onDestroyCallback, 'necromancer');
     }
 
 }

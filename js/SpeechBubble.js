@@ -26,6 +26,9 @@ export default class SpeechBubble extends Phaser.GameObjects.Container{
         // 씬에 추가
         this.scene.add.existing(this);
 
+        this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.spaceKey.on('down', () => this.destroyBubble());
+
         // 컨테이너 전체에 대한 클릭 이벤트 설정
         this.setSize(this.bubble.width * this.bubble.scaleX, this.bubble.height * this.bubble.scaleY);
         this.setInteractive({ useHandCursor: true });
@@ -40,6 +43,7 @@ export default class SpeechBubble extends Phaser.GameObjects.Container{
         // Load the player image
         scene.load.image('MaxImage', 'assets/intro/max_normal.png'); 
         scene.load.image('ChordImage', 'assets/intro/chord_normal.png'); 
+        scene.load.image('NecromancerImage', 'assets/npc/necromancer.png'); 
     }
     
     createBubble() {
