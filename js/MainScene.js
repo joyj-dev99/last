@@ -541,6 +541,22 @@ export default class MainSceneTest extends Phaser.Scene {
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
+                        break; 
+                    case 'alchemist' : 
+                        m = new MonsterAlchemist({ 
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                    case 'Wolfgang' : 
+                        m = new MonsterWolfgang({ 
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
                         break;
 
                     default:
