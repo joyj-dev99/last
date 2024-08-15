@@ -290,6 +290,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             if (this.anims.currentAnim.key !== 'player_run' && this.slash === null) {
                  //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
                 this.anims.play('player_run', true);
+                console.log('달리기 애니메이션 실행');
+                
             }
         } else {
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
@@ -392,7 +394,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if(this.status.nowHeart === 0){
             console.log("플레이어 죽음");
             this.anims.play('player_death');
-
+            this.handlePlayerDeath();
         }else{
             this.anims.play('player_damage');
             
@@ -473,13 +475,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
 
-    showSpeechBubble(contents, onDestroyCallback) {
+    handlePlayerDeath() {
+        this.scene.monsterArr.forEach(monster => {
+            monster.destroy();
+        });
+        this.scene.cameras.main.fadeOut(2000, 0, 0, 0); // 2초 동안 까맣게 페이드 아웃
 
-        // SpeechBubble 클래스 인스턴스 생성
-        new SpeechBubble(this.scene, contents, onDestroyCallback, 'Max');
+        this.scene.cameras.main.once('camerafadeoutcomplete', () => {
+            this.scene.scene.start('BattleResultScene');
+        });
     }
 
-    stop() {
+    stopMove() {
         this.isMoving = false;
         this.setVelocity(0, 0);
         this.anims.play('player_idle', true);
