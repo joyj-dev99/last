@@ -8,10 +8,30 @@ export default class StageManager {
         this.dialog = dialog;
     }
 
+    static preload(scene){
+        scene.load.audio("forest_default", "assets/audio/background/forest/forest_default.mp3");
+        scene.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
+        scene.load.audio("dungeon_default", "assets/audio/background/dungeon/dungeon_default.mp3");
+        scene.load.audio("dungeon_boss", "assets/audio/background/dungeon/dungeon_boss.mp3");
+        scene.load.audio("room_default", "assets/audio/background/room/room_default.mp3");
+        scene.load.audio("room_boss", "assets/audio/background/room/room_boss.mp3");
+    }
+
+    /**
+    * @param {string} bgmKey - 배경음악 키값
+    */
+    setBGM(bgmKey) {
+        // Play background music
+        this.scene.backgroundMusic = this.scene.sound.add(bgmKey, {
+            volume: 0.2, // Set the volume (0 to 1)
+            loop: true // Enable looping if desired
+        });
+    }
+
     setStageStart(stageNumber, mapNumber) {
         if (stageNumber == 1 && mapNumber == 1) {
-            let tutorial = new Tutorial();
-            
+            let tutorial = new Tutorial(this.player);
+            this.setBGM('forest_default');
             // 첫번째는 센서 없이 바로 시작
             this.scene.isInDialogue = true;
             const dialogueMessages = [
@@ -21,10 +41,10 @@ export default class StageManager {
             // Dialog를 사용해 대화 표시, 대화 종료 후 콜백 전달
             this.dialog.showDialogModal(dialogueMessages, () => {
                 this.scene.isInDialogue = false;
-                tutorial.startDirectionControlExplanation(this.scene, this.player.x + 50, this.player.y - 160);
+                tutorial.startDirectionControlExplanation(this.scene, 250, this.player.y - 160, this.player);
             });
             
-            let sensor2 = tutorial.createSensor(this.scene, this.player.x +200, this.player.y - 160, 10, 500);
+            let sensor2 = tutorial.createSensor(this.scene, 280, this.player.y - 160, 10, 500);
             // 충돌시 이동키 설명관련 데이터 삭제
             // shift, z 한번, z 세번
 
@@ -38,10 +58,11 @@ export default class StageManager {
                     const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                     console.log("플레이어와 센서2 충돌");
                     this.scene.isInDialogue = true;
-                    this.player.stopMove
-        ();
+                    this.player.stopMove();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
                     // 이동키 조작 설명 끝
                     tutorial.endDirectionControlExplanation();
 
@@ -69,10 +90,11 @@ export default class StageManager {
                     const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                     console.log("플레이어와 센서3 충돌");
                     this.scene.isInDialogue = true;
-                    this.player.stopMove
-        ();
+                    this.player.stopMove();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
                     // 이동키 조작 설명 끝
                     tutorial.endzKeyControlExplanation();
 
@@ -101,10 +123,11 @@ export default class StageManager {
                     const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
                     console.log("플레이어와 센서4 충돌");
                     this.scene.isInDialogue = true;
-                    this.player.stopMove
-        ();
+                    this.player.stopMove();
                     // 센서 제거
                     tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
                     tutorial.endshiftKeyControlExplanation();
                     tutorial.finish(this.scene);
 
@@ -125,6 +148,7 @@ export default class StageManager {
                 }
             });
         } else if (stageNumber == 1 && mapNumber == 2) {
+            this.setBGM('forest_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 토마토랑 가지냐?'},
@@ -134,6 +158,7 @@ export default class StageManager {
                 this.startBattleSequence();
             });
         } else if (stageNumber == 1 && mapNumber == 3) {
+            this.setBGM('forest_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '코드', portrait : 'ChordPotrait', message : '사과와 레몬이네요! 너무 상큼해보여요!'},
@@ -144,6 +169,7 @@ export default class StageManager {
                 this.startBattleSequence();
             });
         } else if (stageNumber == 1 && mapNumber == 4) {
+            this.setBGM('forest_boss');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 호박이야? 가지가지 하는군...'},
@@ -157,6 +183,7 @@ export default class StageManager {
                 this.startBattleSequence();
             });
         } else if (stageNumber == 2 && mapNumber == 1) {
+            this.setBGM('dungeon_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '과거에 감옥으로 썼던 곳인가 보군.'},
@@ -168,6 +195,7 @@ export default class StageManager {
                 this.startBattleSequence();
             });
         } else if (stageNumber == 2 && mapNumber == 2) {
+            this.setBGM('dungeon_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '저건... 고블린?'},
@@ -180,6 +208,7 @@ export default class StageManager {
                 this.startBattleSequence();
             });
         } else if (stageNumber == 2 && mapNumber == 3) {
+            this.setBGM('dungeon_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '코드', portrait : 'ChordPotrait', message : '으악!!!!!! 쥐다!!!!!'},
@@ -191,6 +220,7 @@ export default class StageManager {
                 this.startBattleSequence();
             });
         } else if (stageNumber == 2 && mapNumber == 4) {
+            this.setBGM('dungeon_boss');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '누구냐! 감히 우리 베이비들에게 손을 대다니!'},
@@ -205,6 +235,7 @@ export default class StageManager {
             });
         }
         else if (stageNumber == 3 && mapNumber == 1) {
+            this.setBGM('room_default');
             this.scene.isInDialogue = true;
             // 대화
             const dialogueMessages = [
@@ -219,6 +250,7 @@ export default class StageManager {
             });
         }
         else if (stageNumber == 3 && mapNumber == 2) {
+            this.setBGM('room_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 저기 위에 뭐가 있어요? 저건.. 천사?'},
@@ -231,6 +263,7 @@ export default class StageManager {
             });
         }
         else if (stageNumber == 3 && mapNumber == 3) {
+            this.setBGM('room_default');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '골렘', portrait : 'NecromancerPotrait', message : '침입자는 처단한다.'},
@@ -244,6 +277,7 @@ export default class StageManager {
             });
         }
         else if (stageNumber == 3 && mapNumber == 4) {
+            this.setBGM('room_boss');
             this.scene.isInDialogue = true;
             const dialogueMessages = [
                 {name : '볼프강', portrait : 'NecromancerPotrait', message : '오, 맥스. 드디어 왔구나.'},

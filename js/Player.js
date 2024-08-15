@@ -1,7 +1,7 @@
 import Arrow from "./Arrow.js";
 import Magic from "./Magic.js";
 import Slash from "./Slash.js";
-import SpeechBubble from "./SpeechBubble.js";
+
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY, BOUNDARY_CATEGORY} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
@@ -325,6 +325,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             // 구르기 애니메이션 재생
             this.anims.play('player_roll', true);
+            this.scene.sound.play('sound_player_roll');
 
             // 구르기 중 충돌 비활성화
             this.setCollidesWith([TILE_CATEGORY, SENSOR_CATEGORY]);

@@ -29,7 +29,6 @@ import Arrow from "./Arrow.js";
 import Slash from "./Slash.js";
 import Magic from "./Magic.js";
 
-import SpeechBubble from "./SpeechBubble.js";
 import Dialog from "./Dialog.js";
 
 import {
@@ -141,7 +140,6 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage_03_04_map", "assets/map/stage_03_04.json");
 
         // 배경음악 로드
-        this.load.audio("bgm_stage_1", "assets/audio/field_theme_1.wav");
         this.load.audio("get_item", "assets/audio/get_item.wav");
         this.load.audio("coin_drop", "assets/audio/coin_drop.wav");
         this.load.audio("potion_drop", "assets/audio/potion_drop.wav");
@@ -149,8 +147,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
-        this.load.audio("forest_default", "assets/audio/background/forest/forest_default.mp3");
-        this.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
+        
 
         Player.preload(this);
         Monster.preload(this);
@@ -164,9 +161,9 @@ export default class MainSceneTest extends Phaser.Scene {
 
         ProgressIndicator.preload(this);
         HeartIndicator.preload(this);
+        StageManager.preload(this);
 
         Milestone.preload(this);
-        SpeechBubble.preload(this);
         Dialog.preload(this);
     }
 
@@ -175,32 +172,26 @@ export default class MainSceneTest extends Phaser.Scene {
         this.cameras.main.fadeIn(1000, 0, 0, 0);
         this.setupWorld(this.stageNumber, this.mapNumber);
 
-        // Play background music
-        this.backgroundMusic = this.sound.add(`forest_default`, {
-            volume: 0.3, // Set the volume (0 to 1)
-            loop: true // Enable looping if desired
-        });
-
         this.getItemSound = this.sound.add(`get_item`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.5 // Set the volume (0 to 1)
         });
         this.coinDropSound = this.sound.add(`coin_drop`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.5 // Set the volume (0 to 1)
         });
         this.potionDropSound = this.sound.add(`potion_drop`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.5 // Set the volume (0 to 1)
         });
         this.monsterDamage1Sound = this.sound.add(`monster_damage1`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.5 // Set the volume (0 to 1)
         });
         this.monsterDeath1Sound = this.sound.add(`monster_death1`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.5 // Set the volume (0 to 1)
         });
         this.monsterDeath2Sound = this.sound.add(`monster_death2`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.5 // Set the volume (0 to 1)
         });
         this.smallShotSound = this.sound.add(`small_shot`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.5 // Set the volume (0 to 1)
         });
 
 

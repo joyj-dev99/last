@@ -103,6 +103,7 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.healthBar.setDepth(1001);
         this.healthBarBack.setDepth(1001);
 
+        this.delayedCallEvent = null;
     }
 
     static preload(scene) {
@@ -253,6 +254,10 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         if (this.hp > 0) {
             this.anims.play(`${this.monsterType}_damage`, true);
         } else {
+            if (this.delayedCallEvent) {
+                this.delayedCallEvent.remove();
+            }
+
             this.setCollidesWith([TILE_CATEGORY]);
             this.isAlive = false;
             this.attackEvent.destroy();
@@ -315,7 +320,7 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         bullet.creationTime = this.scene.time.now;
         this.bullets.add(bullet);
         this.scene.setCollisionOfMonsterAttack(bullet);
-        this.scene.time.delayedCall(2600, () => {
+        this.delayedCallEvent = this.scene.time.delayedCall(2600, () => {
             this.setStatic(false);
         });
     }
