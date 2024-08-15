@@ -1,7 +1,7 @@
 {
     "anims": [
         {
-            "key": "thrown_coin_bag",
+            "key": "throw_coin_bag",
             "type": "frames",
             "repeat": 0,
             "frameRate": 12,
