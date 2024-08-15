@@ -1,7 +1,7 @@
 /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
 const UI_TEXT_STYLE = Object.freeze({
     // fontFamily: KENNEY_FUTURE_NARROW_FONT_NAME,
-    color: 'black',
+    color: 'white',
     fontSize: '20px',
     wordWrap: { width: 0 },
 });
@@ -59,7 +59,7 @@ export default class Dialog  {
 
         // 컨테이너 및 UI 요소 설정
         const panel = this.#scene.add
-            .rectangle(0, 0, this.#width, this.#height, 0xffffff, 0.8)
+            .rectangle(0, 0, this.#width, this.#height, '#000000', 0.8)
             .setOrigin(0)
             .setStrokeStyle(8,'#000000', 1);
         this.#container = this.#scene.add.container(0, 0, [panel]);
@@ -71,7 +71,7 @@ export default class Dialog  {
         this.#nameText = this.#scene.add.text(90, 10, '', {
             fontFamily: 'Arial',
             fontSize: '15px',
-            color: 'black'
+            color: 'yellow'
         }).setScrollFactor(0);
         this.#container.add(this.#nameText);
 
