@@ -397,7 +397,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.scene.sound.play('sound_player_death');
 
 
-
         }else{
             this.anims.play('player_damage');
             
