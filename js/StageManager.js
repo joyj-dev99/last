@@ -71,7 +71,7 @@ export default class StageManager {
                     tutorial.removeRightSign();
 
                     // 조작키 제거
-                    tutorial.removeKey();
+                    tutorial.endzKeyControlExplanation();
                 
                     // 코드의 위치 이동시키기
                     this.chord.setLocation(this.player.x, this.player.y - 50);
