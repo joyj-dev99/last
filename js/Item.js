@@ -150,10 +150,10 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             monsterITEM = Item.Ratfolk_ITEM;
         }
         else if(monster instanceof MonsterBossGoblin){
-            monsterITEM = Item.Potion_ITEM;
+            monsterITEM = Item.Blue_Potion_ITEM;
         }
         else if(monster instanceof MonsterBossNecromancer){
-            monsterITEM = Item.Potion_ITEM;
+            monsterITEM = Item.Blue_Potion_ITEM;
         }
         else if(monster instanceof MonsterBugbear){
             monsterITEM = Item.COIN_ITEM;
