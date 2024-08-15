@@ -490,13 +490,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
 
-    showSpeechBubble(contents, onDestroyCallback) {
+    handlePlayerDeath() {
+        this.scene.monsterArr.forEach(monster => {
+            monster.destroy();
+        });
+        this.scene.cameras.main.fadeOut(2000, 0, 0, 0); // 2초 동안 까맣게 페이드 아웃
 
-        // SpeechBubble 클래스 인스턴스 생성
-        new SpeechBubble(this.scene, contents, onDestroyCallback, 'Max');
+        this.scene.cameras.main.once('camerafadeoutcomplete', () => {
+            this.scene.scene.start('BattleResultScene');
+        });
     }
 
-    stop() {
+    stopMove() {
         this.isMoving = false;
         this.setVelocity(0, 0);
         this.anims.play('player_idle', true);
