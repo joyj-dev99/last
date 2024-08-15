@@ -46,6 +46,8 @@ export default class Tutorial{
         // Matter 월드에 이 경계를 추가
         scene.matter.world.add(this.boundary);
         
+        console.log('방향키 조작방법 시작');
+        
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
         // cursors.left
