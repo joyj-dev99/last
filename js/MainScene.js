@@ -19,6 +19,8 @@ import MonsterNecromancer from "./monsters/MonsterNecromancer.js";
 import MonsterBugbear from "./monsters/MonsterBugbear.js";
 import MonsterAngel from "./monsters/MonsterAngel.js";
 import MonsterGolem from "./monsters/MonsterGolem.js";
+import MonsterAlchemist from "./monsters/MonsterAlchemist.js";
+import MonsterWolfgang from "./monsters/MonsterWolfgang.js";
 
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
@@ -50,8 +52,8 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 1;
-        this.mapNumber = data.mapNumber || 1;
+        this.stageNumber = data.stageNumber || 3;
+        this.mapNumber = data.mapNumber || 4;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
@@ -144,6 +146,8 @@ export default class MainSceneTest extends Phaser.Scene {
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
+        MonsterAlchemist.preload(this);
+
         Chord.preload(this);
         Item.preload(this);
         Tutorial.preload(this);
@@ -311,7 +315,6 @@ export default class MainSceneTest extends Phaser.Scene {
         else if (stageNumber === 3 && mapNumber <= 3) {
             const Tileset = map.addTilesetImage("Modern_Office_32x32", "Tileset");
             const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "Tileset2");
-            const Tileset3 = map.addTilesetImage("Lab Tileset", "Tileset3");
 
             const floor = map.createLayer("floor", Tileset2, 0, 0);
             const wall = map.createLayer("wall", Tileset2, 0, 0);
@@ -346,7 +349,7 @@ export default class MainSceneTest extends Phaser.Scene {
             const floor = map.createLayer("floor", Tileset, 0, 0);
             const wall = map.createLayer("wall", Tileset, 0, 0);
             map.createLayer("decor1", Tileset, 0, 0);
-            // map.createLayer("decor2", Tileset, 0, 0);
+            map.createLayer("decor2", Tileset, 0, 0);
 
             // 충돌이 필요한 타일 설정
             floor.setCollisionByProperty({collides: true});
@@ -424,7 +427,7 @@ export default class MainSceneTest extends Phaser.Scene {
         // 몬스터 생성 - 플레이어가 생성된 이후에 생성되어야 함.
         objectLayer.objects.forEach(object => {
             const {x, y, name, type} = object;
-            if (type === 'monster') {
+            if (type === 'monster' || type === 'Monster') {
                 let m;
                 //몬스터 종류에 따라 다르게 생성 -> 추후 구현
                 switch (name) {
@@ -540,7 +543,22 @@ export default class MainSceneTest extends Phaser.Scene {
                             player: this.player // 플레이어 객체 전달
                         });
                         break; 
-                        
+                    case 'alchemist' : 
+                        m = new MonsterAlchemist({ 
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break; 
+                    case 'Wolfgang' : 
+                        m = new MonsterWolfgang({ 
+                            scene: this,
+                            x: x,
+                            y: y,
+                            player: this.player // 플레이어 객체 전달
+                        });
+                        break;                 
                     default:
                     // console.log("몬스터 생성 : " + name);
                 }
@@ -621,7 +639,7 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     iteamDrop(monster) {
-        if (this.mapNumber === 1) {
+        if (this.stageNumber === 1 && this.mapNumber === 1) {
             //맵 1인 경우, 반드시 미트코인이 나온다
             this.itemType = Item.COIN_ITEM;
         

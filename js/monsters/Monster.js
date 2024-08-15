@@ -98,7 +98,18 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.atlas('golem', 'assets/monster/golem/golem.png', 'assets/monster/golem/golem_atlas.json');
         scene.load.animation('golemAnim', 'assets/monster/golem/golem_anim.json');
 
+        scene.load.atlas('wolfgang', 'assets/monster/Wolfgang/wolfgang.png', 'assets/monster/Wolfgang/wolfgang_atlas.json');
+        scene.load.animation('wolfgangAnim', 'assets/monster/Wolfgang/wolfgang_anim.json');
 
+        // scene.load.atlas('minotaur', 'assets/monster/minotaur/minotaur.png', 'assets/monster/minotaur/minotaur_atlas.json');
+        // scene.load.animation('minotaurAnim', 'assets/monster/minotaur/minotaur_anim.json');
+
+        // scene.load.atlas('alchemist_transform', 'assets/monster/alchemist/tramsform/alchemist_transform.png', 'assets/monster/alchemist/tramsform/alchemist_transform_atlas.json');
+        // scene.load.animation('alchemist_transformAnim', 'assets/monster/alchemist/tramsform/alchemist_transform_anim.json');
+     
+        // scene.load.atlas('alchemist', 'assets/monster/alchemist/alchemist.png', 'assets/monster/alchemist/alchemist_atlas.json');
+        // scene.load.animation('alchemistAnim', 'assets/monster/alchemist/alchemist_anim.json');
+     
     }
 
     update() {
@@ -135,7 +146,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(0, 0);
         }
 
-        
         const currentAnimKey = this.anims.currentAnim.key;
         // isMoving 에 따른 move, idle 애니메이션 실행
         if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
@@ -143,6 +153,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         } else if (!this.isHurt && !this.isMoving && currentAnimKey !== `${this.monsterType}_idle`) {
             this.anims.play(`${this.monsterType}_idle`);
         }
+
     }
 
     startBattle() {
