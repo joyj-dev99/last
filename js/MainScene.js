@@ -37,8 +37,10 @@ import {
     TILE_CATEGORY,
     OBJECT_CATEGORY,
     PLAYER_ATTACK_CATEGORY,
-    SENSOR_CATEGORY
+    SENSOR_CATEGORY,
+    MONSTER_ATTACK_CATEGORY
 } from "./constants.js";
+
 
 import MonsterApple from "./monsters/MonsterApple.js";
 import StageManager from "./StageManager.js";
@@ -223,32 +225,62 @@ export default class MainSceneTest extends Phaser.Scene {
             }
         }
 
-        // 플레이어와 표지판 충돌 이벤트 설정
-        this.matterCollision.addOnCollideStart({
-            objectA: this.player,
-            objectB: this.milestone,
-            callback: eventData => {
-                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                console.log("플레이어와 표지판 충돌");
-                // 상호작용 가능 키 표시
-                gameObjectB.showInteractPrompt();
-                // 키보드 입력 이벤트 설정
-                this.input.keyboard.on('keydown-E', goToNextHandler);
-            }
-        });
+        if (this.milestone) {
+            // 플레이어와 표지판 충돌 이벤트 설정
+            this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: this.milestone,
+                callback: eventData => {
+                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                    console.log("플레이어와 표지판 충돌");
+                    // 상호작용 가능 키 표시
+                    gameObjectB.showInteractPrompt();
+                    // 키보드 입력 이벤트 설정
+                    this.input.keyboard.on('keydown-E', goToNextHandler);
+                }
+            });
 
-        this.matterCollision.addOnCollideEnd({
-            objectA: this.player,
-            objectB: this.milestone,
-            callback: eventData => {
-                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                console.log("플레이어와 표지판 떨어짐");
-                // 상호작용 가능 키 숨기기
-                gameObjectB.hideInteractPrompt();
-                // 키보드 입력 이벤트 해제
-                this.input.keyboard.off('keydown-E', goToNextHandler);
-            }
-        });
+        
+            this.matterCollision.addOnCollideEnd({
+                objectA: this.player,
+                objectB: this.milestone,
+                callback: eventData => {
+                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                    console.log("플레이어와 표지판 떨어짐");
+                    // 상호작용 가능 키 숨기기
+                    gameObjectB.hideInteractPrompt();
+                    // 키보드 입력 이벤트 해제
+                    this.input.keyboard.off('keydown-E', goToNextHandler);
+                }
+            });
+        }
+
+        // // 플레이어와 표지판 충돌 이벤트 설정
+        // this.matterCollision.addOnCollideStart({
+        //     objectA: this.player,
+        //     objectB: this.milestone,
+        //     callback: eventData => {
+        //         const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+        //         console.log("플레이어와 표지판 충돌");
+        //         // 상호작용 가능 키 표시
+        //         gameObjectB.showInteractPrompt();
+        //         // 키보드 입력 이벤트 설정
+        //         this.input.keyboard.on('keydown-E', goToNextHandler);
+        //     }
+        // });
+
+        // this.matterCollision.addOnCollideEnd({
+        //     objectA: this.player,
+        //     objectB: this.milestone,
+        //     callback: eventData => {
+        //         const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+        //         console.log("플레이어와 표지판 떨어짐");
+        //         // 상호작용 가능 키 숨기기
+        //         gameObjectB.hideInteractPrompt();
+        //         // 키보드 입력 이벤트 해제
+        //         this.input.keyboard.off('keydown-E', goToNextHandler);
+        //     }
+        // });
 
     }
 
@@ -320,7 +352,6 @@ export default class MainSceneTest extends Phaser.Scene {
             const wall = map.createLayer("wall", Tileset2, 0, 0);
             map.createLayer("decor1", Tileset2, 0, 0);
             map.createLayer("decor2", Tileset, 0, 0);
-            // map.createLayer("decor2", Tileset3, 0, 0);
 
             // 충돌이 필요한 타일 설정
             floor.setCollisionByProperty({collides: true});
@@ -346,32 +377,32 @@ export default class MainSceneTest extends Phaser.Scene {
 
             const Tileset = map.addTilesetImage("Lab Tileset", "Tileset3");
 
-            const floor = map.createLayer("floor", Tileset, 0, 0);
+            map.createLayer("floor", Tileset, 0, 0);
             const wall = map.createLayer("wall", Tileset, 0, 0);
-            map.createLayer("decor1", Tileset, 0, 0);
-            map.createLayer("decor2", Tileset, 0, 0);
+            const decor1 = map.createLayer("decor1", Tileset, 0, 0);
 
             // 충돌이 필요한 타일 설정
-            floor.setCollisionByProperty({collides: true});
             wall.setCollisionByProperty({collides: true});
+            decor1.setCollisionByProperty({collides: true});
             // 타일맵 레이어를 물리적으로 변환
-            this.matter.world.convertTilemapLayer(floor);
             this.matter.world.convertTilemapLayer(wall);
+            this.matter.world.convertTilemapLayer(decor1);
             // 충돌 카테고리 설정
-            floor.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-                }
-            });
             wall.forEachTile(tile => {
                 if (tile.physics.matterBody) {
                     tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
                     tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
                 }
             });
+            decor1.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = OBJECT_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY | PLAYER_ATTACK_CATEGORY | MONSTER_ATTACK_CATEGORY;
+                }
+            });
 
         }
+
 
         //오브젝트 레이어 관련 코드
         const objectLayer = map.getObjectLayer('object');
