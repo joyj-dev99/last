@@ -6,8 +6,6 @@ import {
     PLAYER_ATTACK_CATEGORY, MONSTER_ATTACK_CATEGORY
 } from "../constants.js";
 
-import SpeechBubble from "../SpeechBubble.js";
-
 export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y, player} = data;
