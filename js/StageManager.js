@@ -42,6 +42,7 @@ export default class StageManager {
                     tutorial.onSensorHit(this.scene, bodyB);
                     // 오른쪽 사인 제거
                     tutorial.removeRightSign();
+                    tutorial.endDirectionControlExplanation();
 
                     // 코드의 위치 이동시키기
                     this.chord.setLocation(this.player.x, this.player.y - 50);
@@ -70,6 +71,7 @@ export default class StageManager {
                     tutorial.onSensorHit(this.scene, bodyB);
                     // 오른쪽 사인 제거
                     tutorial.removeRightSign();
+                    tutorial.endzKeyControlExplanation();
                 
                     // 코드의 위치 이동시키기
                     this.chord.setLocation(this.player.x, this.player.y - 50);

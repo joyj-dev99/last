@@ -193,8 +193,6 @@ export default class Tutorial{
                     // 물리엔진 갱신
                     scene.matter.world.engine.world.bodies = scene.matter.world.engine.world.bodies.filter(body => body !== this.boundary);
 
-                    // 조작키 제거
-                    this.removeKey();
                 }, 1000);
                 
             }
@@ -342,7 +340,7 @@ export default class Tutorial{
         return {'result': result, 'anim_keys' : anim_key, 'anim_keyboards' : anim_keyboard};
     }
 
-    removeKey(){
+    endDirectionControlExplanation(){
         // 메모리에서 완전히 제거
         if(this.keyboard_up){
             this.keyboard_up.destroy();
@@ -356,12 +354,6 @@ export default class Tutorial{
         if(this.keyboard_right){
             this.keyboard_right.destroy();
         }
-        if(this.keyboard_z){
-            this.keyboard_z.destroy();
-        }
-        if(this.keyboard_shift){
-            this.keyboard_shift.destroy();
-        }
         
         // // 나중에 이벤트 리스너를 제거합니다.
         // scene.input.keyboard.off('keydown', this.keyHandler);
@@ -370,6 +362,10 @@ export default class Tutorial{
         // scene.input.keyboard.off('keyup', this.keyHandler);
     }
 
+    endzKeyControlExplanation(){
+        console.log('z키 조작방법 끝');
+        this.keyboard_z.destroy();
+    }
 
 
     // 오른쪽으로 이동하는 sign 객체 만들기
