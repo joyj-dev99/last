@@ -89,10 +89,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         
         // Preload the sound effect for sword action
         scene.load.audio('sound_player_sword_1', 'assets/audio/sound_player_sword_1.wav');
-        scene.load.audio('sound_player_hit', 'assets/audio/sound_player_hit.wav');
+        scene.load.audio('sound_player_hit', 'assets/audio/sound_player_hit.mp3');
+        scene.load.audio('sound_player_move', 'assets/audio/sound_player_move.mp3');
+        scene.load.audio('sound_player_death', 'assets/audio/sound_player_death.mp3');
+        scene.load.audio('sound_player_damage', 'assets/audio/sound_player_damage.mp3');
+
         scene.load.audio('sound_male_hurt', 'assets/audio/sound_male_hurt.wav');
-        scene.load.audio('sound_player_bow', 'assets/audio/sound_player_bow.wav');
-        scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.wav');
+        scene.load.audio('sound_player_bow', 'assets/audio/sound_player_bow.mp3');
+        scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.mp3');
         scene.load.audio('sound_player_teleport', 'assets/audio/sound_player_teleport.wav');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
 
@@ -141,6 +145,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.removeSlash();
 
             this.anims.play('player_bow');
+            this.scene.sound.play('sound_player_bow');
+
             let arrow = new Arrow({
                 scene: this.scene,
                 x: this.x + 2,
@@ -163,6 +169,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.removeSlash();
 
             this.anims.play('player_spell');
+            this.scene.sound.play('sound_player_spell');
+
             let magic = new Magic({
                 scene : this.scene
             });
@@ -223,6 +231,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         const playerX = this.x;
         const playerY = this.y;
     
+
+
         // 입력 상태 확인 및 플레이어 속도와 방향 설정
         if (this.cursors.right.isDown && this.cursors.up.isDown) {
             if (playerX < this.scene.maxX && playerY > this.scene.minY) {
@@ -291,6 +301,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             if (this.anims.currentAnim.key !== 'player_run' && this.slash === null) {
                  //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
                 this.anims.play('player_run', true);
+                // this.scene.sound.play('sound_player_move');
             }
         } else {
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
@@ -371,7 +382,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         this.comboState = stage;
         console.log(`칼 휘두르기 ${stage}단계`);
-        this.scene.sound.play('sound_player_sword_1');
+        // this.scene.sound.play('sound_player_sword_1');
+        this.scene.sound.play('sound_player_hit');
 
     }
 
@@ -393,10 +405,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if(this.status.nowHeart === 0){
             console.log("플레이어 죽음");
             this.anims.play('player_death');
+            this.scene.sound.play('sound_player_death');
+
 
         }else{
             this.anims.play('player_damage');
-            
+            this.scene.sound.play('sound_player_damage');
+
         }
         
         console.log('player takeDamage, hp : ', this.status.nowHeart);
