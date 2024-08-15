@@ -26,8 +26,10 @@ export default class SpeechBubble extends Phaser.GameObjects.Container{
         // 씬에 추가
         this.scene.add.existing(this);
 
-        this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.spaceKey.on('down', () => this.destroyBubble());
+
+        // 스페이스 눌러서 넘어가기 추후에 추가하기.
+        // this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        // this.spaceKey.on('down', () => this.destroyBubble());
 
         // 컨테이너 전체에 대한 클릭 이벤트 설정
         this.setSize(this.bubble.width * this.bubble.scaleX, this.bubble.height * this.bubble.scaleY);

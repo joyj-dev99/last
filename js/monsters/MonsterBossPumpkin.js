@@ -282,7 +282,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
                 this.setStatic(false);
             }
         });
-        this.scene.setCollisionOfMonsterPumpkinShockwave(shockwave);
+        this.scene.setCollisionOfMonsterShockwave(shockwave);
 
     }
 

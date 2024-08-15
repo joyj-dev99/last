@@ -28,6 +28,7 @@ export default class MonsterAlchemist extends Phaser.Physics.Matter.Sprite {
         this.speed = 1;
         this.maxMove = 50;
         this.followDistance = 400;
+        
         this.scene.add.existing(this);
 
         // 최초 생성시 왼쪽을 바라보도록.

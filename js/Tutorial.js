@@ -11,7 +11,7 @@ const UP_ANIMS = 'up_key', DOWN_ANIMS = 'down_key', LEFT_ANIMS = 'left_key', RIG
 export default class Tutorial{
 
     constructor() {
-
+        console.log('튜토리얼 객체 생성');
     }
     
     static preload(scene) {
@@ -31,6 +31,8 @@ export default class Tutorial{
 
     // 방향키 조작법 설명 시작
     startDirectionControlExplanation(scene, sensor_x, sensor_y){
+        console.log('방향키 조작방법 시작');
+        
         
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
@@ -148,7 +150,7 @@ export default class Tutorial{
         this.keyHandler = event => {
             // 이벤트 핸들러 로직
             // event는 키보드 이벤트 객체입니다.
-            console.log('Key pressed: down? ' + event.key); // 누른 키를 출력합니다.
+            // console.log('Key pressed: down? ' + event.key); // 누른 키를 출력합니다.
 
             let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
             if(관련된값.result === true){
@@ -322,13 +324,14 @@ export default class Tutorial{
             anim_keyboard = [this.keyboard_shift];
         }
         
-        console.log('this.combo_count : '+this.combo_count);
+        // console.log('this.combo_count : '+this.combo_count);
 
         return {'result': result, 'anim_keys' : anim_key, 'anim_keyboards' : anim_keyboard};
     }
 
     // 방향키 조작법 설명 끝
     endDirectionControlExplanation(){
+        console.log('방향키 조작방법 끝');
         // 메모리에서 완전히 제거
         this.keyboard_up.destroy();
         this.keyboard_down.destroy();
@@ -343,6 +346,7 @@ export default class Tutorial{
     }
 
     startZKeyControlExplanation(scene, sensor_x, sensor_y){
+        console.log('z키 조작방법 시작');
         
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
@@ -398,11 +402,12 @@ export default class Tutorial{
     }
 
     endzKeyControlExplanation(){
+        console.log('z키 조작방법 끝');
         this.keyboard_z.destroy();
     }
 
     startshiftKeyControlExplanation(scene, sensor_x, sensor_y){
-        
+        console.log('shift키 조작방법 시작');
                 
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
@@ -449,10 +454,12 @@ export default class Tutorial{
 
 
     endshiftKeyControlExplanation(){
+        console.log('shift키 조작방법 끝');
         this.keyboard_shift.destroy();
     }
 
     finish(scene){
+        console.log('튜토리얼 finish');
         // 나중에 이벤트 리스너를 제거합니다.
         scene.input.keyboard.off('keydown', this.keyHandler);
         // 나중에 이벤트 리스너를 제거합니다.
