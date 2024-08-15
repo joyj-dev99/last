@@ -407,27 +407,34 @@ export default class StageManager {
                 });
             });
         } else if (stageNumber == 2 && mapNumber == 4) {
-            this.necromancer.showSpeechBubble('큭… 안돼… 마이 베이비…', () => {
-                this.player.showSpeechBubble('이봐. 너. 볼프강 박사를 알고 있나?', () => {
-                    this.necromancer.showSpeechBubble('볼프강! 내 둘도 없는 친우지!', () => {
-                        this.necromancer.showSpeechBubble('다시 보니 네놈 코드로구나! 볼프강을 배신한거냐?', () => {
-                            this.chord.showSpeechBubble('배신이라뇨! 애초에 전 돈 받은 만큼 일한 것 뿐 이라구요!', () => {
-                                this.player.showSpeechBubble('일? 날 상대로 사기친 일을 말하는거냐?', () => {
-                                    this.chord.showSpeechBubble('아이고, 맥스님. 저도 정말 미트코인이 사기일줄 몰랐다니까요!', () => {
-                                        this.player.showSpeechBubble('그렇다고치고. 이봐, 볼프강은 어디있지?', () => {
-                                            this.necromancer.showSpeechBubble('뭐야, 볼프강의 손님이었나?', () => {
-                                                this.necromancer.showSpeechBubble('볼프강은 언제나처럼 연구소에 있을거다. 썩 가버려.', () => {
-                                                    this.scene.isInDialogue = false;
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
+            this.chord.showSpeechBubble('쥐는 치즈를 좋아해~', () => {
+                this.player.showSpeechBubble('이봐 코드! 이제 다 온거냐?', () => {
+                    this.chord.showSpeechBubble('네! 한 층만 더 위로 올라가면 지상으로 나갈 수 있어요!', () => {
+                        this.scene.isInDialogue = false;
                     });
                 });
             });
+            // this.necromancer.showSpeechBubble('큭… 안돼… 마이 베이비…', () => {
+            //     this.player.showSpeechBubble('이봐. 너. 볼프강 박사를 알고 있나?', () => {
+            //         this.necromancer.showSpeechBubble('볼프강! 내 둘도 없는 친우지!', () => {
+            //             this.necromancer.showSpeechBubble('다시 보니 네놈 코드로구나! 볼프강을 배신한거냐?', () => {
+            //                 this.chord.showSpeechBubble('배신이라뇨! 애초에 전 돈 받은 만큼 일한 것 뿐 이라구요!', () => {
+            //                     this.player.showSpeechBubble('일? 날 상대로 사기친 일을 말하는거냐?', () => {
+            //                         this.chord.showSpeechBubble('아이고, 맥스님. 저도 정말 미트코인이 사기일줄 몰랐다니까요!', () => {
+            //                             this.player.showSpeechBubble('그렇다고치고. 이봐, 볼프강은 어디있지?', () => {
+            //                                 this.necromancer.showSpeechBubble('뭐야, 볼프강의 손님이었나?', () => {
+            //                                     this.necromancer.showSpeechBubble('볼프강은 언제나처럼 연구소에 있을거다. 썩 가버려.', () => {
+            //                                         this.scene.isInDialogue = false;
+            //                                     });
+            //                                 });
+            //                             });
+            //                         });
+            //                     });
+            //                 });
+            //             });
+            //         });
+            //     });
+            // });
         }
         else if (stageNumber == 3 && mapNumber == 1) {
             this.chord.showSpeechBubble('이제 저쪽 사이길로 들어가면 볼프강 박사의 연구소가 있는 성이 보일거예요!', () => {
