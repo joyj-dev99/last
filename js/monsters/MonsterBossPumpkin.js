@@ -89,6 +89,13 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.healthBar.setDepth(1001);
         this.healthBarBack.setDepth(1001);
 
+        this.pumpkinShockwaveSound = this.scene.sound.add(`pumpkin_shockwave`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.pumpkinSeedSound = this.scene.sound.add(`pumpkin_seed`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+
     }
 
     static preload(scene) {
@@ -99,6 +106,9 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('seedAnim', 'assets/monster/pumpkin/seed/seed_anim.json');
 
         scene.load.image('pumpkin_shockwave', 'assets/monster/pumpkin/shockwave.png');
+
+        scene.load.audio("pumpkin_shockwave", "assets/audio/pumpkin_shockwave.wav");
+        scene.load.audio("pumpkin_seed", "assets/audio/pumpkin_seed.wav");
     }
 
     update() {
@@ -271,6 +281,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         shockwave.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
         shockwave.setCollidesWith([PLAYER_CATEGORY]);
         // 충격파 확장 애니메이션
+        this.pumpkinShockwaveSound.play();
         this.scene.tweens.add({
             targets: shockwave,
             scaleX: 0.3,
@@ -307,6 +318,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
             bullet.damage = 0.5;
             bullet.creationTime = this.scene.time.now;
             this.bullets.add(bullet);
+            this.pumpkinSeedSound.play();
             this.scene.setCollisionOfMonsterAttack(bullet);
         }
         // 몇초마다 한번씩 발사하도록 하는 변수
