@@ -141,6 +141,12 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 배경음악 로드
         this.load.audio("bgm_stage_1", "assets/audio/field_theme_1.wav");
+        this.load.audio("get_item", "assets/audio/get_item.wav");
+        this.load.audio("coin_drop", "assets/audio/coin_drop.wav");
+        this.load.audio("potion_drop", "assets/audio/potion_drop.wav");
+        this.load.audio("monster_damage1", "assets/audio/monster_damage1.wav");
+        this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
+        this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
 
         Player.preload(this);
         Monster.preload(this);
@@ -169,6 +175,26 @@ export default class MainSceneTest extends Phaser.Scene {
             volume: 0.3, // Set the volume (0 to 1)
             loop: true // Enable looping if desired
         });
+
+        this.getItemSound = this.sound.add(`get_item`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.coinDropSound = this.sound.add(`coin_drop`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.potionDropSound = this.sound.add(`potion_drop`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.monsterDamage1Sound = this.sound.add(`monster_damage1`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.monsterDeath1Sound = this.sound.add(`monster_death1`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.monsterDeath2Sound = this.sound.add(`monster_death2`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+
 
         if (this.mapNumber < 4) {
             // 스테이지 진행률 UI
@@ -239,7 +265,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 }
             });
 
-        
+
             this.matterCollision.addOnCollideEnd({
                 objectA: this.player,
                 objectB: this.milestone,
@@ -544,17 +570,17 @@ export default class MainSceneTest extends Phaser.Scene {
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
-                        break; 
-                    case 'alchemist' : 
-                        m = new MonsterAlchemist({ 
+                        break;
+                    case 'alchemist' :
+                        m = new MonsterAlchemist({
                             scene: this,
                             x: x,
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
-                        break; 
-                    case 'Wolfgang' : 
-                        m = new MonsterWolfgang({ 
+                        break;
+                    case 'Wolfgang' :
+                        m = new MonsterWolfgang({
                             scene: this,
                             x: x,
                             y: y,
@@ -591,6 +617,9 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     removeMonsterFromArr(monster) {
+        this.monsterDeath2Sound.play();
+
+
         const index = this.monsterArr.indexOf(monster);
         if (index > -1) {
             this.monsterArr.splice(index, 1);
@@ -609,6 +638,7 @@ export default class MainSceneTest extends Phaser.Scene {
             objectA: this.monsterArr, // 몬스터 배열
             objectB: attack, // 공격 객체
             callback: eventData => {
+                this.monsterDamage1Sound.play();
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 if (gameObjectB instanceof Arrow) {
                     console.log("몬스터가 화살에 맞음");
@@ -634,6 +664,7 @@ export default class MainSceneTest extends Phaser.Scene {
                     if (result === 'death') {
                         this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
+
                         this.removeMonsterFromArr(gameObjectA);
                     }
                 }
@@ -644,6 +675,8 @@ export default class MainSceneTest extends Phaser.Scene {
     iteamDrop(monster) {
         if (this.mapNumber === 1) {
             //맵 1인 경우, 반드시 미트코인이 나온다
+            this.coinDropSound.play();
+
             this.itemType = Item.COIN_ITEM;
 
             // 몬스터의 위치에 객체 생성 
@@ -654,6 +687,8 @@ export default class MainSceneTest extends Phaser.Scene {
                 itemType: this.itemType
             });
         } else {
+            this.potionDropSound.play();
+
             // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
             this.itemType = Item.createItemType(monster);
 
@@ -673,6 +708,7 @@ export default class MainSceneTest extends Phaser.Scene {
             objectB: this.item,
             callback: eventData => {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                this.getItemSound.play();
                 console.log("플레이어와 아이템 충돌");
                 // 아이템 효과 적용하기 및 화면에 반영하기
                 gameObjectB.applyItem(gameObjectA, this.coinIndicatorText, this.heartIndicator);
