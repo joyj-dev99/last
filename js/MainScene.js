@@ -147,6 +147,8 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("monster_damage1", "assets/audio/monster_damage1.wav");
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
+        this.load.audio("small_shot", "assets/audio/small_shot.wav");
+
 
         Player.preload(this);
         Monster.preload(this);
@@ -192,6 +194,9 @@ export default class MainSceneTest extends Phaser.Scene {
             volume: 0.3 // Set the volume (0 to 1)
         });
         this.monsterDeath2Sound = this.sound.add(`monster_death2`, {
+            volume: 0.3 // Set the volume (0 to 1)
+        });
+        this.smallShotSound = this.sound.add(`small_shot`, {
             volume: 0.3 // Set the volume (0 to 1)
         });
 
