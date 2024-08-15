@@ -51,7 +51,7 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 3;
+        this.stageNumber = data.stageNumber || 2;
         this.mapNumber = data.mapNumber || 4;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
@@ -117,7 +117,6 @@ export default class MainSceneTest extends Phaser.Scene {
     }
 
     preload() {
-
         this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
         this.load.tilemapTiledJSON("stage_01_01_map", "assets/map/stage_01_01.json");
         this.load.tilemapTiledJSON("stage_01_02_map", "assets/map/stage_01_02.json");
@@ -169,8 +168,10 @@ export default class MainSceneTest extends Phaser.Scene {
             loop: true // Enable looping if desired
         });
 
-        // 스테이지 진행률 UI
-        this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber - 1);
+        if (this.mapNumber < 4) {
+            // 스테이지 진행률 UI
+            this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber);
+        }
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
 
@@ -517,6 +518,7 @@ export default class MainSceneTest extends Phaser.Scene {
                             y: y,
                             player: this.player // 플레이어 객체 전달
                         });
+                        this.necromancer = m;
                         break;
                     case 'bugbear' : 
                         m = new MonsterBugbear({ 
