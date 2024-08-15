@@ -53,7 +53,7 @@
             }
         },
         {
-            "filename": "giant_fly_sprite_sheet_4",
+            "filename": "giant_fly_sprite_sheet_6",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -66,7 +66,7 @@
             }
         },
         {
-            "filename": "giant_fly_sprite_sheet_5",
+            "filename": "giant_fly_sprite_sheet_7",
             "frame": {
                 "w": 32,
                 "h": 32,
@@ -79,37 +79,11 @@
             }
         },
         {
-            "filename": "giant_fly_sprite_sheet_6",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 0,
-                "y": 64
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_7",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 32,
-                "y": 64
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
             "filename": "giant_fly_sprite_sheet_8",
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 64,
+                "x": 0,
                 "y": 64
             },
             "anchor": {
@@ -122,33 +96,7 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 96,
-                "y": 0
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_10",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 96,
-                "y": 32
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_11",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 96,
+                "x": 32,
                 "y": 64
             },
             "anchor": {
@@ -161,8 +109,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 0,
-                "y": 96
+                "x": 64,
+                "y": 64
             },
             "anchor": {
                 "x": 0.5,
@@ -174,8 +122,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 32,
-                "y": 96
+                "x": 96,
+                "y": 0
             },
             "anchor": {
                 "x": 0.5,
@@ -187,8 +135,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 64,
-                "y": 96
+                "x": 96,
+                "y": 32
             },
             "anchor": {
                 "x": 0.5,
@@ -201,33 +149,7 @@
                 "w": 32,
                 "h": 32,
                 "x": 96,
-                "y": 96
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_16",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 128,
-                "y": 0
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_17",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 128,
-                "y": 32
+                "y": 64
             },
             "anchor": {
                 "x": 0.5,
@@ -239,8 +161,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 128,
-                "y": 64
+                "x": 0,
+                "y": 96
             },
             "anchor": {
                 "x": 0.5,
@@ -252,7 +174,7 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 128,
+                "x": 32,
                 "y": 96
             },
             "anchor": {
@@ -265,8 +187,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 0,
-                "y": 128
+                "x": 64,
+                "y": 96
             },
             "anchor": {
                 "x": 0.5,
@@ -278,8 +200,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 32,
-                "y": 128
+                "x": 96,
+                "y": 96
             },
             "anchor": {
                 "x": 0.5,
@@ -291,8 +213,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 64,
-                "y": 128
+                "x": 128,
+                "y": 0
             },
             "anchor": {
                 "x": 0.5,
@@ -304,8 +226,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 96,
-                "y": 128
+                "x": 128,
+                "y": 32
             },
             "anchor": {
                 "x": 0.5,
@@ -318,7 +240,7 @@
                 "w": 32,
                 "h": 32,
                 "x": 128,
-                "y": 128
+                "y": 64
             },
             "anchor": {
                 "x": 0.5,
@@ -330,60 +252,8 @@
             "frame": {
                 "w": 32,
                 "h": 32,
-                "x": 160,
-                "y": 0
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_26",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 160,
-                "y": 32
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_27",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 160,
-                "y": 64
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_28",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 160,
+                "x": 128,
                 "y": 96
-            },
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            }
-        },
-        {
-            "filename": "giant_fly_sprite_sheet_29",
-            "frame": {
-                "w": 32,
-                "h": 32,
-                "x": 160,
-                "y": 128
             },
             "anchor": {
                 "x": 0.5,
