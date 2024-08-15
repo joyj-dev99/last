@@ -1,5 +1,5 @@
 import Player from "./Player.js";
-import Bonfire from "./objects/bonfire.js";
+import Bonfire from "./objects/Bonfire.js";
 import Chord from "./character/Chord.js";
 
 export default class NightScene extends Phaser.Scene {
@@ -11,13 +11,25 @@ export default class NightScene extends Phaser.Scene {
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
         this.stageNumber = data.stageNumber || 1;
-        this.isDay = false; // 낮 상태를 추적하는 변수
+        this.mapNumber = data.mapNumber || 5;
+        this.playerStatus = data.playerStatus || null;
 
+        // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
+        this.isInDialogue = true;
+
+        this.mapWidth = 480;
+        this.mapHigth = 320;
+        this.minX = 74;
+        this.maxX = 406;
+        this.minY = 74;
+        this.maxY = 278;
     }
 
     preload() {
         this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
         this.load.tilemapTiledJSON("stage_01_night_map", "assets/map/stage_01_night.json");
+        this.load.image("labTileset", "assets/map/Lab Tileset.png");
+        this.load.tilemapTiledJSON("stage_02_night_map", "assets/map/stage_02_night.json");
 
         // 배경음악 로드
         this.load.audio("nightMusic", "assets/audio/night_theme_1.wav");
@@ -32,24 +44,40 @@ export default class NightScene extends Phaser.Scene {
         this.cameras.main.fadeIn(1000, 0, 0, 0);
 
         this.matter.world.setBounds();
-        this.map = this.make.tilemap({key: "stage_01_night_map"});
+        this.map = this.make.tilemap({key: `stage_0${this.stageNumber}_night_map`});
         const forestTileset = this.map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
+        const labTileset = this.map.addTilesetImage("Lab Tileset", "labTileset");
         
         this.floorLayer = this.map.createLayer("floor", forestTileset, 0, 0);
-        this.cliffLayer = this.map.createLayer("cliff", forestTileset, 0, 0);
-        this.decor1Layer = this.map.createLayer("decor1", forestTileset, 0, 0);
+        if (this.stageNumber === 1) {
+            this.cliffLayer = this.map.createLayer("cliff", forestTileset, 0, 0);
+            this.decor1Layer = this.map.createLayer("decor1", forestTileset, 0, 0);
+        } else if (this.stageNumber === 2) {
+            this.wallLayer = this.map.createLayer("wall", labTileset, 0, 0);
+            this.decor1Layer = this.map.createLayer("decor1", labTileset, 0, 0);
+        }
+
         this.decor2Layer = this.map.createLayer("decor2", forestTileset, 0, 0);
 
+        // 조명설정
         this.lights.enable().setAmbientColor(0x7c6dc7); // 어두운 조명 (밤)
-        
+    
         this.floorLayer.setPipeline('Light2D');
-        this.cliffLayer.setPipeline('Light2D');
+        if (this.stageNumber === 1) {
+            this.cliffLayer.setPipeline('Light2D');
+        } else if (this.stageNumber === 2) {
+            this.wallLayer.setPipeline('Light2D');
+        }
         this.decor1Layer.setPipeline('Light2D');
         this.decor2Layer.setPipeline('Light2D');
 
-
+        // 충돌설정
         this.floorLayer.setCollisionByProperty({collides: true});
         this.matter.world.convertTilemapLayer(this.floorLayer);
+        if (this.wallLayer) {
+            this.wallLayer.setCollisionByProperty({collides: true});
+            this.matter.world.convertTilemapLayer(this.wallLayer);
+        }
 
         //오브젝트 레이어 관련 코드
         const objectLayer = this.map.getObjectLayer('object');
@@ -58,20 +86,13 @@ export default class NightScene extends Phaser.Scene {
             const { x, y, width, height, name, type, properties } = object;
             console.log(`Object: ${name}, Type: ${type}, X: ${x}, Y: ${y}`);
     
-
             // 코드 생성 위치 설정
             if (name === 'chord') {
-                /* name 으로 다음과 같이 구분
-                chordStart : 해당 맵에 처음 들어갔을 때 코드의 위치, 플레이어 스타트 위치 바로 옆
-                chordBattle : 전투 중 코드의 위치, 맵 중간, 이동불가 지역 -> 충돌체 설정시 오류 날 가능성 있으니 잘 확인할 것
-                chordEnd : 전투 끝나고 코드 위치, 표지판 옆   
-                */
-                        this.chord = new Chord({
-                            scene: this,
-                            x: x,
-                            y: y
-                        });
-                        
+                    this.chord = new Chord({
+                        scene: this,
+                        x: x,
+                        y: y
+                    });
                 }
 
             // 모닥불
@@ -79,9 +100,7 @@ export default class NightScene extends Phaser.Scene {
                 this.bonfire = new Bonfire({
                     scene: this,
                     x: x,
-                    y: y,
-                    texture: 'bonfire',
-                    frame: 'bonfire_01'
+                    y: y
                 });
             }
 
@@ -90,11 +109,8 @@ export default class NightScene extends Phaser.Scene {
                 this.player = new Player({
                     scene: this,
                     x: x,
-                    y: y,
-                    texture: 'player',
-                    frame: 'player_idle_01'
+                    y: y
                 });
-        
             }
         });
 
@@ -115,6 +131,44 @@ export default class NightScene extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 480, 320);
         this.matter.world.setBounds(0, 0, 480, 320);
         this.cameras.main.startFollow(this.player);
+
+        // 다음 맵으로 이동하는 이벤트 핸들러
+        const goToNextHandler = (event) => {
+            console.log('Moving to the next map...');
+            const stageNumber = this.stageNumber + 1;
+            const mapNumber = 1;
+            const playerStatus = this.player.status;
+
+            this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
+            this.backgroundMusic.stop();
+        }
+
+        // 플레이어와 모닥불 충돌 이벤트 설정
+        this.matterCollision.addOnCollideStart({
+            objectA: this.player,
+            objectB: this.bonfire,
+            callback: eventData => {
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("플레이어와 모닥불 충돌");
+                // 상호작용 가능 키 표시
+                gameObjectB.showInteractPrompt();
+                // 키보드 입력 이벤트 설정
+                this.input.keyboard.on('keydown-E', goToNextHandler);
+            }
+        });
+
+        this.matterCollision.addOnCollideEnd({
+            objectA: this.player,
+            objectB: this.bonfire,
+            callback: eventData => {
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("플레이어와 모닥불 떨어짐");
+                // 상호작용 가능 키 숨기기
+                gameObjectB.hideInteractPrompt();
+                // 키보드 입력 이벤트 해제
+                this.input.keyboard.off('keydown-E', goToNextHandler);
+            }
+        });
     }
 
     update() {
