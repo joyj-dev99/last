@@ -259,9 +259,11 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.anims.play(`${this.monsterType}_damage`, true);
             this.applyKnockback(gameObject);
         } else {
-            this.setCollidesWith([TILE_CATEGORY]);
+            if (this.moveEvent) {
+                this.moveEvent.destroy();
+            }
             this.isAlive = false;
-            this.moveEvent.destroy();
+            this.setCollidesWith([TILE_CATEGORY]);
             this.hp = 0;
             this.anims.play(`${this.monsterType}_death`);
             return 'death';
