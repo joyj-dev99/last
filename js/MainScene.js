@@ -30,6 +30,7 @@ import Slash from "./Slash.js";
 import Magic from "./Magic.js";
 
 import SpeechBubble from "./SpeechBubble.js";
+import Dialog from "./Dialog.js";
 
 import {
     PLAYER_CATEGORY,
@@ -166,8 +167,7 @@ export default class MainSceneTest extends Phaser.Scene {
 
         Milestone.preload(this);
         SpeechBubble.preload(this);
-
-        StageManager.preload(this);
+        Dialog.preload(this);
     }
 
     create() {
