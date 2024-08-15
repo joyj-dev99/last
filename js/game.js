@@ -11,7 +11,7 @@ const config = {
     pixelArt: true, // 픽셀 아트 스타일 활성화, 화질 깨지는 걸 막음
     type: Phaser.AUTO,
     parent: 'game',
-    scene: [TitleScene, IntroScene, MainScene, NightScene],
+    scene: [MainScene, NightScene, TitleScene, IntroScene],
     scale: {
         // 다양한 디바이스와 해상도에 맞춰지도록
         mode: Phaser.Scale.FIT,
