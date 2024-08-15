@@ -2,7 +2,7 @@ import Arrow from "./Arrow.js";
 import Magic from "./Magic.js";
 import Slash from "./Slash.js";
 import SpeechBubble from "./SpeechBubble.js";
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY} from "./constants.js";
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY, BOUNDARY_CATEGORY} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -37,7 +37,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             label: 'playerCollider',
             collisionFilter: {
                 category: PLAYER_CATEGORY, // 현재 객체 카테고리
-                mask: MONSTER_CATEGORY | OBJECT_CATEGORY | TILE_CATEGORY | MONSTER_ATTACK_CATEGORY | SENSOR_CATEGORY //충돌할 대상 카테고리
+                mask: MONSTER_CATEGORY | OBJECT_CATEGORY | TILE_CATEGORY | MONSTER_ATTACK_CATEGORY | SENSOR_CATEGORY 
+                | BOUNDARY_CATEGORY//충돌할 대상 카테고리
             }
         });
 
