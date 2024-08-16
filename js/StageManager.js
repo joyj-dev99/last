@@ -418,7 +418,7 @@ export default class StageManager {
                 this.scene.backgroundMusic.stop();
                 this.scene.cameras.main.once('camerafadeoutcomplete', () => {
                     const result = 'clear';
-                    this.scene.scene.start('BattleResultScene', result);
+                    this.scene.scene.start('BattleResultScene', {result});
                 });
             }
         });
