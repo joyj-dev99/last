@@ -7,7 +7,7 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
         });
     }
 
-    constructor(scene, texture, stageNum, subStageNum) {
+    constructor(scene, texture, stageNumber, mapNumber) {
         // X, Y 위치를 화면의 상단 중앙으로 설정
         const x = scene.sys.game.config.width / 2;
         const y = 30; 
@@ -17,24 +17,32 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
 
         // 초기 프레임 설정
         this.setFrame(0);
-
         // 스크롤에 영향을 받지 않도록 설정
         this.setScrollFactor(0);
 
         // 'Stage 1' 텍스트 추가
-        this.stageText = scene.add.text(x, y - 12, `Stage ${stageNum}`, {
-            font: '13px Arial',
+        this.stageText = scene.add.text(x, y - 12, this.getStageName(stageNumber), {
+            fontFamily: 'Galmuri11, sans-serif',
             fill: '#ffffff',
             align: 'center'
-        }).setOrigin(0.5, 0.5);  // 텍스트를 중앙 정렬
+        }).setOrigin(0.5, 0.7);  // 텍스트를 중앙 정렬
 
         this.stageText.setScrollFactor(0);
         this.stageText.setDepth(1001);
 
         this.setScale(0.5);
-
-        this.setProgress(subStageNum);
+        this.setProgress(mapNumber);
         
+    }
+
+    getStageName(stageNumber) {
+        if (stageNumber == 1) {
+            return '에덴 마을 외곽';
+        } else if (stageNumber == 2) {
+            return '지하 감옥'
+        } else if (stageNumber == 3) {
+            return '볼프강의 연구소'
+        }
     }
 
     setProgress(frameIndex) {

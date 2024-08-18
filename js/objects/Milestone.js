@@ -1,7 +1,4 @@
-const PLAYER_CATEGORY = 0x0001;
-const MONSTER_CATEGORY = 0x0002;
-const TILE_CATEGORY = 0x0004;
-const OBJECT_CATEGORY = 0x0005;
+import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY} from "../constants.js";
 
 export default class Milestone extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -19,13 +16,13 @@ export default class Milestone extends Phaser.Physics.Matter.Sprite {
         const signCollider = Bodies.circle(this.x, this.y, 10, { 
             isSensor: false,
             isStatic: true, 
-            label: 'milestone' 
+            label: 'milestone',
+            collisionFilter: {
+                category: OBJECT_CATEGORY, // 현재 객체 카테고리
+                mask: PLAYER_CATEGORY, MONSTER_CATEGORY
+            } 
         });
         this.setExistingBody(signCollider);
-
-        // 충돌 카테고리 설정
-        this.setCollisionCategory(OBJECT_CATEGORY);
-        this.setCollidesWith([PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY]);
     }
 
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행

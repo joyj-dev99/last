@@ -1,0 +1,177 @@
+{
+    "frames": [
+        {
+            "filename": "thunderstrike_w_blur_0",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_1",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 64,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_2",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 0,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_3",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 64,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_4",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 128,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_5",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 128,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_6",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 0,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_7",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 64,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_8",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 128,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_9",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 192,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_10",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 192,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_11",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 192,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "thunderstrike_w_blur_12",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 0,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

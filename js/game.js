@@ -2,6 +2,7 @@ import MainScene from './MainScene.js';
 import NightScene from './NightScene.js';
 import IntroScene from './IntroScene.js';
 import TitleScene from './TitleScene.js';
+import BattleResultScene from './BattleResultScene.js';
 
 const config = {
     // 32*32px 타일 기준 세로 8칸, 가로 11.1칸
@@ -11,7 +12,7 @@ const config = {
     pixelArt: true, // 픽셀 아트 스타일 활성화, 화질 깨지는 걸 막음
     type: Phaser.AUTO,
     parent: 'game',
-    scene: [MainScene, TitleScene, IntroScene, NightScene],
+    scene: [TitleScene, IntroScene, BattleResultScene, MainScene, NightScene],
     scale: {
         // 다양한 디바이스와 해상도에 맞춰지도록
         mode: Phaser.Scale.FIT,

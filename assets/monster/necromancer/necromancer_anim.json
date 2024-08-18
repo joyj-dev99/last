@@ -1,0 +1,276 @@
+{
+  "anims": [
+    {
+      "key": "necromancer_idle",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 8,
+      "frames": [
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_0"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_1"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_2"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_3"
+        }
+      ]
+    },
+    {
+      "key": "necromancer_move",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 10,
+      "frames": [
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_8"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_9"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_10"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_11"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_12"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_13"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_14"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_15"
+        }
+      ]
+    },
+    {
+      "key": "necromancer_attack1",
+      "type": "frames",
+      "repeat": 0,
+      "frameRate": 8,
+      "frames": [
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_16"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_17"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_18"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_19"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_20"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_21"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_22"
+        }
+      ]
+    },
+    {
+      "key": "necromancer_damage",
+      "type": "frames",
+      "repeat": 0,
+      "frameRate": 6,
+      "frames": [
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_24"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_25"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_26"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_27"
+        }
+      ]
+    },
+    {
+      "key": "necromancer_death",
+      "type": "frames",
+      "repeat": 0,
+      "frameRate": 8,
+      "frames": [
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_32"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_33"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_34"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_35"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_36"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_37"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_38"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_39"
+        }
+      ]
+    },
+    {
+      "key": "necromancer_attack2",
+      "type": "frames",
+      "repeat": 0,
+      "frameRate": 10,
+      "frames": [
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_42"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_45"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_46"
+        }
+      ]
+    },
+    {
+      "key": "necromancer_evil_laugh",
+      "type": "frames",
+      "repeat": 0,
+      "frameRate": 6,
+      "frames": [
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_48"
+        },
+        {
+          "key": "necromancer",
+          "frame": "necromancer_sprite_sheet_49"
+        }
+      ]
+    }
+  ]
+}

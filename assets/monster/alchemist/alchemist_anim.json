@@ -1,0 +1,280 @@
+{
+    "anims": [
+        {
+            "key": "alchemist_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_0"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_1"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_2"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_3"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_8"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_9"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_10"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_11"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_12"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_13"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_14"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_15"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_equip_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_16"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_17"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_18"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_19"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_20"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_throw_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_24"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_25"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_26"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_27"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_drink_potion",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_32"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_33"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_34"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_35"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_36"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_37"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_38"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_39"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_40"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_41"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_42"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_43"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_48"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_49"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_50"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_51"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_52"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_53"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_54"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_55"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_flask_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_56"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_57"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_58"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_59"
+                }
+            ]
+        },
+        {
+            "key": "alchemist_flask_hit",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_64"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_65"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_66"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_67"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_68"
+                },
+                {
+                    "key": "alchemist",
+                    "frame": "alchemist_sprite_sheet_69"
+                }
+            ]
+        }
+    ]
+}

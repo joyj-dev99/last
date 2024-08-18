@@ -1,0 +1,684 @@
+{
+    "frames": [
+        {
+            "filename": "giant_pumpkin_sprite_sheet_0",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_1",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 96,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_2",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 0,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_3",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 96,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_15",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 192,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_16",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 192,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_17",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 0,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_18",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 96,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_19",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 192,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_20",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 288,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_30",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 288,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_31",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 288,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_32",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 0,
+                "y": 288
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_33",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 96,
+                "y": 288
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_34",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 192,
+                "y": 288
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_35",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 288,
+                "y": 288
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_36",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 384,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_37",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 384,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_38",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 384,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_39",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 384,
+                "y": 288
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_40",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 0,
+                "y": 384
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_41",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 96,
+                "y": 384
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_45",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 192,
+                "y": 384
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_46",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 288,
+                "y": 384
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_47",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 384,
+                "y": 384
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_48",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 480,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_49",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 480,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_60",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 480,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_61",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 480,
+                "y": 288
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_62",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 480,
+                "y": 384
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_63",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 0,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_64",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 96,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_65",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 192,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_75",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 288,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_76",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 384,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_77",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 480,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_78",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 576,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_90",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 576,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_91",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 576,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_92",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 576,
+                "y": 288
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_93",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 576,
+                "y": 384
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_94",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 576,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_95",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 0,
+                "y": 576
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_96",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 96,
+                "y": 576
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_97",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 192,
+                "y": 576
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_98",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 288,
+                "y": 576
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_99",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 384,
+                "y": 576
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_100",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 480,
+                "y": 576
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_101",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 576,
+                "y": 576
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_102",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 672,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_103",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 672,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giant_pumpkin_sprite_sheet_104",
+            "frame": {
+                "w": 96,
+                "h": 96,
+                "x": 672,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

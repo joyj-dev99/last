@@ -1,3 +1,6 @@
+import {PLAYER_CATEGORY, OBJECT_CATEGORY} from "../constants.js";
+import SpeechBubble from "../SpeechBubble.js";
+
 export default class Chord extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y} = data;
@@ -13,7 +16,11 @@ export default class Chord extends Phaser.Physics.Matter.Sprite {
         const chordCollider = Bodies.rectangle(this.x, this.y, 32, 28, { 
             isSensor: false,
             isStatic: true,
-            label: 'chord'
+            label: 'chord',
+            collisionFilter: {
+                category: OBJECT_CATEGORY, // 현재 객체 카테고리
+                mask: PLAYER_CATEGORY //충돌할 대상 카테고리
+            }
         });
         this.setExistingBody(chordCollider);
 
@@ -27,8 +34,6 @@ export default class Chord extends Phaser.Physics.Matter.Sprite {
     static preload(scene){
         scene.load.atlas('chord', 'assets/npc/chord/chord.png', 'assets/npc/chord/chord_atlas.json');
         scene.load.animation('chordAnim', 'assets/npc/chord/chord_anim.json');
-        // Load the speech bubble image
-        scene.load.image('speechBubble', '/assets/ui/—Pngtree—pixel speech bubble_8533530.png');
     }
 
     startPlayLute() {
@@ -43,16 +48,11 @@ export default class Chord extends Phaser.Physics.Matter.Sprite {
         }
     }
 
-    showSpeechBubble() {
-        const bubble = this.scene.add.image(this.x, this.y -20 , 'speechBubble').setScale(0.015);
-        const text = this.scene.add.text(this.x, this.y-20, '이제 배운걸\n써먹어 보자', { fontSize: '8px', fill: '#000000' });
-        text.setOrigin(0.5, 0.5); // Center the text within the bubble
+    showSpeechBubble(contents, onDestroyCallback) {
 
-        // Optionally, destroy the bubble after some time
-        this.scene.time.delayedCall(3000, () => {
-            bubble.destroy();
-            text.destroy();
-        });
+        // SpeechBubble 클래스 인스턴스 생성
+        new SpeechBubble(this.scene, contents, onDestroyCallback, 'Chord');
+    
     }
 
     setLocation(x, y) {

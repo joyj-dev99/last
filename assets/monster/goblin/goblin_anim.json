@@ -1,0 +1,444 @@
+{
+    "anims": [
+        {
+            "key": "goblin_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_0"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_1"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_2"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_3"
+                }
+            ]
+        },
+        {
+            "key": "goblin_movement",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_16"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_17"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_18"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_19"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_20"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_21"
+                }
+            ]
+        },
+        {
+            "key": "goblin_panic",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_32"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_33"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_34"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_35"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_36"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_37"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_38"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_39"
+                }
+            ]
+        },
+        {
+            "key": "goblin_grab_coin_bag",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_48"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_49"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_50"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_51"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_52"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_53"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_54"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_55"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_56"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_57"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_58"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_59"
+                }
+            ]
+        },
+        {
+            "key": "goblin_throw_coin_bag",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_64"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_65"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_66"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_67"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_68"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_69"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_70"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_71"
+                }
+            ]
+        },
+        {
+            "key": "goblin_eat",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_80"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_81"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_82"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_83"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_84"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_85"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_86"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_87"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_88"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_89"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_90"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_91"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_92"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_93"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_94"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_95"
+                }
+            ]
+        },
+        {
+            "key": "goblin_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_96"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_97"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_98"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_99"
+                }
+            ]
+        },
+        {
+            "key": "goblin_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_112"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_113"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_114"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_115"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_116"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_117"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_118"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_119"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_120"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_121"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_122"
+                }
+            ]
+        },
+        {
+            "key": "goblin_command",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_128"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_129"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_130"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_131"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_132"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_133"
+                }
+            ]
+        },
+        {
+            "key": "goblin_jump",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_144"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_145"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_146"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_147"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_148"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_149"
+                }
+            ]
+        },
+        {
+            "key": "goblin_slam",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_160"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_161"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_162"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_163"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_164"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_165"
+                },
+                {
+                    "key": "goblin",
+                    "frame": "goblin_sprite_sheet_166"
+                }
+            ]
+        }
+    ]
+}

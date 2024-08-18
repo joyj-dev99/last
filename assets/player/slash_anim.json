@@ -1,0 +1,28 @@
+{
+    "anims": [
+        {
+            "key": "slash",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 15,
+            "frames": [
+                {
+                    "key": "slash",
+                    "frame": "fe1002_01"
+                },
+                {
+                    "key": "slash",
+                    "frame": "fe1002_02"
+                },
+                {
+                    "key": "slash",
+                    "frame": "fe1002_03"
+                },
+                {
+                    "key": "slash",
+                    "frame": "fe1002_04"
+                }
+            ]
+        }
+    ]
+}

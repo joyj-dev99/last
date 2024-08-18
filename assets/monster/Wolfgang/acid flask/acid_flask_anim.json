@@ -1,0 +1,76 @@
+{
+    "anims": [
+        {
+            "key": "acid_flask",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_0"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_1"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_2"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_3"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_4"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_5"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_6"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_7"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_8"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_9"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_10"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_11"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_12"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_13"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_14"
+                },
+                {
+                    "key": "acid_flask",
+                    "frame": "acid_flask_sprite_sheet_64x32_15"
+                }
+            ]
+        }
+    ]
+}

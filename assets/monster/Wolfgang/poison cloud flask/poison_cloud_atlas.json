@@ -1,0 +1,216 @@
+{
+    "frames": [
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_0",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_1",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 0,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_2",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 128,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_3",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 128,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_4",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 0,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_5",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 128,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_6",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 0,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_7",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 128,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_8",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 256,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_9",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 256,
+                "y": 64
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_10",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 256,
+                "y": 128
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_11",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 256,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_12",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 0,
+                "y": 256
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_13",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 128,
+                "y": 256
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_14",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 256,
+                "y": 256
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "poison_cloud_flask_sprite_sheet_128x64_15",
+            "frame": {
+                "w": 128,
+                "h": 64,
+                "x": 0,
+                "y": 320
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

@@ -108,7 +108,7 @@
             "key": "tomato_damage",
             "type": "frames",
             "repeat": 0,
-            "frameRate": 6,
+            "frameRate": 12,
             "frames": [
                 {
                     "key": "tomato",

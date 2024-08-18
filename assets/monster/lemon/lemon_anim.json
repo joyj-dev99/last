@@ -1,0 +1,236 @@
+{
+    "anims": [
+        {
+            "key": "lemon_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_0"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_1"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_2"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_3"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_4"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_5"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_6"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_7"
+                }
+            ]
+        },
+        {
+            "key": "lemon_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_8"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_9"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_10"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_11"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_12"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_13"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_14"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_15"
+                }
+            ]
+        },
+        {
+            "key": "lemon_spawn_bubbles",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_16"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_17"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_18"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_19"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_20"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_21"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_22"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_23"
+                }
+            ]
+        },
+        {
+            "key": "lemon_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_23"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_24"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_25"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_26"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_27"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_28"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_29"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_30"
+                }
+            ]
+        },
+        {
+            "key": "lemon_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_32"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_33"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_34"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_35"
+                }
+            ]
+        },
+        {
+            "key": "lemon_bubble_movement",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_40"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_41"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_42"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_43"
+                }
+            ]
+        },
+        {
+            "key": "lemon_bubble_pop",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_48"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_49"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_50"
+                },
+                {
+                    "key": "lemon",
+                    "frame": "lemon_sprite_sheet_51"
+                }
+            ]
+        }
+    ]
+}

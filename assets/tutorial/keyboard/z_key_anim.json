@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "z_key_anim.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 32,
+				"h": 16
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "zkey.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					}
+				},
+				{
+					"filename": "zkey2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 16,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:cc2d45ca281efa34eeda00dbe54afdc3:a624b5b459559881dbbbadc7d7d1dd88:441231123d9177408f12702d95323ec9$"
+	}
+}

@@ -1,11 +1,220 @@
+import {PLAYER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
+
 import TextIndicator from "./TextIndicator.js";
+import MonsterTomato from "./monsters/MonsterTomato.js";
+import MonsterEggplant from "./monsters/MonsterEggplant.js";
+import MonsterApple from "./monsters/MonsterApple.js";
+import MonsterLemon from "./monsters/MonsterLemon.js";
+import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
+import MonsterFly from "./monsters/MonsterFly.js";
+import MonsterSpider from "./monsters/MonsterSpider.js";
+import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
+import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
+import MonsterBossGoblin from "./monsters/MonsterBossGoblin.js";
+import MonsterBossNecromancer from "./monsters/MonsterBossNecromancer.js";
+import MonsterBugbear from "./monsters/MonsterBugbear.js";
+import MonsterAngel from "./monsters/MonsterAngel.js";
+import MonsterGolem from "./monsters/MonsterGolem.js";
 
 export default class Item extends Phaser.Physics.Matter.Sprite {
 
-    constructor(scene, x, y, texture, frame, player, type) {
+    // 동전 아이템 데이터 
+    static COIN_ITEM = {
+        type : 'coin',
+        texture : 'coin',
+        frame : null,
+        scale : 0.5,
+        // 상단 누적코인 갯수 표시하는 text 객체
+        // textIndicator : this.coinIndicatorText,
+        message : '+10 coin',
+        drap_per : 0.2
+    };
+
+    // 토마토 시체 아이템 데이터 
+    static TOMATO_ITEM = {
+        type : 'tomato',
+        texture : 'fruit',
+        frame : 3,
+        // 상단 우측 체력 표시하는 하트 표시 객체
+        // heartIndicator : this.heartIndicator,
+        message : '+1 heart',
+        drap_per : 0.2
+    };
+
+    // 가지 시체 아이템 데이터 
+    static Eggplant_ITEM = {
+        type : 'eggplant',
+        // texture : 'fruit',
+        // frame : 10,
+        texture : 'eggplant',
+        frame : null,
+        scale : 0.66,
+        message : '+5 ATK', //Strength (공격력 5 증가) 
+        drap_per : 1.0
+    };
+
+    // 사과 시체 아이템 데이터 
+    static Apple_ITEM = {
+        type : 'apple',
+        texture : 'fruit',
+        frame : 4,
+        message : '+1 heart' ,
+        drap_per : 0.2
+    };
+
+
+    // 레몬 시체 아이템 데이터 
+    static Lemon_ITEM = {
+        type : 'lemon',
+        texture : 'fruit',
+        frame : 23,
+        message : '+1 heart' ,
+        drap_per : 0.2
+    };
+
+    // 호박 시체 아이템 데이터 
+    static Pumpkin_ITEM = {
+        type : 'pumpkin',
+        texture : 'pumpkin',
+        frame : 0,
+        message : '+5 ATK' ,
+        scale : 0.5,
+        drap_per : 1.0
+    };
+
+
+    // 고블린 고기 아이템 데이터 
+    static MiniGoblin_ITEM = {
+        type : 'mini_goblin_meat',
+        texture : 'meat',
+        frame : null,
+        scale : 0.66,
+        message : '+1 heart' ,
+        drap_per : 0.5
+    };
+    
+    // 쥐의 치즈 아이템 데이터 
+    static Ratfolk_ITEM = {
+        type : 'cheese',
+        texture : 'cheese',
+        frame : null,
+        scale : 0.5,
+        message : '+1 heart' ,
+        drap_per : 0.5
+    };
+    
+    // 물약 아이템 데이터 
+    static Blue_Potion_ITEM = {
+        type : 'potion',
+        texture : 'potion',
+        frame : 0,
+        scale : 0.66,
+        message : '+5 ATK' ,
+        drap_per : 0.5
+    };
+    // 물약 아이템 데이터 
+    static Yellow_Potion_ITEM = {
+        type : 'potion',
+        texture : 'potion',
+        frame : 1,
+        scale : 0.66,
+        message : '+5 ATK' ,
+        drap_per : 0.5
+    };
+    // 물약 아이템 데이터 
+    static Red_Potion_ITEM = {
+        type : 'potion',
+        texture : 'potion',
+        frame : 2,
+        scale : 0.66,
+        message : '+5 ATK' ,
+        drap_per : 0.5
+    };
+
+    // 하트 아이템 데이터 
+    static Heart_ITEM = {
+        type : 'heart',
+        texture : 'heart',
+        frame : null,
+        scale : 0.5,
+        message : '+1 heart' ,
+        drap_per : 0.5
+    };
+
+    // Item.setData(this.coinIndicatorText,this.heartIndicator);
+    // static setData(textIndicator, heartIndicator){
+    //     Item.COIN_ITEM.textIndicator = textIndicator;
+    //     Item.TOMATO_ITEM.heartIndicator = heartIndicator;
+    // }
+
+    static createItemType(monster){
+
+        let monsterITEM = null;
+        if(monster instanceof MonsterEggplant){
+            monsterITEM = Item.Eggplant_ITEM;
+        }
+        else if(monster instanceof MonsterTomato){
+            monsterITEM = Item.TOMATO_ITEM;
+
+        }else if(monster instanceof MonsterApple){
+            monsterITEM = Item.Apple_ITEM;
+        }
+        else if(monster instanceof MonsterLemon){
+            monsterITEM = Item.Lemon_ITEM;
+        }
+        else if(monster instanceof MonsterBossPumpkin){
+            monsterITEM = Item.Pumpkin_ITEM;
+        }
+        else if(monster instanceof MonsterFly){
+            monsterITEM = Item.COIN_ITEM;
+        }
+        else if(monster instanceof MonsterSpider){
+            monsterITEM = Item.COIN_ITEM;
+        }
+        else if(monster instanceof MonsterMiniGoblin){
+            monsterITEM = Item.MiniGoblin_ITEM;
+        }
+        else if(monster instanceof MonsterRatfolk){
+            monsterITEM = Item.Ratfolk_ITEM;
+        }
+        else if(monster instanceof MonsterBossGoblin){
+            monsterITEM = Item.Blue_Potion_ITEM;
+        }
+        else if(monster instanceof MonsterBossNecromancer){
+            monsterITEM = Item.Blue_Potion_ITEM;
+        }
+        else if(monster instanceof MonsterBugbear){
+            monsterITEM = Item.Yellow_Potion_ITEM;
+        }
+        else if(monster instanceof MonsterAngel){
+            monsterITEM = Item.Heart_ITEM;
+        }
+        else if(monster instanceof MonsterGolem){
+            monsterITEM = Item.Red_Potion_ITEM;
+        }
+        else{
+            monsterITEM = Item.COIN_ITEM;
+        }
+        
+        // Math.random() 함수는 0 (포함)에서 1 (제외) 사이의 난수를 생성합니다.
+        const randomValue = Math.random();
+        console.log('randomValue : '+randomValue);
+        console.log('monsterITEM.drap_per : '+monsterITEM.drap_per);
+
+        const itemType = randomValue <= monsterITEM.drap_per ? monsterITEM : Item.COIN_ITEM;
+        return itemType;
+
+    }
+
+    constructor(data) {
+
+        let {scene, x, y, itemType} = data;
+
+        // COIN_ITEM에서 scale 값을 받아오고, 기본값은 1로 설정
+        let scale = itemType.scale !== undefined ? itemType.scale : 1;
 
         // Matter.js 물리를 사용하여 지정된 texture로 (x, y) 위치에 플레이어 스프라이트를 생성
-        super(scene.matter.world, x, y, texture, frame);
+        super(scene.matter.world, x, y, itemType.texture, itemType.frame);
 
         // 플레이어 스프라이트를 장면에 추가하여 화면에 렌더링되고 다른 게임 객체들과 상호작용
         // 화면에 아이템 보이게하기
@@ -13,70 +222,114 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     
         // 밀리지 않도록 객체를 고정
         this.setStatic(true);
-
-        // 특정 객체 (Player)를 인식하도록 저장
-        this.player = player;
-        this.type = type;
+        // 크기 설정 (코인 크기 0.5배로 설정)
+        this.setScale(scale);
 
         // 충돌 이벤트 리스너 추가
         // scene.matter.world.on('collisionstart', this.handleCollision, this);
+        this.setCollisionCategory(OBJECT_CATEGORY);
+        this.setCollidesWith([PLAYER_CATEGORY, TILE_CATEGORY]);
+
+        this.itemType = itemType;
 
     }
 
-    // // 충돌 이벤트 핸들러
-    // handleCollision(event) {
-
-    //     // 충돌 쌍 가져오기
-    //     const pairs = event.pairs;
-
-    //     // 모든 충돌 쌍 하나씩 가져오기 (반복)
-    //     for (let i = 0; i < pairs.length; i++) {
-    //         const bodyA = pairs[i].bodyA;
-    //         const bodyB = pairs[i].bodyB;
-
-    //         // this.body와 player.body의 충돌인지 확인
-    //         // item과 플레이어가 충돌했다면
-    //         if ((bodyA === this.body && bodyB === this.player.body) || (bodyA === this.player.body && bodyB === this.body)) {
-                
-
-    //             let content;;
-    //             if(this.type == 'tomato'){
-    //                 // 플레이어 heart 1회복
-    //                 this.player.increaseHeart(1);
-    //                 content = '+1 heart';
-    //             }
-    //             else if(this.type == 'coin'){
-    //                 console.log('코인 획득');
-    //                 this.player.addCoin(10);
-    //                 content = '+10 coin';
-    //             }
-    //             else{
-    //                 content='';
-    //             }
-
-
-    //             let text = TextIndicator.createText(this.scene, this.x,this.y, content, {
-    //                 fontSize: '0.8vw',
-    //                 fill: '#FFF' // 글씨 색상 검은색
-    //             });
-
-    //             this.scene.time.delayedCall(2000, () => {
-    //                 TextIndicator.removeText(text);
-    //             });
-
-    //             // 객체를 화면에서 제거
-    //             this.destroy();
-
-    //         }
-    //     }
-
-    // }
-
     static preload(scene) {
-        // Load the SVG file
         scene.load.image('coin', 'assets/item/pixel_meat_coin.png');
-        scene.load.spritesheet('item', 'assets/item/fruits asset.png', { frameWidth: 16, frameHeight: 16 });
-        // scene.load.image('coin', 'assets/item/meatCoin.png');
+        scene.load.spritesheet('fruit', 'assets/item/fruits asset.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.image('pumpkin', 'assets/item/pumpkin.png');
+        scene.load.image('cheese', 'assets/item/cheese.png');
+        scene.load.image('meat', 'assets/item/meat.png');
+        scene.load.image('heart', 'assets/item/heart.png');
+        scene.load.spritesheet('potion', 'assets/item/potion.png', { frameWidth: 24, frameHeight: 24 });
+        scene.load.image('eggplant', 'assets/item/eggplant.png');
+        // 에셋 추가
+    }
+
+    // 아이템 적용 메소드
+    // 아이템마다 상속으로 처리할 수도 있을 듯
+    applyItem(player, textIndicator, heartIndicator) {
+
+        console.log('itemType : '+this.itemType.type);
+
+        if(this.itemType.type == 'coin'){
+            // 상단 coin 누적 갯수 화면에 반영
+            player.status.coin += 10;
+            textIndicator.setText(`Coins: ${player.status.coin}`);
+        }
+        else if(this.itemType.type == 'tomato'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        else if(this.itemType.type == 'eggplant'){
+            // 힘 3종류 +5 적용
+            player.increaseATK(5);
+
+        }else if(this.itemType.type == 'apple'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        else if(this.itemType.type == 'lemon'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        else if(this.itemType.type == 'pumpkin'){
+            // 공격력 +5 적용
+            player.increaseATK(5);
+        }
+        // 미니고블린의 고기
+        else if(this.itemType.type == 'mini_goblin_meat'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        // 쥐의 치즈
+        else if(this.itemType.type == 'cheese'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        // 포션 
+        else if(this.itemType.type == 'potion'){
+            // 공격력 +5 적용
+            player.increaseATK(5);
+        }
+        // 미니고블린의 고기
+        else if(this.itemType.type == 'heart'){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        
+        let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
+            fontFamily: 'GalmuriMono7, sans-serif',
+            fontSize: '8px', //8배수 단위로 늘어나야 잘 보임
+            // fill: '#FFFFFF',
+            fill: '#000000',
+            resolution:2
+        });
+
+        this.scene.time.delayedCall(2000, () => {
+            // gpt가 이 지연 호출이 정확히 실행될 때 text 객체가 이미 파괴되었을 가능성이 있습니다. 
+            // 안전하게 처리하려면 text가 존재할 때만 제거하도록 할 수 있습니다.
+            // 라면서 확인하라고 해서 추가한 코드
+            if (text) {
+                TextIndicator.removeText(text);
+            }
+        });
+        
+        
+        this.destroy();
+
+        console.log("상호작용 가능 표시를 보여주는 메서드.");
+
+        return true;
+        // return this.itemType.type;
+
     }
 
 }
+

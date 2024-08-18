@@ -1,0 +1,228 @@
+{
+    "anims": [
+        {
+            "key": "bugbear_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_0"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_1"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_2"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_3"
+                }
+            ]
+        },
+        {
+            "key": "bugbear_move",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 10,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_6"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_7"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_8"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_9"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_10"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_11"
+                }
+            ]
+        },
+        {
+            "key": "bugbear_taunt",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_12"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_13"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_14"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_15"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_16"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_17"
+                }
+            ]
+        },
+        {
+            "key": "bugbear_block1",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_18"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_19"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_20"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_21"
+                }
+            ]
+        },
+        {
+            "key": "bugbear_block2",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_24"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_25"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_26"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_27"
+                }
+            ]
+        },
+        {
+            "key": "bugbear_attack",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_30"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_31"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_32"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_33"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_34"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_35"
+                }
+            ]
+        },
+        {
+            "key": "bugbear_damage",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_36"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_37"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_38"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_39"
+                }
+            ]
+        },
+        {
+            "key": "bugbear_death",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_42"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_43"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_44"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_45"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_46"
+                },
+                {
+                    "key": "bugbear",
+                    "frame": "bugbear_sprite_sheet_47"
+                }
+            ]
+        }
+    ]
+}
