@@ -168,11 +168,26 @@ export default class Tutorial{
             // console.log('Key pressed: down? ' + event.key); // 누른 키를 출력합니다.
 
             let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
+            console.log("관련된값", 관련된값);
             if(관련된값.result === true){
                 //  return {anim_keys : anim_key, anim_keyboards : anim_keyboard};
                 for (let i = 0; i < 관련된값.anim_keyboards.length; i++) {
                     관련된값.anim_keyboards[i].stop();
                 }
+
+                if(관련된값.anim_keys[0] === "z_key"){
+                    console.log("z_key 누름");
+                    this.player.handleSlash();
+
+                }else if(관련된값.anim_keys[0] === "x_key"){
+                    console.log("x_key 누름");
+                    this.player.handleBow();
+
+                }else if(관련된값.anim_keys[0] === "c_key"){
+                    console.log("c_key 누름");
+                    this.player.handleSpell();
+                }
+
                 console.log('this.이동키조작설명순서[0] : '+this.이동키조작설명순서[0]);
                 console.log('stop');
             }
