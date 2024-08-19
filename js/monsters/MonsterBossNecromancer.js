@@ -21,17 +21,15 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.bodyHeight = 20;
         this.centreX = 0;
         this.centreY = -6;
-        this.initHp = 250;
-        this.hp = 250;
-        this.damage = 0.5;
-        this.reach = 30;
-        this.speed = 1;
-        this.oneMove = 10;
-        this.speed = 1;
-        this.maxMove = 10;
-        this.followDistance = 400;
+        this.initHp = 550;
+        this.hp = 550;
+        this.damage = 0;
+        this.speed = 1.5;
+        this.followDistance = 500;
         this.scene.add.existing(this);
 
+        // 이 변수 가져오는거 모름 ㅠㅠㅠ
+        this.mapSize = 480;
         // 최초 생성시 왼쪽을 바라보도록.
         this.setFlipX(true);
         this.setDepth(10);
@@ -59,30 +57,15 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.setCollisionCategory(MONSTER_CATEGORY);
         this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY, TILE_CATEGORY]);
 
-        this.isBattleStared = false;
 
-        this.isMoving = false;
-        this.isFollowing = false;
-        this.isHurt = false;
-        this.isReturning = false;
         this.isAlive = true;
-        this.state = 'idle'; // 현재 상태
         // 위치 설정
         this.initialX = x;
         this.initialY = y;
         this.target = new Phaser.Math.Vector2(this.x, this.y);
         //
         this.bullets = this.scene.add.group();
-        this.isShoting = true;
-        this.shotingRate = 3000; // 발사 간격 (밀리초)
-        this.bulletSpeed = 4;
         this.bulletDuration = 2000;
-        this.bulletDistance = 400;
-        this.totalBullets = 20;
-        this.angleStep = 360 / this.totalBullets;
-        this.recoveryHp = 0;
-
-        this.isOneTimeRecall = true;
 
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
@@ -95,6 +78,8 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
             padding: {x: 10}
         }).setScrollFactor(0).setDepth(1001);
 
+        this.healthBarWidth = 120;
+        this.healthBarHeight = 15;
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
         // 초기 프레임 설정
@@ -104,6 +89,16 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.healthBarBack.setDepth(1001);
 
         this.delayedCallEvent = null;
+        this.attackType = 0;
+        //
+        //     지금 안쓰는 변수들은 아래
+        this.isMoving = false;
+        this.isFollowing = false;
+        this.isReturning = false;
+        this.state = 'idle'; // 현재 상태
+        this.isBattleStared = false;
+        this.isKnockBack = false;
+
     }
 
     static preload(scene) {
@@ -111,32 +106,32 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         scene.load.animation('necromancerAnim', 'assets/monster/necromancer/necromancer_anim.json');
 
         scene.load.image('necromancer_beam', 'assets/monster/necromancer/beam/beam.png');
+        scene.load.image('necromancer_magic_circle', 'assets/monster/necromancer/magic_circle.png');
+        scene.load.image('necromancer_magic_circle2', 'assets/monster/necromancer/magic_circle2.png');
     }
 
     update() {
         //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;
+        this.updateHpState();
+        this.timeOutBullets();
+        // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
+        // if (!this.isBattleStared || this.isHurt) return;
+        console.log('update 2 실행')
+        this.monsterDistanceControlPlayer();
+    }
+
+    updateHpState() {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 + 120, 20, 120, 15);
-        let healthWidth = (this.hp / this.initHp) * 120;
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, 20, this.healthBarWidth, this.healthBarHeight);
+        let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 + 120, 20, healthWidth, 15);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, 20, healthWidth, this.healthBarHeight);
+    }
 
-        this.bullets.getChildren().forEach(bullet => {
-            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
-            const elapsedTime = this.scene.time.now - bullet.creationTime;
-            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
-                // this.bullets.remove(bullet, true, true);
-                bullet.destroy();
-
-            }
-        });
-
-        // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
-        if (!this.isBattleStared || this.isHurt) return;
-        console.log('update 2 실행')
+    monsterDistanceControlPlayer() {
         this.target.x = this.player.x;
         this.target.y = this.player.y;
 
@@ -145,8 +140,7 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         let monsterVelocity = new Phaser.Math.Vector2();
         let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
         let distanceToTarget = toTarget.length();
-        if (distanceToTarget > 150) {
-            this.isMoving = true;
+        if (distanceToTarget > 120) {
             toTarget.normalize(); // 벡터를 단위 벡터로 정규화
             monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
             if (toTarget.x < 0 && this.anims.currentAnim.key !== `${this.monsterType}_attack2`) {
@@ -155,44 +149,26 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
                 this.setFlipX(false);
             }
             this.setVelocity(monsterVelocity.x, monsterVelocity.y);
-        } else {
-            this.isMoving = false;
-            // this.setVelocity(0, 0);
+        } else if (0 <= distanceToTarget && distanceToTarget < 110) {
             const dx = this.x - this.player.x;
             const dy = this.y - this.player.y;
             if (dx > 0) {
-                this.setVelocityX(speed *4);
+                this.setVelocityX(speed *2);
             } else {
-                this.setVelocityX(-speed * 4);
+                this.setVelocityX(-speed * 2);
             }
             if (dy > 0) {
-                this.setVelocityY(speed * 4);
+                this.setVelocityY(speed *2);
             } else {
-                this.setVelocityY(-speed * 4);
+                this.setVelocityY(-speed * 2);
             }
         }
-
-        //
-        //
-
-        // 공격 애니메이션 처리 안됨
-        //
-        //
-        // 정호
-        // 이 코드가 있어서 공격 모션이 캔슬됨.
-        const currentAnimKey = this.anims.currentAnim.key;
-        // 상태 변화 감지 및 애니메이션 재생
-        // if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_movement`) {
-        //     this.anims.play(`${this.monsterType}_movement`);
-        // }
-
-
     }
 
     startBattle() {
         this.attackEvent = this.scene.time.addEvent({
             delay: 5000,
-            callback: this.attack,
+            callback: this.monsterAttackPlayerBySkill,
             callbackScope: this,
             loop: true
         });
@@ -200,49 +176,64 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.anims.play(`${this.monsterType}_move`, true);
     }
 
-    actionAmin(state) {
-        this.state = state;
-        if (state === 'attack') {
-            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
-            this.setStatic(true);
-            this.anims.play(`${this.monsterType}_evil_laugh`, true);
-        }
-        if (state === 'damage') {
-            this.anims.play(`${this.monsterType}_damage`, true);
-        }
+    monsterAttackPlayer() {
+        //     네크로맨서는 부딪혀도 뭐 데미지 주고 말고 할게 없다 생각해서.
+        //     나보다 약한데 내가 어깨빵 한건데 내 체력이 감소하는건 이상함.
     }
 
     handleAnimationComplete(animation) {
-        if (animation.key === `${this.monsterType}_damage`) {
-            this.isHurt = false;
-            this.anims.play(`${this.monsterType}_move`, true);
-        } else if (animation.key === `${this.monsterType}_evil_laugh`) {
-            this.scene.time.delayedCall(300, () => {
-                this.setStatic(false);
+        if (animation.key === `${this.monsterType}_attack2`) {
+            this.scene.time.delayedCall(600, () => {
                 this.anims.play(`${this.monsterType}_move`, true);
             });
         } else if (animation.key === `${this.monsterType}_attack1`) {
             this.anims.play(`${this.monsterType}_move`, true);
-            this.makeGoblin();
-        } else if (animation.key === `${this.monsterType}_attack2`) {
-            this.scene.time.delayedCall(600, () => {
-                this.anims.play(`${this.monsterType}_move`, true);
-            });
+        } else if (animation.key === `${this.monsterType}_damage`) {
+            this.anims.play(`${this.monsterType}_move`, true);
         } else if (animation.key === `${this.monsterType}_death`) {
             this.destroy();
         }
     }
 
-    attack() {
-        this.setStatic(true);
-        if (this.initHp / 2 >= this.hp && this.isOneTimeRecall && this.anims.currentAnim.key === `${this.monsterType}_move`) {
-            this.isOneTimeRecall = false;
-            this.hp = this.hp + this.initHp / 3;
-            this.anims.play(`${this.monsterType}_attack1`);
-        } else if (this.isOneTimeRecall === false) {
+    monsterAttackPlayerBySkill() {
+        this.attackType = this.attackType + 1;
+        if (this.attackType === 2) {
+            this.magic_circle = this.scene.add.image(this.mapSize / 2, this.mapSize / 2 + 40, 'necromancer_magic_circle');
+            this.scene.tweens.add({
+                targets: this.magic_circle,
+                scaleX: 0.35,
+                scaleY: 0.35,
+                hold: 5000,
+                alpha: 1,
+                duration: 0,
+                onComplete: () => {
+                    this.magic_circle.destroy();
+                }
+            });
+            this.scene.playerDebuff('speed');
+        } else if (this.attackType === 4) {
+            this.magic_circle2 = this.scene.add.image(this.mapSize / 2, this.mapSize / 2 + 40, 'necromancer_magic_circle2');
+            this.scene.tweens.add({
+                targets: this.magic_circle2,
+                scaleX: 0.35,
+                scaleY: 0.35,
+                hold: 5000,
+                alpha: 1,
+                duration: 0,
+                onComplete: () => {
+                    this.magic_circle2.destroy();
+                }
+            });
+            this.magic_circle2.setBlendMode(Phaser.BlendModes.ADD);
+            this.magic_circle2.setDepth(8);
+            this.scene.playerDebuff('sight');
+            this.attackType = 0
+        } else {
             this.anims.play(`${this.monsterType}_attack2`);
-            this.shootBullet();
+            this.necromancerShootingBeam();
         }
+
+
     }
 
     takeDamage(amount) {
@@ -251,14 +242,16 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.hp -= amount;
         console.log('monster HP', this.hp)
 
-        if (this.hp > 0) {
+        if (this.hp > 0 && this.anims.currentAnim.key === `${this.monsterType}_movement`) {
             this.anims.play(`${this.monsterType}_damage`, true);
-        } else {
+        } else if (this.hp <= 0) {
             if (this.delayedCallEvent) {
                 this.delayedCallEvent.remove();
             }
-
+            this.destroyBullets()
             this.setCollidesWith([TILE_CATEGORY]);
+            // this.magic_circle.destroy();
+            // this.magic_circle2.destroy();
             this.isAlive = false;
             this.attackEvent.destroy();
             this.hp = 0;
@@ -267,40 +260,9 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
             this.healthBarBack.destroy();
             return 'death';
         }
-
-
     }
 
-    /**
-     * @param {Phaser.GameObjects.GameObject} source
-     */
-    applyKnockback(source) {
-        console.log("몬스터 넉백 시작");
-        // 충돌 방향 계산
-        const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
-
-        // 밀려나는 방향으로 힘과 속도를 동시에 적용
-        impactDirection.normalize().scale(50);
-        const force = {x: impactDirection.x * 0.1, y: impactDirection.y * 0.1};
-        this.setVelocity(impactDirection.x, impactDirection.y);
-
-        // Phaser에서 Matter 객체를 올바르게 참조합니다.
-        const Matter = Phaser.Physics.Matter.Matter;
-        Matter.Body.applyForce(this.body, this.body.position, force);
-
-        // 일정 시간 후 속도를 0으로 설정하여 멈춤
-        this.scene.time.delayedCall(200, () => {
-            this.setVelocity(0, 0);
-            this.isHurt = false;
-        });
-    }
-
-    makeGoblin() {
-        // 충격파 생성
-        this.scene.doMakeGoblin();
-    }
-
-    shootBullet() {
+    necromancerShootingBeam() {
         this.setStatic(true);
         let bullet = this.scene.matter.add.image(0, 0, 'necromancer_beam');
         bullet.setStatic(true);
@@ -319,14 +281,28 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         bullet.damage = 0.5;
         bullet.creationTime = this.scene.time.now;
         this.bullets.add(bullet);
-        this.scene.setCollisionOfMonsterAttack(bullet);
-        this.delayedCallEvent = this.scene.time.delayedCall(2600, () => {
+        this.scene.setCollisionOfMonsterLongAttack(bullet);
+        this.delayedCallEvent = this.scene.time.delayedCall(2300, () => {
             this.setStatic(false);
         });
     }
 
-    showSpeechBubble(contents, onDestroyCallback) {
+    timeOutBullets() {
+        this.bullets.getChildren().forEach(bullet => {
+            const elapsedTime = this.scene.time.now - bullet.creationTime;
+            if (elapsedTime > this.bulletDuration) {
+                bullet.destroy();
+            }
+        });
+    }
 
+    destroyBullets() {
+        this.bullets.children.each(bullet => {
+            bullet.destroy();
+        }, this);
+    }
+
+    showSpeechBubble(contents, onDestroyCallback) {
         // SpeechBubble 클래스 인스턴스 생성
         new SpeechBubble(this.scene, contents, onDestroyCallback, 'necromancer');
     }

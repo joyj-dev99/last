@@ -20,7 +20,7 @@ import MonsterBossNecromancer from "./monsters/MonsterBossNecromancer.js";
 import MonsterBugbear from "./monsters/MonsterBugbear.js";
 import MonsterAngel from "./monsters/MonsterAngel.js";
 import MonsterGolem from "./monsters/MonsterGolem.js";
-import MonsterAlchemist from "./monsters/MonsterAlchemist.js";
+import MonsterBossAlchemist from "./monsters/MonsterBossAlchemist.js";
 import MonsterWolfgang from "./monsters/MonsterWolfgang.js";
 
 import Milestone from "./objects/Milestone.js";
@@ -52,8 +52,8 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 1;
-        this.mapNumber = data.mapNumber || 1;
+        this.stageNumber = data.stageNumber || 3;
+        this.mapNumber = data.mapNumber || 4;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
@@ -146,13 +146,14 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
-        
+
 
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
         MonsterBossGoblin.preload(this);
         MonsterBossNecromancer.preload(this);
+        MonsterBossAlchemist.preload(this);
         MonsterApple.preload(this);
         Chord.preload(this);
         Item.preload(this);
@@ -227,7 +228,7 @@ export default class MainSceneTest extends Phaser.Scene {
 
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 if (gameObjectB.isAlive && this.player.isAlive) {
-                    gameObjectB.actionAmin('attack');
+                    gameObjectB.monsterAttackPlayer();
                     this.player.takeDamage(gameObjectB.damage);
                     if (this.player.isAlive) {
                         this.player.applyKnockback(gameObjectB);
@@ -572,7 +573,7 @@ export default class MainSceneTest extends Phaser.Scene {
                         });
                         break;
                     case 'alchemist' :
-                        m = new MonsterAlchemist({
+                        m = new MonsterBossAlchemist({
                             scene: this,
                             x: x,
                             y: y,
@@ -716,42 +717,8 @@ export default class MainSceneTest extends Phaser.Scene {
         });
     }
 
-    // 동적으로 생성된 몬스터 원거리 공격에 대한 충돌 이벤트 추가, 몸통박치기의 경우 이 메서드 사용하면 안됨
-    setCollisionOfMonsterAttack(attack) {
-        this.matterCollision.addOnCollideStart({
-            objectA: this.player, // 플레이어
-            objectB: attack, // 공격 객체(총알 그 자체)
-            callback: eventData => {
-                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                console.log("플레이어가 몬스터 공격에 맞음");
 
-                let x = gameObjectB.x;
-                let y = gameObjectB.y;
-
-                // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
-                this.player.takeDamage(gameObjectB.damage);
-                this.player.applyKnockback(gameObjectB);
-
-                // 네크로맨서의 레이저빔은 사라지지 않고 유지되게 만드려고
-                if (gameObjectB.texture.key === 'necromancer_beam') {
-                    //     pass
-                } else {
-                    gameObjectB.destroy();
-                    // 충돌 후 애니메이션 재생 하고 소멸
-                    let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
-                    egg_hit_anim.setBody({width: 1, height: 1})
-                    egg_hit_anim.setSensor(true)
-                    egg_hit_anim.play('eggplant_egg_hit');
-                    this.time.delayedCall(600, () => {
-                        egg_hit_anim.destroy();
-                    });
-                }
-            }
-        });
-    }
-
-
-    setCollisionOfMonsterShockwave(attack) {
+    setCollisionOfMonsterShortAttack(attack) {
         this.matterCollision.addOnCollideStart({
             objectA: this.player, // 플레이어
             objectB: attack, // 공격 객체 쇼크웨이브
@@ -777,21 +744,74 @@ export default class MainSceneTest extends Phaser.Scene {
         });
     }
 
-    doMakeGoblin() {
-        const type = this.monsterArr.find(t => t.monsterType === 'goblin');
-        if (type === undefined) {
-            let m = new MonsterBossGoblin({
-                scene: this,
-                x: 250,
-                y: 250,
-                player: this.player // 플레이어 객체 전달
+    // 동적으로 생성된 몬스터 원거리 공격에 대한 충돌 이벤트 추가, 몸통박치기의 경우 이 메서드 사용하면 안됨
+    setCollisionOfMonsterLongAttack(attack) {
+        this.matterCollision.addOnCollideStart({
+            objectA: this.player, // 플레이어
+            objectB: attack, // 공격 객체(총알 그 자체)
+            callback: eventData => {
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("플레이어가 몬스터 공격에 맞음");
+
+                let x = gameObjectB.x;
+                let y = gameObjectB.y;
+
+                // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
+                this.player.takeDamage(gameObjectB.damage);
+                this.player.applyKnockback(gameObjectB);
+
+                // 네크로맨서의 레이저빔은 사라지지 않고 유지되게 만드려고
+                if (gameObjectB.texture.key === 'necromancer_beam') {
+                    //     pass
+                } else if (gameObjectB.texture.key === 'alchemist') {
+                    gameObjectB.destroy();
+                    // 충돌 후 애니메이션 재생 하고 소멸
+                    let flask_hit_anim = this.matter.add.sprite(x, y, 'alchemist_flask_hit');
+                    flask_hit_anim.setBody({width: 1, height: 1})
+                    flask_hit_anim.setSensor(true)
+                    flask_hit_anim.play('alchemist_flask_hit');
+                    this.time.delayedCall(600, () => {
+                        flask_hit_anim.destroy();
+                    });
+                } else {
+                    gameObjectB.destroy();
+                    // 충돌 후 애니메이션 재생 하고 소멸
+                    let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
+                    egg_hit_anim.setBody({width: 1, height: 1})
+                    egg_hit_anim.setSensor(true)
+                    egg_hit_anim.play('eggplant_egg_hit');
+                    this.time.delayedCall(600, () => {
+                        egg_hit_anim.destroy();
+                    });
+                }
+            }
+        });
+    }
+
+    playerDebuff(attack) {
+        if (attack === 'speed') {
+            this.player.speed = this.player.speed - 2;
+            this.time.delayedCall(5000, () => {
+                this.player.speed = this.player.speed + 2;
             });
-            m.setCollisionCategory(MONSTER_CATEGORY);
-            m.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY, TILE_CATEGORY]);
-            this.monsterArr.push(m);
-            m.startBattle();
+        } else if (attack === 'sight') {
+            // 카메라에 반투명한 검은색 레이어 추가
+            this.darkOverlay = this.add.graphics();
+            this.darkOverlay.fillStyle(0x00000, 1.0);
+            this.darkOverlay.fillRect(0, 0, 800, 600);
+            this.darkOverlay.setScrollFactor(0);
+            this.darkOverlay.setDepth(1000);
+            this.tweens.add({
+                targets: this.darkOverlay,
+                alpha: {from: 0, to: 1},
+                duration: 4000,
+                onComplete: () => {
+                    this.time.delayedCall(1000, () => {
+                        this.darkOverlay.destroy();
+
+                    });
+                }
+            });
         }
-
-
     }
 }

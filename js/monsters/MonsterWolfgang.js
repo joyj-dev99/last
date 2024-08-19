@@ -40,15 +40,15 @@ export default class MonsterWolfgang extends Monster {
 
     update(){
 
-        super.update();
-
-        this.healthBarBack.clear();
-        this.healthBar.clear();
-        this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, 240, 15);
-        let healthWidth = (this.hp / this.initHp) * 240;
-        this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
+        // super.update();
+        //
+        // this.healthBarBack.clear();
+        // this.healthBar.clear();
+        // this.healthBarBack.fillStyle(0x000000);
+        // this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, 240, 15);
+        // let healthWidth = (this.hp / this.initHp) * 240;
+        // this.healthBar.fillStyle(0xff0000);
+        // this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
 
     }
 
