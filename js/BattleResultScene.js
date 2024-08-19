@@ -20,7 +20,6 @@ export default class BattleResultScene extends Phaser.Scene {
         this.textColor = "#ffffff"
 
         console.log(this.result);
-        let result;
         if (this.result === 'death') {
             this.textColor = "#ff0000";
             this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 50, 'gameOverImage').setOrigin(0.5);
@@ -44,7 +43,8 @@ export default class BattleResultScene extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive()
             .on('pointerdown', () => {
-                this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus}); // 전투 장면으로 다시 시작 (필요에 따라 조정)
+                this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus, skipTutorial: true}); // 전투 장면으로 다시 시작 (필요에 따라 조정)
+                // skipTutorial 플래그를 true로 설정하여 튜토리얼을 스킵
             })
             .on('pointerover', () => {
                 restartButton.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
@@ -61,6 +61,7 @@ export default class BattleResultScene extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 this.scene.start('TitleScene', {stageNumber, mapNumber, playerStatus}); // 메인 메뉴 장면으로 이동 (필요에 따라 조정)
+
             })
             .on('pointerover', () => {
                 mainMenuButton.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐

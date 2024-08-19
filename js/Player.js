@@ -146,58 +146,20 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // z키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
         if (Phaser.Input.Keyboard.JustDown(this.zKey)) {
             
-            // 구르기 중 슬래쉬 실행
-            if(this.isRolling){
-                this.cancelRoll(); // 구르기를 즉시 중단
-            }
-            this.handlSlash(); // 슬래쉬 동작 처리
+            this.handleSlash(); // 슬래쉬 동작 처리
         
         }
 
         // x키 누르면 해당 방향으로 활 쏘기
         if (Phaser.Input.Keyboard.JustDown(this.xKey)) {
 
-            // 구르기 중 슬래쉬 실행
-            if(this.isRolling){
-                this.cancelRoll(); // 구르기를 즉시 중단
-            }
-
-            //검 공격 콤보 상태 초기화
-            this.resetComboState();
-            // 슬래쉬 객체 제거
-            this.removeSlash();
-
-            this.anims.play('player_bow');
-            this.soundBow.play();
-
-            let arrow = new Arrow({
-                scene: this.scene,
-                x: this.x + 2,
-                y: this.y
-            });
-            this.scene.setCollisionOfPlayerAttack(arrow);
+            this.handleBow(); //활쏘기 동작 처리
         }
 
         //c키 누르면 마법 생성.
         if (Phaser.Input.Keyboard.JustDown(this.cKey)) {
 
-            // 구르기 중 슬래쉬 실행
-            if(this.isRolling){
-                this.cancelRoll(); // 구르기를 즉시 중단
-            }
-
-            //검 공격 콤보 상태 초기화
-            this.resetComboState();
-            // 슬래쉬 객체 제거
-            this.removeSlash();
-
-            this.anims.play('player_spell');
-            this.soundSpell.play();
-
-            let magic = new Magic({
-                scene : this.scene
-            });
-            this.scene.setCollisionOfPlayerAttack(magic);
+            this.handleSpell(); //마법 부리기
         }
 
 
@@ -217,15 +179,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
 
-                // 슬래쉬 객체 제거
-                this.removeSlash();
-
-                this.startRoll(playerVelocity);
+                this.handleRoll(playerVelocity); // 구르기
             }
         }
     }
 
-    handlSlash(){
+    handleSlash(){
+        if(this.isRolling){
+            this.cancelRoll(); // 구르기를 즉시 중단
+        }
+
         //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
         if(this.comboState === 0){ 
             this.swingSword(1);
@@ -244,6 +207,55 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 break;
             }
         }
+    }
+
+    handleBow(){
+        if(this.isRolling){
+            this.cancelRoll(); // 구르기를 즉시 중단
+        }
+
+        //검 공격 콤보 상태 초기화
+        this.resetComboState();
+        // 슬래쉬 객체 제거
+        this.removeSlash();
+
+        this.anims.play('player_bow');
+        this.soundBow.play();
+
+        let arrow = new Arrow({
+            scene: this.scene,
+            x: this.x + 2,
+            y: this.y
+        });
+        this.scene.setCollisionOfPlayerAttack(arrow);
+    }
+
+
+    handleSpell(){
+        if(this.isRolling){
+            this.cancelRoll(); // 구르기를 즉시 중단
+        }
+
+        //검 공격 콤보 상태 초기화
+        this.resetComboState();
+        // 슬래쉬 객체 제거
+        this.removeSlash();
+
+        this.anims.play('player_spell');
+        this.soundSpell.play();
+
+        let magic = new Magic({
+            scene : this.scene
+        });
+        this.scene.setCollisionOfPlayerAttack(magic);
+    }
+
+    handleRoll(playerVelocity){
+
+        // 슬래쉬 객체 제거
+        this.removeSlash();
+
+        this.startRoll(playerVelocity);
     }
 
     handleArrowKeyInput(playerVelocity, speed) {
