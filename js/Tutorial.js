@@ -9,7 +9,7 @@ const UP_ANIMS = 'up_key', DOWN_ANIMS = 'down_key', LEFT_ANIMS = 'left_key', RIG
 
 export default class Tutorial{
 
-    constructor(player, scene) {
+    constructor(player, scene, dialog) {
         this.player = player;
         this.zKeyPressCount = 0; // z 키를 누른 횟수 추적
         this.zKeyLastTime = 0; // z 키를 마지막으로 누른 시간 추적
@@ -19,6 +19,8 @@ export default class Tutorial{
         this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         // shift 키 입력 설정
         this.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        // 다이얼로그 가져오기
+        this.dialog = dialog;
 
     }
     
@@ -186,6 +188,10 @@ export default class Tutorial{
                 if(관련된값.anim_keys[0] === "z_key"){
                     console.log(관련된값.anim_keys[0] + " 누름");
                     this.player.handleSlash(); // 첫 번째 슬래쉬
+                
+                    this.dialog.showDialogModal([
+                        {name : '코드', portrait : 'ChordPotrait', message: 'z 연달아 2번 눌러보세요.' }
+                    ]);
 
                 }else if(관련된값.anim_keys[0] === "z_key_double"){
                     console.log(관련된값.anim_keys[0] + " 누름");
@@ -195,6 +201,10 @@ export default class Tutorial{
                     setTimeout(() => {
                         this.player.handleSlash();
                     }, 200); // 200ms 지연 후 실행
+
+                    this.dialog.showDialogModal([
+                        {name : '코드', portrait : 'ChordPotrait', message: 'z 연달아 3번 눌러보세요.' }
+                    ]);
 
                 }else if(관련된값.anim_keys[0] === "z_key_triple"){
                     console.log(관련된값.anim_keys[0] + " 누름");

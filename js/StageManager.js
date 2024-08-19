@@ -30,7 +30,7 @@ export default class StageManager {
 
     setStageStart(stageNumber, mapNumber) {
         if (stageNumber == 1 && mapNumber == 1) {
-            let tutorial = new Tutorial(this.player, this.scene);
+            let tutorial = new Tutorial(this.player, this.scene, this.dialog);
             this.setBGM('forest_default');
             // 첫번째는 센서 없이 바로 시작
             this.scene.isInDialogue = true;
