@@ -43,6 +43,9 @@ import {
     MONSTER_ATTACK_CATEGORY
 } from "./constants.js";
 
+const { type } = window.gameConfig;
+
+
 export default class MainSceneTest extends Phaser.Scene {
 
     constructor() {
@@ -147,6 +150,8 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
         
+        // 버튼에 사용할 이미지 로드
+        this.load.image('button', 'path_to_button_image.png');
 
         Player.preload(this);
         Monster.preload(this);
@@ -205,7 +210,19 @@ export default class MainSceneTest extends Phaser.Scene {
         //페이드인 완료 후 게임 실행
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.time.delayedCall(1000, () => {
-                this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
+                console.log('camerafadeincomplete');
+                if(type === 'pc'){
+                    this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
+                }
+                else if(type === 'mobile'){
+                    if(this.stageNumber == 1 && this.mapNumber == 1){
+                        this.isInDialogue = false;
+                    }
+                    else{
+                        this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
+                    }
+                    
+                }
             }, [], this);
         });
 
@@ -280,7 +297,248 @@ export default class MainSceneTest extends Phaser.Scene {
             });
         }
 
+        if(type === 'mobile'){
+
+            // 가상 조이스틱 생성
+            // 조이스틱 조작 시 player 에서 update를 실행할 때 신호를 준다.
+            // or player 함수를 사용한다
+            this.joystick = this.plugins.get('rexVirtualJoystick').add(this, {
+                x: 80,
+                y: 200,
+                radius: 100,
+                base: this.add.circle(0, 0, 30, 0x888888),
+                thumb: this.add.circle(0, 0, 15, 0xcccccc),
+                dir: '8dir', 
+                forceMin: 16,
+            }).on('update', this.updateJoystickState, this);
+        
+            // this.joystick.setEnable(false); // 조이스틱 컨테이너를 비활성화
+        
+            // this.joystick.setVisible(false); // 조이스틱 컨테이너를 숨김
+
+        //  // 화면 오른쪽 하단에 버튼을 고정
+        //  const button = this.add.image(this.cameras.main.width - 50, this.cameras.main.height - 50, 'button')
+        //  .setOrigin(0.5) // 중앙을 기준으로 버튼 배치
+        //  .setScrollFactor(0); // 스크롤이나 카메라 이동에 영향을 받지 않음
+
+
+         // 버튼 생성 검
+         this.button = this.add.image(this.cameras.main.width - 90, this.cameras.main.height - 50,'button')
+                        .setInteractive()
+                        .setScrollFactor(0);
+
+          // 버튼 생성 구르기
+          this.button2 = this.add.image(this.cameras.main.width - 50, this.cameras.main.height - 50, 'button')         
+                        .setInteractive()
+                        .setScrollFactor(0);
+
+          // 버튼 생성 화살
+          this.button3 = this.add.image(this.cameras.main.width - 90, this.cameras.main.height - 90,'button')
+                            .setInteractive()
+                            .setScrollFactor(0);
+            // 버튼 생성 마법
+            this.button4 = this.add.image(this.cameras.main.width - 50, this.cameras.main.height - 90, 'button')
+                        .setInteractive()
+                        .setScrollFactor(0);
+
+
+
+         // 버튼을 눌렀을 때 (pointerdown)
+         this.button.on('pointerdown', () => {
+             console.log('Button pressed down!');
+             this.button.setScale(0.9);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+             // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+            const zKeyDownEvent = new KeyboardEvent('keydown', {
+                key: 'z',
+                code: 'KeyZ',
+                keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+                bubbles: true,
+                cancelable: true
+            });
+
+            window.dispatchEvent(zKeyDownEvent);
+
+         });
+ 
+         // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+         this.button.on('pointerup', () => {
+             console.log('Button released!');
+             this.button.setScale(1);  // 버튼 크기를 원래대로 되돌림
+             // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+            const zKeyUpEvent = new KeyboardEvent('keyup', {
+                key: 'z',
+                code: 'KeyZ',
+                keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+                bubbles: true,
+                cancelable: true
+            });
+
+            window.dispatchEvent(zKeyUpEvent);
+
+         });
+ 
+         // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+         this.button.on('pointerout', () => {
+             console.log('Pointer out of button!');
+             this.button.setScale(1);  // 버튼 크기를 원래대로 되돌림
+         });
+
+
+
+          // 버튼을 눌렀을 때 (pointerdown)
+          this.button2.on('pointerdown', () => {
+              console.log('Button pressed down!');
+              this.button2.setScale(0.9);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+ 
+              // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+             const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+                 key: 'Shift',
+                 code: 'ShiftLeft',
+                 keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+                 bubbles: true,
+                 cancelable: true
+             });
+ 
+             window.dispatchEvent(shiftKeyDownEvent);
+ 
+          });
+  
+          // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+          this.button2.on('pointerup', () => {
+              console.log('Button released!');
+              this.button2.setScale(1);  // 버튼 크기를 원래대로 되돌림
+              // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+ 
+                 // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+             const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+                 key: 'Shift',
+                 code: 'ShiftLeft',
+                 keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+                 bubbles: true,
+                 cancelable: true
+             });
+ 
+             window.dispatchEvent(shiftKeyUpEvent);
+ 
+          });
+  
+          // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+          this.button2.on('pointerout', () => {
+              console.log('Pointer out of button!');
+              this.button2.setScale(1);  // 버튼 크기를 원래대로 되돌림
+          });
+ 
+
+ 
+           // 버튼을 눌렀을 때 (pointerdown)
+           this.button3.on('pointerdown', () => {
+               console.log('Button pressed down!');
+               this.button3.setScale(0.9);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+  
+               // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+              const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+                  key: 'Shift',
+                  code: 'ShiftLeft',
+                  keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                  bubbles: true,
+                  cancelable: true
+              });
+  
+              window.dispatchEvent(shiftKeyDownEvent);
+  
+           });
+   
+           // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+           this.button3.on('pointerup', () => {
+               console.log('Button released!');
+               this.button3.setScale(1);  // 버튼 크기를 원래대로 되돌림
+               // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+  
+                  // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+              const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+                  key: 'Shift',
+                  code: 'ShiftLeft',
+                  keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                  bubbles: true,
+                  cancelable: true
+              });
+  
+              window.dispatchEvent(shiftKeyUpEvent);
+  
+           });
+   
+           // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+           this.button3.on('pointerout', () => {
+               console.log('Pointer out of button!');
+               this.button3.setScale(1);  // 버튼 크기를 원래대로 되돌림
+           });
+  
+
+
+            // 버튼을 눌렀을 때 (pointerdown)
+            this.button4.on('pointerdown', () => {
+                console.log('Button pressed down!');
+                this.button4.setScale(0.9);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+   
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+               const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+                   key: 'Shift',
+                   code: 'ShiftLeft',
+                   keyCode: Phaser.Input.Keyboard.KeyCodes.C,
+                   bubbles: true,
+                   cancelable: true
+               });
+   
+               window.dispatchEvent(shiftKeyDownEvent);
+   
+            });
+    
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.button4.on('pointerup', () => {
+                console.log('Button released!');
+                this.button4.setScale(1);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+   
+                   // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+               const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+                   key: 'Shift',
+                   code: 'ShiftLeft',
+                   keyCode: Phaser.Input.Keyboard.KeyCodes.C,
+                   bubbles: true,
+                   cancelable: true
+               });
+   
+               window.dispatchEvent(shiftKeyUpEvent);
+   
+            });
+    
+            // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+            this.button4.on('pointerout', () => {
+                console.log('Pointer out of button!');
+                this.button4.setScale(1);  // 버튼 크기를 원래대로 되돌림
+            });
+
+
+        }
+            
     }
+
+
+    updateJoystickState(){
+
+        var cursorKeys = this.joystick.createCursorKeys();
+        let playerKeys = this.player.cursors;
+        
+        playerKeys.right.isDown = cursorKeys.right.isDown;
+        playerKeys.left.isDown = cursorKeys.left.isDown;
+        playerKeys.up.isDown = cursorKeys.up.isDown;
+        playerKeys.down.isDown = cursorKeys.down.isDown;
+
+    }
+
 
     update() {
         this.heartIndicator.setHeart(this.player.status.nowHeart);
@@ -314,6 +572,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 }
             });
         } else if (stageNumber === 2) {
+          
             const dungeonTileset = map.addTilesetImage("Royal Dungeon Tileset", "dungeonTileset");
 
             const floor = map.createLayer("floor", dungeonTileset, 0, 0);
@@ -775,6 +1034,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 // });
             }
         });
+
     }
 
     doMakeGoblin() {
@@ -791,7 +1051,6 @@ export default class MainSceneTest extends Phaser.Scene {
             this.monsterArr.push(m);
             m.startBattle();
         }
-
 
     }
 }

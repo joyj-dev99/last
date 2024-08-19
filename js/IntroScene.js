@@ -118,6 +118,7 @@ export default class IntroScene extends Phaser.Scene {
         //     this.max_angry.setAlpha(0);
         //     this.chord_scary.setAlpha(0);
         // }
+        
         this.max_normal.setAlpha(0);
         this.chord_normal.setAlpha(0);
         this.max_angry.setAlpha(0);
