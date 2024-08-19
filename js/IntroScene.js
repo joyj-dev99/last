@@ -108,7 +108,14 @@ export default class IntroScene extends Phaser.Scene {
     nextDialogue() {
         if (this.dialogueIndex >= this.dialogue.length) {
             this.dialogueIndex = 0;
-            this.scene.start('MainScene');
+            
+            // MainScene에 데이터를 전달하면서 씬을 시작합니다.
+            this.scene.start('MainScene', {
+                stageNumber: 1,  // 필요에 따라 변경
+                mapNumber: 1,    // 필요에 따라 변경
+                playerStatus: null,  // 필요에 따라 변경
+                skipTutorial: false  // 튜토리얼을 스킵하지 않도록 설정
+            });
             return;
         }
         const {speaker, text} = this.dialogue[this.dialogueIndex];
