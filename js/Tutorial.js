@@ -2,10 +2,10 @@ import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYE
 const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right', 
         UPLEFT = 'up_left', UPRIGHT = 'up_right', 
         DOWNLEFT = 'down_left', DOWNRIGHT = 'down_right',
-        ATK1 = 'sword1', ATK2 = 'sword2', ATK3 = 'sword3', SHIFT = 'shift';
+        ATK1 = 'sword1', ATK2 = 'sword2', ATK3 = 'sword3', LEFTSHIFT = 'left_shift';
 
 const UP_ANIMS = 'up_key', DOWN_ANIMS = 'down_key', LEFT_ANIMS = 'left_key', RIGHT_ANIMS = 'right_key', 
-        ATK1_ANIMS = 'z_key', ATK2_ANIMS = 'z_key_double', ATK3_ANIMS = 'z_key_triple', SHIFT_ANIMS = 'shift_key_anim';
+        ATK1_ANIMS = 'z_key', ATK2_ANIMS = 'z_key_double', ATK3_ANIMS = 'z_key_triple', SHIFT_ANIMS = 'shift_key';
 
 export default class Tutorial{
 
@@ -26,14 +26,14 @@ export default class Tutorial{
 
         // 튜토리얼 keyboard 이미지 파일
         scene.load.spritesheet('keyboard', 'assets/tutorial/keyboard/Keyboard Letters and Symbols.png', { frameWidth: 16, frameHeight: 16 });
-        scene.load.spritesheet('shift_key', 'assets/tutorial/keyboard/shift_key.png', { frameWidth: 32, frameHeight: 16 });
+        scene.load.spritesheet('keyboard_shift_key', 'assets/tutorial/keyboard/shift_key.png', { frameWidth: 32, frameHeight: 16 });
 
         scene.load.atlas('up_key', 'assets/tutorial/keyboard/up_key.png', 'assets/tutorial/keyboard/up_key_anim.json');
         scene.load.atlas('down_key', 'assets/tutorial/keyboard/down_key.png', 'assets/tutorial/keyboard/down_key_anim.json');
         scene.load.atlas('left_key', 'assets/tutorial/keyboard/left_key.png', 'assets/tutorial/keyboard/left_key_anim.json');
         scene.load.atlas('right_key', 'assets/tutorial/keyboard/right_key.png', 'assets/tutorial/keyboard/right_key_anim.json');
         scene.load.atlas('z_key', 'assets/tutorial/keyboard/z_key.png', 'assets/tutorial/keyboard/z_key_anim.json');
-        scene.load.atlas('shift_key_anim', 'assets/tutorial/keyboard/shift_key.png', 'assets/tutorial/keyboard/shift_key_anim.json');
+        scene.load.atlas('shift_key', 'assets/tutorial/keyboard/shift_key.png', 'assets/tutorial/keyboard/shift_key_anim.json');
         scene.load.image('right_sign', 'assets/tutorial/sign/right_sign-removebg-preview.png' );
 
     }
@@ -184,10 +184,37 @@ export default class Tutorial{
                 }
 
                 if(관련된값.anim_keys[0] === "z_key"){
-                    console.log("z_key 누름");
-                    this.player.handleSlash();
+                    console.log(관련된값.anim_keys[0] + " 누름");
+                    this.player.handleSlash(); // 첫 번째 슬래쉬
 
-                }else if(관련된값.anim_keys[0] === "x_key"){
+                }else if(관련된값.anim_keys[0] === "z_key_double"){
+                    console.log(관련된값.anim_keys[0] + " 누름");
+
+                    this.player.handleSlash(); // 첫 번째 슬래쉬
+                    // 두 번째 슬래쉬는 첫 번째 슬래쉬 후 일정 시간 후에 실행
+                    setTimeout(() => {
+                        this.player.handleSlash();
+                    }, 200); // 200ms 지연 후 실행
+
+                }else if(관련된값.anim_keys[0] === "z_key_triple"){
+                    console.log(관련된값.anim_keys[0] + " 누름");
+                    this.player.handleSlash(); // 첫 번째 슬래쉬
+
+                    // 두 번째 슬래쉬는 첫 번째 슬래쉬 후 일정 시간 후에 실행
+                    setTimeout(() => {
+                        this.player.handleSlash();
+                    }, 300); // 300ms 지연 후 실행
+
+                    // 세 번째 슬래쉬는 두 번째 슬래쉬 후 일정 시간 후에 실행
+                    setTimeout(() => {
+                        this.player.handleSlash();
+                    }, 600); // 두 번째 슬래쉬 후 300ms 추가 지연 (총 600ms 후 실행)
+
+                }else if(관련된값.anim_keys[0] === "left_key" && 관련된값.anim_keys[1] === "shift_key"){
+                    this.player.handleRoll(this.player.body.velocity);
+                    // 현재 플레이어의 이동속도 전달
+                }
+                else if(관련된값.anim_keys[0] === "x_key"){
                     console.log("x_key 누름");
                     this.player.handleBow();
 
@@ -365,15 +392,16 @@ export default class Tutorial{
             anim_key = [ATK3_ANIMS];
             anim_keyboard = [this.keyboard_z];
         }
-        else if(이동키조작설명값 == SHIFT){
-            if(!(Phaser.Input.Keyboard.JustDown(this.shiftKey))){
-                result = false;
-            }
-            else{
+        else if(이동키조작설명값 == LEFTSHIFT){
+            // 왼쪽 방향키 + shift 키를 함께 누를시
+            if((Phaser.Input.Keyboard.JustDown(this.shiftKey)) && cursors.left.isDown ){
                 result = true;
             }
-            anim_key = [SHIFT_ANIMS];
-            anim_keyboard = [this.keyboard_shift];
+            else{
+                result = false;
+            }
+            anim_key = [LEFT_ANIMS,SHIFT_ANIMS];
+            anim_keyboard = [this.keyboard_left, this.keyboard_shift];
         }
 
         // 조건이 충족되면 카운트 초기화 (다음 콤보를 위해)
@@ -517,20 +545,27 @@ export default class Tutorial{
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
 
-        let keyboard_shift  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+25, sensor_y+190, 'shift_key', 0);
+        // 왼쪽 키보드 스프라이트 생성
+        let keyboard_left = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x - 25, sensor_y + 190, 'keyboard', 2);
+        keyboard_left.setScale(2);
+        scene.add.existing(keyboard_left);
+        this.keyboard_left = keyboard_left;
+
+        // shift 키보드 스프라이트 생성
+        let keyboard_shift  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+25, sensor_y+190, 'keyboard_shift_key', 0);
         keyboard_shift.setScale(2);
         scene.add.existing(keyboard_shift); 
-
         this.keyboard_shift = keyboard_shift;
-        this.키조작설명순서 = [SHIFT];
+
+        this.키조작설명순서 = [LEFTSHIFT];
 
         scene.anims.create({
-            key:'shift_key_anim',
+            key:'shift_key',
             frames : [{
-                key:'shift_key_anim',
+                key:'shift_key',
                 frame:"shift_key.png"
             }, {
-                key:'shift_key_anim',
+                key:'shift_key',
                 frame:"shift_key2.png"
             }],
             frameRate : 8,
@@ -538,11 +573,18 @@ export default class Tutorial{
         });
 
 
-        // 애니메이션 완료 후 원래 이미지로 돌아가기
-        keyboard_shift.on('animationstop', function () {
+        // 애니메이션 완료 후 원래 이미지로 돌아가기 (Shift 키)
+        this.keyboard_shift.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
             keyboard_shift.setFrame(0); // '0'은 keyboard 텍스처에서의 첫 번째 프레임을 의미
-            keyboard_shift.setTexture('shift_key_anim', 0); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
+            keyboard_shift.setTexture('keyboard_shift_key', 0); // 원래 이미지로 돌아감
+        }, this);
+
+        // 애니메이션 완료 후 원래 이미지로 돌아가기 (왼쪽 키)
+        this.keyboard_left.on('animationstop', function () {
+            console.log('left animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
+            keyboard_left.setFrame(2); // 
+            keyboard_left.setTexture('keyboard', 2); // 원래 이미지로 돌아감
         }, this);
         
 
@@ -550,6 +592,8 @@ export default class Tutorial{
         console.dir(관련된값);
         for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
             관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
+            console.log(관련된값.anim_keyboards[i]);
+            console.log(관련된값.anim_keys[i]);
         }
         
     }
@@ -571,7 +615,7 @@ export default class Tutorial{
     // player, 
     // 튜토리얼 클래스 만들어서 빼기
     createSensor(scene, sensor_x, sensor_y, width, height){
-     
+    
         // 센서 1 : 충돌시 이동 조작키 이미지, text 보여주는 센서
         let sensor = scene.matter.add.rectangle(sensor_x, sensor_y, width, height, {
             isSensor: true, // 센서로 설정
@@ -582,16 +626,15 @@ export default class Tutorial{
             }
         });
 
-       return sensor;
+    return sensor;
 
     }
 
     onSensorHit(scene, sensor) {
-        console.log('Player has reached the target sensor at x: 200, y: 150');
-        // 센서를 물리 세계에서 제거
-        console.dir(scene.matter);
-        console.dir(scene.matter.world);
-        console.dir(sensor);
+        // 센서를 물리 세계에서 제거   
+        // console.dir(scene.matter);
+        // console.dir(scene.matter.world);
+        // console.dir(sensor);
         scene.matter.world.remove(sensor);
         // 센서가 삭제되었음을 콘솔에 출력
         console.log('Sensor has been destroyed');

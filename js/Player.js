@@ -179,10 +179,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
 
-                // 슬래쉬 객체 제거
-                this.removeSlash();
-
-                this.startRoll(playerVelocity);
+                this.handleRoll(playerVelocity); // 구르기
             }
         }
     }
@@ -251,6 +248,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             scene : this.scene
         });
         this.scene.setCollisionOfPlayerAttack(magic);
+    }
+
+    handleRoll(playerVelocity){
+
+        // 슬래쉬 객체 제거
+        this.removeSlash();
+
+        this.startRoll(playerVelocity);
     }
 
     handleArrowKeyInput(playerVelocity, speed) {

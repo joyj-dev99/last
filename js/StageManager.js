@@ -99,7 +99,7 @@ export default class StageManager {
                     tutorial.endzKeyControlExplanation();
 
                     const dialogueMessages = [
-                        {name : '코드', portrait : 'ChordPotrait', message : 'shift 키를 누르면 구를 수 있어요!'},
+                        {name : '코드', portrait : 'ChordPotrait', message : '방향키와 함께 shift 키를 누르면 구를 수 있어요!'},
                         {name : '코드', portrait : 'ChordPotrait', message : '공격을 피해야 할 때, 구르기를 사용해보세요.'},
                     ];
                     // 메시지 표시가 끝난 후 콜백 처리
