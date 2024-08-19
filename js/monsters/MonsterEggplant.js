@@ -75,7 +75,7 @@ export default class MonsterEggplant extends Monster {
         bullet.damage = 0.5;
         bullet.creationTime = this.scene.time.now;
         this.bullets.add(bullet);
-        this.scene.setCollisionOfMonsterAttack(bullet);
+        this.scene.setCollisionOfMonsterLongAttack(bullet);
         // 몇초마다 한번씩 발사하도록 하는 변수
         this.scene.time.delayedCall(this.shotingRate, () => {
             this.isShoting = true;
