@@ -142,16 +142,14 @@ export default class Dialog  {
         this.#width = width - this.#padding * 2;
         this.#height = height * 0.3; // 화면 높이의 30%로 설정
 
-        const panel = this.#container.getAt(0);
+        console.log('this.#container'+this.#container);
+        console.log('this.#container.getAt(0)'+this.#container.getAt(0));
+        console.log('this.#container.getAt(0):', this.#container.getAt(0));
+        console.dir(this.#container);
 
-        // panel이 제대로 정의되었는지 확인
-        if (panel) {
-            panel.setSize(this.#width, this.#height); // 패널 크기 조정
-            this.#uiText.setWordWrapWidth(this.#width - 90);
-            this.#portrait.setPosition(30, this.#height / 2); // 초상화 위치 조정
-        } else {
-            console.error("Dialog: Panel 객체가 정의되지 않았습니다. 초기화 과정에서 문제가 발생했습니다.");
-        }
+        this.#container.getAt(0).setSize(this.#width, this.#height); // 패널 크기 조정
+        this.#uiText.setWordWrapWidth(this.#width - 90);
+        this.#portrait.setPosition(30, this.#height / 2); // 초상화 위치 조정
     }
 
     /**
