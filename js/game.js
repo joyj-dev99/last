@@ -34,6 +34,12 @@ const config = {
                 mapping: 'matterCollision'
             }
         ]
+        ,
+        global: [{
+            key: 'rexVirtualJoystick',
+            plugin: rexvirtualjoystickplugin,
+            start: true
+        }]
     }
 }
 

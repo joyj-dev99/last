@@ -62,6 +62,10 @@ export default class Dialog  {
             .rectangle(0, 0, this.#width, this.#height, '#000000', 0.8)
             .setOrigin(0)
             .setStrokeStyle(8,'#000000', 1);
+
+        console.log('Panel:', panel);
+
+
         this.#container = this.#scene.add.container(0, 0, [panel]);
         
         // 모든 요소에 setScrollFactor(0) 적용
@@ -103,6 +107,11 @@ export default class Dialog  {
             this.onSpaceKeyPressed();
         });
 
+        this.#scene.input.on('pointerdown',() => {
+            this.onSpaceKeyPressed();
+        }, this.#scene);
+
+
         // 화면 크기 변경 이벤트 처리
         this.#scene.scale.on('resize', this.handleResize, this);
 
@@ -142,6 +151,11 @@ export default class Dialog  {
         this.#width = width - this.#padding * 2;
         this.#height = height * 0.3; // 화면 높이의 30%로 설정
 
+        console.log('this.#container'+this.#container);
+        console.log('this.#container.getAt(0)'+this.#container.getAt(0));
+        console.log('this.#container.getAt(0):', this.#container.getAt(0));
+        console.dir(this.#container);
+
         this.#container.getAt(0).setSize(this.#width, this.#height); // 패널 크기 조정
         this.#uiText.setWordWrapWidth(this.#width - 90);
         this.#portrait.setPosition(30, this.#height / 2); // 초상화 위치 조정
@@ -152,6 +166,9 @@ export default class Dialog  {
      * @param {Function} [onComplete] - 대화 종료 후 실행될 콜백
      */
     showDialogModal(messages, onComplete) {
+
+        console.log('showDialogModal');
+
         this.#messagesToShow = [...messages];
         this.onCompleteCallback = onComplete || null;
 

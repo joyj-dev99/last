@@ -2,6 +2,9 @@ import Player from "./Player.js";
 import Bonfire from "./objects/Bonfire.js";
 import Chord from "./character/Chord.js";
 
+const { type } = window.gameConfig;
+
+
 export default class NightScene extends Phaser.Scene {
     constructor() {
         super("NightScene");
@@ -154,6 +157,21 @@ export default class NightScene extends Phaser.Scene {
                 gameObjectB.showInteractPrompt();
                 // 키보드 입력 이벤트 설정
                 this.input.keyboard.on('keydown-E', goToNextHandler);
+
+                // this.input.on('pointerdown',() => {
+                //     // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                //     const shiftKeyUpEvent = new KeyboardEvent('keydown', {
+                //      key: 'E',
+                //      code: 'E',
+                //      keyCode: Phaser.Input.Keyboard.KeyCodes.E,
+                //      bubbles: true,
+                //      cancelable: true
+                //  });
+     
+                //  window.dispatchEvent(shiftKeyUpEvent);
+             
+            //  }, this);
+     
             }
         });
 
@@ -167,11 +185,55 @@ export default class NightScene extends Phaser.Scene {
                 gameObjectB.hideInteractPrompt();
                 // 키보드 입력 이벤트 해제
                 this.input.keyboard.off('keydown-E', goToNextHandler);
+
+            //     this.input.off('pointerdown',() => {
+            //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+            //         const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+            //         key: 'E',
+            //         code: 'E',
+            //         keyCode: Phaser.Input.Keyboard.KeyCodes.E,
+            //         bubbles: true,
+            //         cancelable: true
+            //      });
+     
+            //      window.dispatchEvent(shiftKeyUpEvent);
+             
+            //  }, this);
+
             }
         });
+
+        if(type === 'mobile'){
+            // 가상 조이스틱 생성
+            // 조이스틱 조작 시 player 에서 update를 실행할 때 신호를 준다.
+            // or player 함수를 사용한다
+            this.joystick = this.plugins.get('rexVirtualJoystick').add(this, {
+                x: 80,
+                y: 200,
+                radius: 100,
+                base: this.add.circle(0, 0, 30, 0x888888),
+                thumb: this.add.circle(0, 0, 15, 0xcccccc),
+                dir: '8dir', 
+                forceMin: 16,
+            }).on('update', this.updateJoystickState, this);
+        }
+
     }
 
     update() {
         this.player.update();
     }
+
+    updateJoystickState(){
+
+        var cursorKeys = this.joystick.createCursorKeys();
+        let playerKeys = this.player.cursors;
+        
+        playerKeys.right.isDown = cursorKeys.right.isDown;
+        playerKeys.left.isDown = cursorKeys.left.isDown;
+        playerKeys.up.isDown = cursorKeys.up.isDown;
+        playerKeys.down.isDown = cursorKeys.down.isDown;
+
+    }
+
 }

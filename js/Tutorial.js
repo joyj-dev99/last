@@ -33,7 +33,7 @@ export default class Tutorial{
     // 방향키 조작법 설명 시작
     startDirectionControlExplanation(scene, sensor_x, sensor_y){
 
-         // x = 200 에 고정된 보이지 않는 경계 생성
+        // x = 200 에 고정된 보이지 않는 경계 생성
         this.boundary = scene.matter.add.rectangle(200, scene.scale.height / 2, 10, scene.scale.height, {
             isStatic: true, // 이 속성으로 경계가 움직이지 않도록 설정
             isSensor: false, // 센서가 아니라 실제로 충돌하는 객체로 만듦
@@ -336,6 +336,7 @@ export default class Tutorial{
 
     // 방향키 조작법 설명 끝
     endDirectionControlExplanation(){
+        
         console.log('방향키 조작방법 끝');
         // 메모리에서 완전히 제거
         if(this.keyboard_up){

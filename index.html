@@ -9,9 +9,65 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css">
     <script src="//cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser-matter-collision-plugin"></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser3-rex-plugins/dist/rexvirtualjoystickplugin.min.js"></script>
+
 </head>
 <body>
-    
+ <script>
+
+    function isMobile() {
+        
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        // userAgent : Mozilla/5.0 (Windows NT 10.0; Win64; x64) 
+        // AppleWebKit/537.36 (KHTML, like Gecko) 
+        //Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0
+        // alert('userAgent : ' + userAgent);
+
+        // iOS & Android 기반 장치들 확인
+        if (/android/i.test(userAgent)) {
+            return true;
+        }
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return true;
+        }
+
+        // 기타 모바일 장치 확인
+        if (/Mobile|Opera Mini|IEMobile|BlackBerry|webOS|Silk|Opera Mobi|Kindle|SymbianOS/i.test(userAgent)) {
+            return true;
+        }
+
+        // 모바일 장치가 아니면 false 반환
+        return false;
+
+    }
+
+    if (isMobile()) {
+        console.log("모바일 브라우저에서 접속 중입니다.");
+        // alert('모바일 브라우저에서 접속 중입니다.');
+        // 여기서 글로벌 변수 정의
+        window.gameConfig = {
+            width: 454,
+            height: 256,
+            backgroundColor: '#FFFFFF',
+            debugMode: false, 
+            type : 'mobile'
+        };
+    } else {
+        console.log("PC 브라우저에서 접속 중입니다.");
+        // alert('PC 브라우저에서 접속 중입니다.' );
+        // 여기서 글로벌 변수 정의
+        window.gameConfig = {
+            width: 454,
+            height: 256,
+            backgroundColor: '#000000',
+            debugMode: false, 
+            type : 'pc'
+        };
+    }
+
+</script>
+   
     <div id="game"></div>
     <script type="module" src="js/game.js"></script>
 </body>

@@ -1,5 +1,8 @@
 import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY} from "../constants.js";
 
+const { type } = window.gameConfig;
+
+
 export default class Milestone extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y} = data;
@@ -30,14 +33,42 @@ export default class Milestone extends Phaser.Physics.Matter.Sprite {
         scene.load.atlas('milestone', 'assets/objects/milestone/milestone.png', 'assets/objects/milestone/milestone_atlas.json');
         scene.load.animation('milestoneAnim', 'assets/objects/milestone/milestone_anim.json');
         scene.load.spritesheet('keybordImg', 'assets/ui/Keyboard Letters and Symbols.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.image('nextBtnImg', 'assets/ui/Blue_Buttons_Pixel.png');//52, { frameWidth: 32, frameHeight: 16 }
     }
 
     // 상호작용 가능 표시를 보여주는 메서드
     showInteractPrompt() {
         if (!this.interativeKeyImg) {
-            this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keybordImg', 20);
+
+            if(type === 'mobile'){
+                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImg');//, 52
+                // Make the sprite interactive
+                this.interativeKeyImg.setInteractive();
+                // Add a click event listener to the sprite
+                this.interativeKeyImg.on('pointerdown', function (pointer) {
+                    // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                    const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+                        key: 'Shift',
+                        code: 'ShiftLeft',
+                        keyCode: Phaser.Input.Keyboard.KeyCodes.E,
+                        bubbles: true,
+                        cancelable: true
+                    });
+
+                    window.dispatchEvent(shiftKeyDownEvent);
+                }, this);
+
+
+            }
+            else  if(type === 'pc'){
+                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keybordImg', 20);
+            }
+
             this.interativeKeyImg.setOrigin(0.5);
+           
         }
+
+
     }
 
     // 상호작용 가능 표시를 숨기는 메서드
@@ -46,5 +77,20 @@ export default class Milestone extends Phaser.Physics.Matter.Sprite {
             this.interativeKeyImg.destroy();
             this.interativeKeyImg = null;
         }
+
+        // this.scene.input.off('pointerdown', () => {
+        //        // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //        const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+        //         key: 'Shift',
+        //         code: 'ShiftLeft',
+        //         keyCode: Phaser.Input.Keyboard.KeyCodes.E,
+        //         bubbles: true,
+        //         cancelable: true
+        //     });
+
+        //     window.dispatchEvent(shiftKeyUpEvent);
+        
+        // }, this.scene);
+
     }
 }
