@@ -618,14 +618,6 @@ export default class Tutorial{
         }
     }
 
-    finish(scene){
-        console.log('튜토리얼 finish');
-        // 나중에 이벤트 리스너를 제거합니다.
-        scene.input.keyboard.off('keydown', this.keyHandler);
-        // 나중에 이벤트 리스너를 제거합니다.
-        scene.input.keyboard.off('keyup', this.keyHandler);
-    }
-
     // player, 
     // 튜토리얼 클래스 만들어서 빼기
     createSensor(scene, sensor_x, sensor_y, width, height){
@@ -652,6 +644,12 @@ export default class Tutorial{
         scene.matter.world.remove(sensor);
         // 센서가 삭제되었음을 콘솔에 출력
         console.log('Sensor has been destroyed');
+    }
+
+    finish(scene){
+        console.log('튜토리얼 finish');
+        scene.input.keyboard.off('keydown', this.keyHandler);
+        scene.input.keyboard.off('keyup', this.keyHandler);
     }
 
 }

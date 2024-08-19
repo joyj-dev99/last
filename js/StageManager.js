@@ -1,11 +1,12 @@
 import Tutorial from "./Tutorial.js";
 
 export default class StageManager {
-    constructor(scene, player, chord, dialog) {
+    constructor(scene, player, chord, dialog, skipTutorial) {
         this.scene = scene;
         this.player = player;
         this.chord = chord;
         this.dialog = dialog;
+        this.skipTutorial = skipTutorial;
     }
 
     static preload(scene){
@@ -30,123 +31,16 @@ export default class StageManager {
 
     setStageStart(stageNumber, mapNumber) {
         if (stageNumber == 1 && mapNumber == 1) {
-            let tutorial = new Tutorial(this.player, this.scene, this.dialog);
-            this.setBGM('forest_default');
-            // 첫번째는 센서 없이 바로 시작
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '코드', portrait : 'ChordPotrait', message : '모험을 떠나기 전에 몇가지 알려드릴게요.'},
-                {name : '코드', portrait : 'ChordPotrait', message : '방향키를 눌러보세요!'},
-            ];
-            // Dialog를 사용해 대화 표시, 대화 종료 후 콜백 전달
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.scene.isInDialogue = false;
-                tutorial.startDirectionControlExplanation(this.scene, 250, this.player.y - 160, this.player);
-            });
-            
-            let sensor2 = tutorial.createSensor(this.scene, 280, this.player.y - 160, 10, 500);
-            // 충돌시 이동키 설명관련 데이터 삭제
-            // shift, z 한번, z 세번
 
-            // shift를 눌러보세요!
-            // z key를 눌러보세요!
-            // z key를 연속 3번 눌러보세요!
-            const unsubscribe2 = this.scene.matterCollision.addOnCollideStart({
-                objectA: this.player,
-                objectB: sensor2,
-                callback: eventData => {
-                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-                    console.log("플레이어와 센서2 충돌");
-                    this.scene.isInDialogue = true;
-                    this.player.stopMove();
-                    // 센서 제거
-                    tutorial.onSensorHit(this.scene, bodyB);
-                    // 오른쪽 사인 제거
-                    tutorial.removeRightSign();
-                    // 이동키 조작 설명 끝
-                    tutorial.endDirectionControlExplanation();
+            if (this.skipTutorial) {
+                // 튜토리얼을 건너뛰고 전투 바로 시작
+                this.setBGM('forest_default');
+                this.startBattleSequence();
+            } else {
+                // 튜토리얼 시작
+                this.startTutorial();
+            }
 
-                    const dialogueMessages = [
-                        {name : '코드', portrait : 'ChordPotrait', message : 'z 키를 눌러보세요!'},
-                    ];
-                    this.dialog.showDialogModal(dialogueMessages, () => {
-                        this.scene.isInDialogue = false;
-                        // z 키 설명 시작
-                        tutorial.startZKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
-                    });
-    
-                    // 충돌 이벤트 제거
-                    unsubscribe2();
-                }
-            });
-
-
-            let sensor3 = tutorial.createSensor(this.scene, this.player.x +300, this.player.y - 160, 10, 500);
-            // 충돌시 이동키 설명관련 데이터 삭제
-            const unsubscribe3 = this.scene.matterCollision.addOnCollideStart({
-                objectA: this.player,
-                objectB: sensor3,
-                callback: eventData => {
-                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-                    console.log("플레이어와 센서3 충돌");
-                    this.scene.isInDialogue = true;
-                    this.player.stopMove();
-                    // 센서 제거
-                    tutorial.onSensorHit(this.scene, bodyB);
-                    // 오른쪽 사인 제거
-                    tutorial.removeRightSign();
-                    // 이동키 조작 설명 끝
-                    tutorial.endzKeyControlExplanation();
-
-                    const dialogueMessages = [
-                        {name : '코드', portrait : 'ChordPotrait', message : '방향키와 함께 shift 키를 누르면 구를 수 있어요!'},
-                        {name : '코드', portrait : 'ChordPotrait', message : '공격을 피해야 할 때, 구르기를 사용해보세요.'},
-                    ];
-                    // 메시지 표시가 끝난 후 콜백 처리
-                    this.dialog.showDialogModal(dialogueMessages, () => {
-                        this.scene.isInDialogue = false;
-                        // shift 키 설명 시작
-                        tutorial.startshiftKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
-                    });
-                    // 충돌 이벤트 제거
-                    unsubscribe3();
-                }
-            });
-
-            
-            let sensor4 = tutorial.createSensor(this.scene, 600, this.player.y - 160, 10, 500);
-            // 충돌시 이동키 설명관련 데이터 삭제
-            const unsubscribe4 = this.scene.matterCollision.addOnCollideStart({
-                objectA: this.player,
-                objectB: sensor4,
-                callback: eventData => {
-                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-                    console.log("플레이어와 센서4 충돌");
-                    this.scene.isInDialogue = true;
-                    this.player.stopMove();
-                    // 센서 제거
-                    tutorial.onSensorHit(this.scene, bodyB);
-                    // 오른쪽 사인 제거
-                    tutorial.removeRightSign();
-                    tutorial.endshiftKeyControlExplanation();
-                    tutorial.finish(this.scene);
-
-                    const dialogueMessages = [
-                        {name : '맥스', portrait : 'MaxPotrait', message : '토마토? 아니 몬스터인가.'},
-                        {name : '맥스', portrait : 'MaxPotrait', message : '저런 건 처음보는데…'},
-                        {name : '코드', portrait : 'ChordPotrait', message : '얼마전부터 이 근방에 농작물처럼 생긴 몬스터가 나타나기 시작했다고 들었어요'},
-                        {name : '맥스', portrait : 'MaxPotrait', message : '한시가 급한데, 이상한 몬스터까지 나타나다니. 미치겠군.'},
-                        {name : '코드', portrait : 'ChordPotrait', message : '어쩌죠? 볼프강 박사가 있는 곳으로 가려면 이 길을 꼭 지나야 해요.'},
-                        {name : '맥스', portrait : 'MaxPotrait', message : '흥. 이정돈 별거 아니라고!'},
-                    ];
-                    // 메시지 표시가 끝난 후 콜백 처리
-                    this.dialog.showDialogModal(dialogueMessages, () => {
-                        this.startBattleSequence();
-                    });
-                    // 충돌 이벤트 제거
-                    unsubscribe4();
-                }
-            });
         } else if (stageNumber == 1 && mapNumber == 2) {
             this.setBGM('forest_default');
             this.scene.isInDialogue = true;
@@ -292,6 +186,126 @@ export default class StageManager {
         }
     }
 
+    startTutorial(){
+        let tutorial = new Tutorial(this.player, this.scene, this.dialog);
+            this.setBGM('forest_default');
+            // 첫번째는 센서 없이 바로 시작
+            this.scene.isInDialogue = true;
+            const dialogueMessages = [
+                {name : '코드', portrait : 'ChordPotrait', message : '모험을 떠나기 전에 몇가지 알려드릴게요.'},
+                {name : '코드', portrait : 'ChordPotrait', message : '방향키를 눌러보세요!'},
+            ];
+            // Dialog를 사용해 대화 표시, 대화 종료 후 콜백 전달
+            this.dialog.showDialogModal(dialogueMessages, () => {
+                this.scene.isInDialogue = false;
+                tutorial.startDirectionControlExplanation(this.scene, 250, this.player.y - 160, this.player);
+            });
+            
+            let sensor2 = tutorial.createSensor(this.scene, 280, this.player.y - 160, 10, 500);
+            // 충돌시 이동키 설명관련 데이터 삭제
+            // shift, z 한번, z 세번
+
+            // shift를 눌러보세요!
+            // z key를 눌러보세요!
+            // z key를 연속 3번 눌러보세요!
+            const unsubscribe2 = this.scene.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor2,
+                callback: eventData => {
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서2 충돌");
+                    this.scene.isInDialogue = true;
+                    this.player.stopMove();
+                    // 센서 제거
+                    tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
+                    // 이동키 조작 설명 끝
+                    tutorial.endDirectionControlExplanation();
+
+                    const dialogueMessages = [
+                        {name : '코드', portrait : 'ChordPotrait', message : 'z 키를 눌러보세요!'},
+                    ];
+                    this.dialog.showDialogModal(dialogueMessages, () => {
+                        this.scene.isInDialogue = false;
+                        // z 키 설명 시작
+                        tutorial.startZKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
+                    });
+    
+                    // 충돌 이벤트 제거
+                    unsubscribe2();
+                }
+            });
+
+
+            let sensor3 = tutorial.createSensor(this.scene, this.player.x +300, this.player.y - 160, 10, 500);
+            // 충돌시 이동키 설명관련 데이터 삭제
+            const unsubscribe3 = this.scene.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor3,
+                callback: eventData => {
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서3 충돌");
+                    this.scene.isInDialogue = true;
+                    this.player.stopMove();
+                    // 센서 제거
+                    tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
+                    // 이동키 조작 설명 끝
+                    tutorial.endzKeyControlExplanation();
+
+                    const dialogueMessages = [
+                        {name : '코드', portrait : 'ChordPotrait', message : '방향키와 함께 shift 키를 누르면 구를 수 있어요!'},
+                        {name : '코드', portrait : 'ChordPotrait', message : '공격을 피해야 할 때, 구르기를 사용해보세요.'},
+                    ];
+                    // 메시지 표시가 끝난 후 콜백 처리
+                    this.dialog.showDialogModal(dialogueMessages, () => {
+                        this.scene.isInDialogue = false;
+                        // shift 키 설명 시작
+                        tutorial.startshiftKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
+                    });
+                    // 충돌 이벤트 제거
+                    unsubscribe3();
+                }
+            });
+
+            
+            let sensor4 = tutorial.createSensor(this.scene, 600, this.player.y - 160, 10, 500);
+            // 충돌시 이동키 설명관련 데이터 삭제
+            const unsubscribe4 = this.scene.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor4,
+                callback: eventData => {
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서4 충돌");
+                    this.scene.isInDialogue = true;
+                    this.player.stopMove();
+                    // 센서 제거
+                    tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
+                    tutorial.endshiftKeyControlExplanation();
+                    tutorial.finish(this.scene);
+
+                    const dialogueMessages = [
+                        {name : '맥스', portrait : 'MaxPotrait', message : '토마토? 아니 몬스터인가.'},
+                        {name : '맥스', portrait : 'MaxPotrait', message : '저런 건 처음보는데…'},
+                        {name : '코드', portrait : 'ChordPotrait', message : '얼마전부터 이 근방에 농작물처럼 생긴 몬스터가 나타나기 시작했다고 들었어요'},
+                        {name : '맥스', portrait : 'MaxPotrait', message : '한시가 급한데, 이상한 몬스터까지 나타나다니. 미치겠군.'},
+                        {name : '코드', portrait : 'ChordPotrait', message : '어쩌죠? 볼프강 박사가 있는 곳으로 가려면 이 길을 꼭 지나야 해요.'},
+                        {name : '맥스', portrait : 'MaxPotrait', message : '흥. 이정돈 별거 아니라고!'},
+                    ];
+                    // 메시지 표시가 끝난 후 콜백 처리
+                    this.dialog.showDialogModal(dialogueMessages, () => {
+                        this.startBattleSequence();
+                    });
+                    // 충돌 이벤트 제거
+                    unsubscribe4();
+                }
+            });
+    }
+
     // 전투 시작 시 호출될 메서드
     startBattleSequence() {
         this.scene.isInDialogue = false;
@@ -309,6 +323,8 @@ export default class StageManager {
         this.scene.monsterArr.forEach((monster) => {
             monster.startBattle();
         });
+
+        
     }
 
     setStageEnd(stageNumber, mapNumber) {

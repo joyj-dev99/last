@@ -55,6 +55,8 @@ export default class MainSceneTest extends Phaser.Scene {
         this.stageNumber = data.stageNumber || 1;
         this.mapNumber = data.mapNumber || 1;
         this.playerStatus = data.playerStatus || null;
+        this.skipTutorial = data.skipTutorial || false;
+
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
 
@@ -201,7 +203,7 @@ export default class MainSceneTest extends Phaser.Scene {
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
         this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3);
-        this.stageManager = new StageManager(this, this.player, this.chord, this.dialog);
+        this.stageManager = new StageManager(this, this.player, this.chord, this.dialog, this.skipTutorial);
         //페이드인 완료 후 게임 실행
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.time.delayedCall(1000, () => {
