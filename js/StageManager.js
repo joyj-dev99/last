@@ -228,8 +228,8 @@ export default class StageManager {
                     ];
                     this.dialog.showDialogModal(dialogueMessages, () => {
                         this.scene.isInDialogue = false;
-                        // z 키 설명 시작
-                        tutorial.startZKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
+                        // z키 설명 시작
+                        tutorial.startzKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
                     });
     
                     // 충돌 이벤트 제거
@@ -252,7 +252,7 @@ export default class StageManager {
                     tutorial.onSensorHit(this.scene, bodyB);
                     // 오른쪽 사인 제거
                     tutorial.removeRightSign();
-                    // 이동키 조작 설명 끝
+                    // z키 조작 설명 끝
                     tutorial.endzKeyControlExplanation();
 
                     const dialogueMessages = [

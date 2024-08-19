@@ -2,10 +2,14 @@ import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYE
 const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right', 
         UPLEFT = 'up_left', UPRIGHT = 'up_right', 
         DOWNLEFT = 'down_left', DOWNRIGHT = 'down_right',
-        ATK1 = 'sword1', ATK2 = 'sword2', ATK3 = 'sword3', LEFTSHIFT = 'left_shift';
+        SWORD1 = 'sword1', SWORD2 = 'sword2', SWORD3 = 'sword3',
+        BOW = 'bow', SPELL = 'spell',
+        LEFTSHIFT = 'left_shift';
 
 const UP_ANIMS = 'up_key', DOWN_ANIMS = 'down_key', LEFT_ANIMS = 'left_key', RIGHT_ANIMS = 'right_key', 
-        ATK1_ANIMS = 'z_key', ATK2_ANIMS = 'z_key_double', ATK3_ANIMS = 'z_key_triple', SHIFT_ANIMS = 'shift_key';
+        SWORD1_ANIMS = 'z_key', SWORD2_ANIMS = 'z_key_double', SWORD3_ANIMS = 'z_key_triple', 
+        BOW_ANIMS = 'x_key', SPELL_ANIMS = 'c_key',
+        SHIFT_ANIMS = 'shift_key';
 
 export default class Tutorial{
 
@@ -17,6 +21,10 @@ export default class Tutorial{
 
         // Z 키 입력 설정
         this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+        // X 키 입력 설정
+        this.xKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        // C 키 입력 설정
+        this.cKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         // shift 키 입력 설정
         this.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         // 다이얼로그 가져오기
@@ -37,6 +45,8 @@ export default class Tutorial{
         scene.load.atlas('z_key', 'assets/tutorial/keyboard/z_key.png', 'assets/tutorial/keyboard/z_key_anim.json');
         scene.load.atlas('shift_key', 'assets/tutorial/keyboard/shift_key.png', 'assets/tutorial/keyboard/shift_key_anim.json');
         scene.load.image('right_sign', 'assets/tutorial/sign/right_sign-removebg-preview.png' );
+        scene.load.atlas('x_key', 'assets/tutorial/keyboard/x_key.png', 'assets/tutorial/keyboard/x_key_atlas.json');
+        scene.load.atlas('c_key', 'assets/tutorial/keyboard/c_key.png', 'assets/tutorial/keyboard/c_key_atlas.json');
 
     }
 
@@ -63,19 +73,19 @@ export default class Tutorial{
         let cursors = scene.input.keyboard.createCursorKeys();
         // cursors.left
         
-        let keyboard_up  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+155, 'keyboard', 0);
+        let keyboard_up  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+130, 'keyboard', 0);
         scene.add.existing(keyboard_up);  
         keyboard_up.setScale(2);
 
-        let keyboard_down  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+190, 'keyboard', 1);
+        let keyboard_down  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+165, 'keyboard', 1);
         scene.add.existing(keyboard_down);  
         keyboard_down.setScale(2);
 
-        let keyboard_left  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-25, sensor_y+190, 'keyboard', 2);
+        let keyboard_left  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-25, sensor_y+165, 'keyboard', 2);
         scene.add.existing(keyboard_left);  
         keyboard_left.setScale(2);
 
-        let keyboard_right  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+45, sensor_y+190, 'keyboard', 3);
+        let keyboard_right  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+45, sensor_y+165, 'keyboard', 3);
         scene.add.existing(keyboard_right);  
         keyboard_right.setScale(2);
 
@@ -142,33 +152,24 @@ export default class Tutorial{
         // 애니메이션 완료 후 원래 이미지로 돌아가기
         keyboard_up.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-            keyboard_up.setFrame(0); // '0'은 keyboard 텍스처에서의 첫 번째 프레임을 의미
             keyboard_up.setTexture('keyboard', 0); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
         }, this);
 
         // 애니메이션 완료 후 원래 이미지로 돌아가기
         keyboard_down.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-
-            keyboard_down.setFrame(1); // '0'은 keyboard 텍스처에서의 첫 번째 프레임을 의미
             keyboard_down.setTexture('keyboard', 1); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
         }, this);
 
         // 애니메이션 완료 후 원래 이미지로 돌아가기
         keyboard_left.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-
-            keyboard_left.setFrame(2); // '0'은 keyboard 텍스처에서의 첫 번째 프레임을 의미
-
             keyboard_left.setTexture('keyboard', 2); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
         }, this);
 
         // 애니메이션 완료 후 원래 이미지로 돌아가기
         keyboard_right.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-
-            keyboard_right.setFrame(3); // '0'은 keyboard 텍스처에서의 첫 번째 프레임을 의미
-
             keyboard_right.setTexture('keyboard', 3); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
         }, this);
         
@@ -190,7 +191,7 @@ export default class Tutorial{
                     this.player.handleSlash(); // 첫 번째 슬래쉬
                 
                     this.dialog.showDialogModal([
-                        {name : '코드', portrait : 'ChordPotrait', message: 'z 연달아 2번 눌러보세요.' }
+                        {name : '코드', portrait : 'ChordPotrait', message: 'z키를 연달아 2번 눌러보세요.' }
                     ]);
 
                 }else if(관련된값.anim_keys[0] === "z_key_double"){
@@ -203,7 +204,7 @@ export default class Tutorial{
                     }, 200); // 200ms 지연 후 실행
 
                     this.dialog.showDialogModal([
-                        {name : '코드', portrait : 'ChordPotrait', message: 'z 연달아 3번 눌러보세요.' }
+                        {name : '코드', portrait : 'ChordPotrait', message: 'z키를 연달아 3번 눌러보세요.' }
                     ]);
 
                 }else if(관련된값.anim_keys[0] === "z_key_triple"){
@@ -213,12 +214,12 @@ export default class Tutorial{
                     // 두 번째 슬래쉬는 첫 번째 슬래쉬 후 일정 시간 후에 실행
                     setTimeout(() => {
                         this.player.handleSlash();
-                    }, 300); // 300ms 지연 후 실행
+                    }, 200); // 200ms 지연 후 실행
 
                     // 세 번째 슬래쉬는 두 번째 슬래쉬 후 일정 시간 후에 실행
                     setTimeout(() => {
                         this.player.handleSlash();
-                    }, 600); // 두 번째 슬래쉬 후 300ms 추가 지연 (총 600ms 후 실행)
+                    }, 400); // 두 번째 슬래쉬 후 200ms 추가 지연 (총 400ms 후 실행)
 
                 }else if(관련된값.anim_keys[0] === "left_key" && 관련된값.anim_keys[1] === "shift_key"){
                     this.player.handleRoll(this.player.body.velocity);
@@ -385,22 +386,42 @@ export default class Tutorial{
             anim_key = [DOWN_ANIMS,RIGHT_ANIMS];
             anim_keyboard = [this.keyboard_down, this.keyboard_right];
         }
-        else if(이동키조작설명값 == ATK1){
+        else if(이동키조작설명값 == SWORD1){
             result = (this.zKeyPressCount === 1);
 
-            anim_key = [ATK1_ANIMS];
+            anim_key = [SWORD1_ANIMS];
             anim_keyboard = [this.keyboard_z];
-        }else if(이동키조작설명값 == ATK2){
+        }else if(이동키조작설명값 == SWORD2){
             result = (this.zKeyPressCount === 2);
 
-            anim_key = [ATK2_ANIMS];
+            anim_key = [SWORD2_ANIMS];
             anim_keyboard = [this.keyboard_z];
 
-        }else if(이동키조작설명값 == ATK3){
+        }else if(이동키조작설명값 == SWORD3){
             result = (this.zKeyPressCount === 3);
 
-            anim_key = [ATK3_ANIMS];
+            anim_key = [SWORD3_ANIMS];
             anim_keyboard = [this.keyboard_z];
+
+        }else if(이동키조작설명값 == BOW){
+            if(Phaser.Input.Keyboard.JustDown(this.xKey)){
+                result = true;
+            }
+            else{
+                result = false;
+            }
+            anim_key = [BOW_ANIMS];
+            anim_keyboard = [this.keyboard_x];
+        }
+        else if(이동키조작설명값 == SPELL){
+            if(Phaser.Input.Keyboard.JustDown(this.cKey)){
+                result = true;
+            }
+            else{
+                result = false;
+            }
+            anim_key = [SPELL_ANIMS];
+            anim_keyboard = [this.keyboard_c];
         }
         else if(이동키조작설명값 == LEFTSHIFT){
             // 왼쪽 방향키 + shift 키를 함께 누를시
@@ -470,18 +491,18 @@ export default class Tutorial{
     }
 
 
-    startZKeyControlExplanation(scene, sensor_x, sensor_y){
+    startzKeyControlExplanation(scene, sensor_x, sensor_y){
         console.log('z키 조작방법 시작');
         
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
 
-        let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+15, sensor_y+190, 'keyboard', 41);
+        let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-30, sensor_y+130, 'keyboard', 41);
         keyboard_z.setScale(2);
         scene.add.existing(keyboard_z);  
-
         this.keyboard_z = keyboard_z;
-        this.키조작설명순서 = [ATK1, ATK2, ATK3];
+
+        this.키조작설명순서 = [SWORD1, SWORD2, SWORD3];
 
         // z키 관련 애니메이션 제작
         scene.anims.create({
@@ -523,11 +544,9 @@ export default class Tutorial{
             repeat: -1      // 반복 설정
         });
         
-
-        // 애니메이션 완료 후 원래 이미지로 돌아가기
+        // z키 애니메이션 완료 후 원래 이미지로 돌아가기
         keyboard_z.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-            keyboard_z.setFrame(41); // '0'은 keyboard 텍스처에서의 첫 번째 프레임을 의미
             keyboard_z.setTexture('keyboard', 41); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
         }, this);
         
@@ -548,6 +567,109 @@ export default class Tutorial{
         }
     }
 
+    /*
+    * x키 조작방법 시작
+    */
+    startxKeyControlExplanation(scene, x, y){
+        console.log('x키 조작방법 시작');
+        
+        // 키 입력을 위한 기본 커서 키 설정
+        let cursors = scene.input.keyboard.createCursorKeys();
+
+        let keyboard_x = new Phaser.Physics.Matter.Sprite(scene.matter.world, x, y, 'keyboard', 39);
+        keyboard_x.setScale(2);
+        scene.add.existing(keyboard_x);  
+        this.keyboard_x = keyboard_x;
+
+        this.키조작설명순서 = [BOW];
+        
+        // x키 애니메이션 제작
+        scene.anims.create({
+            key: 'x_key',
+            frames: [
+                { key: 'x_key', frame: 'x_key_0' }, 
+                { key: 'x_key', frame: 'x_key_1' }  
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+        
+        // x키 애니메이션 완료 후 원래 이미지로 돌아가기
+        keyboard_x.on('animationstop', function () {
+            console.log('animation stop '); 
+            keyboard_x.setTexture('keyboard', 39); 
+        }, this);
+
+        let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
+        console.log('관련된 값 return 값 : ');
+        console.dir(관련된값);
+        for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
+            관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
+        }
+        
+    }
+
+    /*
+    * x키 조작방법 종료
+    */
+    endxKeyControlExplanation(){
+        if(this.keyboard_x){
+            this.keyboard_x.destroy();
+        }
+    }
+
+    /*
+    * c키 조작방법 시작
+    */
+        startcKeyControlExplanation(scene, x, y){
+            console.log('c키 조작방법 시작');
+            
+            // 키 입력을 위한 기본 커서 키 설정
+            let cursors = scene.input.keyboard.createCursorKeys();
+    
+            let keyboard_c = new Phaser.Physics.Matter.Sprite(scene.matter.world, x, y, 'keyboard', 18);
+            keyboard_c.setScale(2);
+            scene.add.existing(keyboard_c);  
+            this.keyboard_c = keyboard_c;
+    
+            this.키조작설명순서 = [SPELL];
+            
+            // c키 애니메이션 제작
+            scene.anims.create({
+                key: 'c_key',
+                frames: [
+                    { key: 'c_key', frame: 'c_key_0' }, 
+                    { key: 'c_key', frame: 'c_key_1' }  
+                ],
+                frameRate: 8,
+                repeat: -1
+            });
+            
+            // c키 애니메이션 완료 후 원래 이미지로 돌아가기
+            keyboard_c.on('animationstop', function () {
+                console.log('animation stop '); 
+                keyboard_c.setTexture('keyboard', 18); 
+            }, this);
+    
+            let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
+            console.log('관련된 값 return 값 : ');
+            console.dir(관련된값);
+            for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
+                관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
+            }
+            
+        }
+    
+        /*
+        * c키 조작방법 종료
+        */
+        endcKeyControlExplanation(){
+            if(this.keyboard_c){
+                this.keyboard_c.destroy();
+            }
+        }
+
+
     startshiftKeyControlExplanation(scene, sensor_x, sensor_y){
         console.log('shift키 조작방법 시작');
                 
@@ -555,13 +677,13 @@ export default class Tutorial{
         let cursors = scene.input.keyboard.createCursorKeys();
 
         // 왼쪽 키보드 스프라이트 생성
-        let keyboard_left = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x - 25, sensor_y + 190, 'keyboard', 2);
+        let keyboard_left = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x - 25, sensor_y +130, 'keyboard', 2);
         keyboard_left.setScale(2);
         scene.add.existing(keyboard_left);
         this.keyboard_left = keyboard_left;
 
         // shift 키보드 스프라이트 생성
-        let keyboard_shift  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+25, sensor_y+190, 'keyboard_shift_key', 0);
+        let keyboard_shift  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+25, sensor_y+130, 'keyboard_shift_key', 0);
         keyboard_shift.setScale(2);
         scene.add.existing(keyboard_shift); 
         this.keyboard_shift = keyboard_shift;
@@ -585,14 +707,12 @@ export default class Tutorial{
         // 애니메이션 완료 후 원래 이미지로 돌아가기 (Shift 키)
         this.keyboard_shift.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-            keyboard_shift.setFrame(0); // '0'은 keyboard 텍스처에서의 첫 번째 프레임을 의미
             keyboard_shift.setTexture('keyboard_shift_key', 0); // 원래 이미지로 돌아감
         }, this);
 
         // 애니메이션 완료 후 원래 이미지로 돌아가기 (왼쪽 키)
         this.keyboard_left.on('animationstop', function () {
             console.log('left animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-            keyboard_left.setFrame(2); // 
             keyboard_left.setTexture('keyboard', 2); // 원래 이미지로 돌아감
         }, this);
         
@@ -618,8 +738,6 @@ export default class Tutorial{
         }
     }
 
-    // player, 
-    // 튜토리얼 클래스 만들어서 빼기
     createSensor(scene, sensor_x, sensor_y, width, height){
     
         // 센서 1 : 충돌시 이동 조작키 이미지, text 보여주는 센서
