@@ -428,17 +428,14 @@ export default class Tutorial{
         if(this.keyboard_right){
             this.keyboard_right.destroy();
         }
-
-        // // 나중에 이벤트 리스너를 제거합니다.
-        // scene.input.keyboard.off('keydown', this.keyHandler);
-
-        // // 나중에 이벤트 리스너를 제거합니다.
-        // scene.input.keyboard.off('keyup', this.keyHandler);
     }
 
     endzKeyControlExplanation(){
         console.log('z키 조작방법 끝');
-        this.keyboard_z.destroy();
+        if(this.keyboard_z){
+            this.keyboard_z.destroy();
+        }
+        
     }
 
 
@@ -536,7 +533,9 @@ export default class Tutorial{
 
     endzKeyControlExplanation(){
         console.log('z키 조작방법 끝');
-        this.keyboard_z.destroy();
+        if(this.keyboard_z){
+            this.keyboard_z.destroy();
+        }
     }
 
     startshiftKeyControlExplanation(scene, sensor_x, sensor_y){
@@ -600,8 +599,13 @@ export default class Tutorial{
 
 
     endshiftKeyControlExplanation(){
-        console.log('shift키 조작방법 끝');
-        this.keyboard_shift.destroy();
+        console.log('left + shift키 조작방법 끝');
+        if(this.keyboard_shift){
+            this.keyboard_shift.destroy();
+        }
+        if(this.keyboard_left){
+            this.keyboard_left.destroy();
+        }
     }
 
     finish(scene){
