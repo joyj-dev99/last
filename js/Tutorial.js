@@ -2,16 +2,24 @@ import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYE
 const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right', 
         UPLEFT = 'up_left', UPRIGHT = 'up_right', 
         DOWNLEFT = 'down_left', DOWNRIGHT = 'down_right',
-        ATK1 = 'attack1', SHIFT = 'shift';
+        ATK1 = 'sword1', ATK2 = 'sword2', ATK3 = 'sword3', SHIFT = 'shift';
 
 const UP_ANIMS = 'up_key', DOWN_ANIMS = 'down_key', LEFT_ANIMS = 'left_key', RIGHT_ANIMS = 'right_key', 
-        ATK_ANIMS = 'z_key', SHIFT_ANIMS = 'shift_key_anim';
+        ATK1_ANIMS = 'z_key', ATK2_ANIMS = 'z_key_double', ATK3_ANIMS = 'z_key_triple', SHIFT_ANIMS = 'shift_key_anim';
 
 export default class Tutorial{
 
-    constructor(player) {
+    constructor(player, scene) {
         this.player = player;
-        console.log('튜토리얼 객체 생성');
+        this.zKeyPressCount = 0; // z 키를 누른 횟수 추적
+        this.zKeyLastTime = 0; // z 키를 마지막으로 누른 시간 추적
+        this.zKeyMaxInterval = 300; // 연속 입력으로 인정되는 최대 시간 간격 (밀리초)
+
+        // Z 키 입력 설정
+        this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+        // shift 키 입력 설정
+        this.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+
     }
     
     static preload(scene) {
@@ -75,7 +83,7 @@ export default class Tutorial{
         this.keyboard_left = keyboard_left;
         this.keyboard_right = keyboard_right;    
 
-        this.이동키조작설명순서 = [RIGHT,UP,LEFT,DOWN,UPRIGHT,UPLEFT,DOWNLEFT,DOWNRIGHT];
+        this.키조작설명순서 = [RIGHT,UP,LEFT,DOWN,UPRIGHT,UPLEFT,DOWNLEFT,DOWNRIGHT];
 
         scene.anims.create({
             key:UP_ANIMS,
@@ -167,7 +175,7 @@ export default class Tutorial{
             // event는 키보드 이벤트 객체입니다.
             // console.log('Key pressed: down? ' + event.key); // 누른 키를 출력합니다.
 
-            let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
+            let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
             console.log("관련된값", 관련된값);
             if(관련된값.result === true){
                 //  return {anim_keys : anim_key, anim_keyboards : anim_keyboard};
@@ -188,7 +196,7 @@ export default class Tutorial{
                     this.player.handleSpell();
                 }
 
-                console.log('this.이동키조작설명순서[0] : '+this.이동키조작설명순서[0]);
+                console.log('this.키조작설명순서[0] : '+this.키조작설명순서[0]);
                 console.log('stop');
             }
             else{ 
@@ -196,8 +204,8 @@ export default class Tutorial{
             }
 
 
-            this.이동키조작설명순서.splice(0, 1);
-            if(this.이동키조작설명순서.length == 0){
+            this.키조작설명순서.splice(0, 1);
+            if(this.키조작설명순서.length == 0){
                 console.log('조작키 설명 완료');
 
                // 0.5초 후에 오른쪽 사인 생성
@@ -215,7 +223,7 @@ export default class Tutorial{
             }
             else {                
                 console.log('조작키 설명 남음');
-                let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
+                let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
                 for (let i = 0; i < 관련된값.anim_keyboards.length; i++) {
                     console.log('anim_keys');
 
@@ -228,7 +236,7 @@ export default class Tutorial{
         scene.input.keyboard.on('keydown', this.keyHandler);
         scene.input.keyboard.on('keyup', this.keyHandler);
 
-        let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
+        let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
         console.dir(관련된값);
         for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
             관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
@@ -236,7 +244,24 @@ export default class Tutorial{
         
     }
 
+    // z키 누른 횟수 세는 메서드
+    updateZKeyPressCount() {
+        const currentTime = this.player.scene.time.now; // 현재 시간을 가져옴
+        const zKeyJustDown = Phaser.Input.Keyboard.JustDown(this.zKey);
+
+        if (zKeyJustDown) {
+            if (currentTime - this.zKeyLastTime > this.zKeyMaxInterval) {
+                // 일정 시간 이상 경과 시 카운트 초기화
+                this.zKeyPressCount = 0;
+            }
+            this.zKeyPressCount++;
+            this.zKeyLastTime = currentTime; // 마지막 입력 시간을 갱신
+        }
+    }
+
     관련된값반환(이동키조작설명값, cursors){
+
+        this.updateZKeyPressCount(); // z 키 입력 업데이트
 
         let anim_key = [];
         let anim_keyboard = [];
@@ -324,13 +349,20 @@ export default class Tutorial{
             anim_keyboard = [this.keyboard_down, this.keyboard_right];
         }
         else if(이동키조작설명값 == ATK1){
-            if(!(Phaser.Input.Keyboard.JustDown(this.zKey))){
-                result = false;
-            }
-            else{
-                result = true;
-            }
-            anim_key = [ATK_ANIMS];
+            result = (this.zKeyPressCount === 1);
+
+            anim_key = [ATK1_ANIMS];
+            anim_keyboard = [this.keyboard_z];
+        }else if(이동키조작설명값 == ATK2){
+            result = (this.zKeyPressCount === 2);
+
+            anim_key = [ATK2_ANIMS];
+            anim_keyboard = [this.keyboard_z];
+
+        }else if(이동키조작설명값 == ATK3){
+            result = (this.zKeyPressCount === 3);
+
+            anim_key = [ATK3_ANIMS];
             anim_keyboard = [this.keyboard_z];
         }
         else if(이동키조작설명값 == SHIFT){
@@ -343,8 +375,11 @@ export default class Tutorial{
             anim_key = [SHIFT_ANIMS];
             anim_keyboard = [this.keyboard_shift];
         }
-        
-        // console.log('this.combo_count : '+this.combo_count);
+
+        // 조건이 충족되면 카운트 초기화 (다음 콤보를 위해)
+        if(result){
+            this.zKeyPressCount = 0;
+        }
 
         return {'result': result, 'anim_keys' : anim_key, 'anim_keyboards' : anim_keyboard};
     }
@@ -405,27 +440,15 @@ export default class Tutorial{
         
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
-        // Z 키 입력 설정
-        this.zKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        this.combo_count = 0;
 
         let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+15, sensor_y+190, 'keyboard', 41);
         keyboard_z.setScale(2);
         scene.add.existing(keyboard_z);  
 
         this.keyboard_z = keyboard_z;
-        // const ATK1 = {
-        //     keyboard : keyboard_z,
-        //     anim_key : 'z_key'
-        // };
+        this.키조작설명순서 = [ATK1, ATK2, ATK3];
 
-        // const ATK3 = {
-        //     keyboard : keyboard_z,
-        //     anim_key : 'z_key'
-        // };
-
-        this.이동키조작설명순서 = [ATK1];
-
+        // z키 관련 애니메이션 제작
         scene.anims.create({
             key:'z_key',
             frames : [{
@@ -439,6 +462,33 @@ export default class Tutorial{
             repeat : -1
         });
 
+        scene.anims.create({
+            key: 'z_key_double',
+            frames: [
+                { key: 'z_key', frame: "zkey.png" },
+                { key: 'z_key', frame: "zkey2.png" },
+                { key: 'z_key', frame: "zkey.png" }, // 첫 번째 클릭 후 다시 원래 상태로
+                { key: 'z_key', frame: "zkey2.png" } // 두 번째 클릭
+            ],
+            frameRate: 12, // 더 빠르게 번갈아가며 재생되도록 설정
+            repeat: -1 // 반복
+        });
+        
+        scene.anims.create({
+            key: 'z_key_triple',
+            frames: [
+                { key: 'z_key', frame: "zkey.png" },
+                { key: 'z_key', frame: "zkey2.png" },  // 첫 번째 클릭
+                { key: 'z_key', frame: "zkey.png" },   // 다시 원래 상태로
+                { key: 'z_key', frame: "zkey2.png" },  // 두 번째 클릭
+                { key: 'z_key', frame: "zkey.png" },   // 다시 원래 상태로
+                { key: 'z_key', frame: "zkey2.png" }   // 세 번째 클릭
+            ],
+            frameRate: 16,  // 빠르게 3번의 클릭을 표현하기 위해 프레임 속도를 높임
+            repeat: -1      // 반복 설정
+        });
+        
+
         // 애니메이션 완료 후 원래 이미지로 돌아가기
         keyboard_z.on('animationstop', function () {
             console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
@@ -447,7 +497,7 @@ export default class Tutorial{
         }, this);
         
 
-        let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
+        let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
         console.log('관련된 값 return 값 : ');
         console.dir(관련된값);
         for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
@@ -466,16 +516,13 @@ export default class Tutorial{
                 
         // 키 입력을 위한 기본 커서 키 설정
         let cursors = scene.input.keyboard.createCursorKeys();
-        // Z 키 입력 설정
-        this.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-
 
         let keyboard_shift  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+25, sensor_y+190, 'shift_key', 0);
         keyboard_shift.setScale(2);
         scene.add.existing(keyboard_shift); 
 
         this.keyboard_shift = keyboard_shift;
-        this.이동키조작설명순서 = [SHIFT];
+        this.키조작설명순서 = [SHIFT];
 
         scene.anims.create({
             key:'shift_key_anim',
@@ -499,7 +546,7 @@ export default class Tutorial{
         }, this);
         
 
-        let 관련된값 = this.관련된값반환(this.이동키조작설명순서[0] ,cursors);
+        let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
         console.dir(관련된값);
         for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
             관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
