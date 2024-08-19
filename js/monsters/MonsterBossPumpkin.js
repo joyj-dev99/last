@@ -321,7 +321,6 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.bullets.children.each(bullet => {
             bullet.destroy();
         }, this);
-
     }
 
 }

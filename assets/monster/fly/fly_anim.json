@@ -49,15 +49,12 @@
             ]
         },
         {
-            "key": "fly_summon_files",
+            "key": "fly_attack",
             "type": "frames",
             "repeat": 0,
             "frameRate": 8,
             "frames": [
-                {
-                    "key": "fly",
-                    "frame": "giant_fly_sprite_sheet_6"
-                },
+
                 {
                     "key": "fly",
                     "frame": "giant_fly_sprite_sheet_7"

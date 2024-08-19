@@ -20,8 +20,8 @@ export default class MonsterBossWolfgang extends Phaser.Physics.Matter.Sprite {
         this.bodyHeight = 22;
         this.centreX = 0;
         this.centreY = -2;
-        this.initHp = 100;
-        this.hp = 100;
+        this.initHp = 500;
+        this.hp = 500;
         this.damage = 0;
         this.speed = 0.5;
         this.followDistance = 150;
@@ -241,7 +241,7 @@ export default class MonsterBossWolfgang extends Phaser.Physics.Matter.Sprite {
             radius: 5, // 반지름을 작게 설정하여 충돌 범위 축소
         });
         bullet.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
-        bullet.setCollidesWith([PLAYER_CATEGORY]);
+        bullet.setCollidesWith([PLAYER_CATEGORY,OBJECT_CATEGORY]);
         bullet.setFixedRotation();
         bullet.setFrictionAir(0);
         bullet.setMass(1);

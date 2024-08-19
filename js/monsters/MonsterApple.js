@@ -18,10 +18,10 @@ export default class MonsterApple extends Monster {
             hp: 60,
             damage: 0.5, //플레이어의 기준 체력이 3이기 때문에, 0.5로 설정
             reach: 20,
-            speed: 1,
+            speed: 2,
             oneMove : 30,
             maxMove : 100,
-            followDistance : 70,
+            followDistance : 80,
             player: player
         });
     }

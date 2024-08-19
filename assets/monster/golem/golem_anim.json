@@ -73,7 +73,7 @@
             ]
         },
         {
-            "key": "golem_attack1",
+            "key": "golem_attack",
             "type": "frames",
             "repeat": 0,
             "frameRate": 10,
@@ -129,7 +129,7 @@
             ]
         },
         {
-            "key": "golem_attack2",
+            "key": "golem_beam",
             "type": "frames",
             "repeat": 0,
             "frameRate": 10,

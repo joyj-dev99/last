@@ -15,13 +15,13 @@ export default class MonsterRatfolk extends Monster {
             bodyHeight: 14,
             centreX: 0,
             centreY: -6,
-            hp: 60,
+            hp: 80,
             damage: 0.5, //플레이어의 기준 체력이 3이기 때문에, 0.5로 설정
             reach: 20,
-            speed: 1,
+            speed: 3,
             oneMove : 30,
             maxMove : 100,
-            followDistance : 70,
+            followDistance : 180,
             player: player
         });
     }

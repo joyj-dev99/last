@@ -81,27 +81,11 @@
             ]
         },
         {
-            "key": "lemon_spawn_bubbles",
+            "key": "lemon_attack",
             "type": "frames",
-            "repeat": -1,
+            "repeat": 0,
             "frameRate": 12,
             "frames": [
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_16"
-                },
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_17"
-                },
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_18"
-                },
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_19"
-                },
                 {
                     "key": "lemon",
                     "frame": "lemon_sprite_sheet_20"
@@ -126,22 +110,6 @@
             "repeat": 0,
             "frameRate": 12,
             "frames": [
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_23"
-                },
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_24"
-                },
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_25"
-                },
-                {
-                    "key": "lemon",
-                    "frame": "lemon_sprite_sheet_26"
-                },
                 {
                     "key": "lemon",
                     "frame": "lemon_sprite_sheet_27"
@@ -211,7 +179,7 @@
         {
             "key": "lemon_bubble_pop",
             "type": "frames",
-            "repeat": -1,
+            "repeat": 0,
             "frameRate": 8,
             "frames": [
                 {
