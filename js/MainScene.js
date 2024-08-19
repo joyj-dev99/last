@@ -21,7 +21,7 @@ import MonsterBugbear from "./monsters/MonsterBugbear.js";
 import MonsterAngel from "./monsters/MonsterAngel.js";
 import MonsterGolem from "./monsters/MonsterGolem.js";
 import MonsterBossAlchemist from "./monsters/MonsterBossAlchemist.js";
-import MonsterWolfgang from "./monsters/MonsterWolfgang.js";
+import MonsterBossWolfgang from "./monsters/MonsterBossWolfgang.js";
 
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
@@ -154,6 +154,7 @@ export default class MainSceneTest extends Phaser.Scene {
         MonsterBossGoblin.preload(this);
         MonsterBossNecromancer.preload(this);
         MonsterBossAlchemist.preload(this);
+        MonsterBossWolfgang.preload(this);
         MonsterApple.preload(this);
         Chord.preload(this);
         Item.preload(this);
@@ -581,7 +582,7 @@ export default class MainSceneTest extends Phaser.Scene {
                         });
                         break;
                     case 'Wolfgang' :
-                        m = new MonsterWolfgang({
+                        m = new MonsterBossWolfgang({
                             scene: this,
                             x: x,
                             y: y,
@@ -755,7 +756,6 @@ export default class MainSceneTest extends Phaser.Scene {
 
                 let x = gameObjectB.x;
                 let y = gameObjectB.y;
-
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
@@ -766,17 +766,24 @@ export default class MainSceneTest extends Phaser.Scene {
                 } else if (gameObjectB.texture.key === 'alchemist') {
                     gameObjectB.destroy();
                     // 충돌 후 애니메이션 재생 하고 소멸
-                    let flask_hit_anim = this.matter.add.sprite(x, y, 'alchemist_flask_hit');
+                    const flask_hit_anim = this.matter.add.sprite(x, y, 'alchemist_flask_hit');
                     flask_hit_anim.setBody({width: 1, height: 1})
                     flask_hit_anim.setSensor(true)
                     flask_hit_anim.play('alchemist_flask_hit');
                     this.time.delayedCall(600, () => {
                         flask_hit_anim.destroy();
                     });
+                } else if (gameObjectB.texture.key === 'wolfgang_missile') {
+                    gameObjectB.destroy();
+                    const missile_hit = this.add.image(x, y, 'wolfgang_missile_hit');
+                    missile_hit.setScale(0.03);
+                    this.time.delayedCall(600, () => {
+                        missile_hit.destroy();
+                    });
                 } else {
                     gameObjectB.destroy();
                     // 충돌 후 애니메이션 재생 하고 소멸
-                    let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
+                    const egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
                     egg_hit_anim.setBody({width: 1, height: 1})
                     egg_hit_anim.setSensor(true)
                     egg_hit_anim.play('eggplant_egg_hit');
@@ -814,4 +821,62 @@ export default class MainSceneTest extends Phaser.Scene {
             });
         }
     }
+
+    setMinotaurShockWave() {
+        let playerInitSpeed = this.player.speed;
+        this.player.speed = 0;
+        const player_stun = this.add.image(this.player.x, this.player.y - 20, 'player_stun');
+        player_stun.setScale(0.1);
+        // 일정 시간 후 스턴 해제
+        this.time.delayedCall(2000, () => {
+            this.player.speed = playerInitSpeed;
+            player_stun.destroy();
+        });
+    }
+
+    doMakeBoss(bossMonster) {
+        let m = null;
+        const type = this.monsterArr.find(t => t.monsterType === bossMonster);
+        if (type === undefined) {
+            if (bossMonster === 'pumpkin') {
+                m = new MonsterBossPumpkin({
+                    scene: this,
+                    x: 240,
+                    y: 240,
+                    player: this.player // 플레이어 객체 전달
+                });
+                m.topInfoY = 17;
+                m.healthBarHeight = 8;
+                m.monsterName.y = 54;
+            } else if (bossMonster === 'goblin') {
+                m = new MonsterBossGoblin({
+                    scene: this,
+                    x: 240,
+                    y: 240,
+                    player: this.player // 플레이어 객체 전달
+                });
+                m.topInfoY = 11;
+                m.healthBarHeight = 8;
+                m.monsterName.y = 30;
+            } else if (bossMonster === 'necromancer') {
+                m = new MonsterBossNecromancer({
+                    scene: this,
+                    x: 240,
+                    y: 240,
+                    player: this.player // 플레이어 객체 전달
+                });
+                m.topInfoY = 11;
+                m.healthBarHeight = 8;
+                m.monsterName.y = 30;
+            } else {
+                return;
+            }
+            m.setCollisionCategory(MONSTER_CATEGORY);
+            m.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY, TILE_CATEGORY]);
+            this.monsterArr.push(m);
+            m.startBattle();
+        }
+
+    }
+
 }

@@ -111,7 +111,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     static preload(scene){
         scene.load.atlas('player', 'assets/player/player.png', 'assets/player/player_atlas.json');
         scene.load.animation('playerAnim', 'assets/player/player_anim.json');
-        
+        scene.load.image('player_stun', 'assets/player/player_stun.png');
+
         // Preload the sound effect for sword action
         scene.load.audio('sound_player_hit', 'assets/audio/sound_player_hit.mp3');
         scene.load.audio('sound_player_move', 'assets/audio/sound_player_move.mp3');

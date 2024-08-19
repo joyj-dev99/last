@@ -19,10 +19,9 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
         this.bodyHeight = 22;
         this.centreX = 0;
         this.centreY = -2;
-        this.initHp = 100;
-        this.hp = 100;
+        this.initHp = 500;
+        this.hp = 500;
         this.damage = 0;
-        this.reach = 30;
         this.speed = 1.5;
         this.followDistance = 120;
 
@@ -71,16 +70,9 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
-        this.scene.add.text(this.scene.sys.game.config.width / 4 - 10, 5, `알케미스트`, {
-            fontFamily: 'Galmuri11, sans-serif',
-            fontSize: '12px',
-            fill: '#000',
-            backgroundColor: 'rgba(255, 255, 255, 0.5)',
-            padding: {x: 10}
-        }).setScrollFactor(0).setDepth(1001);
 
         this.healthBarWidth = 120;
-        this.healthBarHeight = 15;
+        this.healthBarHeight = 8;
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
         // 초기 프레임 설정
@@ -88,6 +80,14 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.setScrollFactor(0);
         this.healthBar.setDepth(1001);
         this.healthBarBack.setDepth(1001);
+
+        this.scene.add.text(this.scene.sys.game.config.width / 4 + this.healthBarWidth, 5, `알케미스트`, {
+            fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '12px',
+            fill: '#000',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            padding: {x: 10}
+        }).setScrollFactor(0).setDepth(1001);
 
         //     지금 안쓰는 변수들은 아래
         this.isMoving = false;
@@ -146,10 +146,10 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, this.healthBarWidth, this.healthBarHeight);
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, 20, this.healthBarWidth, this.healthBarHeight);
         let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, this.healthBarHeight);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, 20, healthWidth, this.healthBarHeight);
     }
 
     monsterDistanceControlPlayer() {
@@ -162,11 +162,11 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
         let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
         let distanceToTarget = toTarget.length();
         if (distanceToTarget > this.followDistance) {
-            toTarget.normalize(); // 벡터를 단위 벡터로 정규화
-            monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
-            if (toTarget.x < 0 && this.anims.currentAnim.key !== `${this.monsterType}_attack2`) {
+            toTarget.normalize();
+            monsterVelocity = toTarget.scale(speed);
+            if (toTarget.x < 0) {
                 this.setFlipX(true);
-            } else if (toTarget.x >= 0 && this.anims.currentAnim.key !== `${this.monsterType}_attack2`) {
+            } else {
                 this.setFlipX(false);
             }
             this.setVelocity(monsterVelocity.x, monsterVelocity.y);
@@ -249,13 +249,16 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
             this.setStatic(true);
             this.anims.play(`${this.monsterType}_attack1`);
             this.scene.time.delayedCall(2000, () => {
+                this.minotaurShockWave();
                 this.scene.cameras.main.shake(2000, 0.02);
-
             });
 
         }
     }
 
+    minotaurShockWave() {
+        this.scene.setMinotaurShockWave();
+    }
 
     alchemistShootBullet() {
         this.setStatic(true);
@@ -326,12 +329,12 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
                 // 충격파 확장 애니메이션
                 this.scene.tweens.add({
                     targets: poison,
-                    scaleX: 0.07,
-                    scaleY: 0.07,
-                    alpha: 0, // 점점 투명해짐
-                    duration: 5000,
+                    scaleX: 0.05,
+                    scaleY: 0.05,
+                    alpha: 0.2, // 점점 투명해짐
+                    duration: 3000,
                     onComplete: () => {
-                        poison.destroy(); // 애니메이션이 끝나면 충격파 제거
+                        poison.destroy();
                     }
                 });
                 this.scene.setCollisionOfMonsterShortAttack(poison);

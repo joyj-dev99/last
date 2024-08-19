@@ -26,6 +26,7 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.followDistance = 500;
         this.scene.add.existing(this);
 
+        this.topInfoY = 5;
 
         // 이 변수 가져오는거 모름 ㅠㅠㅠ
         this.mapSize = 480;
@@ -75,7 +76,7 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
-        this.scene.add.text(this.scene.sys.game.config.width / 4 - 30, 5, `고블린`, {
+        this.monsterName = this.scene.add.text(this.scene.sys.game.config.width / 4 - 10, this.topInfoY, `고블린`, {
             fontFamily: 'Galmuri11, sans-serif',
             fontSize: '12px',
             fill: '#000',
@@ -128,10 +129,10 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, this.healthBarWidth, this.healthBarHeight);
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY * 4, this.healthBarWidth, this.healthBarHeight);
         let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, this.healthBarHeight);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY * 4, healthWidth, this.healthBarHeight);
     }
 
     monsterFollowPlayer() {

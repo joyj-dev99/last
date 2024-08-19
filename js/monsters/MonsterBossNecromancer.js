@@ -21,13 +21,14 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.bodyHeight = 20;
         this.centreX = 0;
         this.centreY = -6;
-        this.initHp = 550;
-        this.hp = 550;
+        this.initHp = 500;
+        this.hp = 500;
         this.damage = 0;
         this.speed = 1.5;
         this.followDistance = 500;
         this.scene.add.existing(this);
 
+        this.topInfoY = 5;
         // 이 변수 가져오는거 모름 ㅠㅠㅠ
         this.mapSize = 480;
         // 최초 생성시 왼쪽을 바라보도록.
@@ -70,7 +71,7 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
-        this.scene.add.text(this.scene.sys.game.config.width / 4 + 120, 5, `네크로맨서`, {
+        this.monsterName = this.scene.add.text(this.scene.sys.game.config.width / 4 + 120, this.topInfoY, `네크로맨서`, {
             fontFamily: 'Galmuri11, sans-serif',
             fontSize: '12px',
             fill: '#000',
@@ -125,10 +126,10 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, 20, this.healthBarWidth, this.healthBarHeight);
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, this.topInfoY*4, this.healthBarWidth, this.healthBarHeight);
         let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, 20, healthWidth, this.healthBarHeight);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 + this.healthBarWidth, this.topInfoY*4, healthWidth, this.healthBarHeight);
     }
 
     monsterDistanceControlPlayer() {

@@ -29,7 +29,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
 
         // 이 변수 가져오는거 모름 ㅠㅠㅠ
         this.mapSize = 480;
-
+        this.topInfoY = 5;
         // 최초 생성시 왼쪽을 바라보도록.
         this.setFlipX(true);
 
@@ -76,7 +76,15 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
 
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
-        this.healthBarWidth = 240;
+        this.monsterName = this.scene.add.text(this.scene.sys.game.config.width / 4 - 10, this.topInfoY, `호박`, {
+            fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '12px',
+            fill: '#000',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            padding: {x: 10}
+        }).setScrollFactor(0).setDepth(1001);
+
+        this.healthBarWidth = 120;
         this.healthBarHeight = 15;
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
@@ -133,10 +141,10 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, this.healthBarWidth, this.healthBarHeight);
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY*4, this.healthBarWidth, this.healthBarHeight);
         let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, this.healthBarHeight);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY*4, healthWidth, this.healthBarHeight);
     }
 
     monsterFollowPlayer() {
