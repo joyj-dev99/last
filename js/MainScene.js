@@ -52,8 +52,8 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 3;
-        this.mapNumber = data.mapNumber || 3;
+        this.stageNumber = data.stageNumber || 1;
+        this.mapNumber = data.mapNumber || 2;
         this.playerStatus = data.playerStatus || null;
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
@@ -146,7 +146,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
-        
+
         // 버튼에 사용할 이미지 로드
         this.load.image('button', 'path_to_button_image.png');
 

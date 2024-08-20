@@ -92,8 +92,8 @@ export default class MonsterLemon extends Monster {
     }
 
     destroy() {
-        super.destroy();
         this.destroyBullets();
+        super.destroy();
     }
 
     destroyBullets() {

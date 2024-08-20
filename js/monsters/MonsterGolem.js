@@ -1,5 +1,11 @@
 import Monster from "./Monster.js";
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "../constants.js";
+import {
+    PLAYER_CATEGORY,
+    MONSTER_CATEGORY,
+    TILE_CATEGORY,
+    OBJECT_CATEGORY,
+    PLAYER_ATTACK_CATEGORY, MONSTER_ATTACK_CATEGORY
+} from "../constants.js";
 
 export default class MonsterGolem extends Monster {
     constructor(data) {
@@ -19,36 +25,74 @@ export default class MonsterGolem extends Monster {
             damage: 0.5, //플레이어의 기준 체력이 3이기 때문에, 0.5로 설정
             reach: 20,
             speed: 1,
-            oneMove : 30,
-            maxMove : 100,
-            followDistance : 250,
+            oneMove: 30,
+            maxMove: 100,
+            followDistance: 150,
             player: player
         });
 
         this.defaultHpX = 26;
         this.defaultHpY = 50;
-        this.healthBarWidth =52;
+        this.healthBarWidth = 52;
 
         this.scene.anims.create({
-            key: 'myAnimation',
+            key: 'beam',
             frames: [
-                { key: 'golem_beam', frame: 'energy_beam_sprite_sheet_0' },
-                { key: 'golem_beam', frame: 'energy_beam_sprite_sheet_1' },
-                { key: 'golem_beam', frame: 'energy_beam_sprite_sheet_2' }
+                {key: 'golem_beam', frame: 'energy_beam_sprite_sheet_0'},
+                {key: 'golem_beam', frame: 'energy_beam_sprite_sheet_1'},
+                {key: 'golem_beam', frame: 'energy_beam_sprite_sheet_2'}
             ],
-            frameRate: 10, // 초당 10 프레임
-            repeat: -1     // 무한 반복
+            frameRate: 10,
+            repeat: 0
         });
 
-        // 스프라이트 생성 및 애니메이션 실행
-        const sprite = this.scene.add.sprite(200, 200, 'myAtlas', 'energy_beam_sprite_sheet_0');
-        sprite.setFlipX(true);
-        sprite.play('myAnimation');
-
-        // let bullet = this.scene.matter.add.image(this.x, this.y, 'golem_beam', 'energy_beam_sprite_sheet_2');
-
+        this.attackEvent = this.scene.time.addEvent({
+            delay: 5000,
+            callback: this.monsterAttackPlayerBySkill,
+            callbackScope: this,
+            loop: true
+        });
 
     }
 
+    monsterAttackPlayerBySkill() {
+        if (this.isBattleStared === true && this.hp > 0 && this.isFollowing === true) {
+            this.setStatic(true)
+            this.golemBeam = this.scene.matter.add.sprite(0, 0, 'beam')
+            this.golemBeam.setBody({
+                type: 'rectangle',
+                width: this.golemBeam.width + 20,
+                height: this.golemBeam.height + 30
+            });
+            let toTarget = new Phaser.Math.Vector2(this.player.x - this.x, this.player.y - this.y);
+            toTarget.normalize();
+            if (toTarget.x < 0) {
+                this.golemBeam.setPosition(this.x - 30, this.y + 20);
+                this.golemBeam.setFlipX(true);
+            } else {
+                this.golemBeam.setPosition(this.x + 30, this.y + 20);
+                this.golemBeam.setFlipX(false);
+            }
+            this.golemBeam.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
+            this.golemBeam.setCollidesWith( [PLAYER_CATEGORY]);
+            this.golemBeam.setFixedRotation();
+            this.golemBeam.setStatic(true)
+            this.golemBeam.setFrictionAir(0);
+            this.golemBeam.damage = 0.5;
+            this.golemBeam.play('beam');
+            this.scene.setCollisionOfMonsterShortAttack(this.golemBeam);
+
+            this.scene.time.delayedCall(600, () => {
+                this.golemBeam.destroy();
+                this.setStatic(false)
+            });
+        }
+    }
+
+    destroy() {
+        this.attackEvent.remove();
+        this.golemBeam.destroy();
+        super.destroy();
+    }
 
 }
