@@ -190,6 +190,7 @@ export default class Dialog  {
             frameWidth: 16, // 각 프레임의 너비
             frameHeight: 16, // 각 프레임의 높이
         });
+        scene.load.image('nextBtnImage', 'assets/ui/Blue_Buttons_Pixel.png');
     }
 
     /** @type {boolean} */
