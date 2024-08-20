@@ -41,148 +41,103 @@ export default class StageManager {
                 this.startTutorial();
             }
 
-        } else if (stageNumber == 1 && mapNumber == 2) {
-            this.setBGM('forest_default');
+        } else {
             this.scene.isInDialogue = true;
-            const dialogueMessages = [
+            let dialogueMessages;
+            if (stageNumber == 1 && mapNumber == 2) {
+            this.setBGM('forest_default');
+            dialogueMessages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 토마토랑 가지냐?'},
             ];
+            } else if (stageNumber == 1 && mapNumber == 3) {
+                this.setBGM('forest_default');
+                dialogueMessages = [
+                    {name : '코드', portrait : 'ChordPotrait', message : '사과와 레몬이네요! 너무 상큼해보여요!'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '헛소리 하지말고, 저리가서 연주나 해.'},
+                ];
+            } else if (stageNumber == 1 && mapNumber == 4) {
+                this.setBGM('forest_boss');
+                dialogueMessages = [
+                    {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 호박이야? 가지가지 하는군...'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '이 호박은 다른 몬스터들보다 좀더 강해보여요.'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '그래봐야 한주먹거리지.'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '역시 맥스님! 다녀오시면 제가 호박으로 스프라도 만들어드릴게요!'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '헛소리 말고 저리 꺼져.'},
+                ];
+            } else if (stageNumber == 2 && mapNumber == 1) {
+                this.setBGM('dungeon_default');
+                dialogueMessages = [
+                    {name : '맥스', portrait : 'MaxPotrait', message : '과거에 감옥으로 썼던 곳인가 보군.'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '으악! 맥스님, 거미랑 파리가 너무 많아요!'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '시끄러워...'},
+                ];
+            } else if (stageNumber == 2 && mapNumber == 2) {
+                this.setBGM('dungeon_default');
+                dialogueMessages = [
+                    {name : '맥스', portrait : 'MaxPotrait', message : '저건... 고블린?'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '원래 고블린이 건물 안에 살던가?'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '그럴리가요. 뭔가 이상하네요.'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '아무래도 조심하는게 좋을 거 같아요, 맥스님.'},
+                ];
+            } else if (stageNumber == 2 && mapNumber == 3) {
+                this.setBGM('dungeon_default');
+                dialogueMessages = [
+                    {name : '코드', portrait : 'ChordPotrait', message : '으악!!!!!! 쥐다!!!!!'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '그냥 쥐라고 하기엔 너무 큰거 아냐?'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '여기서 무슨 일이 벌어지고 있긴 한가보군.'},
+                ];
+            } else if (stageNumber == 2 && mapNumber == 4) {
+                this.setBGM('dungeon_boss');
+                dialogueMessages = [
+                    {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '누구냐! 감히 우리 베이비들에게 손을 대다니!'},
+                    {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '대가를 치르게 해주마!'},
+                    {name : '고블린', portrait : null, message : '우어어어'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '그.. 베이비가, 고블린은 아니겠지?'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '음. 사람마다 취향이 다를 수도 있죠..하하..'},
+                ];
+            }
+            else if (stageNumber == 3 && mapNumber == 1) {
+                this.setBGM('room_default');
+                // 대화
+                dialogueMessages = [
+                    {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 여기가 볼프강 박사가 있는 연구소예요!'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '그 사람 주변에는 항상 호위무사가 있는데…'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '저거 말하는거냐?'},
+                    {name : '도깨비', portrait : null, message : '침입자. 죽인다.'},
+                ];
+            }
+            else if (stageNumber == 3 && mapNumber == 2) {
+                this.setBGM('room_default');
+                dialogueMessages = [
+                    {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 저기 위에 뭐가 있어요? 저건.. 천사?'},
+                    {name : '천사', portrait : null, message : '침입자인가. 신의 심판이 두렵지 않나?'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '저것도 몬스터인가? 그렇다기엔 너무 인간처럼 생겼는데.'},
+                ];
+            }
+            else if (stageNumber == 3 && mapNumber == 3) {
+                this.setBGM('room_default');
+                dialogueMessages = [
+                    {name : '골렘', portrait : null, message : '침입자는 처단한다.'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '이제는 골렘까지?'},
+                    {name : '코드', portrait : 'ChordPotrait', message : '조금만 더 가면 중앙 연구실이예요!'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '칫. 일단 가보자!'},
+                ];
+            }
+            else if (stageNumber == 3 && mapNumber == 4) {
+                this.setBGM('room_boss');
+                dialogueMessages = [
+                    {name : '볼프강', portrait : null, message : '오, 맥스. 드디어 왔구나.'},
+                    {name : '볼프강', portrait : null, message : '내 연구의 결실을 확인할 시간이야!'},
+                    {name : '조수', portrait : null, message : '기다리고 있었어요, 맥스.'},
+                    {name : '맥스', portrait : 'MaxPotrait', message : '볼프강! 내 피같은 돈 돌려받으러 왔다!'},
+                ];
+            }
             // 메시지 표시가 끝난 후 콜백 처리
             this.dialog.showDialogModal(dialogueMessages, () => {
+                
                 this.startBattleSequence();
             });
-        } else if (stageNumber == 1 && mapNumber == 3) {
-            this.setBGM('forest_default');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '코드', portrait : 'ChordPotrait', message : '사과와 레몬이네요! 너무 상큼해보여요!'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '헛소리 하지말고, 저리가서 연주나 해.'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        } else if (stageNumber == 1 && mapNumber == 4) {
-            this.setBGM('forest_boss');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 호박이야? 가지가지 하는군...'},
-                {name : '코드', portrait : 'ChordPotrait', message : '이 호박은 다른 몬스터들보다 좀더 강해보여요.'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '그래봐야 한주먹거리지.'},
-                {name : '코드', portrait : 'ChordPotrait', message : '역시 맥스님! 다녀오시면 제가 호박으로 스프라도 만들어드릴게요!'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '헛소리 말고 저리 꺼져.'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        } else if (stageNumber == 2 && mapNumber == 1) {
-            this.setBGM('dungeon_default');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '맥스', portrait : 'MaxPotrait', message : '과거에 감옥으로 썼던 곳인가 보군.'},
-                {name : '코드', portrait : 'ChordPotrait', message : '으악! 맥스님, 거미랑 파리가 너무 많아요!'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '시끄러워...'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        } else if (stageNumber == 2 && mapNumber == 2) {
-            this.setBGM('dungeon_default');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '맥스', portrait : 'MaxPotrait', message : '저건... 고블린?'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '원래 고블린이 건물 안에 살던가?'},
-                {name : '코드', portrait : 'ChordPotrait', message : '그럴리가요. 뭔가 이상하네요.'},
-                {name : '코드', portrait : 'ChordPotrait', message : '아무래도 조심하는게 좋을 거 같아요, 맥스님.'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        } else if (stageNumber == 2 && mapNumber == 3) {
-            this.setBGM('dungeon_default');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '코드', portrait : 'ChordPotrait', message : '으악!!!!!! 쥐다!!!!!'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '그냥 쥐라고 하기엔 너무 큰거 아냐?'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '여기서 무슨 일이 벌어지고 있긴 한가보군.'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        } else if (stageNumber == 2 && mapNumber == 4) {
-            this.setBGM('dungeon_boss');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '누구냐! 감히 우리 베이비들에게 손을 대다니!'},
-                {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '대가를 치르게 해주마!'},
-                {name : '고블린', portrait : null, message : '우어어어'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '그.. 베이비가, 고블린은 아니겠지?'},
-                {name : '코드', portrait : 'ChordPotrait', message : '음. 사람마다 취향이 다를 수도 있죠..하하..'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        }
-        else if (stageNumber == 3 && mapNumber == 1) {
-            this.setBGM('room_default');
-            this.scene.isInDialogue = true;
-            // 대화
-            const dialogueMessages = [
-                {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 여기가 볼프강 박사가 있는 연구소예요!'},
-                {name : '코드', portrait : 'ChordPotrait', message : '그 사람 주변에는 항상 호위무사가 있는데…'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '저거 말하는거냐?'},
-                {name : '도깨비', portrait : null, message : '침입자. 죽인다.'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        }
-        else if (stageNumber == 3 && mapNumber == 2) {
-            this.setBGM('room_default');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 저기 위에 뭐가 있어요? 저건.. 천사?'},
-                {name : '천사', portrait : null, message : '침입자인가. 신의 심판이 두렵지 않나?'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '저것도 몬스터인가? 그렇다기엔 너무 인간처럼 생겼는데.'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        }
-        else if (stageNumber == 3 && mapNumber == 3) {
-            this.setBGM('room_default');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '골렘', portrait : null, message : '침입자는 처단한다.'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '이제는 골렘까지?'},
-                {name : '코드', portrait : 'ChordPotrait', message : '조금만 더 가면 중앙 연구실이예요!'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '칫. 일단 가보자!'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
-        }
-        else if (stageNumber == 3 && mapNumber == 4) {
-            this.setBGM('room_boss');
-            this.scene.isInDialogue = true;
-            const dialogueMessages = [
-                {name : '볼프강', portrait : null, message : '오, 맥스. 드디어 왔구나.'},
-                {name : '볼프강', portrait : null, message : '내 연구의 결실을 확인할 시간이야!'},
-                {name : '조수', portrait : null, message : '기다리고 있었어요, 맥스.'},
-                {name : '맥스', portrait : 'MaxPotrait', message : '볼프강! 내 피같은 돈 돌려받으러 왔다!'},
-            ];
-            // 메시지 표시가 끝난 후 콜백 처리
-            this.dialog.showDialogModal(dialogueMessages, () => {
-                this.startBattleSequence();
-            });
+            this.dialog.addInstructions('space');
         }
     }
 
@@ -300,6 +255,7 @@ export default class StageManager {
                     this.dialog.showDialogModal(dialogueMessages, () => {
                         this.startBattleSequence();
                     });
+                    this.dialog.addInstructions('space');
                     // 충돌 이벤트 제거
                     unsubscribe4();
                 }

@@ -32,6 +32,7 @@ import Magic from "./Magic.js";
 
 import Dialog from "./Dialog.js";
 import StageManager from "./StageManager.js";
+import { showMapSelectionUI } from './mapSelection.js';
 
 import {
     PLAYER_CATEGORY,
@@ -42,11 +43,12 @@ import {
     SENSOR_CATEGORY,
     MONSTER_ATTACK_CATEGORY
 } from "./constants.js";
+import Thelma from "./character/Thelma.js";
 
 const { type } = window.gameConfig;
 
 
-export default class MainSceneTest extends Phaser.Scene {
+export default class MainScene extends Phaser.Scene {
 
     constructor() {
         super("MainScene");
@@ -55,8 +57,8 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 3;
-        this.mapNumber = data.mapNumber || 4;
+        this.stageNumber = data.stageNumber || 1;
+        this.mapNumber = data.mapNumber || 2;
         this.playerStatus = data.playerStatus || null;
         this.skipTutorial = data.skipTutorial || false;
 
@@ -75,6 +77,8 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
         this.isInDialogue = true;
+
+        this.isMapSelectionActive = false; // UI 활성화 플래그
 
         if (this.stageNumber === 1 && this.mapNumber <= 3) { // 일반맵
             this.mapWidth = 960;
@@ -153,7 +157,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
         
         // 버튼에 사용할 이미지 로드
-        this.load.image('button', 'path_to_button_image.png');
+        // this.load.image('button', 'path_to_button_image.png');
 
         Player.preload(this);
         Monster.preload(this);
@@ -164,6 +168,7 @@ export default class MainSceneTest extends Phaser.Scene {
         MonsterBossWolfgang.preload(this);
         MonsterApple.preload(this);
         Chord.preload(this);
+        Thelma.preload(this);
         Item.preload(this);
         Tutorial.preload(this);
 
@@ -173,6 +178,12 @@ export default class MainSceneTest extends Phaser.Scene {
 
         Milestone.preload(this);
         Dialog.preload(this);
+
+        this.load.spritesheet('mapButton', 'assets/ui/mapButton.png', {
+            frameWidth: 34, // 각 프레임의 너비
+            frameHeight: 10, // 각 프레임의 높이
+            spacing: 4         // 각 프레임 사이의 간격
+        });
     }
 
     create() {
@@ -259,17 +270,45 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 다음 맵으로 이동하는 이벤트 핸들러
         const goToNextHandler = (event) => {
-            console.log('Moving to the next map...');
-            const stageNumber = this.stageNumber;
-            const mapNumber = this.mapNumber + 1;
-            const playerStatus = this.player.status;
-            if (mapNumber < 5) {
-                this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
+            console.log('Selecting the next map...');
+            this.input.keyboard.off('keydown-E', goToNextHandler);
+            // UI가 이미 활성화된 경우 이중 실행 방지
+            if (this.isMapSelectionActive) return;
+        
+            this.isMapSelectionActive = true; // UI 활성화 플래그 설정
+
+            // 10개의 맵 중에서 랜덤하게 3개의 맵을 선택
+            const maps = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+            const selectedMaps = Phaser.Utils.Array.Shuffle(maps).slice(0, 3);
+
+            // showMapSelectionUI 함수 호출
+            showMapSelectionUI.call(this, this, selectedMaps, (selectedMap) => {
+                console.log(`Moving to ${selectedMap}...`);
+                const stageNumber = this.stageNumber;
+                const playerStatus = this.player.status;
+
+                this.isMapSelectionActive = false; // UI 비활성화
+                this.scene.start('MainScene', { stageNumber, mapNumber: selectedMap, playerStatus });
                 this.backgroundMusic.stop();
-            } else {
-                this.scene.start('NightScene', {stageNumber, mapNumber, playerStatus});
-                this.backgroundMusic.stop();
-            }
+                dialog.hideDialogModal();  // 선택 후 대화창 숨기기
+            }, () => {
+                console.log('Map selection cancelled');
+                this.isMapSelectionActive = false; // UI 비활성화
+                this.input.keyboard.on('keydown-E', goToNextHandler);
+                dialog.hideDialogModal();  // 취소 후 대화창 숨기기
+            });
+
+            // console.log('Moving to the next map...');
+            // const stageNumber = this.stageNumber;
+            // const mapNumber = this.mapNumber + 1;
+            // const playerStatus = this.player.status;
+            // if (mapNumber < 5) {
+            //     this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
+            //     this.backgroundMusic.stop();
+            // } else {
+            //     this.scene.start('NightScene', {stageNumber, mapNumber, playerStatus});
+            //     this.backgroundMusic.stop();
+            // }
         }
         if (this.milestone) {
             // 플레이어와 표지판 충돌 이벤트 설정
@@ -546,7 +585,7 @@ export default class MainSceneTest extends Phaser.Scene {
 
     update() {
         this.heartIndicator.setHeart(this.player.status.nowHeart);
-        if (this.isInDialogue || !this.player.isAlive) return;
+        if (this.isInDialogue || this.isMapSelectionActive || !this.player.isAlive) return;
         this.player.update();
         this.monsterArr.forEach((monster) => {
             monster.update();
@@ -688,6 +727,11 @@ export default class MainSceneTest extends Phaser.Scene {
                 } else if (name === 'chordEnd') {
                     this.chordEnd = {x: x, y: y};
                     console.log(`chordEnd = {x: ${this.chordEnd.x}, y: ${this.chordEnd.y}`);
+                    this.thelma = new Thelma({
+                        scene: this,
+                        x: x,
+                        y: y
+                    });
                 }
             }
 
