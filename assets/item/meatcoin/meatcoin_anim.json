@@ -1,0 +1,48 @@
+{
+    "anims": [
+        {
+            "key": "meatcoin_drop",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_01"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_02"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_01"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_02"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_03"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_04"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_03"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_04"
+                },
+                {
+                    "key": "meatcoin",
+                    "frame": "meatcoin_05"
+                }
+            ]
+        }
+    ]
+}
