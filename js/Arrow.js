@@ -63,6 +63,7 @@ export default class Arrow extends Phaser.Physics.Matter.Sprite {
         // 화살의 회전 각도를 플레이어의 이동 방향에 맞춤
         const angle = Phaser.Math.Angle.Between(0, 0, direction.x, direction.y);
         this.setRotation(angle);
+        
     }
     
 }
