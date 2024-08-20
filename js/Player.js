@@ -262,19 +262,20 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     handleArrowKeyInput(playerVelocity, speed) {
         // 이동 상태 초기화 (방향키를 누르지 않은 경우에는)
         this.isMoving = false;
+        this.isMovingUpward = false;
     
         // 플레이어의 현재 위치를 가져옵니다.
         const playerX = this.x;
         const playerY = this.y;
     
-
-
         // 입력 상태 확인 및 플레이어 속도와 방향 설정
         if (this.cursors.right.isDown && this.cursors.up.isDown) {
             if (playerX < this.scene.maxX && playerY > this.scene.minY) {
                 playerVelocity.set(1, -1);
                 this.isLookingRight = true;
                 this.isMoving = true;
+                // 위로 달리는 플래그
+                this.isMovingUpward = true;
             }
         } else if (this.cursors.right.isDown && this.cursors.down.isDown) {
             if (playerX < this.scene.maxX && playerY < this.scene.maxY) {
@@ -287,6 +288,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 playerVelocity.set(-1, -1);
                 this.isLookingRight = false;
                 this.isMoving = true;
+                // 위로 달리는 플래그
+                this.isMovingUpward = true;
             }
         } else if (this.cursors.left.isDown && this.cursors.down.isDown) {
             if (playerX > this.scene.minX && playerY < this.scene.maxY) {
@@ -315,6 +318,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             if (playerY > this.scene.minY) {
                 playerVelocity.set(0, -1);
                 this.isMoving = true;
+                // 위로 달리는 플래그
+                this.isMovingUpward = true;
             }
         }
     
@@ -323,15 +328,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
         // 이동 상태에 따른 속도 설정
         if (this.isMoving) {
-            // console.log("this.isMoving이 true");
+            console.log("this.isMoving이 true");
             console.log("this.anims.currentAnim.key "+ this.anims.currentAnim.key);
             console.log("this.slash " + this.slash );
+            console.log("this.isMovingUpward" + this.isMovingUpward);
  
             //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
-            if (this.anims.currentAnim.key === 'player_idle' && this.slash === null) {
-                this.anims.play('player_run', true);
-                console.log('달리기 애니메이션 실행');
-                
+            if (this.slash === null) {
+
+                if(this.isMovingUpward){
+                    this.anims.play('player_run_upward', true);
+                    console.log('위로 달리기 애니메이션 실행');
+
+                }else{
+                    this.anims.play('player_run', true);
+                    console.log('달리기 애니메이션 실행');
+                }
             }
 
             //데미지 애니메이션이 재생중일때도 이동가능
@@ -346,13 +358,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(playerVelocity.x, playerVelocity.y);
             
         } else {
-            // console.log("this.isMoving이 false");
-
+            console.log("this.isMoving이 false");
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
-            if (this.anims.currentAnim.key === 'player_run') {
-                this.anims.stop();
-                this.anims.play('player_idle', true);
-            }
         }
     }
     
@@ -463,7 +470,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.soundDamage.play();
         }
         
-       
+
     }
 
     /** 
