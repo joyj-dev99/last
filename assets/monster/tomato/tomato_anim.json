@@ -72,14 +72,6 @@
             "frames": [
                 {
                     "key": "tomato",
-                    "frame": "tomato_attack_01"
-                },
-                {
-                    "key": "tomato",
-                    "frame": "tomato_attack_02"
-                },
-                {
-                    "key": "tomato",
                     "frame": "tomato_attack_03"
                 },
                 {
@@ -89,19 +81,8 @@
                 {
                     "key": "tomato",
                     "frame": "tomato_attack_05"
-                },
-                {
-                    "key": "tomato",
-                    "frame": "tomato_attack_06"
-                },
-                {
-                    "key": "tomato",
-                    "frame": "tomato_attack_07"
-                },
-                {
-                    "key": "tomato",
-                    "frame": "tomato_attack_08"
                 }
+
             ]
         },
         {

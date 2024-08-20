@@ -16,13 +16,13 @@ export default class MonsterEggplant extends Monster {
             bodyHeight: 16,
             centreX: 0,
             centreY: -6,
-            hp: 100,
+            hp: 40,
             damage: 0.5, //플레이어의 기준 체력이 3이기 때문에, 0.5로 설정
             reach: 80,
-            speed: 2,
+            speed: 1,
             oneMove: 30,
             maxMove: 100,
-            followDistance: 100,
+            followDistance: 80,
             player: player
         });
 
@@ -31,22 +31,31 @@ export default class MonsterEggplant extends Monster {
         this.shotingRate = 3000; // 발사 간격 (밀리초)
         this.bulletSpeed = 2;
         this.bulletDuration = 2000;
-        this.bulletDistance = 200;
+        this.bulletDistance = 100;
 
     }
-    
+
     update() {
         super.update();
         if (this.isFollowing) {
+
+
+
             const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.player.x, this.player.y);
             if (distanceToPlayer < this.reach) {
                 if (this.isShoting) {
                     this.isShoting = false;
-                    this.actionAmin('attack');
+                    this.monsterAttackPlayer();
                     this.shootBullet(this.player);
                 }
             }
         }
+
+        this.timeOutBullets();
+
+    }
+
+    timeOutBullets() {
         this.bullets.getChildren().forEach(bullet => {
             const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
             const elapsedTime = this.scene.time.now - bullet.creationTime;
@@ -80,7 +89,15 @@ export default class MonsterEggplant extends Monster {
         this.scene.time.delayedCall(this.shotingRate, () => {
             this.isShoting = true;
         });
-
+    }
+    destroy() {
+        super.destroy();
+        this.destroyBullets();
+    }
+    destroyBullets() {
+        this.bullets.children.each(bullet => {
+            bullet.destroy();
+        }, this);
     }
 
     itemDrop() {

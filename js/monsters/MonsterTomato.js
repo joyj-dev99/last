@@ -21,7 +21,7 @@ export default class MonsterTomato extends Monster {
             speed: 1,
             oneMove : 30,
             maxMove : 100,
-            followDistance : 70,
+            followDistance : 80,
             player: player
         });
     }

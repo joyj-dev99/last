@@ -56,7 +56,7 @@ export default class MainSceneTest extends Phaser.Scene {
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
         this.stageNumber = data.stageNumber || 3;
-        this.mapNumber = data.mapNumber || 4;
+        this.mapNumber = data.mapNumber || 3;
         this.playerStatus = data.playerStatus || null;
         this.skipTutorial = data.skipTutorial || false;
 
@@ -990,6 +990,13 @@ export default class MainSceneTest extends Phaser.Scene {
                 // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
                 this.player.takeDamage(gameObjectB.damage);
                 this.player.applyKnockback(gameObjectB);
+                if (gameObjectB.texture.key === 'spider') {
+                    let initSpeed = this.player.speed;
+                    this.player.speed = 0.5;
+                    this.time.delayedCall(1000, () => {
+                        this.player.speed = initSpeed;
+                    });
+                }
 
                 // // 충돌하면 총알 제거
                 // gameObjectB.destroy();
@@ -1041,6 +1048,23 @@ export default class MainSceneTest extends Phaser.Scene {
                     missile_hit.setScale(0.03);
                     this.time.delayedCall(600, () => {
                         missile_hit.destroy();
+                    });
+                } else if (gameObjectB.texture.key === 'lemon') {
+                    gameObjectB.destroy();
+                    // 충돌 후 애니메이션 재생 하고 소멸
+                    const lemon_bubble_pop = this.matter.add.sprite(x, y, 'lemon_bubble_pop');
+                    lemon_bubble_pop.setBody({width: 1, height: 1})
+                    lemon_bubble_pop.setSensor(true)
+                    lemon_bubble_pop.play('lemon_bubble_pop');
+                    this.time.delayedCall(600, () => {
+                        lemon_bubble_pop.destroy();
+                    });
+                } else if (gameObjectB.texture.key === 'spider') {
+                    gameObjectB.destroy();
+                    let initSpeed = this.player.speed;
+                    this.player.speed = 0.5;
+                    this.time.delayedCall(1000, () => {
+                        this.player.speed = initSpeed;
                     });
                 } else {
                     gameObjectB.destroy();

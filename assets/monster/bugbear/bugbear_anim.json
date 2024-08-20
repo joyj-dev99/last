@@ -142,14 +142,7 @@
             "repeat": 0,
             "frameRate": 8,
             "frames": [
-                {
-                    "key": "bugbear",
-                    "frame": "bugbear_sprite_sheet_30"
-                },
-                {
-                    "key": "bugbear",
-                    "frame": "bugbear_sprite_sheet_31"
-                },
+
                 {
                     "key": "bugbear",
                     "frame": "bugbear_sprite_sheet_32"

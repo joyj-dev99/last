@@ -88,22 +88,6 @@
             "frames": [
                 {
                     "key": "apple",
-                    "frame": "apple_sprite_sheet_16"
-                },
-                {
-                    "key": "apple",
-                    "frame": "apple_sprite_sheet_17"
-                },
-                {
-                    "key": "apple",
-                    "frame": "apple_sprite_sheet_18"
-                },
-                {
-                    "key": "apple",
-                    "frame": "apple_sprite_sheet_19"
-                },
-                {
-                    "key": "apple",
                     "frame": "apple_sprite_sheet_20"
                 },
                 {
@@ -126,22 +110,6 @@
             "repeat": 0,
             "frameRate": 12,
             "frames": [
-                {
-                    "key": "apple",
-                    "frame": "apple_sprite_sheet_24"
-                },
-                {
-                    "key": "apple",
-                    "frame": "apple_sprite_sheet_25"
-                },
-                {
-                    "key": "apple",
-                    "frame": "apple_sprite_sheet_26"
-                },
-                {
-                    "key": "apple",
-                    "frame": "apple_sprite_sheet_27"
-                },
                 {
                     "key": "apple",
                     "frame": "apple_sprite_sheet_28"
