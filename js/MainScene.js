@@ -57,7 +57,7 @@ export default class MainSceneTest extends Phaser.Scene {
     init(data) {
 
         this.stageNumber = data.stageNumber || 1;
-        this.mapNumber = data.mapNumber || 1;
+        this.mapNumber = data.mapNumber || 2;
         this.playerStatus = data.playerStatus || null;
         this.skipTutorial = data.skipTutorial || false;
 
@@ -265,18 +265,45 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 다음 맵으로 이동하는 이벤트 핸들러
         const goToNextHandler = (event) => {
-            console.log('Moving to the next map...');
-            const stageNumber = this.stageNumber;
-            const mapNumber = this.mapNumber + 1;
-            const playerStatus = this.player.status;
-            if (mapNumber < 5) {
-                this.scene.stop('MainScene'); // 씬을 먼저 중단
-                this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
+            console.log('Selecting the next map...');
+            this.input.keyboard.off('keydown-E', goToNextHandler);
+            // UI가 이미 활성화된 경우 이중 실행 방지
+            if (this.isMapSelectionActive) return;
+        
+            this.isMapSelectionActive = true; // UI 활성화 플래그 설정
+
+            // 10개의 맵 중에서 랜덤하게 3개의 맵을 선택
+            const maps = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+            const selectedMaps = Phaser.Utils.Array.Shuffle(maps).slice(0, 3);
+
+            // showMapSelectionUI 함수 호출
+            showMapSelectionUI.call(this, this, selectedMaps, (selectedMap) => {
+                console.log(`Moving to ${selectedMap}...`);
+                const stageNumber = this.stageNumber;
+                const playerStatus = this.player.status;
+
+                this.isMapSelectionActive = false; // UI 비활성화
+                this.scene.start('MainScene', { stageNumber, mapNumber: selectedMap, playerStatus });
                 this.backgroundMusic.stop();
-            } else {
-                this.scene.start('NightScene', {stageNumber, mapNumber, playerStatus});
-                this.backgroundMusic.stop();
-            }
+                dialog.hideDialogModal();  // 선택 후 대화창 숨기기
+            }, () => {
+                console.log('Map selection cancelled');
+                this.isMapSelectionActive = false; // UI 비활성화
+                this.input.keyboard.on('keydown-E', goToNextHandler);
+                dialog.hideDialogModal();  // 취소 후 대화창 숨기기
+            });
+
+            // console.log('Moving to the next map...');
+            // const stageNumber = this.stageNumber;
+            // const mapNumber = this.mapNumber + 1;
+            // const playerStatus = this.player.status;
+            // if (mapNumber < 5) {
+            //     this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
+            //     this.backgroundMusic.stop();
+            // } else {
+            //     this.scene.start('NightScene', {stageNumber, mapNumber, playerStatus});
+            //     this.backgroundMusic.stop();
+            // }
         }
         if (this.milestone) {
             // 플레이어와 표지판 충돌 이벤트 설정
