@@ -48,13 +48,11 @@ export default class MonsterFly extends Monster {
             let velocityY = Math.sin(angle) * speed;
             // 몬스터에 속도 적용
             this.setVelocity(velocityX, velocityY);
-        } else {
-
         }
     }
 
     destroy() {
-        super.destroy();
         this.attackEvent.remove();
+        super.destroy();
     }
 }

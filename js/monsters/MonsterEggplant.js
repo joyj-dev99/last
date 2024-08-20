@@ -91,8 +91,8 @@ export default class MonsterEggplant extends Monster {
         });
     }
     destroy() {
-        super.destroy();
         this.destroyBullets();
+        super.destroy();
     }
     destroyBullets() {
         this.bullets.children.each(bullet => {

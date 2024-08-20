@@ -155,7 +155,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
-        
+
         // 버튼에 사용할 이미지 로드
         // this.load.image('button', 'path_to_button_image.png');
 
