@@ -3,6 +3,7 @@ import NightScene from './NightScene.js';
 import IntroScene from './IntroScene.js';
 import TitleScene from './TitleScene.js';
 import BattleResultScene from './BattleResultScene.js';
+import StoreScene from './StoreScene.js';
 
 const config = {
     // 32*32px 타일 기준 세로 8칸, 가로 11.1칸

@@ -43,6 +43,9 @@ export default class Dialog  {
      */
     #currentMessage = null;
 
+    #currentInstructions = [];
+    /** @type {boolean} */
+    #ignoreSpaceKey;
 
     /**
      * @param {Phaser.Scene} scene
@@ -56,6 +59,8 @@ export default class Dialog  {
         this.#height = height;
         this.#textAnimationPlaying = false;
         this.#messagesToShow = [];
+        this.#currentInstructions = [];  // 현재 추가된 UI 요소들을 추적
+        this.#ignoreSpaceKey = false; // 스페이스 키를 무시하는 플래그
 
         this.stageNumber = stageNumber;
         this.mapNumber = mapNumber;
@@ -156,6 +161,61 @@ export default class Dialog  {
 
     }
 
+    addInstructions(key) {
+        // 기존 UI 요소 제거
+        this.clearInstructions();
+        if (key === 'map') {
+            // 스페이스 키 이미지 추가
+            const spaceSprite = this.#scene.add.sprite(this.#width - 120, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
+            this.#container.add(spaceSprite);
+            this.#currentInstructions.push(spaceSprite);  // 요소 추적
+
+            // "선택" 텍스트 추가
+            const selectText = this.#scene.add.text(this.#width - 90, this.#height - 15, '선택', {
+                fontFamily: 'Arial',
+                fontSize: '12px',
+                color: 'white'
+            }).setScrollFactor(0);
+            this.#container.add(selectText);
+            this.#currentInstructions.push(selectText);  // 요소 추적
+
+            // ESC 키 이미지 추가
+            const escKeySprite = this.#scene.add.sprite(this.#width - 50, this.#height - 10, 'keyboard_extas', 1).setOrigin(0.5, 0.5).setScrollFactor(0);
+            this.#container.add(escKeySprite);
+            this.#currentInstructions.push(escKeySprite);  // 요소 추적
+
+            // "취소" 텍스트 추가
+            const cancelText = this.#scene.add.text(this.#width - 30, this.#height - 15, '취소', {
+                fontFamily: 'Arial',
+                fontSize: '12px',
+                color: 'white'
+            }).setScrollFactor(0);
+            this.#container.add(cancelText);
+            this.#currentInstructions.push(cancelText);  // 요소 추적
+        } else if (key === 'space') {
+            // 스페이스 키 이미지 추가
+            const spaceSprite = this.#scene.add.sprite(this.#width - 70, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
+            this.#container.add(spaceSprite);
+            this.#currentInstructions.push(spaceSprite);  // 요소 추적
+            // "넘기기" 텍스트 추가
+            const continueText = this.#scene.add.text(this.#width - 40, this.#height - 15, '넘기기', {
+                fontFamily: 'Arial',
+                fontSize: '12px',
+                color: 'white'
+            }).setScrollFactor(0);
+            this.#container.add(continueText);
+            this.#currentInstructions.push(continueText);  // 요소 추적
+        }
+    }
+
+    clearInstructions() {
+        // 현재 UI 요소들이 존재한다면 모두 제거
+        if (this.#currentInstructions.length > 0) {
+            this.#currentInstructions.forEach(element => element.destroy());
+            this.#currentInstructions = [];
+        }
+    }
+
     static preload(scene) {
         scene.load.image('MaxPotrait', 'assets/npc/potrait/max.png'); 
         scene.load.image('ChordPotrait', 'assets/npc/potrait/chord.png'); 
@@ -202,10 +262,10 @@ export default class Dialog  {
         this.#width = width - this.#padding * 2;
         this.#height = height * 0.3; // 화면 높이의 30%로 설정
 
-        console.log('this.#container'+this.#container);
-        console.log('this.#container.getAt(0)'+this.#container.getAt(0));
-        console.log('this.#container.getAt(0):', this.#container.getAt(0));
-        console.dir(this.#container);
+        // console.log('this.#container'+this.#container);
+        // console.log('this.#container.getAt(0)'+this.#container.getAt(0));
+        // console.log('this.#container.getAt(0):', this.#container.getAt(0));
+        // console.dir(this.#container);
 
         this.#container.getAt(0).setSize(this.#width, this.#height); // 패널 크기 조정
         this.#uiText.setWordWrapWidth(this.#width - 90);
@@ -322,6 +382,9 @@ export default class Dialog  {
      * @returns {void}
      */
     onSpaceKeyPressed() {
+        if (this.#ignoreSpaceKey) {
+            return; // 스페이스 키를 무시하도록 설정된 경우 아무것도 하지 않음
+        }
         if (this.#textAnimationPlaying) {
             // 현재 텍스트 애니메이션을 중단하고 전체 메시지를 표시
             if (this.#uiText.timer) {
@@ -337,5 +400,9 @@ export default class Dialog  {
             // 메시지가 끝나고 스페이스바를 누르면 대화창 숨기기
             this.hideDialogModal();
         }
+    }
+
+    setIgnoreSpaceKey(value) {
+        this.#ignoreSpaceKey = value; // 스페이스 키 무시 플래그 설정
     }
 }

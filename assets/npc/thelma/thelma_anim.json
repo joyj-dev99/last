@@ -1,0 +1,84 @@
+{
+    "anims": [
+        {
+            "key": "thelma_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_9"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_10"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_11"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_12"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_0"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_1"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                },
+                {
+                    "key": "thelma",
+                    "frame": "bw_-_sprite_sheet_8"
+                }
+            ]
+        }
+    ]
+}

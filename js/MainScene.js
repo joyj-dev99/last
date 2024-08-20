@@ -32,6 +32,7 @@ import Magic from "./Magic.js";
 
 import Dialog from "./Dialog.js";
 import StageManager from "./StageManager.js";
+import { showMapSelectionUI } from './mapSelection.js';
 
 import {
     PLAYER_CATEGORY,
@@ -42,11 +43,12 @@ import {
     SENSOR_CATEGORY,
     MONSTER_ATTACK_CATEGORY
 } from "./constants.js";
+import Thelma from "./character/Thelma.js";
 
 const { type } = window.gameConfig;
 
 
-export default class MainSceneTest extends Phaser.Scene {
+export default class MainScene extends Phaser.Scene {
 
     constructor() {
         super("MainScene");
@@ -75,6 +77,8 @@ export default class MainSceneTest extends Phaser.Scene {
 
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
         this.isInDialogue = true;
+
+        this.isMapSelectionActive = false; // UI 활성화 플래그
 
         if (this.stageNumber === 1 && this.mapNumber <= 3) { // 일반맵
             this.mapWidth = 960;
@@ -153,7 +157,7 @@ export default class MainSceneTest extends Phaser.Scene {
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
         
         // 버튼에 사용할 이미지 로드
-        this.load.image('button', 'path_to_button_image.png');
+        // this.load.image('button', 'path_to_button_image.png');
 
         Player.preload(this);
         Monster.preload(this);
@@ -164,6 +168,7 @@ export default class MainSceneTest extends Phaser.Scene {
         MonsterBossWolfgang.preload(this);
         MonsterApple.preload(this);
         Chord.preload(this);
+        Thelma.preload(this);
         Item.preload(this);
         Tutorial.preload(this);
 
@@ -173,6 +178,12 @@ export default class MainSceneTest extends Phaser.Scene {
 
         Milestone.preload(this);
         Dialog.preload(this);
+
+        this.load.spritesheet('mapButton', 'assets/ui/mapButton.png', {
+            frameWidth: 34, // 각 프레임의 너비
+            frameHeight: 10, // 각 프레임의 높이
+            spacing: 4         // 각 프레임 사이의 간격
+        });
     }
 
     create() {
@@ -579,7 +590,7 @@ export default class MainSceneTest extends Phaser.Scene {
 
     update() {
         this.heartIndicator.setHeart(this.player.status.nowHeart);
-        if (this.isInDialogue || !this.player.isAlive) return;
+        if (this.isInDialogue || this.isMapSelectionActive || !this.player.isAlive) return;
         this.player.update();
         this.monsterArr.forEach((monster) => {
             monster.update();
@@ -721,6 +732,11 @@ export default class MainSceneTest extends Phaser.Scene {
                 } else if (name === 'chordEnd') {
                     this.chordEnd = {x: x, y: y};
                     console.log(`chordEnd = {x: ${this.chordEnd.x}, y: ${this.chordEnd.y}`);
+                    this.thelma = new Thelma({
+                        scene: this,
+                        x: x,
+                        y: y
+                    });
                 }
             }
 
