@@ -264,6 +264,7 @@ export default class MainSceneTest extends Phaser.Scene {
             const mapNumber = this.mapNumber + 1;
             const playerStatus = this.player.status;
             if (mapNumber < 5) {
+                this.scene.stop('MainScene'); // 씬을 먼저 중단
                 this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
                 this.backgroundMusic.stop();
             } else {
