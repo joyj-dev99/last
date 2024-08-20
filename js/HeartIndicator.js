@@ -9,7 +9,7 @@ export default class HeartIndicator extends Phaser.GameObjects.Sprite {
 
     constructor(scene, texture, num) {
         // X, Y 위치를 화면의 상단 중앙으로 설정
-        const x = 400
+        const x = 380
         const y = 30; 
         
         super(scene, x, y, texture);

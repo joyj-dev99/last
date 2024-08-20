@@ -55,9 +55,12 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
+        this.stageNumber = data.stageNumber || 1;
+        this.mapNumber = data.mapNumber || 1;
 
-        this.stageNumber = data.stageNumber || 3;
-        this.mapNumber = data.mapNumber || 3;
+        // this.stageNumber = 1;
+        // this.mapNumber = 4;
+
         this.playerStatus = data.playerStatus || null;
         this.skipTutorial = data.skipTutorial || false;
 
@@ -120,9 +123,11 @@ export default class MainSceneTest extends Phaser.Scene {
             this.minY = 106;
             this.maxY = 438;
         }
+        
     }
 
     preload() {
+
         this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
         this.load.tilemapTiledJSON("stage_01_01_map", "assets/map/stage_01_01.json");
         this.load.tilemapTiledJSON("stage_01_02_map", "assets/map/stage_01_02.json");
@@ -156,6 +161,15 @@ export default class MainSceneTest extends Phaser.Scene {
         // 버튼에 사용할 이미지 로드
         this.load.image('button', 'path_to_button_image.png');
 
+        // 설정
+        this.load.spritesheet('setting', 'assets/ui/Blue_Buttons_Pixel2.png', { frameWidth: 16, frameHeight: 16 });
+        this.load.spritesheet('status', 'assets/ui/on_off.png', { frameWidth: 32, frameHeight: 16 });
+
+        // scene.load.spritesheet('music_off', 'assets/ui/Blue_Buttons_Pixel2.png', { frameWidth: 16, frameHeight: 16 });
+        // scene.load.spritesheet('sound_on', 'assets/ui/Blue_Buttons_Pixel2.png', { frameWidth: 16, frameHeight: 16 });
+        // scene.load.spritesheet('sound_off', 'assets/ui/Blue_Buttons_Pixel2.png', { frameWidth: 16, frameHeight: 16 });
+
+
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
@@ -182,25 +196,25 @@ export default class MainSceneTest extends Phaser.Scene {
         this.setupWorld(this.stageNumber, this.mapNumber);
 
         this.getItemSound = this.sound.add(`get_item`, {
-            volume: 0.7 // Set the volume (0 to 1)
+            volume: 0.7 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.coinDropSound = this.sound.add(`coin_drop`, {
-            volume: 0.4 // Set the volume (0 to 1)
+            volume: 0.4 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.potionDropSound = this.sound.add(`potion_drop`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.monsterDamage1Sound = this.sound.add(`monster_damage1`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume// Set the volume (0 to 1)
         });
         this.monsterDeath1Sound = this.sound.add(`monster_death1`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume// Set the volume (0 to 1)
         });
         this.monsterDeath2Sound = this.sound.add(`monster_death2`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume// Set the volume (0 to 1)
         });
         this.smallShotSound = this.sound.add(`small_shot`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
 
 
@@ -216,8 +230,8 @@ export default class MainSceneTest extends Phaser.Scene {
         //페이드인 완료 후 게임 실행
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.time.delayedCall(1000, () => {
-                console.log('camerafadeincomplete');
 
+                console.log('camerafadeincomplete');
                 this.stageManager.setStageStart(this.stageNumber, this.mapNumber,type);
 
                 // if(type === 'pc'){
@@ -226,13 +240,12 @@ export default class MainSceneTest extends Phaser.Scene {
                 //     if(this.stageNumber == 1 && this.mapNumber == 1){
                 //         this.isInDialogue = false;
                 //         // 튜토리얼
-
                 //     }
                 //     else{
                 //         this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
                 //     }
-                    
                 // }
+
             }, [], this);
         });
 
@@ -278,6 +291,7 @@ export default class MainSceneTest extends Phaser.Scene {
                 this.backgroundMusic.stop();
             }
         }
+
         if (this.milestone) {
             // 플레이어와 표지판 충돌 이벤트 설정
             this.matterCollision.addOnCollideStart({
@@ -884,7 +898,203 @@ export default class MainSceneTest extends Phaser.Scene {
         // 계속 상단에 고정되도록 UI 레이어 설정
         TextIndicator.setScrollFactorText(this.coinIndicatorText);
 
+        this.menuBtn = this.add.sprite(435, 28, 'setting', 22).setScale(1.3).setScrollFactor(0);//, 52
+        this.menuBtn.setInteractive({ useHandCursor: true });
+
+        this.menuBtn.on('pointerdown', () => {
+            console.log('menuBtn  pointerdown');
+                
+
+            if(this.container == undefined){
+
+           
+                // 컨테이너 및 UI 요소 설정
+                const panel = this.add
+                    .rectangle(353, 42, 90, 45, '#FFFFFF', 0.8)
+                    .setOrigin(0)
+                    .setStrokeStyle(8,'#FFFFFF', 1);
+
+                console.log('Panel:', panel);
+
+                this.container = this.add.container(0, 0, [panel]);
+                // 모든 요소에 setScrollFactor(0) 적용
+                panel.setScrollFactor(0);
+
+                // this.#width-25, 62
+                // 사운드
+                this.soundIcon = this.add.image(420, 55, 'status', 0).setScale(1).setVisible(true).setScrollFactor(0);
+                this.container.add(this.soundIcon);
+                // this.soundIcon.setPosition(10, 10);
+
+                // 배경음악
+                this.bgSoundIcon = this.add.image(420, 72, 'status', 1).setScale(1).setVisible(true).setScrollFactor(0);
+                this.container.add(this.bgSoundIcon);
+                // this.nextBtnImage.setPosition(20, 20);
+
+                this.container.setScrollFactor(0); // 컨테이너 자체에도 적용
+
+
+                /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+                const UI_TEXT_STYLE = Object.freeze({
+                    // fontFamily: KENNEY_FUTURE_NARROW_FONT_NAME,
+                    color: 'white',
+                    fontSize: '216px',
+                    wordWrap: { width: 0 },
+                });
+
+
+                // 대화 텍스트 객체 추가
+                this.uiText = this.add.text(360, 50, '사운드', {
+                    ...UI_TEXT_STYLE,
+                    ...{ fontSize: '10px' },
+                }).setScrollFactor(0);
+                this.container.add(this.uiText);
+
+                // 대화 텍스트 객체 추가
+                this.uiText2 = this.add.text(360, 68, '배경음악', {
+                    ...UI_TEXT_STYLE,
+                    ...{ fontSize: '10px' },
+                }).setScrollFactor(0);
+                this.container.add(this.uiText2);
+
+                this.bgSoundIcon.setInteractive({ useHandCursor: true });
+
+                this.bgSoundIcon.on('pointerdown', () => {
+                    console.log('bgSoundIcon  pointerdown');
+
+                    if(window.gameConfig.bgVolume === 0){
+                        this.bgSoundIcon.setTexture('status', 0);
+                        window.gameConfig.bgVolume = 0.2;
+                        this.backgroundMusic.setVolume(0.2);
+                    }
+                    else{
+                        this.bgSoundIcon.setTexture('status', 1);
+                        window.gameConfig.bgVolume = 0;
+                        this.backgroundMusic.setVolume(0);
+                    }
+
+                });
+
+
+                this.soundIcon.setInteractive({ useHandCursor: true });
+
+                this.soundIcon.on('pointerdown', () => {
+                    console.log('soundIcon  pointerdown');
+
+                    if(window.gameConfig.soundVolume === 0){
+                        this.soundIcon.setTexture('status', 0);
+                        window.gameConfig.soundVolume = 1;
+
+                        this.getItemSound.setVolume(0.7);
+                        this.coinDropSound.setVolume(0.4);
+                        this.potionDropSound.setVolume(0.5);
+                        this.monsterDamage1Sound.setVolume(0.5);
+                        this.monsterDeath1Sound.setVolume(0.5);
+                        this.monsterDeath2Sound.setVolume(0.5);
+                        this.smallShotSound.setVolume(0.5);
+
+                        this.player.soundSword.setVolume(0.3);
+                        this.player.soundMove.setVolume(0.5);
+                        this.player.soundDeath.setVolume(0.5);
+                        this.player.soundDamage.setVolume(0.5);
+                        this.player.soundBow.setVolume(0.4);
+                        this.player.soundSpell.setVolume(0.5);
+                        this.player.soundRoll.setVolume(0.5);
+
+                        // this.backgroundMusic.setVolume(0.2);
+                    }
+                    else{
+                        this.soundIcon.setTexture('status', 1);
+                        window.gameConfig.soundVolume = 0;
+
+                        this.getItemSound.setVolume(0);
+                        this.coinDropSound.setVolume(0);
+                        this.potionDropSound.setVolume(0.);
+                        this.monsterDamage1Sound.setVolume(0);
+                        this.monsterDeath1Sound.setVolume(0);
+                        this.monsterDeath2Sound.setVolume(0);
+                        this.smallShotSound.setVolume(0);
+
+                        this.player.soundSword.setVolume(0);
+                        this.player.soundMove.setVolume(0);
+                        this.player.soundDeath.setVolume(0);
+                        this.player.soundDamage.setVolume(0);
+                        this.player.soundBow.setVolume(0);
+                        this.player.soundSpell.setVolume(0);
+                        this.player.soundRoll.setVolume(0);
+
+                        // this.backgroundMusic.setVolume(0);
+                    }
+
+
+                    let bossPumpkins = this.monsterArr.filter(monster => monster instanceof MonsterBossPumpkin);
+
+
+                    if (bossPumpkins.length > 0) {  // 배열이 비어있지 않은지 확인
+                        bossPumpkins.forEach(bossPumpkin => {
+                            if (window.gameConfig.soundVolume === 0) {
+                                console.log('bossPumpkin : ' + bossPumpkin);
+                                console.dir(bossPumpkin);
+                                bossPumpkin.soundOff();
+                            } else {
+                                console.log('bossPumpkin : ' + bossPumpkin);
+                                console.dir(bossPumpkin);
+                                bossPumpkin.soundOn();
+                            }
+                        });
+                    }
+
+                });
+
+
+                // 네모박스
+                this.handler = (pointer) => {
+                    console.log('pointerdown');
+                    // this.container.setVisible(false);
+                    // this.input.off('pointerdown', this.handler, this);
+
+                    const bounds = this.container.getBounds();
+                    const bounds2 = this.menuBtn.getBounds();
+
+                    // 포인터가 설정 창 바깥을 클릭했는지 확인
+                    if (!Phaser.Geom.Rectangle.Contains(bounds, pointer.x, pointer.y) 
+                            && !Phaser.Geom.Rectangle.Contains(bounds2, pointer.x, pointer.y)) {
+                        this.container.visible = false;
+                        this.isInDialogue = false;
+                        // this.soundToggle.visible = false;
+                    }
+
+
+                };
+
+                this.input.on('pointerdown', this.handler, this);
+
+                if(window.gameConfig.bgVolume === 0){
+                    this.bgSoundIcon.setTexture('status', 1);
+                }
+                else{
+                    this.bgSoundIcon.setTexture('status', 0);
+                }
+
+                if(window.gameConfig.soundVolume === 0){
+                    this.soundIcon.setTexture('status', 1);
+                }
+                else{
+                    this.soundIcon.setTexture('status', 0);
+                }
+                // this.soundIcon.setTexture('status', 1);
+
+            }
+
+            this.container.setVisible(true);
+            this.isInDialogue = true;
+
+        });
+
+
+
     }
+
 
     removeMonsterFromArr(monster) {
         this.monsterDeath2Sound.play();
@@ -1108,7 +1318,6 @@ export default class MainSceneTest extends Phaser.Scene {
                 onComplete: () => {
                     this.time.delayedCall(1000, () => {
                         this.darkOverlay.destroy();
-
                     });
                 }
             });

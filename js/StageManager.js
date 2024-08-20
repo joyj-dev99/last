@@ -1,4 +1,5 @@
 import Tutorial from "./Tutorial.js";
+// const { bgVolume } = window.gameConfig;
 
 export default class StageManager {
     constructor(scene, player, chord, dialog, skipTutorial) {
@@ -24,7 +25,7 @@ export default class StageManager {
     setBGM(bgmKey) {
         // Play background music
         this.scene.backgroundMusic = this.scene.sound.add(bgmKey, {
-            volume: 0.2, // Set the volume (0 to 1)
+            volume: window.gameConfig.bgVolume, // Set the volume (0 to 1)
             loop: true // Enable looping if desired
         });
     }

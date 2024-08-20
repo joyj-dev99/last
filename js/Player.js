@@ -87,25 +87,25 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
         this.soundSword = this.scene.sound.add(`sound_player_hit`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: 0.3 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.soundMove = this.scene.sound.add(`sound_player_move`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.soundDeath = this.scene.sound.add(`sound_player_death`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.soundDamage = this.scene.sound.add(`sound_player_damage`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.soundBow = this.scene.sound.add(`sound_player_bow`, {
-            volume: 0.4 // Set the volume (0 to 1)
+            volume: 0.4 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.soundSpell = this.scene.sound.add(`sound_player_spell`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.soundRoll = this.scene.sound.add(`sound_player_roll`, {
-            volume: 0.5 // Set the volume (0 to 1)
+            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
 
 

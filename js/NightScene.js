@@ -119,7 +119,7 @@ export default class NightScene extends Phaser.Scene {
 
          // Play background music
         this.backgroundMusic = this.sound.add('night_default', {
-            volume: 0.3, // Set the volume (0 to 1)
+            volume: window.gameConfig.bgVolume, // Set the volume (0 to 1)
             loop: true // Enable looping if desired
         });
 
