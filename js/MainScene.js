@@ -209,7 +209,7 @@ export default class MainSceneTest extends Phaser.Scene {
         }
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
-        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3);
+        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3, this.stageNumber, this.mapNumber);
         this.stageManager = new StageManager(this, this.player, this.chord, this.dialog, this.skipTutorial);
         //페이드인 완료 후 게임 실행
         this.cameras.main.once('camerafadeincomplete', (camera) => {

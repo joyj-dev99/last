@@ -49,13 +49,21 @@ export default class Dialog  {
      * @param {number} width
      * @param {number} height
      */
-    constructor(scene, width, height) {
+    constructor(scene, width, height, stageNumber, mapNumber) {
         this.#scene = scene;
         this.#padding = 10;
         this.#width = width - this.#padding * 2;
         this.#height = height;
         this.#textAnimationPlaying = false;
         this.#messagesToShow = [];
+
+        this.stageNumber = stageNumber;
+        this.mapNumber = mapNumber;
+
+        console.log('생성자 시작');
+
+        console.log('생성자 this.stageNumber : '+this.stageNumber);
+        console.log('생성자 this.mapNumber : '+this.mapNumber);
 
         // 컨테이너 및 UI 요소 설정
         const panel = this.#scene.add
@@ -142,6 +150,10 @@ export default class Dialog  {
         this.#scene.scale.on('resize', this.handleResize, this);
 
         this.onCompleteCallback = null;  // 대화 종료 시 호출될 콜백 저장
+        
+        console.log('this.#container.getAt(0):', this.#container.getAt(0));
+        console.log('생성자 끝');
+
     }
 
     static preload(scene) {
@@ -171,6 +183,10 @@ export default class Dialog  {
      * @returns {void}
      */
     handleResize(gameSize) {
+
+        console.log('handleResize this.stageNumber : '+this.stageNumber);
+        console.log('handleResize this.mapNumber : '+this.mapNumber);
+
         const width = gameSize.width;
         const height = gameSize.height;
 
