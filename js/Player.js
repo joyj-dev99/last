@@ -78,6 +78,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         this.isAlive = true;
         this.slash = null;
+        this.isShootingBow = false;
+        this.isCastingSpell = false;
+
 
         // 애니메이션 완료 이벤트 리스너 추가
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
@@ -134,11 +137,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         let playerVelocity = new Phaser.Math.Vector2();
 
         // 제자리
-        // 플레이어가 움직이지 않고, 칼 휘두르기(슬래쉬)가 null이며, 구르는 상태도 아니고, 몬스터에 의해 맞지 않는
-        // 수명이 0보다 커야함
+        // 플레이어가 움직이지 않고, 칼 휘두르기(슬래쉬)가 null이며, 활을 쏘거나 마법을 부리는 상태가 아닐때
+        // 구르는 상태도 아니고, 몬스터에 의해 맞지 않는
         // 완료된 애니메이션이 idle 이 아닌 경우에 실행됨
-        if (this.isAlive && !this.isMoving && this.slash === null && !this.isRolling && !this.hitByMonster && this.anims.currentAnim.key !== 'player_idle'
-            && this.status.nowHeart > 0
+        if (this.isAlive && !this.isMoving && this.slash === null && !this.isShootingBow && !this.isCastingSpell
+            && !this.isRolling && !this.hitByMonster && this.anims.currentAnim.key !== 'player_idle'
         ) {
             this.anims.play('player_idle', true);
         }
@@ -189,6 +192,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if(this.isRolling){
             this.cancelRoll(); // 구르기를 즉시 중단
         }
+        this.isShootingBow = false; //활쏘기 중단
+        this.isCastingSpell = false; // 마법 부리기 종료
 
         //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
         if(this.comboState === 0){ 
@@ -219,7 +224,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.resetComboState();
         // 슬래쉬 객체 제거
         this.removeSlash();
+        this.isCastingSpell = false; // 마법 부리기 종료
 
+        this.isShootingBow = true;
         this.anims.play('player_bow');
         this.soundBow.play();
 
@@ -241,7 +248,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.resetComboState();
         // 슬래쉬 객체 제거
         this.removeSlash();
+        this.isShootingBow = false; //활쏘기 중단
 
+        this.isCastingSpell = true; 
         this.anims.play('player_spell');
         this.soundSpell.play();
 
@@ -255,6 +264,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 슬래쉬 객체 제거
         this.removeSlash();
+        this.isShootingBow = false; //활쏘기 중단
+        this.isCastingSpell = false; // 마법 부리기 종료
 
         this.startRoll(playerVelocity);
     }
@@ -327,14 +338,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.setFlipX(!this.isLookingRight);
     
         // 이동 상태에 따른 속도 설정
-        if (this.isMoving) {
+        if(this.isMoving) {
             console.log("this.isMoving이 true");
             console.log("this.anims.currentAnim.key "+ this.anims.currentAnim.key);
             console.log("this.slash " + this.slash );
             console.log("this.isMovingUpward" + this.isMovingUpward);
  
-            //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
-            if (this.slash === null) {
+            //슬래쉬 값이 존재하지 않고, 활을 쏘지 않을때만, 마법을 부리지 않을때만 달리기 애니메이션을 실행한다
+            if (this.slash === null && !this.isShootingBow && !this.isCastingSpell) {
 
                 if(this.isMovingUpward){
                     this.anims.play('player_run_upward', true);
@@ -359,6 +370,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             
         } else {
             console.log("this.isMoving이 false");
+            console.log("this.isShootingBow "+ this.isShootingBow );
+            console.log("this.isCastingSpell "+ this.isCastingSpell );
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
         }
     }
@@ -450,6 +463,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     takeDamage(amount) {
         this.removeSlash();
+        this.isShootingBow = false; //활쏘기 중단
+        this.isCastingSpell = false; // 마법 부리기 종료
 
         if (this.isRolling) return;
         this.hitByMonster = true;
@@ -528,14 +543,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     // 애니메이션이 완료되었을 때 실행될 로직을 중앙화
     handleAnimationComplete(animation, frame) {
         if( animation.key == 'player_roll'){
-            this.isRolling = false;
-            this.anims.play('player_idle', true);
+            this.isRolling = false; //구르기 종료
         }
         else if( animation.key === 'player_sword_1' ||
             animation.key === 'player_sword_2' ||
             animation.key === 'player_sword_3'){
 
-            // 슬래쉬 객체 제거
+            // 슬래쉬 객체 제거 (검 휘두르기 종료)
             this.removeSlash();
 
             // 일정 시간 내에 입력 없으면, 콤보 초기화
@@ -543,12 +557,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 // 콤보 초기화
                 this.comboState = 0;
             });
-            this.anims.play('player_idle', true);
+
         } else if (animation.key === 'player_bow' ||
-            animation.key === 'player_spell' ||
-            animation.key === 'player_damage'
+            animation.key === 'player_spell' 
         ) {
-            this.anims.play('player_idle', true);
+
+            this.isShootingBow = false; // 활 쏘기 종료
+            this.isCastingSpell = false; // 마법 부리기 종료
         }
     }
 
@@ -564,8 +579,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     stopMove() {
         this.isMoving = false;
         this.setVelocity(0, 0);
-        this.anims.play('player_idle', true);
+
     }
-
-
 }

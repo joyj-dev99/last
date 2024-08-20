@@ -420,7 +420,7 @@
             "key": "player_spell",
             "type": "frames",
             "repeat": 0,
-            "frameRate": 8,
+            "frameRate": 16,
             "frames": [
                 {
                     "key": "player",
