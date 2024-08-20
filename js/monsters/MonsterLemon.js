@@ -59,32 +59,31 @@ export default class MonsterLemon extends Monster {
     }
 
     shootBullet(player) {
-        
-        const angle = Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y);
-        let bullet = this.scene.matter.add.sprite(this.x, this.y, 'lemon', 'lemon_sprite_sheet_40');
-        bullet.play('lemon_bubble_pop', true);
-
-        bullet.setBody({
-            type: 'circle',
-            radius: 5, // 반지름을 작게 설정하여 충돌 범위 축소
-        });
-        bullet.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
-        bullet.setCollidesWith([PLAYER_CATEGORY]);
-        bullet.setFixedRotation();
-        bullet.setFrictionAir(0);
-        bullet.setAngle(Phaser.Math.RadToDeg(angle));
-        bullet.setVelocity(Math.cos(angle) * this.bulletSpeed, Math.sin(angle) * this.bulletSpeed);
-        bullet.startX = this.x;
-        bullet.startY = this.y;
-        bullet.damage = 0.5;
-        bullet.creationTime = this.scene.time.now;
-        this.bullets.add(bullet);
-        this.scene.setCollisionOfMonsterLongAttack(bullet);
-        // 몇초마다 한번씩 발사하도록 하는 변수
-        this.scene.time.delayedCall(this.shotingRate, () => {
-            this.isShoting = true;
-        });
-
+        for (let i = 0; i < this.bulletAngles.length; i++) {
+            const angle = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y + this.bulletAngles[i]);
+            let bullet = this.scene.matter.add.sprite(this.x, this.y, 'lemon', 'lemon_sprite_sheet_40');
+            // bullet.play('lemon_bubble_move_movement', true);
+            bullet.setBody({
+                type: 'circle',
+                radius: 5, // 반지름을 작게 설정하여 충돌 범위 축소
+            });
+            bullet.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
+            bullet.setCollidesWith([PLAYER_CATEGORY]);
+            bullet.setFixedRotation();
+            bullet.setFrictionAir(0);
+            bullet.setAngle(Phaser.Math.RadToDeg(angle));
+            bullet.setVelocity(Math.cos(angle) * this.bulletSpeed, Math.sin(angle) * this.bulletSpeed);
+            bullet.startX = this.x;
+            bullet.startY = this.y;
+            bullet.damage = 0.5;
+            bullet.creationTime = this.scene.time.now;
+            this.bullets.add(bullet);
+            this.scene.setCollisionOfMonsterLongAttack(bullet);
+            // 몇초마다 한번씩 발사하도록 하는 변수
+            this.scene.time.delayedCall(this.shotingRate, () => {
+                this.isShoting = true;
+            });
+        }
     }
 
     // update() {
