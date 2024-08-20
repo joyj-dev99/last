@@ -283,7 +283,6 @@ export default class Tutorial{
         for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
             관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
         }
-        
     }
 
     // z키 누른 횟수 세는 메서드
