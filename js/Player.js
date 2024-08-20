@@ -228,8 +228,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         this.isShootingBow = true;
         this.anims.play('player_bow');
-        this.soundBow.play();
 
+       // 활 쏘기 애니메이션이 완료된 후 화살을 발사
+        this.once('animationcomplete-player_bow', () => {
+            this.fireArrow();
+            this.soundBow.play();
+        });
+    }
+
+    // 화살을 발사하는 함수
+    fireArrow() {
         let arrow = new Arrow({
             scene: this.scene,
             x: this.x + 2,
@@ -558,11 +566,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.comboState = 0;
             });
 
-        } else if (animation.key === 'player_bow' ||
-            animation.key === 'player_spell' 
-        ) {
-
+        } else if (animation.key === 'player_bow') {
             this.isShootingBow = false; // 활 쏘기 종료
+        } else if (animation.key === 'player_spell') {
             this.isCastingSpell = false; // 마법 부리기 종료
         }
     }
