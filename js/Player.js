@@ -551,8 +551,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     // 애니메이션이 완료되었을 때 실행될 로직을 중앙화
     handleAnimationComplete(animation, frame) {
-        if( animation.key == 'player_roll'){
-            this.isRolling = false; //구르기 종료
+        if( animation.key === 'player_roll'){
+            this.isRolling = false;
+            this.anims.play('player_idle', true);
         }
         else if( animation.key === 'player_sword_1' ||
             animation.key === 'player_sword_2' ||
