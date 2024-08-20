@@ -55,6 +55,7 @@ export default class MainSceneTest extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
+
         this.stageNumber = data.stageNumber || 3;
         this.mapNumber = data.mapNumber || 3;
         this.playerStatus = data.playerStatus || null;
@@ -209,24 +210,29 @@ export default class MainSceneTest extends Phaser.Scene {
         }
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
-        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3);
+        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3, this.stageNumber, this.mapNumber);
         this.stageManager = new StageManager(this, this.player, this.chord, this.dialog, this.skipTutorial);
+        
         //페이드인 완료 후 게임 실행
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.time.delayedCall(1000, () => {
                 console.log('camerafadeincomplete');
-                if(type === 'pc'){
-                    this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
-                }
-                else if(type === 'mobile'){
-                    if(this.stageNumber == 1 && this.mapNumber == 1){
-                        this.isInDialogue = false;
-                    }
-                    else{
-                        this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
-                    }
+
+                this.stageManager.setStageStart(this.stageNumber, this.mapNumber,type);
+
+                // if(type === 'pc'){
+                // }
+                // else if(type === 'mobile'){
+                //     if(this.stageNumber == 1 && this.mapNumber == 1){
+                //         this.isInDialogue = false;
+                //         // 튜토리얼
+
+                //     }
+                //     else{
+                //         this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
+                //     }
                     
-                }
+                // }
             }, [], this);
         });
 
@@ -264,6 +270,7 @@ export default class MainSceneTest extends Phaser.Scene {
             const mapNumber = this.mapNumber + 1;
             const playerStatus = this.player.status;
             if (mapNumber < 5) {
+                this.scene.stop('MainScene'); // 씬을 먼저 중단
                 this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
                 this.backgroundMusic.stop();
             } else {

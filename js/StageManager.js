@@ -29,7 +29,7 @@ export default class StageManager {
         });
     }
 
-    setStageStart(stageNumber, mapNumber) {
+    setStageStart(stageNumber, mapNumber, type) {
         if (stageNumber == 1 && mapNumber == 1) {
 
             if (this.skipTutorial) {
@@ -38,7 +38,7 @@ export default class StageManager {
                 this.startBattleSequence();
             } else {
                 // 튜토리얼 시작
-                this.startTutorial();
+                this.startTutorial(type);
             }
 
         } else if (stageNumber == 1 && mapNumber == 2) {
@@ -186,18 +186,28 @@ export default class StageManager {
         }
     }
 
-    startTutorial(){
-        let tutorial = new Tutorial(this.player, this.scene, this.dialog);
+    startTutorial(type){
+        let tutorial = new Tutorial(this.player, this.scene, this.dialog , type);
             this.setBGM('forest_default');
             // 첫번째는 센서 없이 바로 시작
             this.scene.isInDialogue = true;
+            let dialog_msg = '';
+
+            if(type === 'pc'){
+                dialog_msg = '방향키를 눌러보세요!';
+            }
+            else if(type === 'mobile'){
+                dialog_msg = '이동 조작기를 사용해 8방향으로 자유롭게 움직여 보세요!';
+            }
+
             const dialogueMessages = [
                 {name : '코드', portrait : 'ChordPotrait', message : '모험을 떠나기 전에 몇가지 알려드릴게요.'},
-                {name : '코드', portrait : 'ChordPotrait', message : '방향키를 눌러보세요!'},
+                {name : '코드', portrait : 'ChordPotrait', message : dialog_msg},
             ];
             // Dialog를 사용해 대화 표시, 대화 종료 후 콜백 전달
             this.dialog.showDialogModal(dialogueMessages, () => {
                 this.scene.isInDialogue = false;
+                // pc 튜토리얼
                 tutorial.startDirectionControlExplanation(this.scene, 250, this.player.y - 160, this.player);
             });
             
@@ -223,8 +233,16 @@ export default class StageManager {
                     // 이동키 조작 설명 끝
                     tutorial.endDirectionControlExplanation();
 
+                    if(type === 'pc'){
+                        dialog_msg = 'z 키를 눌러보세요!';
+                    }
+                    else if(type === 'mobile'){
+                        dialog_msg = '공격 버튼을 눌러보세요!';
+                        // 공격 버튼을 연속으로 눌러 빠르게 검을 최대 3번까지 휘둘러 보세요. 3번의 연속 공격이 가능합니다!
+                    }
+        
                     const dialogueMessages = [
-                        {name : '코드', portrait : 'ChordPotrait', message : 'z 키를 눌러보세요!'},
+                        {name : '코드', portrait : 'ChordPotrait', message : dialog_msg},
                     ];
                     this.dialog.showDialogModal(dialogueMessages, () => {
                         this.scene.isInDialogue = false;
@@ -255,8 +273,16 @@ export default class StageManager {
                     // z키 조작 설명 끝
                     tutorial.endzKeyControlExplanation();
 
+                    if(type === 'pc'){
+                        dialog_msg = '방향키와 함께 shift 키를 누르면 구를 수 있어요!';
+                    }
+                    else if(type === 'mobile'){
+                        dialog_msg = '이동조작기와 함께 구르기 버튼을 누르면 구를 수 있어요!';
+                    }
+        
+
                     const dialogueMessages = [
-                        {name : '코드', portrait : 'ChordPotrait', message : '방향키와 함께 shift 키를 누르면 구를 수 있어요!'},
+                        {name : '코드', portrait : 'ChordPotrait', message : dialog_msg},
                         {name : '코드', portrait : 'ChordPotrait', message : '공격을 피해야 할 때, 구르기를 사용해보세요.'},
                     ];
                     // 메시지 표시가 끝난 후 콜백 처리
