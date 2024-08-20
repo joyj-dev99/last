@@ -13,7 +13,7 @@ const config = {
     type: Phaser.AUTO,
     parent: 'game',
     scene: [MainScene,StoreScene,  TitleScene, IntroScene, BattleResultScene,NightScene],
-    scene: [ MainScene],
+    // scene: [ MainScene],
     scale: {
         // 다양한 디바이스와 해상도에 맞춰지도록
         mode: Phaser.Scale.FIT,
