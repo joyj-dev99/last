@@ -185,8 +185,12 @@ export default class Tutorial{
                 for (let i = 0; i < 관련된값.anim_keyboards.length; i++) {
                     관련된값.anim_keyboards[i].stop();
                 }
-
-                if(관련된값.anim_keys[0] === "z_key"){
+                // 방향키에 해당하는 run 애니메이션 추가
+                if(관련된값.anim_keys[0] === "up_key" ||  관련된값.anim_keys[0] === "down_key" || 관련된값.anim_keys[0] === "right_key" || 관련된값.anim_keys[0] === "left_key"  ){
+                    let playerVelocity = new Phaser.Math.Vector2();
+                    this.player.handleArrowKeyInput(playerVelocity, 3.5);
+                }
+                else if(관련된값.anim_keys[0] === "z_key"){
                     console.log(관련된값.anim_keys[0] + " 누름");
                     this.player.handleSlash(); // 첫 번째 슬래쉬
                 

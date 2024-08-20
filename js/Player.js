@@ -77,6 +77,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.hitByMonster = false;
 
         this.isAlive = true;
+        this.slash = null;
 
         // 애니메이션 완료 이벤트 리스너 추가
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
@@ -322,6 +323,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
         // 이동 상태에 따른 속도 설정
         if (this.isMoving) {
+            // console.log("this.isMoving이 true");
+            console.log("this.anims.currentAnim.key "+ this.anims.currentAnim.key);
+            console.log("this.slash " + this.slash );
+ 
+            //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
+            if (this.anims.currentAnim.key === 'player_idle' && this.slash === null) {
+                this.anims.play('player_run', true);
+                console.log('달리기 애니메이션 실행');
+                
+            }
 
             //데미지 애니메이션이 재생중일때도 이동가능
             if(this.anims.currentAnim.key === 'player_damage'){
@@ -333,14 +344,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             playerVelocity.normalize().scale(speed);
             this.setVelocity(playerVelocity.x, playerVelocity.y);
-            if (this.anims.currentAnim.key !== 'player_run' && this.slash === null) {
-                 //슬래쉬 값이 존재하지 않을때만 달리기 애니메이션을 실행한다
-                this.anims.play('player_run', true);
-                console.log('달리기 애니메이션 실행');
-                
-            }
+            
         } else {
+            // console.log("this.isMoving이 false");
+
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
+            if (this.anims.currentAnim.key === 'player_run') {
+                this.anims.stop();
+                this.anims.play('player_idle', true);
+            }
         }
     }
     
@@ -547,4 +559,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.setVelocity(0, 0);
         this.anims.play('player_idle', true);
     }
+
+
 }
