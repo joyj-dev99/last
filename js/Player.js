@@ -36,15 +36,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 공격 스킬 쿨타임 초기화 (초 단위)
             swordCoolTime: 3000,  // 검 공격 쿨타임 3초
             magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
-            arrowCount: 0 //화살의 갯수
+            arrowCount: 3 //화살의 갯수
         };
 
-        this.rollingCoolTime = 1000;
+        this.rollingCoolTime = 500;
         this.isRolling = true;
         this.isRollingOverLayCoolingDown = false;
         this.rollingCooldownElapsed = 0;
 
-        this.swordCoolTime = 3000;
+        this.swordCoolTime = 1000;
         this.isSlash = true;
         this.isSlashOverLayCoolingDown = false;
         this.slashCooldownElapsed = 0;
@@ -143,49 +143,52 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         });
 
         // 구르기 버튼과 그 오버레이
-        this.btnRollingCoolTime = this.scene.add.image(20, 200, 'button_indicator')
-        this.btnRollingCoolTime.setScrollFactor(0);
-        this.btnRollingCoolTime.setScale(0.05);
-        // 쿨타임 오버레이 생성 (반투명한 검은색 사각형)
-        this.overLayRollingCoolTime = this.scene.add.graphics();
-        this.overLayRollingCoolTime.fillStyle(0x000000, 0.5);
-        this.overLayRollingCoolTime.fillRect(this.btnRollingCoolTime.x - 13, this.btnRollingCoolTime.y - 13, this.btnRollingCoolTime.width * this.btnRollingCoolTime.scale, this.btnRollingCoolTime.height * this.btnRollingCoolTime.scale);
-        this.overLayRollingCoolTime.setScrollFactor(0);
-        this.overLayRollingCoolTime.setVisible(false);
+        const { button: btnRolling, skillSprite: rollingSkill, overlay: overlayRolling, container: containerRolling } = this.createButtonWithOverlay(scene, 20, 200, 'Skills and Spells 16', 138);
+        this.btnRollingCoolTime = btnRolling;
+        this.rollingSkillSprite = rollingSkill;
+        this.overLayRollingCoolTime = overlayRolling;
+        this.containerRollingCoolTime = containerRolling;
 
         // 슬래시 버튼과 그 오버레이
-        this.btnSlashCoolTime = this.scene.add.image(20, 230, 'button_indicator')
-        this.btnSlashCoolTime.setScrollFactor(0);
-        this.btnSlashCoolTime.setScale(0.05);
-        // 쿨타임 오버레이 생성 (반투명한 검은색 사각형)
-        this.overLaySlashCoolTime = this.scene.add.graphics();
-        this.overLaySlashCoolTime.fillStyle(0x000000, 0.5);
-        this.overLaySlashCoolTime.fillRect(this.btnSlashCoolTime.x - 13, this.btnSlashCoolTime.y - 13, this.btnSlashCoolTime.width * this.btnSlashCoolTime.scale, this.btnSlashCoolTime.height * this.btnSlashCoolTime.scale);
-        this.overLaySlashCoolTime.setScrollFactor(0);
-        this.overLaySlashCoolTime.setVisible(false);
+        const { button: btnSlash, skillSprite: slashSkill, overlay: overlaySlash, container: containerSlash } = this.createButtonWithOverlay(scene, 20, 230, 'Weapons and Equipment 16', 68);
+        this.btnSlashCoolTime = btnSlash;
+        this.slashSkillSprite = slashSkill;
+        this.overLaySlashCoolTime = overlaySlash;
+        this.containerSlashCoolTime = containerSlash;
 
         // 애로우 버튼과 그 오버레이
-        this.btnArrowCoolTime = this.scene.add.image(50, 230, 'button_indicator')
-        this.btnArrowCoolTime.setScrollFactor(0);
-        this.btnArrowCoolTime.setScale(0.05);
-        // 쿨타임 오버레이 생성 (반투명한 검은색 사각형)
-        this.overLayArrowCoolTime = this.scene.add.graphics();
-        this.overLayArrowCoolTime.fillStyle(0x000000, 0.5);
-        this.overLayArrowCoolTime.fillRect(this.btnArrowCoolTime.x - 13, this.btnArrowCoolTime.y - 13, this.btnArrowCoolTime.width * this.btnArrowCoolTime.scale, this.btnArrowCoolTime.height * this.btnArrowCoolTime.scale);
-        this.overLayArrowCoolTime.setScrollFactor(0);
-        this.overLayArrowCoolTime.setVisible(false);
+        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, 50, 230, 'Weapons and Equipment 16', 1);
+        this.btnArrowCoolTime = btnArrow;
+        this.arrowSkillSprite = arrowSkill;
+        this.overLayArrowCoolTime = overlayArrow;
+        this.containerArrowCoolTime = containerArrow;
 
         // 마법 버튼과 그 오버레이
-        this.btnMagicCoolTime = this.scene.add.image(80, 230, 'button_indicator')
-        this.btnMagicCoolTime.setScrollFactor(0);
-        this.btnMagicCoolTime.setScale(0.05);
-        // 쿨타임 오버레이 생성 (반투명한 검은색 사각형)
-        this.overLayMagicCoolTime = this.scene.add.graphics();
-        this.overLayMagicCoolTime.fillStyle(0x000000, 0.5);
-        this.overLayMagicCoolTime.fillRect(this.btnMagicCoolTime.x - 13, this.btnMagicCoolTime.y - 13, this.btnMagicCoolTime.width * this.btnMagicCoolTime.scale, this.btnMagicCoolTime.height * this.btnMagicCoolTime.scale);
-        this.overLayMagicCoolTime.setScrollFactor(0);
-        this.overLayMagicCoolTime.setVisible(false);
+        const { button: btnMagic, skillSprite: magicSkill, overlay: overlayMagic, container: containerMagic } = this.createButtonWithOverlay(scene, 80, 230, 'Skills and Spells 16', 1056);
+        this.btnMagicCoolTime = btnMagic;
+        this.magicSkillSprite = magicSkill;
+        this.overLayMagicCoolTime = overlayMagic;
+        this.containerMagicCoolTime = containerMagic;
+    }
 
+    createButtonWithOverlay(scene, x, y, spriteKey, spriteIndex) {
+        // 버튼 이미지 생성
+        const button = scene.add.image(0, 0, 'button_indicator');
+        button.setScale(0.05);
+        
+        const skillSprite = scene.add.sprite(0, 0, spriteKey, spriteIndex).setOrigin(0.5, 0.5);
+
+        // 오버레이 생성 (반투명한 검은색 사각형)
+        const overlay = scene.add.graphics();
+        overlay.fillStyle(0x000000, 0.5);
+        overlay.fillRect(-13, -13, button.width * button.scaleX, button.height * button.scaleY);
+        overlay.setVisible(false);
+
+        // 컨테이너 생성, 버튼과 오버레이를 추가
+        const container = scene.add.container(x, y, [button, skillSprite, overlay]);
+        container.setScrollFactor(0);
+
+        return { button, skillSprite, overlay, container};
     }
 
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
@@ -204,6 +207,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.audio('sound_player_bow', 'assets/audio/sound_player_bow.mp3');
         scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.mp3');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
+
+        scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', { frameWidth: 16, frameHeight: 16 });
 
         Slash.preload(scene);
         Arrow.preload(scene);
@@ -752,59 +758,82 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     }
 
+    coolTimeIndicator(delta, isCoolingDown, cooldownElapsed, coolTime, overlay, button) {
+        if (isCoolingDown) {
+            // 쿨타임이 진행 중이면 경과 시간 갱신
+            cooldownElapsed += delta;
+    
+            // 쿨타임 게이지의 남은 시간 비율 계산 (0에서 1 사이 값)
+            let remainingTimeRatio = 1 - (cooldownElapsed / coolTime);
+    
+            // 오버레이 초기화
+            overlay.clear();
+            overlay.fillStyle(0x000000, 0.5);
+            
+            // 남은 시간 비율에 따라 오버레이 크기 조정
+            const overlayHeight = button.height * button.scaleY * remainingTimeRatio;
+            const overlayY = button.y - button.height * button.scaleY / 2 + (button.height * button.scaleY - overlayHeight);
+    
+            overlay.fillRect(
+                button.x - button.width * button.scaleX / 2, 
+                overlayY, 
+                button.width * button.scaleX, 
+                overlayHeight
+            );
+    
+            if (cooldownElapsed >= coolTime) {
+                // 쿨타임이 완료되면 초기화
+                isCoolingDown = false;
+                cooldownElapsed = 0;
+                overlay.setVisible(false);
+            } else {
+                overlay.setVisible(true);
+            }
+        }
+    
+        return { isCoolingDown, cooldownElapsed };
+    }
+
     rollingCoolTimeIndicator(delta) {
-        if (this.isRollingOverLayCoolingDown) {
-            // 쿨타임이 진행 중이면 경과 시간 갱신
-            this.rollingCooldownElapsed += delta;
-            // 쿨타임 게이지의 높이 조정
-            let remainingTimeRatio = -this.rollingCooldownElapsed / this.rollingCoolTime;
-            this.overLayRollingCoolTime.clear();
-            this.overLayRollingCoolTime.fillStyle(0x000000, 0.5);
-            this.overLayRollingCoolTime.fillRect(this.btnRollingCoolTime.x - 13, this.btnRollingCoolTime.y + 13, this.btnRollingCoolTime.width * this.btnRollingCoolTime.scale, this.btnRollingCoolTime.height * this.btnRollingCoolTime.scale * remainingTimeRatio);
-            if (this.rollingCooldownElapsed >= this.rollingCoolTime) {
-                // 쿨타임이 완료되면 초기화
-                this.isRollingOverLayCoolingDown = false;
-                this.rollingCooldownElapsed = 0;
-                this.overLayRollingCoolTime.setVisible(false);
-            }
-        }
+        const result = this.coolTimeIndicator(
+            delta,
+            this.isRollingOverLayCoolingDown,
+            this.rollingCooldownElapsed,
+            this.rollingCoolTime,
+            this.overLayRollingCoolTime,
+            this.btnRollingCoolTime
+        );
+    
+        this.isRollingOverLayCoolingDown = result.isCoolingDown;
+        this.rollingCooldownElapsed = result.cooldownElapsed;
     }
+    
     slashCoolTimeIndicator(delta) {
-        if (this.isSlashOverLayCoolingDown) {
-            // 쿨타임이 진행 중이면 경과 시간 갱신
-            this.slashCooldownElapsed += delta;
-            // 쿨타임 게이지의 높이 조정
-            let remainingTimeRatio = -this.slashCooldownElapsed / this.swordCoolTime;
-            this.overLaySlashCoolTime.clear();
-            this.overLaySlashCoolTime.fillStyle(0x000000, 0.5);
-            this.overLaySlashCoolTime.fillRect(this.btnSlashCoolTime.x - 13, this.btnSlashCoolTime.y + 13, this.btnSlashCoolTime.width * this.btnSlashCoolTime.scale, this.btnSlashCoolTime.height * this.btnSlashCoolTime.scale * remainingTimeRatio);
-            if (this.slashCooldownElapsed >= this.swordCoolTime) {
-                // 쿨타임이 완료되면 초기화
-                this.isSlashOverLayCoolingDown = false;
-                this.slashCooldownElapsed = 0;
-                this.overLaySlashCoolTime.setVisible(false);
-            }
-        }
+        const result = this.coolTimeIndicator(
+            delta,
+            this.isSlashOverLayCoolingDown,
+            this.slashCooldownElapsed,
+            this.swordCoolTime,
+            this.overLaySlashCoolTime,
+            this.btnSlashCoolTime
+        );
+    
+        this.isSlashOverLayCoolingDown = result.isCoolingDown;
+        this.slashCooldownElapsed = result.cooldownElapsed;
     }
-
-
-
+    
     magicCoolTimeIndicator(delta) {
-        if (this.isMagicOverLayCoolingDown) {
-            // 쿨타임이 진행 중이면 경과 시간 갱신
-            this.magicCooldownElapsed += delta;
-            // 쿨타임 게이지의 높이 조정
-            let remainingTimeRatio = -this.magicCooldownElapsed / this.magicCoolTime;
-            this.overLayMagicCoolTime.clear();
-            this.overLayMagicCoolTime.fillStyle(0x000000, 0.5);
-            this.overLayMagicCoolTime.fillRect(this.btnMagicCoolTime.x - 13, this.btnMagicCoolTime.y + 13, this.btnMagicCoolTime.width * this.btnMagicCoolTime.scale, this.btnMagicCoolTime.height * this.btnMagicCoolTime.scale * remainingTimeRatio);
-            if (this.magicCooldownElapsed >= this.magicCoolTime) {
-                // 쿨타임이 완료되면 초기화
-                this.isMagicOverLayCoolingDown = false;
-                this.magicCooldownElapsed = 0;
-                this.overLayMagicCoolTime.setVisible(false);
-            }
-        }
+        const result = this.coolTimeIndicator(
+            delta,
+            this.isMagicOverLayCoolingDown,
+            this.magicCooldownElapsed,
+            this.magicCoolTime,
+            this.overLayMagicCoolTime,
+            this.btnMagicCoolTime
+        );
+    
+        this.isMagicOverLayCoolingDown = result.isCoolingDown;
+        this.magicCooldownElapsed = result.cooldownElapsed;
     }
 
 }
