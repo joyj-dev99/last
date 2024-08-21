@@ -146,6 +146,8 @@ export default class MainScene extends Phaser.Scene {
             this.minY = 106;
             this.maxY = 438;
         }
+        this.input.addPointer(2); // 기본 포인터 외에 추가로 2개의 포인터를 허용
+
     }
 
     preload() {
