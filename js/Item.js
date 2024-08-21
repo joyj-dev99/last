@@ -9,7 +9,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         texture : 'Skills and Spells',
         frame : 130,
         scale : 0.5,
-        message : '+1 heart'
+        message : '하트 +1'
     };
 
     // 좋은 아이템이든 나쁜 아이템이든 동일한 드랍확률을 가지도록 함
@@ -17,9 +17,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static MaxHeart_ITEM = {
         type: 'max_heart',
         texture: 'Skills and Spells',  
-        frame: 1089,           
+        frame: 1105,           
         scale: 0.5,            
-        message: '+1 Max Heart',  
+        message: '최대 하트 +1, 현재 하트 +1',
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -29,7 +29,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         texture: 'Weapons and Equipment',  
         frame: 1259,  
         scale: 0.5,
-        message: '10초 동안 무적',  
+        message: '10초 동안 무적!',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -39,7 +39,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         texture: 'Weapons and Equipment', 
         frame: 1858,  
         scale: 0.5,
-        message: 'Speed +25%',  
+        message: '이동속도 25% 증가',   
         drap_per: 0.1  // 드랍 확률 (10%)
     };
         
@@ -47,9 +47,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static UnknownAmulet_ITEM = {
         type: 'unknown_amulet',
         texture: 'Loot and Treasure',  
-        frame: 96,  
+        frame: 90,  
         scale: 0.5,
-        message: '-3s Skill Cooldown',  
+        message: '나이스! 쿨타임 3초 감소',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -57,9 +57,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static QuantumHourglass_ITEM = {
         type: 'quantum_hourglass',
         texture: 'Loot and Treasure',  
-        frame: 181,  
+        frame: 180,  
         scale: 0.5,
-        message: '+3s Skill Cooldown',  
+        message: '이런, 쿨타임 3초 증가',   
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -67,9 +67,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static HerbalMedicine_ITEM = {
         type: 'herbal_medicine',
         texture: 'Alchemy and Potions',  
-        frame: 33,  
+        frame: 31,  
         scale: 0.5,
-        message: 'No Rolling for 30s',  
+        message: '약초가 마를때까지 30초동안 구르기 금지!', 
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -77,9 +77,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static PiratesSafe_ITEM = {
         type: 'pirates_safe',
         texture: 'Loot and Treasure', 
-        frame: 126,  
+        frame: 107,  
         scale: 0.5,
-        message: 'All Coins Lost ㅠ.ㅠ',  
+        message: '해적에게 코인을 도난당하셨군요. 코인 초기화',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
         
@@ -89,7 +89,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         texture: 'Loot and Treasure',  
         frame: 25,  
         scale: 0.5,
-        message: 'Speed -25%',  
+        message: '묘약을 마셨더니 배탈이 났군요. 이동속도 25% 감소',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -99,7 +99,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         texture: 'Weapons and Equipment',  
         frame: 47,  
         scale: 0.5,
-        message: '-25% Attack Power',  
+        message: '두꺼운 장갑을 끼니, 무기가 잘 안잡히죠? 공격력 25% 감소',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -236,7 +236,6 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     }
 
     static preload(scene) {
-        scene.load.image('coin', 'assets/item/pixel_meat_coin.png');
         scene.load.spritesheet('fruit', 'assets/item/fruits asset.png', { frameWidth: 16, frameHeight: 16 });
         scene.load.image('pumpkin', 'assets/item/pumpkin.png');
         scene.load.image('cheese', 'assets/item/cheese.png');
@@ -259,13 +258,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
 
         console.log('itemType : '+this.itemType.type);
 
-        if(this.itemType.type == 'coin'){
-            // 상단 coin 누적 갯수 화면에 반영
-            player.status.coin += 10;
-            textIndicator.setText(`Coins: ${player.status.coin}`);
-        }
         // 붉은 하트
-        else if(this.itemType.type == 'heart'){
+        if(this.itemType.type == 'heart'){
             // 체력 +1 적용
             player.increaseHeart(1);
             heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
@@ -301,6 +295,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             dialogMessages.push({ name: '코드', portrait: 'ChordPotrait', message: this.itemType.message });
             dialog.showDialogModal(dialogMessages, () => {
                 player.setInvincible(true);
+                this.destroy();
                 this.scene.time.delayedCall(20000, () => {
                     player.setInvincible(false);
                     console.log('Phantom Cloak effect ended!');
@@ -313,6 +308,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             dialog.showDialogModal(dialogMessages, () => {
                 player.adjustSpeed(1.25);
+                this.destroy();
                 this.scene.time.delayedCall(60000, () => {
                     player.adjustSpeed(1 / 1.25);
                     console.log('Swift Boots effect ended.');
@@ -337,6 +333,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             dialog.showDialogModal(dialogMessages, () => {
                 player.canRoll = false;
+                this.destroy();
                 this.scene.time.delayedCall(30000, () => {
                     player.canRoll = true;
                     console.log('Rolling is now enabled again.');
@@ -358,6 +355,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             dialog.showDialogModal(dialogMessages, () => {
                 player.adjustSpeed(0.75);
+                this.destroy();
                 this.scene.time.delayedCall(60000, () => {
                     player.adjustSpeed(1 / 0.75);
                     console.log('Ancient Potion effect ended.');
@@ -385,10 +383,15 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
 
         }
-        
         dialog.showDialogModal(dialogMessages);
         
         this.destroy();
+
+        // 3초 후에 다이얼로그를 닫음
+        setTimeout(() => {
+            dialog.hideDialogModal(); 
+        }, 3000);
+        
 
         return true;
 

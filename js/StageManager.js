@@ -362,7 +362,7 @@ export default class StageManager {
             Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog)
         }else if(mapAttribute === 4){
             Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog);
-            Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog);
+            Item.dropRandomReward(this.scene, this.player, dropX, dropY + 20, this.dialog);
         }
 
         let dialogueMessages;
