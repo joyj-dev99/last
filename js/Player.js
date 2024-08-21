@@ -21,12 +21,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //마법 공격력
             magicATK : 10,
             // 가지고 있는 coin
-            coin : 0
+            coin : 0,
+            // 이동 속도 초기화
+            speed: 3.5,
+            // 공격 스킬 쿨타임 초기화 (초 단위)
+            swordCooldown: 5,  // 검 공격 쿨타임 5초
+            bowCooldown: 7,    // 활 공격 쿨타임 7초
+            magicCooldown: 10  // 마법 공격 쿨타임 10초
         };
 
         this.scene = scene;
         scene.add.existing(this);
-        this.speed = 3.5;
         // Phaser.Physics.Matter.Matter에서 Body와 Bodies 객체를 가져옴
         // Bodies는 간단한 물리 바디를 생성할 때 사용되고, Body는 이러한 바디를 조작할 때 사용
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;     
@@ -80,6 +85,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.slash = null;
         this.isShootingBow = false;
         this.isCastingSpell = false;
+        this.isInvincible = false; // 무적 상태를 나타내는 변수
+        this.canRoll = true; // 구르기 가능 여부를 관리하는 변수 추가
 
 
         // 애니메이션 완료 이벤트 리스너 추가
@@ -173,7 +180,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if (!this.hitByMonster && !this.isRolling) {
 
             // 8방향 이동 입력 처리
-            this.handleArrowKeyInput(playerVelocity, this.speed );
+            this.handleArrowKeyInput(playerVelocity, this.status.speed );
             
             if(this.slash){ // 이 지점에서 this.slash가 여전히 존재하는지 확인
                 const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
@@ -269,7 +276,36 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.scene.setCollisionOfPlayerAttack(magic);
     }
 
+    // 공격력 조절 메서드
+    adjustAttackPower(multiplier) {
+        this.status.swordATK *= multiplier;
+        this.status.bowATK *= multiplier;
+        this.status.magicATK *= multiplier;
+
+        console.log(`Attack power adjusted by a factor of ${multiplier}.`);
+        console.log('New sword ATK: ' + this.status.swordATK);
+        console.log('New bow ATK: ' + this.status.bowATK);
+        console.log('New magic ATK: ' + this.status.magicATK);
+    }
+
+    // 공격 스킬 쿨타임 조절 메서드
+    adjustCooldown(amount) {
+        this.status.swordCooldown = Math.max(this.status.swordCooldown + amount, 0);
+        this.status.bowCooldown = Math.max(this.status.bowCooldown + amount, 0);
+        this.status.magicCooldown = Math.max(this.status.magicCooldown + amount, 0);
+
+        console.log(`Cooldowns adjusted by ${amount} seconds.`);
+        console.log('New sword cooldown: ' + this.status.swordCooldown);
+        console.log('New bow cooldown: ' + this.status.bowCooldown);
+        console.log('New magic cooldown: ' + this.status.magicCooldown);
+    }
+
     handleRoll(playerVelocity){
+
+        if (!this.canRoll) {
+            console.log("Rolling is currently disabled.");
+            return;  // 구르기 금지 상태일 때는 아무 동작도 하지 않음
+        }
 
         // 슬래쉬 객체 제거
         this.removeSlash();
@@ -385,6 +421,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
     
+    // 이동 속도를 조절하는 함수
+    adjustSpeed(multiplier) {
+        this.status.speed *= multiplier;
+    }
+
     resetComboState(){
         // 다른 동작이 시작될때는, 콤보 상태를 초기화
         this.comboState = 0;
@@ -470,12 +511,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
 
+    setInvincible(isInvincible) {
+        this.isInvincible = isInvincible;
+    }
+
     takeDamage(amount) {
         this.removeSlash();
         this.isShootingBow = false; //활쏘기 중단
         this.isCastingSpell = false; // 마법 부리기 종료
 
         if (this.isRolling) return;
+        if (this.isInvincible) return;
+
         this.hitByMonster = true;
         this.status.nowHeart -= amount;
         this.status.nowHeart = this.status.nowHeart < 0 ? 0 : this.status.nowHeart;
@@ -537,6 +584,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.status.nowHeart = this.status.nowHeart + amount > this.status.maxHeart ? this.status.maxHeart : this.status.nowHeart + amount;
         console.log('this.status.nowHeart : '+ this.status.nowHeart);
     }
+
+    // maxHeart와 nowHeart를 amount만큼 증가
+    increaseMaxHeart(amount) {
+        console.log('increaseMaxHeart');
+        
+        this.status.maxHeart += amount;
+        this.status.nowHeart += amount;
+        
+        console.log('this.status.maxHeart : ' + this.status.maxHeart);
+        console.log('this.status.nowHeart : ' + this.status.nowHeart);
+    }
+
 
     // 힘 amount만큼 증가
     increaseATK(amount){
