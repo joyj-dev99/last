@@ -8,8 +8,8 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
     }
 
     constructor(scene, texture, stageNumber, mapNumber) {
-        // X, Y 위치를 화면의 상단 중앙으로 설정
-        const x = scene.sys.game.config.width / 2;
+        // X, Y 위치를 화면의 상단 우측으로 설정
+        const x = scene.sys.game.config.width - 65;/// 2
         const y = 30; 
         
         super(scene, x, y, texture);

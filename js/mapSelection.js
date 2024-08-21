@@ -55,7 +55,26 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
        buttonContainer.setSize(buttonSprite.displayWidth, buttonSprite.displayHeight);  // 컨테이너의 크기 설정
        buttonContainer.setDepth(200);     // 다른 요소들보다 위에 표시되도록 설정
 
-       mapContainers.push(buttonContainer);
+
+
+       buttonContainer.setInteractive({ useHandCursor: true });
+       buttonContainer.on('pointerdown', () => {
+            selectedIndex = index;
+            console.log('index : '+index);
+            onSelect(selectedMaps[selectedIndex]);
+            cleanup();
+        })
+        .on('pointerover', () => {
+            buttonContainer.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
+        })
+        .on('pointerout', () => {
+            buttonContainer.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
+        });
+
+        
+        mapContainers.push(buttonContainer);
+
+
     });
 
     // UI가 완전히 렌더링된 후 플래그 설정

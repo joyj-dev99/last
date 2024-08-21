@@ -372,7 +372,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(this.itemType.type == 'tomato'){
             // 체력 +1 적용
             player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
         }
         else if(this.itemType.type == 'eggplant'){
             // 힘 3종류 +5 적용
@@ -381,12 +381,12 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         }else if(this.itemType.type == 'apple'){
             // 체력 +1 적용
             player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
         }
         else if(this.itemType.type == 'lemon'){
             // 체력 +1 적용
             player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
         }
         else if(this.itemType.type == 'pumpkin'){
             // 공격력 +5 적용
@@ -396,13 +396,13 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(this.itemType.type == 'mini_goblin_meat'){
             // 체력 +1 적용
             player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
         }
         // 쥐의 치즈
         else if(this.itemType.type == 'cheese'){
             // 체력 +1 적용
             player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
         }
         // 포션 
         else if(this.itemType.type == 'potion'){
@@ -413,7 +413,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(this.itemType.type == 'heart'){
             // 체력 +1 적용
             player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
         }
         //천사의 심장
         else if(this.itemType.type == 'max_heart'){
