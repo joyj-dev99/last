@@ -136,7 +136,7 @@ export function showMapSelectionUI(scene, mapSelections, onSelect, onCancel) {
             selectedIndex = (selectedIndex < mapSelections.length - 1) ? selectedIndex + 1 : 0;
             updateSelection();
         } else if (event.code === 'Space') {
-            const selectedMap = mapSelections[index];
+            const selectedMap = mapSelections[selectedIndex];
             console.log('테스트중 : ', selectedMap);
             
             onSelect(selectedMap.mapNumber, selectedMap.attributeNumber);
