@@ -425,6 +425,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // console.log("this.slash " + this.slash);
             // console.log("this.isMovingUpward" + this.isMovingUpward);
 
+            
             //슬래쉬 값이 존재하지 않고, 활을 쏘지 않을때만, 마법을 부리지 않을때만 달리기 애니메이션을 실행한다
             if (this.slash === null && !this.isShootingBow && !this.isCastingSpell) {
                 if (this.isMovingUpward) {

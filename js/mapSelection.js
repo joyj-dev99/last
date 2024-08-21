@@ -16,13 +16,9 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
     const camera = scene.cameras.main;
     const centerX = camera.scrollX + camera.width / 2;
     const centerY = camera.scrollY + camera.height / 2 - 18; // 버튼들을 위로 이동
-    // 길 정보 설정
+
+    // 길 텍스트 설정
     const paths = ["오른쪽 길", "가운데 길", "왼쪽 길"];
-    const pathIcons = [
-        { text: "오른쪽 길", icon: "coin" },
-        { text: "가운데 길", icon: "heart" },
-        { text: "왼쪽 길", icon: "gift" }
-    ];
 
     // 패딩 설정
     const textPadding = 20;
@@ -47,18 +43,16 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
             icon.setScale(0.7);  // 아이콘 크기 조절
         }
 
-       // 컨테이너에 버튼, 텍스트, 아이콘 추가
-       const buttonContainer = scene.add.container(centerX, centerY - 50 + index * 40, [buttonSprite, text]);
-       if (icon) {
-           buttonContainer.add(icon);
-       }
-       buttonContainer.setSize(buttonSprite.displayWidth, buttonSprite.displayHeight);  // 컨테이너의 크기 설정
-       buttonContainer.setDepth(200);     // 다른 요소들보다 위에 표시되도록 설정
+        // 컨테이너에 버튼, 텍스트, 아이콘 추가
+        const buttonContainer = scene.add.container(centerX, centerY - 50 + index * 40, [buttonSprite, text]);
+        if (icon) {
+            buttonContainer.add(icon);
+        }
+        buttonContainer.setSize(buttonSprite.displayWidth, buttonSprite.displayHeight);  // 컨테이너의 크기 설정
+        buttonContainer.setDepth(200);     // 다른 요소들보다 위에 표시되도록 설정
 
-
-
-       buttonContainer.setInteractive({ useHandCursor: true });
-       buttonContainer.on('pointerdown', () => {
+        buttonContainer.setInteractive({ useHandCursor: true });
+        buttonContainer.on('pointerdown', () => {
             selectedIndex = index;
             console.log('index : '+index);
             onSelect(selectedMaps[selectedIndex]);
@@ -71,10 +65,7 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
             buttonContainer.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
         });
 
-        
         mapContainers.push(buttonContainer);
-
-
     });
 
     // UI가 완전히 렌더링된 후 플래그 설정
