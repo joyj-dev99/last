@@ -147,6 +147,8 @@ export default class MainScene extends Phaser.Scene {
             this.minY = 106;
             this.maxY = 438;
         }
+        this.input.addPointer(2); // 기본 포인터 외에 추가로 2개의 포인터를 허용
+
     }
 
     preload() {
@@ -197,6 +199,13 @@ export default class MainScene extends Phaser.Scene {
             frameHeight: 32, // 각 프레임의 높이
         });
 
+        this.load.spritesheet('Sword And Arrow', 'assets/item/Sword And Arrow.png', {
+            frameWidth: 32, // 각 프레임의 너비
+            frameHeight: 32, // 각 프레임의 높이
+        });
+
+
+        
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
@@ -431,7 +440,7 @@ export default class MainScene extends Phaser.Scene {
             this.graphics1.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50), Phaser.Geom.Rectangle.Contains);
 
             // 버튼 생성 검
-            this.button = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 40,'Weapons and Equipment' , 68)
+            this.button = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 40,'Sword And Arrow' , 0)
             .setScale(0.75)
             // .setDepth(dialogDepth)
             .setScrollFactor(0);
@@ -489,7 +498,7 @@ export default class MainScene extends Phaser.Scene {
             this.graphics3.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50), Phaser.Geom.Rectangle.Contains);
 
             // 버튼 생성 화살
-            this.button3 = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 100,'Weapons and Equipment' , 73)
+            this.button3 = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 100,'Sword And Arrow' , 11)
                             .setScale(0.75)
                             .setScrollFactor(0);
 
