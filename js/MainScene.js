@@ -236,7 +236,7 @@ export default class MainScene extends Phaser.Scene {
             volume: 0.7 // Set the volume (0 to 1)
         });
         this.coinDropSound = this.sound.add(`coin_drop`, {
-            volume: 0.4 // Set the volume (0 to 1)
+            volume: 0.2 // Set the volume (0 to 1)
         });
         this.potionDropSound = this.sound.add(`potion_drop`, {
             volume: 0.5 // Set the volume (0 to 1)

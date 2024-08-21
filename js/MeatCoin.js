@@ -4,8 +4,7 @@ export default class MeatCoin {
 
     static preload(scene) {
         scene.load.atlas('meatcoin', 'assets/item/meatcoin/meatcoin.png', 'assets/item/meatcoin/meatcoin_atlas.json');
-        scene.load.animation('meatcoinAnim', '/assets/item/meatcoin/meatcoin.png');
-        scene.load.audio('coinSound', 'assets/audio/coin_drop.wav');  // 효과음 로드
+        scene.load.animation('meatcoinAnim', 'assets/item/meatcoin/meatcoin_anim.json');
     }
 
     coinDrop(scene, minCoin, maxCoin, x, y) {
@@ -16,7 +15,7 @@ export default class MeatCoin {
         coin.play('meatcoin_drop');
 
         // 코인 획득 효과음 재생
-        scene.sound.play('coinSound');
+        scene.coinDropSound.play();
 
         // '+X coin' 텍스트 생성
         const coinText = scene.add.text(x, y - 20, `+${coinAmount} coin`, {
@@ -42,9 +41,8 @@ export default class MeatCoin {
                 coinText.destroy();
             }
         });
-
-        // 플레이어에게 코인 추가 (여기서는 임의의 함수로 가정)
-        scene.player.addCoin(coinAmount);  // addCoins 메서드는 플레이어 클래스에 정의되어 있어야 함
+        // 플레이어에게 코인 추가
+        scene.player.addCoin(coinAmount);
     }
 
 

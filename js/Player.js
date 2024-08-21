@@ -612,6 +612,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     addCoin(amount) {
         console.log('addCoin');
         this.status.coin += amount;
+        this.scene.coinIndicatorText.setText(`Coins : ${this.status.coin}`);
         console.log(' this.status.coin : ' + this.status.coin);
     }
 
