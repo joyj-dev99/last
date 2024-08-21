@@ -21,8 +21,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 상태 정보 초기화
         this.status = {
             name: '맥스',
-            maxHeart: 3,
-            nowHeart: 3,
+            maxHeart: 7,
+            nowHeart: 7,
             //검 공격력
             swordATK: 20,
             //활 공격력
@@ -159,6 +159,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
         this.containerArrowCoolTime = containerArrow;
+        // 화살 남은 갯수 text
+        // 텍스트 스타일 (폰트 크기 조절)
+        const buttonTextStyle = { font: "18px Arial", fill: "#000000" };
+        this.arrowCountText = this.scene.add.text(50, 230, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
+
 
         // 마법 버튼과 그 오버레이
         const { button: btnMagic, skillSprite: magicSkill, overlay: overlayMagic, container: containerMagic } = this.createButtonWithOverlay(scene, 80, 230, 'Skills and Spells 16', 1056);
@@ -348,6 +353,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.status.arrowCount--;
         console.log('this.status.arrowCount : '+this.status.arrowCount);
         this.scene.setArrowBtnStatus(this.status.arrowCount);
+        if(this.status.arrowCount == 0){
+            this.overLayArrowCoolTime.setVisible(true);
+        }
+
+        this.arrowCountText.setText(this.status.arrowCount);
+        
     }
 
     // 화살의 갯수를 증가시키는 함수
@@ -801,6 +812,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     
         return { isCoolingDown, cooldownElapsed };
     }
+
 
     rollingCoolTimeIndicator(delta) {
         const result = this.coolTimeIndicator(

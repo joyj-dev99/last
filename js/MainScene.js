@@ -905,23 +905,26 @@ export default class MainScene extends Phaser.Scene {
 
     setArrowBtnStatus(arrowCount){
 
-        if(this.arrowCounttext){
-            this.arrowCounttext.destroy();
+        if(type == 'mobile'){
+            if(this.arrowCounttext){
+                this.arrowCounttext.destroy();
+            }
+            // 버튼 스타일 (폰트 크기 조절)
+            const buttonTextStyle = { font: "18px Arial", fill: "#FFFFFF" };
+            console.log("setArrowBtnStatus arrowCount : "+arrowCount);
+            // this.graphics3.
+            this.arrowCounttext = this.add.text(this.cameras.main.width - 80, this.cameras.main.height - 95, arrowCount, buttonTextStyle)
+                .setOrigin(0.5).setScrollFactor(0);
+    
+            if(arrowCount <= 0 && this.graphics3){
+                this.graphics3.removeAllListeners('pointerdown');
+                this.graphics3.removeAllListeners('pointerup');
+                this.graphics3.removeAllListeners('pointerout');
+                this.graphics3.setDepth(2);
+                this.button3.setDepth(0);
+            }
         }
-        // 버튼 스타일 (폰트 크기 조절)
-        const buttonTextStyle = { font: "18px Arial", fill: "#FFFFFF" };
-        console.log("setArrowBtnStatus arrowCount : "+arrowCount);
-        // this.graphics3.
-        this.arrowCounttext = this.add.text(this.cameras.main.width - 80, this.cameras.main.height - 95, arrowCount, buttonTextStyle)
-            .setOrigin(0.5).setScrollFactor(0);
-
-        if(arrowCount <= 0){
-            this.graphics3.removeAllListeners('pointerdown');
-            this.graphics3.removeAllListeners('pointerup');
-            this.graphics3.removeAllListeners('pointerout');
-            this.graphics3.setDepth(2);
-            this.button3.setDepth(0);
-        }
+       
         
     }
 
