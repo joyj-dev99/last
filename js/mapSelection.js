@@ -58,7 +58,7 @@ export function showMapSelectionUI(scene, mapSelections, onSelect, onCancel) {
     // 카메라의 뷰포트를 기준으로 다이얼로그 박스 중앙 위치 계산
     const camera = scene.cameras.main;
     const centerX = camera.scrollX + camera.width / 2;
-    const centerY = camera.scrollY + camera.height / 2 - 50; // 버튼들을 위로 이동
+    const centerY = camera.scrollY + camera.height / 2 - 18; // 버튼들을 위로 이동
     
     // 길 텍스트 설정
     const paths = ["오른쪽 길", "가운데 길", "왼쪽 길"];
@@ -89,12 +89,26 @@ export function showMapSelectionUI(scene, mapSelections, onSelect, onCancel) {
         }
 
         // 컨테이너에 버튼, 텍스트, 아이콘 추가
-        const buttonContainer = scene.add.container(centerX, centerY - 50 + index * 50, [buttonSprite, text]);
+        const buttonContainer = scene.add.container(centerX, centerY - 50 + index * 40, [buttonSprite, text]);
         if (icon) {
             buttonContainer.add(icon);
         }
         buttonContainer.setSize(buttonSprite.displayWidth, buttonSprite.displayHeight);  // 컨테이너의 크기 설정
         buttonContainer.setDepth(200);     // 다른 요소들보다 위에 표시되도록 설정
+
+        buttonContainer.setInteractive({ useHandCursor: true });
+        buttonContainer.on('pointerdown', () => {
+            selectedIndex = index;
+            console.log('index : '+index);
+            onSelect(selectedMaps[selectedIndex]);
+            cleanup();
+        })
+        .on('pointerover', () => {
+            buttonContainer.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
+        })
+        .on('pointerout', () => {
+            buttonContainer.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
+        });
 
         mapContainers.push(buttonContainer);
     });
