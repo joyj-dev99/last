@@ -34,7 +34,7 @@ export default class StoreScene extends Phaser.Scene {
 
     preload() {
         this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-        this.load.tilemapTiledJSON("stage_01_store_map", "assets/map/stage_01_store.json");
+        this.load.tilemapTiledJSON("stage_01_store_map", "assets/map/stage_01/stage_01_store.json");
 
         Player.preload(this);
         Chord.preload(this);
@@ -95,14 +95,12 @@ export default class StoreScene extends Phaser.Scene {
             }
 
             if (name === 'item') {
+                const itemKey = Math.floor(Math.random() * 10) + 1;
                 let item = new StoreItem({
                     scene: this,
                     x: x,
                     y: y,
-                    texture: 'skillAndSpell',
-                    name: '아이템',
-                    description: '아이템설명',
-                    price: 20
+                    itemKey: itemKey
                 });
                 this.itemArr.push(item);
             }
