@@ -121,7 +121,7 @@
                  "name":"chordStart",
                  "point":true,
                  "rotation":0,
-                 "type":"",
+                 "type":"chord",
                  "visible":true,
                  "width":0,
                  "x":230.992341534952,

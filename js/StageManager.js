@@ -30,7 +30,7 @@ export default class StageManager {
     }
 
     setStageStart(stageNumber, mapNumber, type) {
-        if (stageNumber == 1 && mapNumber == 1) {
+        if (stageNumber == 1 && mapNumber == 0) {
 
             if (this.skipTutorial) {
                 // 튜토리얼을 건너뛰고 전투 바로 시작
@@ -44,18 +44,18 @@ export default class StageManager {
         } else {
             this.scene.isInDialogue = true;
             let dialogueMessages;
-            if (stageNumber == 1 && mapNumber == 2) {
-            this.setBGM('forest_default');
-            dialogueMessages = [
-                {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 토마토랑 가지냐?'},
-            ];
-            } else if (stageNumber == 1 && mapNumber == 3) {
+            if (stageNumber == 1 && mapNumber == 1) {
+                this.setBGM('forest_default');
+                dialogueMessages = [
+                    {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 토마토랑 가지냐?'},
+                ];
+            } else if (stageNumber == 1 && mapNumber == 2) {
                 this.setBGM('forest_default');
                 dialogueMessages = [
                     {name : '코드', portrait : 'ChordPotrait', message : '사과와 레몬이네요! 너무 상큼해보여요!'},
                     {name : '맥스', portrait : 'MaxPotrait', message : '헛소리 하지말고, 저리가서 연주나 해.'},
                 ];
-            } else if (stageNumber == 1 && mapNumber == 4) {
+            } else if (stageNumber == 1 && mapNumber == 3) {
                 this.setBGM('forest_boss');
                 dialogueMessages = [
                     {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 호박이야? 가지가지 하는군...'},
@@ -107,7 +107,7 @@ export default class StageManager {
                 ];
             }
             else if (stageNumber == 3 && mapNumber == 2) {
-                this.setBGM('room_default');
+                this.setBGM('forest_default');
                 dialogueMessages = [
                     {name : '코드', portrait : 'ChordPotrait', message : '맥스님, 저기 위에 뭐가 있어요? 저건.. 천사?'},
                     {name : '천사', portrait : null, message : '침입자인가. 신의 심판이 두렵지 않나?'},
@@ -130,6 +130,11 @@ export default class StageManager {
                     {name : '볼프강', portrait : null, message : '내 연구의 결실을 확인할 시간이야!'},
                     {name : '조수', portrait : null, message : '기다리고 있었어요, 맥스.'},
                     {name : '맥스', portrait : 'MaxPotrait', message : '볼프강! 내 피같은 돈 돌려받으러 왔다!'},
+                ];
+            } else {
+                this.setBGM('room_boss');
+                dialogueMessages = [
+                    {name : '맥스', portrait : 'MaxPotrait', message : '대화 아직 안만듦'}
                 ];
             }
             // 메시지 표시가 끝난 후 콜백 처리
@@ -314,7 +319,7 @@ export default class StageManager {
         this.player.stopMove();
         this.chord.setLocation(this.scene.chordEnd.x, this.scene.chordEnd.y);
         let dialogueMessages;
-        if (stageNumber == 1 && mapNumber == 1) {
+        if (stageNumber == 1 && mapNumber == 0) {
             dialogueMessages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '뭐야? 미트코인이잖아?'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '몬스터가 왜 미트코인을 가지고 있는거지?'},
@@ -322,14 +327,14 @@ export default class StageManager {
                 {name : '맥스', portrait : 'MaxPotrait', message : '너는 지금 내가 몬스터 잡는 동안 고작 악기 연주나 하고 있어?'},
                 {name : '코드', portrait : 'ChordPotrait', message : '아무래도 응원가가 있는 편이 좀더 힘이 나니까요!'},       
             ];
-        } else if (stageNumber == 1 && mapNumber == 2) {
+        } else if (stageNumber == 1 && mapNumber == 1) {
             dialogueMessages = [
                 {name : '코드', portrait : 'ChordPotrait', message : '채소 몬스터의 사체를 드셔보셨나요?'},
                 {name : '코드', portrait : 'ChordPotrait', message : '먹고나면 체력이 회복된답니다.'},       
                 {name : '코드', portrait : 'ChordPotrait', message : '맛도 아주 좋다는 이야기를 들었어요.'},       
                 {name : '맥스', portrait : 'MaxPotrait', message : '윽... 이거 먹어도 되는거 맞겠지?'},                
             ];
-        } else if (stageNumber == 1 && mapNumber == 3) {
+        } else if (stageNumber == 1 && mapNumber == 2) {
             dialogueMessages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '몬스터가 왜 이렇게 많아?'},    
                 {name : '코드', portrait : 'ChordPotrait', message : '그러게요. 근데 전부 엄청 신선해보여요!'},
@@ -405,6 +410,10 @@ export default class StageManager {
                 {name : '볼프강', portrait : null, message : '그건 이미 연구비로 다 썼어. 남은 돈은 없다.'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '뭐??'},
                 {name : '코드', portrait : 'ChordPotrait', message : '저런...'},
+            ];
+        } else {
+            dialogueMessages = [
+                {name : '맥스', portrait : 'MaxPotrait', message : '대사 아직 없음'}
             ];
         }
         // 메시지 표시가 끝난 후 콜백 처리

@@ -252,8 +252,8 @@ export default class Dialog  {
      */
     handleResize(gameSize) {
 
-        console.log('handleResize this.stageNumber : '+this.stageNumber);
-        console.log('handleResize this.mapNumber : '+this.mapNumber);
+        // console.log('handleResize this.stageNumber : '+this.stageNumber);
+        // console.log('handleResize this.mapNumber : '+this.mapNumber);
 
         const width = gameSize.width;
         const height = gameSize.height;

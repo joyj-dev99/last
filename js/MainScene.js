@@ -32,7 +32,7 @@ import Magic from "./Magic.js";
 
 import Dialog from "./Dialog.js";
 import StageManager from "./StageManager.js";
-import { showMapSelectionUI } from './mapSelection.js';
+import { mapPreload, mapAttributes, attributeIcons, showMapSelectionUI } from './mapSelection.js';
 
 import {
     PLAYER_CATEGORY,
@@ -58,7 +58,10 @@ export default class MainScene extends Phaser.Scene {
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
         this.stageNumber = data.stageNumber || 1;
-        this.mapNumber = data.mapNumber || 2;
+        this.partNumber = data.partNumber || 1;
+        this.mapNumber = data.mapNumber || 0;
+        this.mapAttribute = data.mapAttribute || 0;
+        
         this.playerStatus = data.playerStatus || null;
         this.skipTutorial = data.skipTutorial || false;
 
@@ -76,46 +79,67 @@ export default class MainScene extends Phaser.Scene {
         this.chordEnd = {x: 0, y: 0};
 
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
-        this.isInDialogue = true;
+        this.isInDialogue = false;
 
         this.isMapSelectionActive = false; // UI 활성화 플래그
 
-        if (this.stageNumber === 1 && this.mapNumber <= 3) { // 일반맵
+        if (this.stageNumber === 1 && this.mapNumber <= 9) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
             this.minX = 10;
             this.maxX = 950;
             this.minY = 96;
             this.maxY = 240;
-        } else if (this.stageNumber === 1 && this.mapNumber == 4) { // 보스맵
+        } else if (this.stageManager === 1 && this.mapNumber === 10) { // 보너스맵
+            this.mapWidth = 480;
+            this.mapHigth = 320;
+            this.minX = 74;
+            this.maxX = 406;
+            this.minY = 74;
+            this.maxY = 278;
+        } else if (this.stageNumber === 1 && this.mapNumber == 11) { // 보스맵
             this.mapWidth = 480;
             this.mapHigth = 480;
             this.minX = 74;
             this.maxX = 406;
             this.minY = 106;
             this.maxY = 438;
-        } else if (this.stageNumber === 2 && this.mapNumber <= 3) { // 일반맵
+        } else if (this.stageNumber === 2 && this.mapNumber <= 9) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
             this.minX = 10;
             this.maxX = 950;
             this.minY = 96;
             this.maxY = 240;
-        } else if (this.stageNumber === 2 && this.mapNumber == 4) { // 보스맵
+        } else if (this.stageManager === 2 && this.mapNumber === 10) { // 보너스맵
+            this.mapWidth = 480;
+            this.mapHigth = 320;
+            this.minX = 74;
+            this.maxX = 406;
+            this.minY = 74;
+            this.maxY = 278;
+        } else if (this.stageNumber === 2 && this.mapNumber == 11) { // 보스맵
             this.mapWidth = 480;
             this.mapHigth = 480;
             this.minX = 74;
             this.maxX = 406;
             this.minY = 106;
             this.maxY = 438;
-        } else if (this.stageNumber === 3 && this.mapNumber <= 3) { // 일반맵
+        } else if (this.stageNumber === 3 && this.mapNumber <= 9) { // 일반맵
             this.mapWidth = 960;
             this.mapHigth = 320;
             this.minX = 10;
             this.maxX = 950;
             this.minY = 96;
             this.maxY = 240;
-        } else if (this.stageNumber === 3 && this.mapNumber == 4) { // 보스맵
+        } else if (this.stageManager === 3 && this.mapNumber === 10) { // 보너스맵
+            this.mapWidth = 480;
+            this.mapHigth = 320;
+            this.minX = 74;
+            this.maxX = 406;
+            this.minY = 74;
+            this.maxY = 278;
+        } else if (this.stageNumber === 3 && this.mapNumber == 11) { // 보스맵
             this.mapWidth = 480;
             this.mapHigth = 480;
             this.minX = 74;
@@ -126,26 +150,22 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-        this.load.tilemapTiledJSON("stage_01_01_map", "assets/map/stage_01_01.json");
-        this.load.tilemapTiledJSON("stage_01_02_map", "assets/map/stage_01_02.json");
-        this.load.tilemapTiledJSON("stage_01_03_map", "assets/map/stage_01_03.json");
-        this.load.tilemapTiledJSON("stage_01_04_map", "assets/map/stage_01_04.json");
+        mapPreload(this);
 
         this.load.image("dungeonTileset", "assets/map/Royal Dungeon Tileset.png");
-        this.load.tilemapTiledJSON("stage_02_01_map", "assets/map/stage_02_01.json");
-        this.load.tilemapTiledJSON("stage_02_02_map", "assets/map/stage_02_02.json");
-        this.load.tilemapTiledJSON("stage_02_03_map", "assets/map/stage_02_03.json");
-        this.load.tilemapTiledJSON("stage_02_04_map", "assets/map/stage_02_04.json");
+        // this.load.tilemapTiledJSON("stage_02_01", "assets/map/stage_02_01.json");
+        // this.load.tilemapTiledJSON("stage_02_02", "assets/map/stage_02_02.json");
+        // this.load.tilemapTiledJSON("stage_02_03", "assets/map/stage_02_03.json");
+        // this.load.tilemapTiledJSON("stage_02_04", "assets/map/stage_02_04.json");
 
         this.load.image("Tileset", "assets/map/Modern_Office_32x32.png");
         this.load.image("Tileset2", "assets/map/Room_Builder_Office_32x32.png");
         this.load.image("Tileset3", "assets/map/Lab Tileset.png");
 
-        this.load.tilemapTiledJSON("stage_03_01_map", "assets/map/stage_03_01.json");
-        this.load.tilemapTiledJSON("stage_03_02_map", "assets/map/stage_03_02.json");
-        this.load.tilemapTiledJSON("stage_03_03_map", "assets/map/stage_03_03.json");
-        this.load.tilemapTiledJSON("stage_03_04_map", "assets/map/stage_03_04.json");
+        // this.load.tilemapTiledJSON("stage_03_01", "assets/map/stage_03_01.json");
+        // this.load.tilemapTiledJSON("stage_03_02", "assets/map/stage_03_02.json");
+        // this.load.tilemapTiledJSON("stage_03_03", "assets/map/stage_03_03.json");
+        // this.load.tilemapTiledJSON("stage_03_04", "assets/map/stage_03_04.json");
 
         // 배경음악 로드
         this.load.audio("get_item", "assets/audio/get_item.wav");
@@ -155,7 +175,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
-
+        
         // 버튼에 사용할 이미지 로드
         // this.load.image('button', 'path_to_button_image.png');
 
@@ -214,9 +234,9 @@ export default class MainScene extends Phaser.Scene {
         });
 
 
-        if (this.mapNumber < 4) {
+        if (this.partNumber < 4) {
             // 스테이지 진행률 UI
-            this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.mapNumber);
+            this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.partNumber);
         }
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
@@ -283,17 +303,30 @@ export default class MainScene extends Phaser.Scene {
             this.isMapSelectionActive = true; // UI 활성화 플래그 설정
 
             // 10개의 맵 중에서 랜덤하게 3개의 맵을 선택
-            const maps = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+            const maps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
             const selectedMaps = Phaser.Utils.Array.Shuffle(maps).slice(0, 3);
 
+            const mapSelections = selectedMaps.map(mapNumber=> {
+                // 해당 맵의 속성 가져오기
+                const attributes = mapAttributes[mapNumber];
+                const selectedAttribute = Phaser.Utils.Array.GetRandom(attributes);  // 속성 랜덤 선택
+                const iconKey = attributeIcons[selectedAttribute];  // 속성에 해당하는 아이콘 가져오기
+
+                return { mapNumber, iconKey };
+            });
+
             // showMapSelectionUI 함수 호출
-            showMapSelectionUI.call(this, this, selectedMaps, (selectedMap) => {
-                console.log(`Moving to ${selectedMap}...`);
-                const stageNumber = this.stageNumber;
-                const playerStatus = this.player.status;
+            showMapSelectionUI.call(this, this, mapSelections, (selectedMapNumber, mapAttribute) => {
+                console.log(`Moving to map number ${selectedMapNumber}...mapAttribute : `, mapAttribute);
 
                 this.isMapSelectionActive = false; // UI 비활성화
-                this.scene.start('MainScene', { stageNumber, mapNumber: selectedMap, playerStatus });
+                this.scene.start('MainScene', { 
+                    stageNumber : this.stageNumber, 
+                    partNumber: this.partNumber + 1,
+                    mapNumber: selectedMapNumber,
+                    mapAttribute: mapAttribute, 
+                    playerStatus : this.player.status 
+                });
                 this.backgroundMusic.stop();
                 dialog.hideDialogModal();  // 선택 후 대화창 숨기기
             }, () => {
@@ -302,18 +335,6 @@ export default class MainScene extends Phaser.Scene {
                 this.input.keyboard.on('keydown-E', goToNextHandler);
                 dialog.hideDialogModal();  // 취소 후 대화창 숨기기
             });
-
-            // console.log('Moving to the next map...');
-            // const stageNumber = this.stageNumber;
-            // const mapNumber = this.mapNumber + 1;
-            // const playerStatus = this.player.status;
-            // if (mapNumber < 5) {
-            //     this.scene.start('MainScene', {stageNumber, mapNumber, playerStatus});
-            //     this.backgroundMusic.stop();
-            // } else {
-            //     this.scene.start('NightScene', {stageNumber, mapNumber, playerStatus});
-            //     this.backgroundMusic.stop();
-            // }
         }
         if (this.milestone) {
             // 플레이어와 표지판 충돌 이벤트 설정
@@ -598,7 +619,14 @@ export default class MainScene extends Phaser.Scene {
     }
 
     setupWorld(stageNumber, mapNumber) {
-        const map = this.make.tilemap({key: `stage_0${stageNumber}_0${mapNumber}_map`});
+        let map;
+        if (mapNumber === 0) {
+            map = this.make.tilemap({key: `stage_01_tutorial`});
+        } else if (mapNumber > 9) {
+            map = this.make.tilemap({key: `stage_0${stageNumber}_${mapNumber}`});
+        } else {
+            map = this.make.tilemap({key: `stage_0${stageNumber}_0${mapNumber}`});
+        }
 
         if (stageNumber === 1) {
             const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
@@ -732,11 +760,6 @@ export default class MainScene extends Phaser.Scene {
                 } else if (name === 'chordEnd') {
                     this.chordEnd = {x: x, y: y};
                     console.log(`chordEnd = {x: ${this.chordEnd.x}, y: ${this.chordEnd.y}`);
-                    this.thelma = new Thelma({
-                        scene: this,
-                        x: x,
-                        y: y
-                    });
                 }
             }
 
