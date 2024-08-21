@@ -1,3 +1,7 @@
+import HeartIndicator from "./HeartIndicator.js";
+import ProgressIndicator from "./ProgressIndicator.js";
+import TextIndicator from "./TextIndicator.js";
+
 import Player from "./Player.js";
 import Chord from "./character/Chord.js";
 import Thelma from "./character/Thelma.js";
@@ -42,6 +46,8 @@ export default class StoreScene extends Phaser.Scene {
         Milestone.preload(this);
         StoreItem.preload(this);
         Dialog.preload(this);
+
+        this.load.audio("get_item", "assets/audio/get_item.wav");
     }
 
     create() {
@@ -95,7 +101,7 @@ export default class StoreScene extends Phaser.Scene {
             }
 
             if (name === 'item') {
-                const itemKey = Math.floor(Math.random() * 10) + 1;
+                const itemKey = Math.floor(Math.random() * 11) + 1;
                 let item = new StoreItem({
                     scene: this,
                     x: x,
@@ -115,12 +121,26 @@ export default class StoreScene extends Phaser.Scene {
             }
         });
 
+        // F키 입력 감지 및 구매 처리
+        const handleFKeyPress = () => {
+            if (this.selectedItem && this.selectedItem.canBuy) {
+                this.selectedItem.buyItem();
+                this.selectedItem = null; // 구매 후 선택된 아이템 해제
+            } else if (this.selectedItem) {
+                console.log('코인이 부족합니다.');
+            }
+        };
+
+        // 키보드 입력 이벤트 리스너를 한번만 등록
+        this.input.keyboard.on('keydown-F', handleFKeyPress);
+
         this.matterCollision.addOnCollideStart({
             objectA: this.player,
             objectB: this.itemArr,
             callback: eventData => {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 gameObjectB.showItemInfo();
+                this.selectedItem = gameObjectB;
             }
         });
 
@@ -130,6 +150,10 @@ export default class StoreScene extends Phaser.Scene {
             callback: eventData => {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
                 gameObjectB.hideItemInfo();
+                // 충돌이 종료된 아이템이 현재 선택된 아이템인 경우 해제
+                if (this.selectedItem === gameObjectB) {
+                    this.selectedItem = null;
+                }
             }
         });
 
@@ -167,10 +191,43 @@ export default class StoreScene extends Phaser.Scene {
             }).on('update', this.updateJoystickState, this);
         }
 
+        if (this.partNumber < 4) {
+            // 스테이지 진행률 UI
+            this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.partNumber);
+        }
+        // 하트(체력) UI
+        this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
+
+        // X, Y 위치를 화면의 상단 우측으로 설정
+        const x = 15;/// 2
+        const y = 6; 
+
+        // 상단 coins:{누적갯수} 텍스트 박스 표시
+        this.coinIndicatorText = TextIndicator.createText(this, x, y, `Coins: ${this.player.status.coin}`, {
+            fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '12px',
+            fill: '#000', // 글씨 색상 검은색
+            backgroundColor: 'rgba(255, 255, 255, 0.5)', // 배경 투명한 흰색
+            padding: {
+                x: 4, // 좌우 패딩
+                y: 0  // 상하 패딩
+            }
+        });
+        // 계속 상단에 고정되도록 UI 레이어 설정
+        TextIndicator.setScrollFactorText(this.coinIndicatorText);
+
+        this.getItemSound = this.sound.add(`get_item`, {
+            volume: 0.7 // Set the volume (0 to 1)
+        });
+
     }
 
     update() {
         this.player.update();
+
+        this.itemArr.forEach(item => {
+            item.updatePurchaseAvailability(this.player.status.coin);
+        });
     }
 
     updateJoystickState(){

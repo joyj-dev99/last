@@ -60,6 +60,12 @@ const itemData = {
         name: "두꺼운 장갑",
         price: 70,
         description: "두꺼운 장갑 끼니까 무기가 잘 안 잡히신다구요? 뭐, 익숙해지세요. 공격력 25% 감소된 건 어쩔 수 없어요."
+    },
+    11: {
+        texture: "item_11",
+        name: "화살 10개",
+        price: 50,
+        description: "유비무환. 화살은 언제나 소중하죠."
     }
 };
 
@@ -81,6 +87,7 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         this.name = itemConfig.name;
         this.description = itemConfig.description;
         this.price = itemConfig.price;
+        this.canBuy = true; // 구매 가능 여부
         console.log(`아이템 생성 :`, this.name, this.price);
 
         // 화면에 렌더링 + 다른 게임 객체들과 상호작용 가능해짐
@@ -99,9 +106,11 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             }
         });
         this.setExistingBody(itemCollider);
+
+        this.canBuy = true;
         
         // 가격 텍스트
-        this.priceText = scene.add.text(x, y + 15, `${this.price} G`, {
+        this.priceText = scene.add.text(x, y + 20, `${this.price} G`, {
             fontSize: '10px',
             color: '#fff',
             align: 'center',
@@ -110,7 +119,7 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         }).setOrigin(0.5, 0.5);
 
         // 이름 및 텍스트
-        this.nameText = scene.add.text(x, y - 50, this.name, {
+        this.nameText = scene.add.text(x, y - 30, this.name, {
             fontSize: '14px',
             color: '#fff',
             align: 'center',
@@ -126,27 +135,39 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             color: '#fff',
             align: 'center',
         }).setOrigin(0.5, 0.5).setVisible(false);
-
-        // F키 입력 감지
-        scene.input.keyboard.on('keydown-F', () => {
-            if (this.isPlayerNearby()) {
-                this.buyItem();
-            }
-        });
     }
 
     static preload(scene) {
-        scene.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', { frameWidth: 32, frameHeight: 32 } );
-        scene.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', { frameWidth: 32, frameHeight: 32 } );
-        scene.load.spritesheet('Loot and Treasure', 'assets/item/Loot and Treasure.png', { frameWidth: 32, frameHeight: 32 } );
-        scene.load.spritesheet('Alchemy and Potions', 'assets/item/Alchemy and Potions.png', { frameWidth: 32, frameHeight: 32 } );
+        scene.load.image('item_01', 'assets/item/item_01.png');
+        scene.load.image('item_02', 'assets/item/item_02.png');
+        scene.load.image('item_03', 'assets/item/item_03.png');
+        scene.load.image('item_04', 'assets/item/item_04.png');
+        scene.load.image('item_05', 'assets/item/item_05.png');
+        scene.load.image('item_06', 'assets/item/item_06.png');
+        scene.load.image('item_07', 'assets/item/item_07.png');
+        scene.load.image('item_08', 'assets/item/item_08.png');
+        scene.load.image('item_09', 'assets/item/item_09.png');
+        scene.load.image('item_10', 'assets/item/item_10.png');
+        scene.load.image('item_11', 'assets/player/arrow_10.jpg')
+    }
+
+    updatePurchaseAvailability(playerCoins) {
+        if (playerCoins >= this.price) {
+            this.canBuy = true;
+            this.priceText.setColor('#fff');
+        } else {
+            this.canBuy = false;
+            this.priceText.setColor('#ff0000');
+        }
     }
 
     // 아이템 정보 보여주기
     showItemInfo() {
         this.nameText.setVisible(true);
-        this.buyKeySprite.setVisible(true);
-        this.buyText.setVisible(true);
+        if (this.canBuy) {
+            this.buyKeySprite.setVisible(true);
+            this.buyText.setVisible(true);
+        }
     }
 
     // 아이템 정보 숨기기
@@ -156,17 +177,26 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         this.buyText.setVisible(false);
     }
 
-    // 플레이어가 아이템에 가까이 있는지 확인
-    isPlayerNearby() {
-        const player = this.scene.player;
-        const distance = Phaser.Math.Distance.Between(player.x, player.y, this.sprite.x, this.sprite.y);
-        return distance < 20; // 적당한 거리 설정 (필요시 조정 가능)
-    }
-
     // 아이템 구매 처리
     buyItem() {
-        // 여기서 플레이어의 골드를 차감하고, 아이템을 인벤토리에 추가하는 등의 작업을 할 수 있음
+        // 플레이어의 코인을 차감
+        this.scene.player.status.coin -= this.price;
+        this.scene.coinIndicatorText.setText(`Coins: ${this.scene.player.status.coin}`);
         console.log(`${this.name}을(를) ${this.price} G에 구매했습니다!`);
-        // 예: this.scene.player.gold -= this.price;
+
+        // this.scene.itemArr에서 해당 아이템 삭제
+        const itemIndex = this.scene.itemArr.indexOf(this);
+        if (itemIndex > -1) {
+            this.scene.itemArr.splice(itemIndex, 1);
+        }
+
+        // 텍스트와 이미지를 모두 제거
+        this.priceText.destroy();
+        this.nameText.destroy();
+        this.buyKeySprite.destroy();
+        this.buyText.destroy();
+
+        // 해당 아이템 객체를 destroy
+        this.destroy();
     }
 }

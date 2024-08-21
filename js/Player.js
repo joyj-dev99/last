@@ -30,7 +30,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //마법 공격력
             magicATK: 10,
             // 가지고 있는 coin
-            coin: 0,
+            coin: 200,
             // 이동 속도 초기화
             speed: 3.5,
             rollingCoolTime: 500,
