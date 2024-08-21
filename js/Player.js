@@ -12,8 +12,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 상태 정보 초기화
         this.status = {
             name: '맥스',
-            maxHeart : 7,
-            nowHeart : 7,
+            maxHeart : 3,
+            nowHeart : 3,
             //검 공격력
             swordATK : 20,
             //활 공격력
@@ -25,9 +25,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 이동 속도 초기화
             speed: 3.5,
             // 공격 스킬 쿨타임 초기화 (초 단위)
-            swordCooldown: 5,  // 검 공격 쿨타임 5초
-            magicCooldown: 10,  // 마법 공격 쿨타임 10초
-            arrowNum : 0 //화살의 갯수
+            swordCoolTime: 3000,  // 검 공격 쿨타임 3초
+            magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
+            arrowCount : 0 //화살의 갯수
         };
 
         this.scene = scene;
