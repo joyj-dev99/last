@@ -432,7 +432,7 @@ export default class MainScene extends Phaser.Scene {
             // .setDepth(dialogDepth)
             .setScrollFactor(0);
 
-
+          
 
             // 구르기 버튼
             const text2 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 20, '구르기', buttonTextStyle)
@@ -464,7 +464,7 @@ export default class MainScene extends Phaser.Scene {
 
             this.button2.setDepth(100);
 
-                    
+
             // 활 공격 버튼
             const text3 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 80, '활 공격', buttonTextStyle)
             .setOrigin(0.5).setScrollFactor(0);
@@ -488,6 +488,10 @@ export default class MainScene extends Phaser.Scene {
             this.button3 = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 100,'Weapons and Equipment' , 73)
                             .setScale(0.75)
                             .setScrollFactor(0);
+
+            this.setArrowBtnStatus(this.player.status.arrowCount);
+            
+
 
 
             // 마법 공격 버튼
@@ -1299,6 +1303,95 @@ export default class MainScene extends Phaser.Scene {
                 }
             }
         });
+
+
+    }
+
+    setArrowBtnStatus(arrowCount){
+
+        if(this.arrowCounttext){
+            this.arrowCounttext.destroy();
+        }
+        // 버튼 스타일 (폰트 크기 조절)
+        const buttonTextStyle = { font: "18px Arial", fill: "#FFFFFF" };
+        console.log("setArrowBtnStatus arrowCount : "+arrowCount);
+        // this.graphics3.
+        this.arrowCounttext = this.add.text(this.cameras.main.width - 80, this.cameras.main.height - 95, arrowCount, buttonTextStyle)
+            .setOrigin(0.5).setScrollFactor(0);
+
+        if(arrowCount <= 0){
+            this.graphics3.removeAllListeners('pointerdown');
+            this.graphics3.removeAllListeners('pointerup');
+            this.graphics3.removeAllListeners('pointerout');
+            this.graphics3.setDepth(2);
+            this.button3.setDepth(0);
+        }
+        
+    }
+
+    setArrowListener(){
+        // 버튼을 눌렀을 때 (pointerdown)
+        this.graphics3.on('pointerdown', () => {
+            console.log('graphics3 pressed down!');
+             this.button3.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+            const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+                key: 'Shift',
+                code: 'ShiftLeft',
+                keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                bubbles: true,
+                cancelable: true
+            });
+
+            window.dispatchEvent(shiftKeyDownEvent);
+
+            });
+
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.graphics3.on('pointerup', () => {
+                console.log('Button released!');
+                this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+            const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+                key: 'Shift',
+                code: 'ShiftLeft',
+                keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                bubbles: true,
+                cancelable: true
+            });
+
+            window.dispatchEvent(shiftKeyUpEvent);
+
+            });
+
+            // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+            this.graphics3.on('pointerout', () => {
+                console.log('Pointer out of button!');
+                this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+            });
+           
+    }
+
+    addArrows(arrowCount){
+
+        if(this.arrowCounttext){
+            this.arrowCounttext.destroy();
+        }
+        // 버튼 스타일 (폰트 크기 조절)
+        const buttonTextStyle = { font: "18px Arial", fill: "#FFFFFF" };
+        console.log("setArrowBtnStatus arrowCount : "+arrowCount);
+        // this.graphics3.
+        this.arrowCounttext = this.add.text(this.cameras.main.width - 80, this.cameras.main.height - 95, arrowCount, buttonTextStyle)
+            .setOrigin(0.5).setScrollFactor(0);
+
+        if(arrowCount > 0){
+            this.graphics3.setDepth(100);
+            this.button3.setDepth(100);
+        }
+        
     }
 
     iteamDrop(monster) {

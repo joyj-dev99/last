@@ -36,7 +36,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 공격 스킬 쿨타임 초기화 (초 단위)
             swordCoolTime: 3000,  // 검 공격 쿨타임 3초
             magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
-            arrowCount : 0 //화살의 갯수
+            arrowCount : 3 //화살의 갯수
         };
 
         this.isSlash = true;
@@ -199,13 +199,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // x키 누르면 해당 방향으로 활 쏘기
         if (Phaser.Input.Keyboard.JustDown(this.xKey)) {
-
-            this.handleBow(); //활쏘기 동작 처리
+            if(this.status.arrowCount > 0)
+                this.handleBow(); //활쏘기 동작 처리
         }
 
         //c키 누르면 마법 생성.
         if (Phaser.Input.Keyboard.JustDown(this.cKey)) {
-
             this.handleSpell(); //마법 부리기
         }
 
@@ -229,9 +228,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.handleRoll(playerVelocity); // 구르기
             }
         }
+
     }
 
     handleSlash() {
+
         if (this.isRolling) {
             this.cancelRoll(); // 구르기를 즉시 중단
         }
@@ -256,6 +257,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                     break;
             }
         }
+
     }
 
     handleBow() {
@@ -287,12 +289,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             y: this.y
         });
         this.scene.setCollisionOfPlayerAttack(arrow);
+
+        console.log('this.status.arrowCount --');
+        this.status.arrowCount--;
+        console.log('this.status.arrowCount : '+this.status.arrowCount);
+        this.scene.setArrowBtnStatus(this.status.arrowCount);
     }
 
     // 화살의 갯수를 증가시키는 함수
     addArrows(amount) {
-        this.status.arrowNum += amount;
-        console.log(`현재 화살의 갯수: ${this.status.arrowNum}`);
+
+        if(this.status.arrowCount <= 0){
+            this.scene.setArrowListener();
+        }
+        this.status.arrowCount += amount;
+        console.log(`현재 화살의 갯수: ${this.status.arrowCount}`);
+        this.scene.addArrows(this.status.arrowCount);
     }
 
     handleSpell() {
@@ -578,7 +590,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.anims.play('player_damage');
             this.soundDamage.play();
         }
-
 
     }
 
