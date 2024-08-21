@@ -1,3 +1,4 @@
+import Item from "./Item.js";
 import Tutorial from "./Tutorial.js";
 
 
@@ -343,10 +344,24 @@ export default class StageManager {
         
     }
 
-    setStageEnd(stageNumber, mapNumber) {
+    setStageEnd(stageNumber, mapNumber, mapAttribute) {
         this.scene.isInDialogue = true;
         this.player.stopMove();
         this.chord.setLocation(this.scene.chordEnd.x, this.scene.chordEnd.y);
+
+        console.log("mapAttribute "+ mapAttribute);
+        // 맵의 속성에 따라서, 아이템 or 하트 or 랜덤 보상을 드랍한다.
+        const dropX = this.scene.chordEnd.x;
+        const dropY = this.scene.chordEnd.y + 30;
+
+        if(mapAttribute === 1){
+            Item.dropHeart(this.scene, this.player, dropX, dropY);
+        }else if(mapAttribute === 2){
+            Item.dropRandomItem(this.scene, dropX, dropY);
+        }else if(mapAttribute === 3){
+            Item.dropRandomReward(this.scene, this.player, dropX, dropY);
+        }
+
         let dialogueMessages;
         if (stageNumber == 1 && mapNumber == 0) {
             dialogueMessages = [

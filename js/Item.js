@@ -18,7 +18,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static Heart = {
         type : 'heart',
         texture : 'Skills and Spells',
-        frame : 146,
+        frame : 130,
         scale : 0.5,
         message : '+1 heart'
     };
@@ -28,7 +28,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static MaxHeart_ITEM = {
         type: 'max_heart',
         texture: 'Skills and Spells',  
-        frame: 1090,           
+        frame: 1089,           
         scale: 0.5,            
         message: '+1 Max Heart',  
         drap_per: 0.1  // 드랍 확률 (10%)
@@ -133,11 +133,32 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     };
 
 
-    static dropHeart(){
-        return Item.Heart;
+    // 하트 드랍 메서드
+    static dropHeart(scene, player, x, y) {
+        let item = new Item({
+            scene: scene,
+            x: x,
+            y: y,
+            itemType: Item.Heart
+        });
+
+        // 플레이어와 아이템 충돌 이벤트 설정
+        const unsubscribe = scene.matterCollision.addOnCollideStart({
+            objectA: player,
+            objectB: item,
+            callback: eventData => {
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                scene.getItemSound.play();
+                console.log("플레이어와 아이템 충돌");
+                // 아이템 효과 적용하기 및 화면에 반영하기
+                gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator);
+                unsubscribe();
+            }
+        });
     }
 
-    static dropRandomItem() {
+    // 랜덤 아이템 드랍 메서드
+    static dropRandomItem(scene, player, x, y) {
         const items = [
             Item.MaxHeart_ITEM,
             Item.PhantomCloak_ITEM,
@@ -150,35 +171,46 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             Item.HeavyGloves_ITEM
         ];
 
-        // 총 드랍 확률 합계
-        // 총 드랍확률을 합해서, 그중 특정 아이템이 드랍될 확률을 비율적으로 적용하기 위함
         const totalDropRate = items.reduce((acc, item) => acc + item.drap_per, 0);
-
-        // 0과 totalDropRate 사이의 랜덤 값을 생성
         let randomValue = Math.random() * totalDropRate;
 
-        // 랜덤 값에 따라 아이템 선택
-        for (let item of items) {
+        let item;
+        for (let oneItem of items) {
             if (randomValue < item.drap_per) {
-                return item;
+                item = new Item({
+                    scene: scene,
+                    x: x,
+                    y: y,
+                    itemType: oneItem
+                });
             }
-            randomValue -= item.drap_per;
+            randomValue -= oneItem.drap_per;
         }
 
-        // 예외 처리: 만약 모든 경우에 해당하지 않으면 (이론상 발생하지 않음)
-        return null;
+        // 플레이어와 아이템 충돌 이벤트 설정
+        const unsubscribe = scene.matterCollision.addOnCollideStart({
+            objectA: player,
+            objectB: item,
+            callback: eventData => {
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                scene.getItemSound.play();
+                console.log("플레이어와 아이템 충돌");
+                // 아이템 효과 적용하기 및 화면에 반영하기
+                gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator);
+                unsubscribe();
+            }
+        });
+
     }
 
-    // 물음표 맵
-    // 하트와 아이템을 떨어뜨리는 두 가지 메서드 중에서 랜덤으로 하나를 선택하여 실행하는 메서드
-    static dropRandomReward() {
-        // 50% 확률로 dropHeart 또는 dropRandomItem을 실행
+    // 랜덤 보상 드랍 메서드 (물음표)
+    static dropRandomReward(scene, player, x, y) {
         const randomChoice = Math.random();
-    
+
         if (randomChoice < 0.5) {
-            return Item.dropHeart();  // 하트 떨어뜨리기
+            return Item.dropHeart(scene, player, x, y);  // 하트 드랍
         } else {
-            return Item.dropRandomItem();  // 랜덤 아이템 떨어뜨리기
+            return Item.dropRandomItem(scene, player, x, y);  // 랜덤 아이템 드랍
         }
     }
     
@@ -236,46 +268,6 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             // 상단 coin 누적 갯수 화면에 반영
             player.status.coin += 10;
             textIndicator.setText(`Coins: ${player.status.coin}`);
-        }
-        else if(this.itemType.type == 'tomato'){
-            // 체력 +1 적용
-            player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
-        }
-        else if(this.itemType.type == 'eggplant'){
-            // 힘 3종류 +5 적용
-            player.increaseATK(5);
-
-        }else if(this.itemType.type == 'apple'){
-            // 체력 +1 적용
-            player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
-        }
-        else if(this.itemType.type == 'lemon'){
-            // 체력 +1 적용
-            player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
-        }
-        else if(this.itemType.type == 'pumpkin'){
-            // 공격력 +5 적용
-            player.increaseATK(5);
-        }
-        // 미니고블린의 고기
-        else if(this.itemType.type == 'mini_goblin_meat'){
-            // 체력 +1 적용
-            player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
-        }
-        // 쥐의 치즈
-        else if(this.itemType.type == 'cheese'){
-            // 체력 +1 적용
-            player.increaseHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
-        }
-        // 포션 
-        else if(this.itemType.type == 'potion'){
-            // 공격력 +5 적용
-            player.increaseATK(5);
         }
         // 붉은 하트
         else if(this.itemType.type == 'heart'){
