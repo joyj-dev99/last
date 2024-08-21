@@ -34,7 +34,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 이동 속도 초기화
             speed: 3.5,
             rollingCoolTime: 500,
-            swordCoolTime: 3000,  // 검 공격 쿨타임 3초
+            swordCoolTime: 1000,  // 검 공격 쿨타임 3초
             magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
             arrowCount: 3 //화살의 갯수
         };
