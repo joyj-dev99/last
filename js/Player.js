@@ -443,8 +443,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
         }
     }
+    
+    // 이동 속도를 조절하는 함수
+    adjustSpeed(multiplier) {
+        this.status.speed *= multiplier;
+    }
 
-    resetComboState() {
+    resetComboState(){
         // 다른 동작이 시작될때는, 콤보 상태를 초기화
         this.comboState = 0;
     }
