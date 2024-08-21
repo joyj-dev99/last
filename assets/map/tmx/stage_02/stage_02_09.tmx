@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="14">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="29">
  <tileset firstgid="1" name="Royal Dungeon Tileset" tilewidth="32" tileheight="32" tilecount="396" columns="18">
-  <image source="../Royal Dungeon Tileset.png" width="576" height="704"/>
+  <image source="../../Royal Dungeon Tileset.png" width="576" height="704"/>
   <tile id="10">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -113,7 +113,7 @@
   <object id="7" name="mini goblin" type="monster" x="179.801" y="153.627">
    <point/>
   </object>
-  <object id="8" name="mini goblin" type="monster" x="304.979" y="227.596">
+  <object id="8" name="spider" type="monster" x="304.979" y="227.596">
    <point/>
   </object>
   <object id="9" name="ratfolk" type="monster" x="386.913" y="154.765">
@@ -129,6 +129,42 @@
    <point/>
   </object>
   <object id="13" name="mini goblin" type="monster" x="794.31" y="149.075">
+   <point/>
+  </object>
+  <object id="14" name="ratfolk" type="monster" x="120.413" y="224.299">
+   <point/>
+  </object>
+  <object id="15" name="fly" type="monster" x="213.674" y="212.494">
+   <point/>
+  </object>
+  <object id="16" name="spider" type="monster" x="289.228" y="138.121">
+   <point/>
+  </object>
+  <object id="17" name="fly" type="monster" x="421.446" y="221.938">
+   <point/>
+  </object>
+  <object id="18" name="mini goblin" type="monster" x="479.292" y="138.121">
+   <point/>
+  </object>
+  <object id="19" name="spider" type="monster" x="633.94" y="219.577">
+   <point/>
+  </object>
+  <object id="20" name="fly" type="monster" x="670.536" y="144.024">
+   <point/>
+  </object>
+  <object id="21" name="ratfolk" type="monster" x="790.949" y="212.494">
+   <point/>
+  </object>
+  <object id="22" name="mini goblin" type="monster" x="898.377" y="221.938">
+   <point/>
+  </object>
+  <object id="23" name="spider" type="monster" x="916.085" y="180.62">
+   <point/>
+  </object>
+  <object id="24" name="fly" type="monster" x="96.8028" y="140.482">
+   <point/>
+  </object>
+  <object id="25" name="spider" type="monster" x="585.539" y="229.021">
    <point/>
   </object>
  </objectgroup>

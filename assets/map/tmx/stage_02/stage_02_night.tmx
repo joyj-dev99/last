@@ -4,7 +4,7 @@
   <export target="stage_01_night.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Forest-Prairie Tileset v1" tilewidth="32" tileheight="32" tilecount="567" columns="21">
-  <image source="../Forest-Prairie Tileset v1.png" width="672" height="864"/>
+  <image source="../../Forest-Prairie Tileset v1.png" width="672" height="864"/>
   <tile id="128">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -652,7 +652,7 @@
   </tile>
  </tileset>
  <tileset firstgid="568" name="Lab Tileset" tilewidth="32" tileheight="32" tilecount="40" columns="5">
-  <image source="../Lab Tileset.png" width="160" height="256"/>
+  <image source="../../Lab Tileset.png" width="160" height="256"/>
  </tileset>
  <layer id="1" name="floor" width="15" height="10">
   <data encoding="csv">
