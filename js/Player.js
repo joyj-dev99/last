@@ -126,23 +126,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
 
-        // this.btnSlashCoolTime = this.scene.add.image(20, 200, 'button_indicator')
-        // this.btnSlashCoolTime.setScale(0.05);
-        // this.btnSlashCoolTime.setScrollFactor(0);
-        //
-        // // 쿨타임 오버레이 생성 (반투명한 검은색 사각형)
-        // this.overLaySlashCoolTime = this.add.graphics();
-        // this.overLaySlashCoolTime.fillStyle(0x000000, 0.5); // 검은색, 50% 투명도
-        // this.overLaySlashCoolTime.fillRect(-this.btnSlashCoolTime.width / 2, -this.btnSlashCoolTime.height / 2, this.btnSlashCoolTime.width, this.btnSlashCoolTime.height);
-        // this.overLaySlashCoolTime.setVisible(false); // 처음에는 보이지 않게 설정
-        //
-        // // 오버레이를 스프라이트로 변환
-        // this.overLaySlashCoolTime = this.add.renderTexture(this.btnSlashCoolTime.x, this.btnSlashCoolTime.y, this.btnSlashCoolTime.width, this.btnSlashCoolTime.height);
-        // this.overLaySlashCoolTime.setOrigin(0.5, 0.5);
-        // this.overLaySlashCoolTime.setTint(0x000000);
-        // this.overLaySlashCoolTime.setAlpha(0.5);
-        // this.overLaySlashCoolTime.setVisible(false);
-
     }
 
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
@@ -228,7 +211,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.handleRoll(playerVelocity); // 구르기
             }
         }
-        
+
         this.rollingCoolTimeIndicator(delta);
         this.slashCoolTimeIndicator(delta);
         this.magicCoolTimeIndicator(delta);
