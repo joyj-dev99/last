@@ -6,6 +6,7 @@ import {
     PLAYER_ATTACK_CATEGORY, MONSTER_ATTACK_CATEGORY, BOUNDARY_CATEGORY
 } from "../constants.js";
 
+const soundVolume = 0.7;
 export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y, player} = data;
@@ -95,11 +96,12 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.setDepth(1001);
 
         this.pumpkinShockwaveSound = this.scene.sound.add(`pumpkin_shockwave`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: soundVolume * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.pumpkinSeedSound = this.scene.sound.add(`pumpkin_seed`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: soundVolume * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
+
 
         //
         //
@@ -111,6 +113,18 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.state = 'idle'; // 현재 상태
         this.isBattleStared = false;
         this.isKnockBack = false;
+    }
+
+    soundOn(){
+        console.log('soundOn ');
+        console.log('pumpkinShockwaveSound : '+this.pumpkinShockwaveSound);
+        this.pumpkinShockwaveSound.setVolume(soundVolume);
+        this.pumpkinSeedSound.setVolume(soundVolume);
+    }
+
+    soundOff(){
+        this.pumpkinShockwaveSound.setVolume(0);
+        this.pumpkinSeedSound.setVolume(0);
     }
 
     static preload(scene) {
