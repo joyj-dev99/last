@@ -16,10 +16,10 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
     const camera = scene.cameras.main;
     const centerX = camera.scrollX + camera.width / 2;
     const centerY = camera.scrollY + camera.height / 2 - 18; // 버튼들을 위로 이동
-
+    
     // 길 텍스트 설정
     const paths = ["오른쪽 길", "가운데 길", "왼쪽 길"];
-
+    
     // 패딩 설정
     const textPadding = 20;
     const iconPadding = 10;
