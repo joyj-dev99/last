@@ -29,7 +29,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         texture: 'Weapons and Equipment',  
         frame: 1259,  
         scale: 0.5,
-        message: '10s Invincibility!',  
+        message: '10초 동안 무적',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -37,7 +37,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static SwiftBoots_ITEM = {
         type: 'swift_boots',
         texture: 'Weapons and Equipment', 
-        frame: 1904,  
+        frame: 1858,  
         scale: 0.5,
         message: 'Speed +25%',  
         drap_per: 0.1  // 드랍 확률 (10%)
@@ -123,7 +123,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
 
 
     // 하트 드랍 메서드
-    static dropHeart(scene, player, x, y) {
+    static dropHeart(scene, player, x, y, dialog) {
         let item = new Item({
             scene: scene,
             x: x,
@@ -140,14 +140,14 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
                 scene.getItemSound.play();
                 console.log("플레이어와 아이템 충돌");
                 // 아이템 효과 적용하기 및 화면에 반영하기
-                gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator);
+                gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator, dialog);
                 unsubscribe();
             }
         });
     }
 
     // 랜덤 아이템 드랍 메서드
-    static dropRandomItem(scene, player, x, y) {
+    static dropRandomItem(scene, player, x, y, dialog) {
         const items = [
             Item.MaxHeart_ITEM,
             Item.PhantomCloak_ITEM,
@@ -163,43 +163,48 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         const totalDropRate = items.reduce((acc, item) => acc + item.drap_per, 0);
         let randomValue = Math.random() * totalDropRate;
 
-        let item;
+        let selectedItem = null;
         for (let oneItem of items) {
-            if (randomValue < item.drap_per) {
-                item = new Item({
-                    scene: scene,
-                    x: x,
-                    y: y,
-                    itemType: oneItem
-                });
+            if (randomValue < oneItem.drap_per) {
+                selectedItem = oneItem;
+                break;  // 조건을 만족하면 루프 종료
             }
             randomValue -= oneItem.drap_per;
         }
 
-        // 플레이어와 아이템 충돌 이벤트 설정
-        const unsubscribe = scene.matterCollision.addOnCollideStart({
-            objectA: player,
-            objectB: item,
-            callback: eventData => {
-                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                scene.getItemSound.play();
-                console.log("플레이어와 아이템 충돌");
-                // 아이템 효과 적용하기 및 화면에 반영하기
-                gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator);
-                unsubscribe();
-            }
-        });
+        if (selectedItem) {
+            let item = new Item({
+                scene: scene,
+                x: x,
+                y: y,
+                itemType: selectedItem
+            });
 
+            // 플레이어와 아이템 충돌 이벤트 설정
+            const unsubscribe = scene.matterCollision.addOnCollideStart({
+                objectA: player,
+                objectB: item,
+                callback: eventData => {
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    scene.getItemSound.play();
+                    console.log("플레이어와 아이템 충돌");
+                    // 아이템 효과 적용하기 및 화면에 반영하기
+                    gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator, dialog);
+                    unsubscribe();
+                }
+            });
+        }
     }
 
+
     // 랜덤 보상 드랍 메서드 (물음표)
-    static dropRandomReward(scene, player, x, y) {
+    static dropRandomReward(scene, player, x, y, dialog) {
         const randomChoice = Math.random();
 
         if (randomChoice < 0.5) {
-            return Item.dropHeart(scene, player, x, y);  // 하트 드랍
+            return Item.dropHeart(scene, player, x, y, dialog);  // 하트 드랍
         } else {
-            return Item.dropRandomItem(scene, player, x, y);  // 랜덤 아이템 드랍
+            return Item.dropRandomItem(scene, player, x, y, dialog);  // 랜덤 아이템 드랍
         }
     }
     
@@ -228,7 +233,6 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         this.setCollidesWith([PLAYER_CATEGORY, TILE_CATEGORY]);
 
         this.itemType = itemType;
-
     }
 
     static preload(scene) {
@@ -249,7 +253,9 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
 
     // 아이템 적용 메소드
     // 아이템마다 상속으로 처리할 수도 있을 듯
-    applyItem(player, textIndicator, heartIndicator) {
+    applyItem(player, textIndicator, heartIndicator, dialog) {
+
+        let dialogMessages = [];
 
         console.log('itemType : '+this.itemType.type);
 
@@ -263,106 +269,126 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             // 체력 +1 적용
             player.increaseHeart(1);
             heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
+
+            // 텍스트 띄우기
+            let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
+                fontFamily: 'GalmuriMono7, sans-serif',
+                fontSize: '8px', //8배수 단위로 늘어나야 잘 보임
+                // fill: '#FFFFFF',
+                fill: '#000000',
+                resolution:2
+            });
+    
+            this.scene.time.delayedCall(2000, () => {
+                // gpt가 이 지연 호출이 정확히 실행될 때 text 객체가 이미 파괴되었을 가능성이 있습니다. 
+                // 안전하게 처리하려면 text가 존재할 때만 제거하도록 할 수 있습니다.
+                // 라면서 확인하라고 해서 추가한 코드
+                if (text) {
+                    TextIndicator.removeText(text);
+                }
+            });
         }
         //천사의 심장
         else if(this.itemType.type == 'max_heart'){
+            dialogMessages.push({ name: '코드', portrait: 'ChordPotrait', message: this.itemType.message });
             player.increaseMaxHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
+
         }
         //팬텀 망토
         else if(this.itemType.type == 'phantom_cloak'){
             // 플레이어를 무적 상태로 설정
-            player.setInvincible(true);
-
-             // 10초 후에 무적 상태를 해제
-            this.scene.time.delayedCall(10000, () => {
-                player.setInvincible(false);
-                console.log('Phantom Cloak effect ended!');
+            dialogMessages.push({ name: '코드', portrait: 'ChordPotrait', message: this.itemType.message });
+            dialog.showDialogModal(dialogMessages, () => {
+                player.setInvincible(true);
+                this.scene.time.delayedCall(20000, () => {
+                    player.setInvincible(false);
+                    console.log('Phantom Cloak effect ended!');
+                });
             });
+            return;
         }
         //신속의 장화
         else if(this.itemType.type == 'swift_boots'){
-            player.adjustSpeed(1.25);  // 25% 속도 증가
-
-            this.scene.time.delayedCall(60000, () => {
-                player.adjustSpeed(1 / 1.25);  // 원래 속도로 복원
-                console.log('Swift Boots effect ended. Speed reset to: ' + player.status.speed);
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
+            dialog.showDialogModal(dialogMessages, () => {
+                player.adjustSpeed(1.25);
+                this.scene.time.delayedCall(60000, () => {
+                    player.adjustSpeed(1 / 1.25);
+                    console.log('Swift Boots effect ended.');
+                });
             });
+            return;
         }
         //알수 없는 부적
         else if(this.itemType.type == 'unknown_amulet'){
-            // 모든 공격 스킬의 쿨타임을 3초 감소시킴
+            // 이미지 잘못됨
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             player.adjustCooldown(-3); 
+
         }
         //양자 모래시계
         else if(this.itemType.type == 'quantum_hourglass'){
-             // 모든 공격 스킬의 쿨타임을 3초 증가시킴
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             player.adjustCooldown(3);
         }
         //허리에 좋은 약초
         else if(this.itemType.type == 'herbal_medicine'){
-            // 구르기 금지
-            player.canRoll = false;
-
-             // 30초 후에 다시 구르기 가능하도록 설정
-            this.scene.time.delayedCall(30000, () => {
-                player.canRoll = true;
-                console.log('Rolling is now enabled again.');
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
+            dialog.showDialogModal(dialogMessages, () => {
+                player.canRoll = false;
+                this.scene.time.delayedCall(30000, () => {
+                    player.canRoll = true;
+                    console.log('Rolling is now enabled again.');
+                });
             });
+            return;
+
         }
         //해적의 금고
         else if(this.itemType.type == 'pirates_safe'){
             // 플레이어의 코인을 0으로 초기화
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             player.status.coin = 0;
+            
         }
         //고대의 묘약
         else if(this.itemType.type == 'ancient_potion'){
             // 이동속도를 25% 감소시킴
-            player.adjustSpeed(0.75);  
-
-            this.scene.time.delayedCall(60000, () => {
-                player.adjustSpeed(1 / 0.75);  // 원래 속도로 복원
-                console.log('Ancient Potion effect ended. Speed reset to: ' + player.status.speed);
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
+            dialog.showDialogModal(dialogMessages, () => {
+                player.adjustSpeed(0.75);
+                this.scene.time.delayedCall(60000, () => {
+                    player.adjustSpeed(1 / 0.75);
+                    console.log('Ancient Potion effect ended.');
+                });
             });
+            return;
         }
         //두꺼운 장갑
         else if(this.itemType.type == 'heavy_gloves'){
             // 모든 공격 스킬의 공격력을 25% 감소시킴
             player.adjustAttackPower(0.75);  
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
         }
         //화살 1개
         else if(this.itemType.type == 'arrow'){
             // 플레이어가 가진 화살이 1개 늘어남
             player.addArrow(1);
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
 
         }
         //화살 10개
         else if(this.itemType.type == 'arrow_10'){
-            // 플레이어가 가진 화살이 1개 늘어남
+            // 플레이어가 가진 화살이 10개 늘어남
             player.addArrow(10);
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
 
         }
         
-        let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
-            fontFamily: 'GalmuriMono7, sans-serif',
-            fontSize: '8px', //8배수 단위로 늘어나야 잘 보임
-            // fill: '#FFFFFF',
-            fill: '#000000',
-            resolution:2
-        });
-
-        this.scene.time.delayedCall(2000, () => {
-            // gpt가 이 지연 호출이 정확히 실행될 때 text 객체가 이미 파괴되었을 가능성이 있습니다. 
-            // 안전하게 처리하려면 text가 존재할 때만 제거하도록 할 수 있습니다.
-            // 라면서 확인하라고 해서 추가한 코드
-            if (text) {
-                TextIndicator.removeText(text);
-            }
-        });
+        dialog.showDialogModal(dialogMessages);
         
         this.destroy();
-
-        console.log("상호작용 가능 표시를 보여주는 메서드.");
 
         return true;
 

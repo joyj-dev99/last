@@ -355,11 +355,14 @@ export default class StageManager {
         const dropY = this.scene.chordEnd.y + 30;
 
         if(mapAttribute === 1){
-            Item.dropHeart(this.scene, this.player, dropX, dropY);
+            Item.dropHeart(this.scene, this.player, dropX, dropY, this.dialog);
         }else if(mapAttribute === 2){
-            Item.dropRandomItem(this.scene, this.player, dropX, dropY);
+            Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog);
         }else if(mapAttribute === 3){
-            Item.dropRandomReward(this.scene, this.player, dropX, dropY);
+            Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog)
+        }else if(mapAttribute === 4){
+            Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog);
+            Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog);
         }
 
         let dialogueMessages;

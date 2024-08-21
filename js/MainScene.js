@@ -1451,7 +1451,7 @@ export default class MainScene extends Phaser.Scene {
                 this.getItemSound.play();
                 console.log("플레이어와 아이템 충돌");
                 // 아이템 효과 적용하기 및 화면에 반영하기
-                gameObjectB.applyItem(gameObjectA, this.coinIndicatorText, this.heartIndicator);
+                gameObjectB.applyItem(gameObjectA, this.coinIndicatorText, this.heartIndicator, this.dialog);
                 unsubscribe();
             }
         });
