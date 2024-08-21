@@ -36,7 +36,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 공격 스킬 쿨타임 초기화 (초 단위)
             swordCoolTime: 3000,  // 검 공격 쿨타임 3초
             magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
-            arrowCount : 3 //화살의 갯수
+            arrowCount: 3 //화살의 갯수
         };
 
         this.isSlash = true;
@@ -228,7 +228,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.handleRoll(playerVelocity); // 구르기
             }
         }
-
+        
+        this.rollingCoolTimeIndicator(delta);
+        this.slashCoolTimeIndicator(delta);
+        this.magicCoolTimeIndicator(delta);
     }
 
     handleSlash() {
