@@ -137,7 +137,9 @@ export function showMapSelectionUI(scene, mapSelections, onSelect, onCancel) {
             selectedIndex = (selectedIndex < mapSelections.length - 1) ? selectedIndex + 1 : 0;
             updateSelection();
         } else if (event.code === 'Space') {
-            onSelect(mapSelections[selectedIndex].mapNumber, mapSelections[selectedIndex].mapAttribute);
+            const selectedMap = mapSelections[selectedIndex];
+            const selectedMapAttribute = mapAttributes[selectedMap.mapNumber];
+            onSelect(selectedMap.mapNumber, selectedMapAttribute[0]);
             cleanup();
         } else if (event.code === 'Escape') {
             onCancel();
