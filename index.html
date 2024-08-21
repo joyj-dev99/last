@@ -42,7 +42,7 @@
 
     }
 
-    if (!isMobile()) {
+    if (isMobile()) {
         console.log("모바일 브라우저에서 접속 중입니다.");
         // alert('모바일 브라우저에서 접속 중입니다.');
         // 여기서 글로벌 변수 정의
@@ -51,7 +51,9 @@
             height: 256,
             backgroundColor: '#FFFFFF',
             debugMode: false, 
-            type : 'mobile'
+            type : 'mobile',
+            soundVolume: 0.2,
+            bgVolume: 0.2
         };
     } else {
         console.log("PC 브라우저에서 접속 중입니다.");
@@ -62,7 +64,9 @@
             height: 256,
             backgroundColor: '#000000',
             debugMode: false, 
-            type : 'pc'
+            type : 'pc',
+            soundVolume: 0.2,
+            bgVolume: 0.2
         };
     }
 
