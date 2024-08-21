@@ -131,14 +131,122 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         drap_per : 0.5
     };
 
-    // 하트 아이템 데이터 
+    // 붉은 하트 아이템 데이터 
     static Heart_ITEM = {
         type : 'heart',
-        texture : 'heart',
-        frame : null,
+        texture : 'Skills and Spells',
+        frame : 146,
         scale : 0.5,
         message : '+1 heart' ,
         drap_per : 0.5
+    };
+
+    //천사의 심장(최대하트) 아이템 데이터
+    static MaxHeart_ITEM = {
+        type: 'max_heart',
+        texture: 'Skills and Spells',  // 아이템의 텍스처 이름
+        frame: 1090,           // 특정 프레임이 필요하지 않다면 null로 설정
+        scale: 0.5,            // 아이템의 크기 비율
+        message: '+1 Max Heart',  // 아이템을 얻었을 때 표시할 메시지
+        drap_per: 0.5          // 드랍 확률 (50%)
+    };
+
+    // 팬텀 망토 아이템 데이터
+    static PhantomCloak_ITEM = {
+        type: 'phantom_cloak',
+        texture: 'Weapons and Equipment',  // 텍스처 시트 이름
+        frame: 1259,  // 팬텀 망토의 프레임 번호
+        scale: 0.5,
+        message: '10s Invincibility!',  // 10초동안 안보임, 데미지 안받음
+        drap_per: 0.3  // 드랍 확률 (30%)
+    };
+
+    // 신속의 장화 아이템 데이터
+    static SwiftBoots_ITEM = {
+        type: 'swift_boots',
+        texture: 'Weapons and Equipment', 
+        frame: 1904,  // 신속의 장화의 프레임 번호
+        scale: 0.5,
+        message: 'Speed +25%',  
+        drap_per: 0.4  // 드랍 확률 (40%)
+    };
+    
+    // 알 수 없는 부적 아이템 데이터
+    static UnknownAmulet_ITEM = {
+        type: 'unknown_amulet',
+        texture: 'Loot and Treasure',  // 텍스처 시트 이름
+        frame: 96,  // 알 수 없는 부적의 프레임 번호
+        scale: 0.5,
+        message: '-3s Skill Cooldown',  // 아이템 효과 메시지
+        drap_per: 0.5  // 드랍 확률 (50%)
+    };
+
+    // 양자 모래시계 아이템 데이터
+    static QuantumHourglass_ITEM = {
+        type: 'quantum_hourglass',
+        texture: 'Loot and Treasure',  // 텍스처 시트 이름
+        frame: 181,  // 양자 모래시계의 프레임 번호
+        scale: 0.5,
+        message: '+3s Skill Cooldown',  // 아이템 효과 메시지
+        drap_per: 0.5  // 드랍 확률 (50%)
+    };
+
+    // 허리에 좋은 약초 아이템 데이터
+    static HerbalMedicine_ITEM = {
+        type: 'herbal_medicine',
+        texture: 'Alchemy and Potions',  // 텍스처 시트 이름
+        frame: 33,  // 허리에 좋은 약초의 프레임 번호
+        scale: 0.5,
+        message: 'No Rolling for 30s',  // 아이템 효과 메시지
+        drap_per: 0.15  // 드랍 확률 (15%)
+    };
+
+    // 해적의 금고 아이템 데이터
+    static PiratesSafe_ITEM = {
+        type: 'pirates_safe',
+        texture: 'Loot and Treasure', 
+        frame: 126,  
+        scale: 0.5,
+        message: 'All Coins Lost ㅠ.ㅠ',  
+        drap_per: 0.5  
+    };
+    
+    // 고대의 묘약 아이템 데이터
+    static AncientPotion_ITEM = {
+        type: 'ancient_potion',
+        texture: 'Loot and Treasure',  // 텍스처 시트 이름
+        frame: 25,  // 고대의 묘약의 프레임 번호
+        scale: 0.5,
+        message: 'Speed -25%',  // 아이템 효과 메시지
+        drap_per: 1.0  // 드랍 확률 (100%)
+    };
+
+    // 두꺼운 장갑 아이템 데이터
+    static HeavyGloves_ITEM = {
+        type: 'heavy_gloves',
+        texture: 'Weapons and Equipment',  // 텍스처 시트 이름
+        frame: 47,  // 두꺼운 장갑의 프레임 번호
+        scale: 0.5,
+        message: '-25% Attack Power',  // 아이템 효과 메시지
+        drap_per: 0.7  // 드랍 확률 (70%)
+    };
+
+    // 화살(1개) 아이템 데이터
+    static arrow_ITEM = {
+        type: 'arrow',
+        texture: 'arrow', 
+        frame: 0,  
+        scale: 0.5,
+        message: '화살 +1개'
+    };
+
+    // 화살(10개) 아이템 데이터
+    static arrow_10_ITEM = {
+        type: 'arrow_10',
+        texture: 'arrow_10', 
+        frame: 0,  
+        scale: 0.5,
+        message: '화살 +10개'
     };
 
     // Item.setData(this.coinIndicatorText,this.heartIndicator);
@@ -240,10 +348,14 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.image('pumpkin', 'assets/item/pumpkin.png');
         scene.load.image('cheese', 'assets/item/cheese.png');
         scene.load.image('meat', 'assets/item/meat.png');
-        scene.load.image('heart', 'assets/item/heart.png');
         scene.load.spritesheet('potion', 'assets/item/potion.png', { frameWidth: 24, frameHeight: 24 });
         scene.load.image('eggplant', 'assets/item/eggplant.png');
-        // 에셋 추가
+        scene.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', { frameWidth: 32, frameHeight: 32 } );
+        scene.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', { frameWidth: 32, frameHeight: 32 } );
+        scene.load.spritesheet('Loot and Treasure', 'assets/item/Loot and Treasure.png', { frameWidth: 32, frameHeight: 32 } );
+        scene.load.spritesheet('Alchemy and Potions', 'assets/item/Alchemy and Potions.png', { frameWidth: 32, frameHeight: 32 } );
+        scene.load.image('arrow', 'assets/player/arrow.png');
+        scene.load.image('arrow_10', 'assets/player/arrow_10.jpg');
     }
 
     // 아이템 적용 메소드
@@ -297,11 +409,89 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             // 공격력 +5 적용
             player.increaseATK(5);
         }
-        // 미니고블린의 고기
+        // 붉은 하트
         else if(this.itemType.type == 'heart'){
             // 체력 +1 적용
             player.increaseHeart(1);
             heartIndicator.setHeart(player.status.nowHeart);
+        }
+        //천사의 심장
+        else if(this.itemType.type == 'max_heart'){
+            player.increaseMaxHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart);
+        }
+        //팬텀 망토
+        else if(this.itemType.type == 'phantom_cloak'){
+            // 플레이어를 무적 상태로 설정
+            player.setInvincible(true);
+
+             // 10초 후에 무적 상태를 해제
+            this.scene.time.delayedCall(10000, () => {
+                player.setInvincible(false);
+                console.log('Phantom Cloak effect ended!');
+            });
+        }
+        //신속의 장화
+        else if(this.itemType.type == 'swift_boots'){
+            player.adjustSpeed(1.25);  // 25% 속도 증가
+
+            this.scene.time.delayedCall(60000, () => {
+                player.adjustSpeed(1 / 1.25);  // 원래 속도로 복원
+                console.log('Swift Boots effect ended. Speed reset to: ' + player.status.speed);
+            });
+        }
+        //알수 없는 부적
+        else if(this.itemType.type == 'unknown_amulet'){
+            // 모든 공격 스킬의 쿨타임을 3초 감소시킴
+            player.adjustCooldown(-3); 
+        }
+        //양자 모래시계
+        else if(this.itemType.type == 'quantum_hourglass'){
+             // 모든 공격 스킬의 쿨타임을 3초 증가시킴
+            player.adjustCooldown(3);
+        }
+        //허리에 좋은 약초
+        else if(this.itemType.type == 'herbal_medicine'){
+            // 구르기 금지
+            player.canRoll = false;
+
+             // 30초 후에 다시 구르기 가능하도록 설정
+            this.scene.time.delayedCall(30000, () => {
+                player.canRoll = true;
+                console.log('Rolling is now enabled again.');
+            });
+        }
+        //해적의 금고
+        else if(this.itemType.type == 'pirates_safe'){
+            // 플레이어의 코인을 0으로 초기화
+            player.status.coin = 0;
+        }
+        //고대의 묘약
+        else if(this.itemType.type == 'ancient_potion'){
+            // 이동속도를 25% 감소시킴
+            player.adjustSpeed(0.75);  
+
+            this.scene.time.delayedCall(60000, () => {
+                player.adjustSpeed(1 / 0.75);  // 원래 속도로 복원
+                console.log('Ancient Potion effect ended. Speed reset to: ' + player.status.speed);
+            });
+        }
+        //두꺼운 장갑
+        else if(this.itemType.type == 'heavy_gloves'){
+            // 모든 공격 스킬의 공격력을 25% 감소시킴
+            player.adjustAttackPower(0.75);  
+        }
+        //화살 1개
+        else if(this.itemType.type == 'arrow'){
+            // 플레이어가 가진 화살이 1개 늘어남
+            player.addArrow(1);
+
+        }
+        //화살 10개
+        else if(this.itemType.type == 'arrow_10'){
+            // 플레이어가 가진 화살이 1개 늘어남
+            player.addArrow(10);
+
         }
         
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
@@ -321,13 +511,11 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             }
         });
         
-        
         this.destroy();
 
         console.log("상호작용 가능 표시를 보여주는 메서드.");
 
         return true;
-        // return this.itemType.type;
 
     }
 
