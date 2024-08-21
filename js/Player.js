@@ -30,14 +30,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //마법 공격력
             magicATK: 10,
             // 가지고 있는 coin
-            coin: 0
+            coin : 0,
+            // 이동 속도 초기화
+            speed: 3.5,
+            // 공격 스킬 쿨타임 초기화 (초 단위)
+            swordCoolTime: 3000,  // 검 공격 쿨타임 3초
+            magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
+            arrowCount : 0 //화살의 갯수
         };
 
-        this.scene = scene;
-        scene.add.existing(this);
-        this.speed = 3.5;
-
-        this.slashCoolTime = 3000;
         this.isSlash = true;
 
         // Phaser.Physics.Matter.Matter에서 Body와 Bodies 객체를 가져옴
