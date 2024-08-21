@@ -212,8 +212,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             // 8방향 이동 입력 처리
             this.handleArrowKeyInput(playerVelocity, this.status.speed);
-
-            if (this.slash) { // 이 지점에서 this.slash가 여전히 존재하는지 확인
+            
+            if(this.slash){ // 이 지점에서 this.slash가 여전히 존재하는지 확인
                 const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
                 // 플레이어 위치에 slash 객체 동기화
                 this.slash.setPosition(this.x + offsetX, this.y);
