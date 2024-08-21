@@ -13,7 +13,7 @@ export default class Chord extends Phaser.Physics.Matter.Sprite {
         // 물리적 바디 설정
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         //물리적 바디가 초기 시각적 스프라이트 위치와 일치
-        const chordCollider = Bodies.rectangle(this.x, this.y, 32, 28, { 
+        const chordCollider = Bodies.rectangle(this.x, this.y, 20, 28, { 
             isSensor: false,
             isStatic: true,
             label: 'chord',

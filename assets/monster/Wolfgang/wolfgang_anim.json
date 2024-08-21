@@ -107,7 +107,7 @@
         {
             "key": "wolfgang_laugh",
             "type": "frames",
-            "repeat": -1,
+            "repeat": 0,
             "frameRate": 6,
             "frames": [
                 {

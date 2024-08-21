@@ -143,7 +143,7 @@
         {
             "key": "pumpkin_float",
             "type": "frames",
-            "repeat": -1,
+            "repeat": 0,
             "frameRate": 8,
             "frames": [
                 {

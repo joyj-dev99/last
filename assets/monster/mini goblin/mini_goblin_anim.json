@@ -121,19 +121,11 @@
             ]
         },
         {
-            "key": "mini_goblin_hammer",
+            "key": "mini_goblin_attack",
             "type": "frames",
             "repeat": 0,
             "frameRate": 8,
             "frames": [
-                {
-                    "key": "mini_goblin",
-                    "frame": "mini_goblin_sprite_sheet_30"
-                },
-                {
-                    "key": "mini_goblin",
-                    "frame": "mini_goblin_sprite_sheet_31"
-                },
                 {
                     "key": "mini_goblin",
                     "frame": "mini_goblin_sprite_sheet_32"

@@ -1,4 +1,10 @@
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "../constants.js";
+import {
+    PLAYER_CATEGORY,
+    MONSTER_CATEGORY,
+    TILE_CATEGORY,
+    OBJECT_CATEGORY,
+    PLAYER_ATTACK_CATEGORY
+} from "../constants.js";
 
 export default class Monster extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -17,6 +23,7 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         // 초기화
         this.monsterType = monsterType;
         this.hp = hp; // 체력
+        this.initHp = hp; // 체력
         this.damage = damage; // 한번에 플레이어의 체력을 얼마나 깍는지. 기본은 0.5
         this.reach = reach; // 공격을 시도하는 최대 거리 (픽셀)
         this.speed = speed; // 이동속도
@@ -67,6 +74,19 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
 
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
+
+        this.healthBarWidth = 16;
+        this.healthBarHeight = 2;
+        this.defaultHpY = 14;
+        this.defaultHpX = 8;
+        this.healthBarBack = this.scene.add.graphics();
+        this.healthBar = this.scene.add.graphics();
+        // 초기 프레임 설정
+        // this.healthBar.setScrollFactor(0);
+        // this.healthBarBack.setScrollFactor(0);
+        this.healthBar.setDepth(1001);
+        this.healthBarBack.setDepth(1001);
+
     }
 
     static preload(scene) {
@@ -93,24 +113,29 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('angelAnim', 'assets/monster/angel/angel_anim.json');
         scene.load.atlas('golem', 'assets/monster/golem/golem.png', 'assets/monster/golem/golem_atlas.json');
         scene.load.animation('golemAnim', 'assets/monster/golem/golem_anim.json');
+        //
+        scene.load.atlas('golem_wave_front', 'assets/monster/golem/golem_wave/Front/wave_attack_front.png', 'assets/monster/golem/golem_wave/Front/wave_attack_front_atlas.json');
+        scene.load.atlas('golem_wave_back', 'assets/monster/golem/golem_wave/Back/wave_attack_back.png', 'assets/monster/golem/golem_wave/Back/wave_attack_back_atlas.json');
+        scene.load.atlas('golem_beam', 'assets/monster/golem/golem_beam/energy_beam.png', 'assets/monster/golem/golem_beam/energy_beam_atlas.json');
 
-        scene.load.atlas('wolfgang', 'assets/monster/Wolfgang/wolfgang.png', 'assets/monster/Wolfgang/wolfgang_atlas.json');
-        scene.load.animation('wolfgangAnim', 'assets/monster/Wolfgang/wolfgang_anim.json');
+        // scene.load.atlas('wolfgang', 'assets/monster/Wolfgang/wolfgang.png', 'assets/monster/Wolfgang/wolfgang_atlas.json');
+        // scene.load.animation('wolfgangAnim', 'assets/monster/Wolfgang/wolfgang_anim.json');
 
-        scene.load.atlas('minotaur', 'assets/monster/minotaur/minotaur.png', 'assets/monster/minotaur/minotaur_atlas.json');
-        scene.load.animation('minotaurAnim', 'assets/monster/minotaur/minotaur_anim.json');
+        // scene.load.atlas('minotaur', 'assets/monster/minotaur/minotaur.png', 'assets/monster/minotaur/minotaur_atlas.json');
+        // scene.load.animation('minotaurAnim', 'assets/monster/minotaur/minotaur_anim.json');
+        //
+        // scene.load.atlas('alchemist_transform', 'assets/monster/alchemist/tramsform/alchemist_transform.png', 'assets/monster/alchemist/tramsform/alchemist_transform_atlas.json');
+        // scene.load.animation('alchemist_transformAnim', 'assets/monster/alchemist/tramsform/alchemist_transform_anim.json');
+        //
+        // scene.load.atlas('alchemist', 'assets/monster/alchemist/alchemist.png', 'assets/monster/alchemist/alchemist_atlas.json');
+        // scene.load.animation('alchemistAnim', 'assets/monster/alchemist/alchemist_anim.json');
 
-        scene.load.atlas('alchemist_transform', 'assets/monster/alchemist/tramsform/alchemist_transform.png', 'assets/monster/alchemist/tramsform/alchemist_transform_atlas.json');
-        scene.load.animation('alchemist_transformAnim', 'assets/monster/alchemist/tramsform/alchemist_transform_anim.json');
-     
-        scene.load.atlas('alchemist', 'assets/monster/alchemist/alchemist.png', 'assets/monster/alchemist/alchemist_atlas.json');
-        scene.load.animation('alchemistAnim', 'assets/monster/alchemist/alchemist_anim.json');
-     
     }
 
     update() {
-        // console.log('update monster start' +this.monsterType);
+        this.updateHpState()
 
+        // console.log('update monster start' +this.monsterType);
         // console.log('this.isBattleStared ' +this.isBattleStared +this.monsterType);
         // console.log('this.isAlive ' +this.isAlive +this.monsterType);
         // console.log('this.isHurt ' +this.isHurt +this.monsterType);
@@ -118,10 +143,21 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         // 전투 시작 전, 몬스터가 죽었을 때, 데미지 입었을때 update 실행하지 않음
         if (!this.isBattleStared || !this.isAlive || this.isHurt) return;
 
-
+        this.monsterDistanceControlPlayer();
         // console.log('update monster mid'  +this.monsterType);
+    }
 
+    updateHpState() {
+        this.healthBarBack.clear();
+        this.healthBar.clear();
+        this.healthBarBack.fillStyle(0x000000);
+        this.healthBarBack.fillRect(this.x - this.defaultHpX, this.y + this.defaultHpY, this.healthBarWidth, this.healthBarHeight);
+        let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
+        this.healthBar.fillStyle(0xff0000);
+        this.healthBar.fillRect(this.x - this.defaultHpX, this.y + this.defaultHpY, healthWidth, this.healthBarHeight);
+    }
 
+    monsterDistanceControlPlayer() {
         // 플레이어와 몬스터 사이의 거리 계산
         const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.player.x, this.player.y);
         if (distanceToPlayer < this.followDistance) {
@@ -138,7 +174,8 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
         let distanceToTarget = toTarget.length();
 
-        if (distanceToTarget > 5) {
+        // if (distanceToTarget >= this.reach-4) {
+        if (distanceToTarget > this.reach / 1.5) {
             toTarget.normalize(); // 벡터를 단위 벡터로 정규화
             monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
             this.isMoving = true;
@@ -152,16 +189,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.isMoving = false;
             this.setVelocity(0, 0);
         }
-
-        const currentAnimKey = this.anims.currentAnim.key;
-        // isMoving 에 따른 move, idle 애니메이션 실행
-        if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_move`) {
-            this.anims.play(`${this.monsterType}_move`);
-        } else if (!this.isHurt && !this.isMoving && currentAnimKey !== `${this.monsterType}_idle`) {
-            this.anims.play(`${this.monsterType}_idle`);
-        }
-        // console.log('update monster end'  +this.monsterType);
-
     }
 
     startBattle() {
@@ -171,39 +198,31 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             callbackScope: this,
             loop: true
         });
+        this.anims.play(`${this.monsterType}_move`)
         this.isBattleStared = true;
     }
 
-    actionAmin(state) {                      
-        
-        console.log('actionAmin');
-        this.state = state;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-        if (state === 'attack') {                                                                             
-            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
-            this.anims.play(`${this.monsterType}_attack`, true);
-            this.setStatic(true);
-            // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
-            this.scene.time.delayedCall(500, () => {
-                this.setStatic(false);
-            });
-        }
-        if (state === 'damage') {
-            this.anims.play(`${this.monsterType}_damage`, true);
-        }
+    monsterAttackPlayer() {
+        this.anims.play(`${this.monsterType}_attack`, true);
+        this.setStatic(true);
+        // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
+        // 왜냐하면 이게 없으면 계속 맞음
+        this.scene.time.delayedCall(500, () => {
+            this.setStatic(false);
+        });
     }
 
     handleAnimationComplete(animation) {
-
         console.log('handleAnimationComplete' + this.monsterType);
         console.log('animation.key' + animation.key);
-        
-        
+
         if (animation.key === `${this.monsterType}_damage`) {
             this.isHurt = false;
-            this.anims.play(`${this.monsterType}_idle`, true);
-        } else if (animation.key === `${this.monsterType}_attack`)  {
-            this.anims.play(`${this.monsterType}_idle`, true);
+            this.anims.play(`${this.monsterType}_move`, true);
+        } else if (animation.key === `${this.monsterType}_attack`) {
+            this.anims.play(`${this.monsterType}_move`, true);
         } else if (animation.key === `${this.monsterType}_death`) {
+
             this.destroy();
         }
 
@@ -243,14 +262,12 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         // console.log('몬스터 타겟 위치 설정 : ', this.target.x, this.target.y);
     }
 
-    // 자식 몬스터 클래스에서 필수로 오버라이드 해야 하는 함수들
-
-    attack() {
-        throw new Error('Method "takeDamage()" must be implemented.');
-    }
 
     takeDamage(amount, gameObject) {
         console.log('takeDamage 실행됨', this.monsterType, amount);
+        if(this.monsterType === 'bugbear' && this.anims.currentAnim.key === `${this.monsterType}_block2`){
+            return
+        }
         this.isHurt = true;
         this.hp -= amount;
         console.log('monster HP', this.hp)
@@ -265,29 +282,31 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.isAlive = false;
             this.setCollidesWith([TILE_CATEGORY]);
             this.hp = 0;
+            this.healthBarBack.clear();
+            this.healthBar.clear();
             this.anims.play(`${this.monsterType}_death`);
             return 'death';
         }
     }
 
-    /** 
-     * @param {Phaser.GameObjects.GameObject} source 
-     */ 
+    /**
+     * @param {Phaser.GameObjects.GameObject} source
+     */
     applyKnockback(source) {
         console.log("몬스터 넉백 시작");
         console.dir(source);
         // 충돌 방향 계산
         const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
-    
+
         // 밀려나는 방향으로 힘과 속도를 동시에 적용
         impactDirection.normalize().scale(10);
-        const force = { x: impactDirection.x * 0.5, y: impactDirection.y * 0.5 };
+        const force = {x: impactDirection.x * 0.5, y: impactDirection.y * 0.5};
         this.setVelocity(impactDirection.x, impactDirection.y);
 
         // Phaser에서 Matter 객체를 올바르게 참조합니다.
         const Matter = Phaser.Physics.Matter.Matter;
         Matter.Body.applyForce(this.body, this.body.position, force);
-        
+
         // 일정 시간 후 속도를 0으로 설정하여 멈춤
         this.scene.time.delayedCall(200, () => {
             this.setVelocity(0, 0);

@@ -12,17 +12,18 @@ export default class MonsterAngel extends Monster {
             frame: 'angel_sprite_sheet_0',
             monsterType: 'angel',
             bodyWidth: 14,
-            bodyHeight: 14,
+            bodyHeight: 24,
             centreX: 0,
-            centreY: -6,
-            hp: 60,
-            damage: 0.5, //플레이어의 기준 체력이 3이기 때문에, 0.5로 설정
+            centreY: -10,
+            hp: 120,
+            damage: 1, //플레이어의 기준 체력이 3이기 때문에, 0.5로 설정
             reach: 20,
-            speed: 1,
+            speed: 3,
             oneMove : 30,
             maxMove : 100,
-            followDistance : 70,
+            followDistance : 150,
             player: player
         });
+        this.defaultHpY = 24;
     }
 }

@@ -62,10 +62,7 @@
             "repeat": 0,
             "frameRate": 10,
             "frames": [
-                {
-                    "key": "angel",
-                    "frame": "angel_sprite_sheet_6"
-                },
+
                 {
                     "key": "angel",
                     "frame": "angel_sprite_sheet_7"

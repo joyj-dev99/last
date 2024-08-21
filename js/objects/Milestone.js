@@ -77,20 +77,5 @@ export default class Milestone extends Phaser.Physics.Matter.Sprite {
             this.interativeKeyImg.destroy();
             this.interativeKeyImg = null;
         }
-
-        // this.scene.input.off('pointerdown', () => {
-        //        // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-        //        const shiftKeyUpEvent = new KeyboardEvent('keyup', {
-        //         key: 'Shift',
-        //         code: 'ShiftLeft',
-        //         keyCode: Phaser.Input.Keyboard.KeyCodes.E,
-        //         bubbles: true,
-        //         cancelable: true
-        //     });
-
-        //     window.dispatchEvent(shiftKeyUpEvent);
-        
-        // }, this.scene);
-
     }
 }

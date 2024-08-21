@@ -3,9 +3,10 @@ import {
     MONSTER_CATEGORY,
     TILE_CATEGORY,
     OBJECT_CATEGORY,
-    PLAYER_ATTACK_CATEGORY, MONSTER_ATTACK_CATEGORY
+    PLAYER_ATTACK_CATEGORY, MONSTER_ATTACK_CATEGORY, BOUNDARY_CATEGORY
 } from "../constants.js";
 
+const soundVolume = 0.7;
 export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let {scene, x, y, player} = data;
@@ -19,17 +20,17 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.bodyHeight = 42;
         this.centreX = 0;
         this.centreY = -26;
-        this.initHp = 250;
-        this.hp = 250;
+        this.initHp = 1000;
+        this.hp = 1000;
         this.damage = 0.5;
-        this.reach = 30;
         this.speed = 1;
-        this.oneMove = 10;
         this.speed = 1;
-        this.maxMove = 10;
-        this.followDistance = 400;
+        this.followDistance = 500;
         this.scene.add.existing(this);
 
+        // 이 변수 가져오는거 모름 ㅠㅠㅠ
+        this.mapSize = 480;
+        this.topInfoY = 5;
         // 최초 생성시 왼쪽을 바라보도록.
         this.setFlipX(true);
 
@@ -55,16 +56,10 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         console.log("몬스터 생성: ", this.monsterType, x, y);
 
         this.setCollisionCategory(MONSTER_CATEGORY);
-        this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY]);
+        this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY,TILE_CATEGORY]);
 
-        this.isBattleStared = false;
 
-        this.isMoving = false;
-        this.isFollowing = false;
-        this.isHurt = false;
-        this.isReturning = false;
         this.isAlive = true;
-        this.state = 'idle'; // 현재 상태
         // 위치 설정
         this.initialX = x;
         this.initialY = y;
@@ -79,8 +74,19 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.totalBullets = 36;
         this.angleStep = 360 / this.totalBullets;
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
+
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
+        this.monsterName = this.scene.add.text(this.scene.sys.game.config.width / 4 - 10, this.topInfoY, `호박`, {
+            fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '12px',
+            fill: '#000',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            padding: {x: 10}
+        }).setScrollFactor(0).setDepth(1001);
+
+        this.healthBarWidth = 120;
+        this.healthBarHeight = 15;
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
         // 초기 프레임 설정
@@ -90,12 +96,35 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.healthBarBack.setDepth(1001);
 
         this.pumpkinShockwaveSound = this.scene.sound.add(`pumpkin_shockwave`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: soundVolume * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
         this.pumpkinSeedSound = this.scene.sound.add(`pumpkin_seed`, {
-            volume: 0.3 // Set the volume (0 to 1)
+            volume: soundVolume * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
 
+
+        //
+        //
+        //
+        //     지금 안쓰는 변수들은 아래
+        this.isMoving = false;
+        this.isFollowing = false;
+        this.isReturning = false;
+        this.state = 'idle'; // 현재 상태
+        this.isBattleStared = false;
+        this.isKnockBack = false;
+    }
+
+    soundOn(){
+        console.log('soundOn ');
+        console.log('pumpkinShockwaveSound : '+this.pumpkinShockwaveSound);
+        this.pumpkinShockwaveSound.setVolume(soundVolume);
+        this.pumpkinSeedSound.setVolume(soundVolume);
+    }
+
+    soundOff(){
+        this.pumpkinShockwaveSound.setVolume(0);
+        this.pumpkinSeedSound.setVolume(0);
     }
 
     static preload(scene) {
@@ -114,39 +143,35 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
     update() {
         //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;
+        this.updateHpState();
+        this.timeOutBullets();
+        // 전투 시작 전이거나, 맞을때 이동안함 그래서 넉백됨
+        // if (!this.isBattleStared || this.isKnockBack) return;
+        console.log('update 2 실행');
+        this.monsterFollowPlayer();
+    }
+
+    updateHpState() {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, 240, 15);
-        let healthWidth = (this.hp / this.initHp) * 240;
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY*4, this.healthBarWidth, this.healthBarHeight);
+        let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, 20, healthWidth, 15);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY*4, healthWidth, this.healthBarHeight);
+    }
 
-        this.bullets.getChildren().forEach(bullet => {
-            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
-            const elapsedTime = this.scene.time.now - bullet.creationTime;
-            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
-                // this.bullets.remove(bullet, true, true);
-                bullet.destroy();
-
-            }
-        });
-
-        // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
-        if (!this.isBattleStared || this.isHurt) return;
-        console.log('update 2 실행')
+    monsterFollowPlayer() {
         this.target.x = this.player.x;
         this.target.y = this.player.y;
-
         // taget까지 거리 및 속도 계산
         const speed = this.speed;
         let monsterVelocity = new Phaser.Math.Vector2();
         let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
         let distanceToTarget = toTarget.length();
         if (distanceToTarget > 5) {
-            this.isMoving = true;
-            toTarget.normalize(); // 벡터를 단위 벡터로 정규화
-            monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
+            toTarget.normalize();
+            monsterVelocity = toTarget.scale(speed);
             if (toTarget.x < 0) {
                 this.setFlipX(true);
             } else {
@@ -154,24 +179,15 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
             }
             this.setVelocity(monsterVelocity.x, monsterVelocity.y);
         } else {
-            this.isMoving = false;
             this.setVelocity(0, 0);
         }
-
-
-        // 공격 애니메이션 처리 안됨
-        const currentAnimKey = this.anims.currentAnim.key;
-        // 상태 변화 감지 및 애니메이션 재생
-        // if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_movement`) {
-        //     this.anims.play(`${this.monsterType}_movement`);
-        // }
-
     }
+
 
     startBattle() {
         this.attackEvent = this.scene.time.addEvent({
             delay: 4000,
-            callback: this.attack,
+            callback: this.monsterAttackPlayerBySkill,
             callbackScope: this,
             loop: true
         });
@@ -179,58 +195,56 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.anims.play(`${this.monsterType}_movement`);
     }
 
-    actionAmin(state) {
-        this.state = state;
-        if (state === 'attack') {
-            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
-            this.anims.play(`${this.monsterType}_attack`, true);
-            // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
-            // this.scene.time.delayedCall(1500, () => {
-            //     this.setStatic(false);
-            // });
-        }
-        if (state === 'damage') {
-            this.anims.play(`${this.monsterType}_damage`, true);
+    monsterAttackPlayer() {
+        if (this.anims.currentAnim.key !== `${this.monsterType}_float`) {
+            this.anims.play(`${this.monsterType}_float`, true);
         }
     }
 
+    monsterAttackPlayerBySkill() {
+        if (this.hp >= this.initHp * (2 / 3)) {
+            this.anims.play(`${this.monsterType}_float`);
+        } else if (this.initHp * (1 / 3) < this.hp && this.hp < this.initHp * (2 / 3)) {
+            this.setStatic(true);
+            this.anims.play(`${this.monsterType}_attack`);
+        } else {
+            this.setStatic(true);
+            this.anims.play(`${this.monsterType}_spit_seed`);
+        }
+    }
+
+
     handleAnimationComplete(animation) {
-        if (animation.key === `${this.monsterType}_damage`) {
-            this.isHurt = false;
+        if (animation.key === `${this.monsterType}_float`) {
             this.anims.play(`${this.monsterType}_movement`, true);
         } else if (animation.key === `${this.monsterType}_attack`) {
             this.scene.time.delayedCall(100, () => {
-                this.shootShockwave();
+                this.pumpkinShockwave();
                 this.anims.play(`${this.monsterType}_movement`, true);
             });
         } else if (animation.key === `${this.monsterType}_spit_seed`) {
+            this.pumpkinShootBullet();
+
             this.scene.time.delayedCall(100, () => {
-                this.shootBullet();
                 this.anims.play(`${this.monsterType}_movement`, true);
             });
+        } else if (animation.key === `${this.monsterType}_damage`) {
+            this.anims.play(`${this.monsterType}_movement`, true);
         } else if (animation.key === `${this.monsterType}_death`) {
             this.destroy();
         }
     }
 
-    attack() {
-        this.setStatic(true);
-        if (this.initHp / 2 >= this.hp) {
-            this.anims.play(`${this.monsterType}_spit_seed`);
-        } else {
-            this.anims.play(`${this.monsterType}_attack`);
-        }
-    }
 
     takeDamage(amount) {
         console.log('takeDamage 실행됨', this.monsterType, amount);
-        this.isHurt = true;
+        // this.isKnockBack = true;
         this.hp -= amount;
         console.log('monster HP', this.hp)
-
-        if (this.hp > 0) {
+        if (this.hp > 0 && this.anims.currentAnim.key === `${this.monsterType}_movement`) {
             this.anims.play(`${this.monsterType}_damage`, true);
-        } else {
+        } else if (this.hp <= 0) {
+            this.destroyBullets();
             this.setCollidesWith([TILE_CATEGORY]);
             this.isAlive = false;
             this.attackEvent.destroy();
@@ -244,31 +258,7 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    /**
-     * @param {Phaser.GameObjects.GameObject} source
-     */
-    applyKnockback(source) {
-        console.log("몬스터 넉백 시작");
-        // 충돌 방향 계산
-        const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
-
-        // 밀려나는 방향으로 힘과 속도를 동시에 적용
-        impactDirection.normalize().scale(50);
-        const force = {x: impactDirection.x * 0.1, y: impactDirection.y * 0.1};
-        this.setVelocity(impactDirection.x, impactDirection.y);
-
-        // Phaser에서 Matter 객체를 올바르게 참조합니다.
-        const Matter = Phaser.Physics.Matter.Matter;
-        Matter.Body.applyForce(this.body, this.body.position, force);
-
-        // 일정 시간 후 속도를 0으로 설정하여 멈춤
-        this.scene.time.delayedCall(200, () => {
-            this.setVelocity(0, 0);
-            this.isHurt = false;
-        });
-    }
-
-    shootShockwave() {
+    pumpkinShockwave() {
         // 충격파 생성
         const shockwave = this.scene.matter.add.image(this.x, this.y, 'pumpkin_shockwave', null, {
             shape: 'circle'
@@ -293,11 +283,11 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
                 this.setStatic(false);
             }
         });
-        this.scene.setCollisionOfMonsterShockwave(shockwave);
+        this.scene.setCollisionOfMonsterShortAttack(shockwave);
 
     }
 
-    shootBullet() {
+    pumpkinShootBullet() {
         this.setStatic(true);
         for (let i = 0; i < this.totalBullets; i++) {
             // const angle = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y);
@@ -319,14 +309,32 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
             bullet.creationTime = this.scene.time.now;
             this.bullets.add(bullet);
             this.pumpkinSeedSound.play();
-            this.scene.setCollisionOfMonsterAttack(bullet);
-        }
-        // 몇초마다 한번씩 발사하도록 하는 변수
-        this.scene.time.delayedCall(1000, () => {
+            this.scene.setCollisionOfMonsterLongAttack(bullet);
             this.setStatic(false);
+        }
 
-        });
+        // 몇초마다 한번씩 발사하도록 하는 변수
+        // this.scene.time.delayedCall(1000, () => {
+        //     this.setStatic(false);
+        // });
     }
 
+    timeOutBullets() {
+        this.bullets.children.each(bullet => {
+            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
+            const elapsedTime = this.scene.time.now - bullet.creationTime;
+            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration
+                || bullet.x > this.mapSize - 10 || bullet.x <= 10 || bullet.y > this.mapSize - 10 || bullet.y <= 10) {
+                bullet.destroy();
+            }
+        }, this);
+    }
+
+
+    destroyBullets() {
+        this.bullets.children.each(bullet => {
+            bullet.destroy();
+        }, this);
+    }
 
 }

@@ -19,17 +19,17 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.bodyHeight = 40;
         this.centreX = 0;
         this.centreY = -12;
-        this.initHp = 250;
-        this.hp = 250;
+        this.initHp = 2000;
+        this.hp = 2000;
         this.damage = 0.5;
-        this.reach = 30;
         this.speed = 1;
-        this.oneMove = 10;
-        this.speed = 1;
-        this.maxMove = 10;
-        this.followDistance = 400;
+        this.followDistance = 500;
         this.scene.add.existing(this);
 
+        this.topInfoY = 5;
+
+        // 이 변수 가져오는거 모름 ㅠㅠㅠ
+        this.mapSize = 480;
         // 최초 생성시 왼쪽을 바라보도록.
         this.setFlipX(true);
         this.setDepth(10);
@@ -52,20 +52,14 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
 
         // 애니메이션 재생
         this.anims.play(`${this.monsterType}_idle`, true);
+        this.moveAnim = `${this.monsterType}_movement`;
         console.log("몬스터 생성: ", this.monsterType, x, y);
 
         this.setCollisionCategory(MONSTER_CATEGORY);
-        this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY,TILE_CATEGORY]);
+        this.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY, TILE_CATEGORY]);
 
-        this.isBattleStared = false;
-
-        this.isMoving = false;
-        this.isFollowing = false;
-        this.isHurt = false;
-        this.isReturning = false;
         this.isAlive = true;
-        this.state = 'idle'; // 현재 상태
-        // 위치 설정
+
         this.initialX = x;
         this.initialY = y;
         this.target = new Phaser.Math.Vector2(this.x, this.y);
@@ -78,12 +72,11 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.bulletDistance = 400;
         this.totalBullets = 20;
         this.angleStep = 360 / this.totalBullets;
-        this.recoveryHp = 0;
-
+        this.isPanicMode = false;
         // 이 리스너는 특정 애니메이션이 끝날 때 자동으로 호출됨
         this.on('animationcomplete', this.handleAnimationComplete, this);
 
-        this.scene.add.text(this.scene.sys.game.config.width / 4 - 30, 5, `고블린`, {
+        this.monsterName = this.scene.add.text(this.scene.sys.game.config.width / 4 - 10, this.topInfoY, `고블린`, {
             fontFamily: 'Galmuri11, sans-serif',
             fontSize: '12px',
             fill: '#000',
@@ -91,7 +84,8 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
             padding: {x: 10}
         }).setScrollFactor(0).setDepth(1001);
 
-
+        this.healthBarWidth = 120;
+        this.healthBarHeight = 15;
         this.healthBarBack = this.scene.add.graphics();
         this.healthBar = this.scene.add.graphics();
         // 초기 프레임 설정
@@ -100,6 +94,17 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.healthBar.setDepth(1001);
         this.healthBarBack.setDepth(1001);
 
+
+        //
+        //
+        //
+        //     지금 안쓰는 변수들은 아래
+        this.isMoving = false;
+        this.isFollowing = false;
+        this.isReturning = false;
+        this.state = 'idle'; // 현재 상태
+        this.isBattleStared = false;
+        this.isKnockBack = false;
     }
 
     static preload(scene) {
@@ -115,39 +120,32 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
     update() {
         //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;
+        this.updateHpState();
+        this.timeOutBullets();
+        this.monsterFollowPlayer();
+    }
+
+    updateHpState() {
         this.healthBarBack.clear();
         this.healthBar.clear();
         this.healthBarBack.fillStyle(0x000000);
-        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 30, 20, 120, 15);
-        let healthWidth = (this.hp / this.initHp) * 120;
+        this.healthBarBack.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY * 4, this.healthBarWidth, this.healthBarHeight);
+        let healthWidth = (this.hp / this.initHp) * this.healthBarWidth;
         this.healthBar.fillStyle(0xff0000);
-        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 30, 20, healthWidth, 15);
+        this.healthBar.fillRect(this.scene.sys.game.config.width / 4 - 10, this.topInfoY * 4, healthWidth, this.healthBarHeight);
+    }
 
-        this.bullets.getChildren().forEach(bullet => {
-            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
-            const elapsedTime = this.scene.time.now - bullet.creationTime;
-            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
-                // this.bullets.remove(bullet, true, true);
-                bullet.destroy();
-
-            }
-        });
-
-        // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
-        if (!this.isBattleStared || this.isHurt) return;
-        console.log('update 2 실행')
+    monsterFollowPlayer() {
         this.target.x = this.player.x;
         this.target.y = this.player.y;
-
         // taget까지 거리 및 속도 계산
         const speed = this.speed;
         let monsterVelocity = new Phaser.Math.Vector2();
         let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
         let distanceToTarget = toTarget.length();
         if (distanceToTarget > 5) {
-            this.isMoving = true;
-            toTarget.normalize(); // 벡터를 단위 벡터로 정규화
-            monsterVelocity = toTarget.scale(speed); // 고정된 speed 값을 곱하여 속도를 설정
+            toTarget.normalize();
+            monsterVelocity = toTarget.scale(speed);
             if (toTarget.x < 0) {
                 this.setFlipX(true);
             } else {
@@ -155,28 +153,14 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
             }
             this.setVelocity(monsterVelocity.x, monsterVelocity.y);
         } else {
-            this.isMoving = false;
             this.setVelocity(0, 0);
         }
-
-        // 공격 애니메이션 처리 안됨
-        //
-        //
-        // 정호
-        // 이 코드가 있어서 공격 모션이 캔슬됨.
-        const currentAnimKey = this.anims.currentAnim.key;
-        // 상태 변화 감지 및 애니메이션 재생
-        // if (!this.isHurt && this.isMoving && currentAnimKey !== `${this.monsterType}_movement`) {
-        //     this.anims.play(`${this.monsterType}_movement`);
-        // }
-
-
     }
 
     startBattle() {
         this.attackEvent = this.scene.time.addEvent({
-            delay: 5000,
-            callback: this.attack,
+            delay: 4000,
+            callback: this.monsterAttackPlayerBySkill,
             callbackScope: this,
             loop: true
         });
@@ -184,58 +168,48 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.anims.play(`${this.monsterType}_movement`, true);
     }
 
-    actionAmin(state) {
-        this.state = state;
-        if (state === 'attack') {
-            // 몬스터를 일시적으로 정적으로 설정하여 충돌 순간에 제자리에 있도록 함
-            this.anims.play(`${this.monsterType}_jump`, true);
-            // 일정 시간 후 몬스터를 다시 움직일 수 있도록 설정
-            // this.scene.time.delayedCall(1500, () => {
-            //     this.setStatic(false);
-            // });
+    monsterAttackPlayer() {
+        if (this.anims.currentAnim.key !== `${this.monsterType}_slam`) {
+            this.anims.play(`${this.monsterType}_slam`, true);
         }
-        if (state === 'damage') {
-            this.anims.play(`${this.monsterType}_damage`, true);
+    }
+
+    monsterAttackPlayerBySkill() {
+        let toTarget = new Phaser.Math.Vector2(this.target.x - this.x, this.target.y - this.y);
+        let distanceToTarget = toTarget.length();
+        if (0 <= distanceToTarget && distanceToTarget < 50) {
+            this.anims.play(`${this.monsterType}_slam`);
+        } else if (50 <= distanceToTarget && distanceToTarget < 120) {
+            this.setStatic(true);
+            this.anims.play(`${this.monsterType}_jump`);
+        } else {
+            this.setStatic(true);
+            this.goblinShootBullet();
+            this.anims.play(`${this.monsterType}_throw_coin_bag`);
         }
     }
 
     handleAnimationComplete(animation) {
-        if (animation.key === `${this.monsterType}_damage`) {
-            this.isHurt = false;
-            this.anims.play(`${this.monsterType}_movement`, true);
+        if (animation.key === `${this.monsterType}_slam`) {
+            this.anims.play(this.moveAnim, true);
         } else if (animation.key === `${this.monsterType}_jump`) {
             this.scene.time.delayedCall(100, () => {
-                this.shootShockwave();
+                this.goblinShockwave();
                 this.anims.play(`${this.monsterType}_idle`, true);
             });
         } else if (animation.key === `${this.monsterType}_throw_coin_bag`) {
-            this.shootBullet();
-            this.scene.time.delayedCall(this.totalBullets * 100, () => {
-                this.anims.play(`${this.monsterType}_movement`, true);
-            });
+            this.anims.play(`${this.monsterType}_throw_coin_bag`);
         } else if (animation.key === `${this.monsterType}_eat`) {
-            this.anims.play(`${this.monsterType}_movement`, true);
-            this.hp = this.hp + 20;
+            this.hp = this.hp + this.initHp / 3;
+            this.anims.play(this.moveAnim, true);
             this.setStatic(false);
+        } else if (animation.key === `${this.monsterType}_damage`) {
+            this.anims.play(this.moveAnim, true);
         } else if (animation.key === `${this.monsterType}_death`) {
             this.destroy();
         }
     }
 
-    attack() {
-        this.setStatic(true);
-        if (this.initHp / 2 >= this.hp) {
-            this.recoveryHp = this.recoveryHp + 1;
-            if (this.recoveryHp >= 2) {
-                this.recoveryHp = 0;
-                this.anims.play(`${this.monsterType}_eat`);
-            } else {
-                this.anims.play(`${this.monsterType}_throw_coin_bag`);
-            }
-        } else {
-            this.anims.play(`${this.monsterType}_jump`);
-        }
-    }
 
     takeDamage(amount) {
         console.log('takeDamage 실행됨', this.monsterType, amount);
@@ -243,9 +217,21 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.hp -= amount;
         console.log('monster HP', this.hp)
 
-        if (this.hp > 0) {
+        if (this.hp <= this.initHp / 2 && this.isPanicMode === false) {
+            this.setStatic(true)
+            this.isPanicMode = true;
+            this.speed = 3;
+            this.totalBullets = this.totalBullets * 2;
+            this.bulletSpeed = this.bulletSpeed + 2;
+            this.moveAnim = `${this.monsterType}_panic`;
+            this.anims.play(`${this.monsterType}_eat`, true);
+            // this.attackEvent.delay = 3000;
+        }
+
+        if (this.hp > 0 && this.anims.currentAnim.key === this.moveAnim) {
             this.anims.play(`${this.monsterType}_damage`, true);
-        } else {
+        } else if (this.hp <= 0) {
+            this.destroyBullets();
             this.setCollidesWith([TILE_CATEGORY]);
             this.isAlive = false;
             this.attackEvent.destroy();
@@ -259,31 +245,14 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    /**
-     * @param {Phaser.GameObjects.GameObject} source
-     */
-    applyKnockback(source) {
-        console.log("몬스터 넉백 시작");
-        // 충돌 방향 계산
-        const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
+    goblinShockwave() {
+        let xx = 0.2;
+        let yy = 0.2;
+        if (this.isPanicMode === true) {
+            xx = 0.3;
+            yy = 0.3;
+        }
 
-        // 밀려나는 방향으로 힘과 속도를 동시에 적용
-        impactDirection.normalize().scale(50);
-        const force = {x: impactDirection.x * 0.1, y: impactDirection.y * 0.1};
-        this.setVelocity(impactDirection.x, impactDirection.y);
-
-        // Phaser에서 Matter 객체를 올바르게 참조합니다.
-        const Matter = Phaser.Physics.Matter.Matter;
-        Matter.Body.applyForce(this.body, this.body.position, force);
-
-        // 일정 시간 후 속도를 0으로 설정하여 멈춤
-        this.scene.time.delayedCall(200, () => {
-            this.setVelocity(0, 0);
-            this.isHurt = false;
-        });
-    }
-
-    shootShockwave() {
         // 충격파 생성
         this.scene.cameras.main.shake(500, 0.01);  // (지속 시간(ms), 강도)
         const shockwave = this.scene.matter.add.image(this.x, this.y, 'goblin_shockwave', null, {
@@ -299,27 +268,24 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         // 충격파 확장 애니메이션
         this.scene.tweens.add({
             targets: shockwave,
-            scaleX: 0.2,
-            scaleY: 0.2,
+            scaleX: xx,
+            scaleY: yy,
             hold: 2000,
             alpha: 1, // 점점 투명해짐
             duration: 0,
             onComplete: () => {
                 shockwave.destroy(); // 애니메이션이 끝나면 충격파 제거
                 this.setStatic(false);
-                this.anims.play(`${this.monsterType}_movement`, true);
+                this.anims.play(this.moveAnim, true);
             }
         });
-        this.scene.setCollisionOfMonsterShockwave(shockwave);
+        this.scene.setCollisionOfMonsterShortAttack(shockwave);
     }
 
-    shootBullet() {
-        this.setStatic(true);
-        this.anims.play(`${this.monsterType}_throw_coin_bag`);
+    goblinShootBullet() {
         for (let i = 0; i < this.totalBullets; i++) {
             this.scene.time.delayedCall(i * 100, () => {
                 const angle = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y);
-                // const angle = Phaser.Math.DegToRad(i * this.angleStep);
                 let bullet = this.scene.matter.add.image(this.x, this.y, 'coin_bag', 'coin_bag_sprite_sheet_0');
                 bullet.setBody({
                     type: 'circle',
@@ -336,13 +302,30 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
                 bullet.damage = 0.5;
                 bullet.creationTime = this.scene.time.now;
                 this.bullets.add(bullet);
-                this.scene.setCollisionOfMonsterAttack(bullet);
+                this.scene.setCollisionOfMonsterLongAttack(bullet);
             });
         }
         this.scene.time.delayedCall(this.totalBullets * 100, () => {
+            this.anims.play(this.moveAnim, true);
             this.setStatic(false);
         });
     }
 
+    timeOutBullets() {
+        this.bullets.children.each(bullet => {
+            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
+            const elapsedTime = this.scene.time.now - bullet.creationTime;
+            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration
+                || bullet.x > this.mapSize - 10 || bullet.x <= 10 || bullet.y > this.mapSize - 10 || bullet.y <= 10) {
+                bullet.destroy();
+            }
+        }, this);
+    }
+
+    destroyBullets() {
+        this.bullets.children.each(bullet => {
+            bullet.destroy();
+        }, this);
+    }
 
 }

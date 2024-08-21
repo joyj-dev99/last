@@ -6,6 +6,8 @@ const UI_TEXT_STYLE = Object.freeze({
     wordWrap: { width: 0 },
 });
 
+const { type } = window.gameConfig;
+
 export default class Dialog  {
 
     /** @type {Phaser.Scene} */
@@ -43,19 +45,32 @@ export default class Dialog  {
      */
     #currentMessage = null;
 
+    #currentInstructions = [];
+    /** @type {boolean} */
+    #ignoreSpaceKey;
 
     /**
      * @param {Phaser.Scene} scene
      * @param {number} width
      * @param {number} height
      */
-    constructor(scene, width, height) {
+    constructor(scene, width, height, stageNumber, mapNumber) {
         this.#scene = scene;
         this.#padding = 10;
         this.#width = width - this.#padding * 2;
         this.#height = height;
         this.#textAnimationPlaying = false;
         this.#messagesToShow = [];
+        this.#currentInstructions = [];  // 현재 추가된 UI 요소들을 추적
+        this.#ignoreSpaceKey = false; // 스페이스 키를 무시하는 플래그
+
+        this.stageNumber = stageNumber;
+        this.mapNumber = mapNumber;
+
+        console.log('생성자 시작');
+
+        console.log('생성자 this.stageNumber : '+this.stageNumber);
+        console.log('생성자 this.mapNumber : '+this.mapNumber);
 
         // 컨테이너 및 UI 요소 설정
         const panel = this.#scene.add
@@ -90,12 +105,31 @@ export default class Dialog  {
         }).setScrollFactor(0);
         this.#container.add(this.#uiText);
 
+
+        // if(type == 'mobile'){
+            
+        // }
+       
+
+        // 스페이스바 입력 감지
+        this.#scene.input.keyboard.on('keydown-SPACE', () => {
+            this.onSpaceKeyPressed();
+        });
+
+        this.#scene.events.on('shutdown', () => {
+            // 씬이 중단될 때 정리해야 할 작업 수행
+            console.log("shutdown this.#scene.scale.off('resize', this.handleResize, this);");
+            this.#scene.scale.off('resize', this.handleResize, this);
+        });
+
+
         // 대화창의 depth를 플레이어보다 높게 설정
         const dialogDepth = 101;
         this.#container.setDepth(dialogDepth);
         this.#nameText.setDepth(dialogDepth);
         this.#portrait.setDepth(dialogDepth);
         this.#uiText.setDepth(dialogDepth);
+        // this.nextBtnImage.setDepth(dialogDepth);
 
 
         this.#container.setScrollFactor(0); // 컨테이너 자체에도 적용
@@ -107,21 +141,109 @@ export default class Dialog  {
             this.onSpaceKeyPressed();
         });
 
-        this.#scene.input.on('pointerdown',() => {
-            this.onSpaceKeyPressed();
-        }, this.#scene);
-
-
         // 화면 크기 변경 이벤트 처리
         this.#scene.scale.on('resize', this.handleResize, this);
 
         this.onCompleteCallback = null;  // 대화 종료 시 호출될 콜백 저장
+        
+        console.log('this.#container.getAt(0):', this.#container.getAt(0));
+        console.log('생성자 끝');
+
+    }
+
+    addInstructions(key) {
+        // 기존 UI 요소 제거
+        this.clearInstructions();
+        if (key === 'map') {
+            if(type == 'pc'){
+                // 스페이스 키 이미지 추가
+                const spaceSprite = this.#scene.add.sprite(this.#width - 120, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
+                this.#container.add(spaceSprite);
+                this.#currentInstructions.push(spaceSprite);  // 요소 추적
+
+                // "선택" 텍스트 추가
+                const selectText = this.#scene.add.text(this.#width - 90, this.#height - 15, '선택', {
+                    fontFamily: 'Arial',
+                    fontSize: '12px',
+                    color: 'white'
+                }).setScrollFactor(0);
+                this.#container.add(selectText);
+                this.#currentInstructions.push(selectText);  // 요소 추적
+
+                // ESC 키 이미지 추가
+                const escKeySprite = this.#scene.add.sprite(this.#width - 50, this.#height - 10, 'keyboard_extas', 1).setOrigin(0.5, 0.5).setScrollFactor(0);
+                this.#container.add(escKeySprite);
+                this.#currentInstructions.push(escKeySprite);  // 요소 추적
+
+                // "취소" 텍스트 추가
+                const cancelText = this.#scene.add.text(this.#width - 30, this.#height - 15, '취소', {
+                    fontFamily: 'Arial',
+                    fontSize: '12px',
+                    color: 'white'
+                }).setScrollFactor(0);
+                this.#container.add(cancelText);
+                this.#currentInstructions.push(cancelText);  // 요소 추적
+            }
+            else if(type == 'mobile'){
+            }
+            
+        } else if (key === 'space') {
+            // 스페이스 키 이미지 추가
+            const spaceSprite = this.#scene.add.sprite(this.#width - 70, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
+            this.#container.add(spaceSprite);
+            this.#currentInstructions.push(spaceSprite);  // 요소 추적
+            // "넘기기" 텍스트 추가
+            const continueText = this.#scene.add.text(this.#width - 40, this.#height - 15, '넘기기', {
+                fontFamily: 'Arial',
+                fontSize: '12px',
+                color: 'white'
+            }).setScrollFactor(0);
+            this.#container.add(continueText);
+            this.#currentInstructions.push(continueText);  // 요소 추적
+        }
+        else if (key === 'next') {
+            // 스페이스 키 이미지 추가
+            // 다음 버튼
+            this.nextBtnImage = this.#scene.add.image(this.#width-25, 62, 'nextBtnImage').setScale(1).setVisible(true).setScrollFactor(0);
+
+            this.#container.add(this.nextBtnImage);
+
+            this.nextBtnImage.setInteractive({ useHandCursor: true });
+            this.nextBtnImage.on('pointerdown', () => {
+                console.log('nextBtnImage  pointerdown');
+                this.onSpaceKeyPressed();
+            })
+            .on('pointerover', () => {
+                this.nextBtnImage.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
+            })
+            .on('pointerout', () => {
+                this.nextBtnImage.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
+            });
+            this.#currentInstructions.push(this.nextBtnImage);  // 요소 추적
+        }
+    }
+
+    clearInstructions() {
+        // 현재 UI 요소들이 존재한다면 모두 제거
+        if (this.#currentInstructions.length > 0) {
+            this.#currentInstructions.forEach(element => element.destroy());
+            this.#currentInstructions = [];
+        }
     }
 
     static preload(scene) {
         scene.load.image('MaxPotrait', 'assets/npc/potrait/max.png'); 
         scene.load.image('ChordPotrait', 'assets/npc/potrait/chord.png'); 
         scene.load.image('NecromancerPotrait', 'assets/npc/potrait/necromancer.png'); 
+        scene.load.spritesheet('keyboard_extas', 'assets/ui/Keyboard Extras.png', {
+            frameWidth: 32, // 각 프레임의 너비
+            frameHeight: 16, // 각 프레임의 높이
+        });
+        scene.load.spritesheet('keyboard_letter_symbols', 'assets/ui/Keyboard Letters and Symbols.png', {
+            frameWidth: 16, // 각 프레임의 너비
+            frameHeight: 16, // 각 프레임의 높이
+        });
+        scene.load.image('nextBtnImage', 'assets/ui/Blue_Buttons_Pixel.png');
     }
 
     /** @type {boolean} */
@@ -144,6 +266,10 @@ export default class Dialog  {
      * @returns {void}
      */
     handleResize(gameSize) {
+
+        // console.log('handleResize this.stageNumber : '+this.stageNumber);
+        // console.log('handleResize this.mapNumber : '+this.mapNumber);
+
         const width = gameSize.width;
         const height = gameSize.height;
 
@@ -151,10 +277,10 @@ export default class Dialog  {
         this.#width = width - this.#padding * 2;
         this.#height = height * 0.3; // 화면 높이의 30%로 설정
 
-        console.log('this.#container'+this.#container);
-        console.log('this.#container.getAt(0)'+this.#container.getAt(0));
-        console.log('this.#container.getAt(0):', this.#container.getAt(0));
-        console.dir(this.#container);
+        // console.log('this.#container'+this.#container);
+        // console.log('this.#container.getAt(0)'+this.#container.getAt(0));
+        // console.log('this.#container.getAt(0):', this.#container.getAt(0));
+        // console.dir(this.#container);
 
         this.#container.getAt(0).setSize(this.#width, this.#height); // 패널 크기 조정
         this.#uiText.setWordWrapWidth(this.#width - 90);
@@ -271,6 +397,9 @@ export default class Dialog  {
      * @returns {void}
      */
     onSpaceKeyPressed() {
+        if (this.#ignoreSpaceKey) {
+            return; // 스페이스 키를 무시하도록 설정된 경우 아무것도 하지 않음
+        }
         if (this.#textAnimationPlaying) {
             // 현재 텍스트 애니메이션을 중단하고 전체 메시지를 표시
             if (this.#uiText.timer) {
@@ -286,5 +415,9 @@ export default class Dialog  {
             // 메시지가 끝나고 스페이스바를 누르면 대화창 숨기기
             this.hideDialogModal();
         }
+    }
+
+    setIgnoreSpaceKey(value) {
+        this.#ignoreSpaceKey = value; // 스페이스 키 무시 플래그 설정
     }
 }

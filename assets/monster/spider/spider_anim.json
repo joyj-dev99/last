@@ -61,7 +61,7 @@
             ]
         },
         {
-            "key": "spider_jump",
+            "key": "spider_attack",
             "type": "frames",
             "repeat": 0,
             "frameRate": 10,
