@@ -15,7 +15,7 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
     // 카메라의 뷰포트를 기준으로 다이얼로그 박스 중앙 위치 계산
     const camera = scene.cameras.main;
     const centerX = camera.scrollX + camera.width / 2;
-    const centerY = camera.scrollY + camera.height / 2 - 50; // 버튼들을 위로 이동
+    const centerY = camera.scrollY + camera.height / 2 - 18; // 버튼들을 위로 이동
     // 길 정보 설정
     const paths = ["오른쪽 길", "가운데 길", "왼쪽 길"];
     const pathIcons = [
@@ -48,7 +48,7 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
         }
 
        // 컨테이너에 버튼, 텍스트, 아이콘 추가
-       const buttonContainer = scene.add.container(centerX, centerY - 50 + index * 50, [buttonSprite, text]);
+       const buttonContainer = scene.add.container(centerX, centerY - 50 + index * 40, [buttonSprite, text]);
        if (icon) {
            buttonContainer.add(icon);
        }
