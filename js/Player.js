@@ -211,7 +211,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if (!this.hitByMonster && !this.isRolling) {
 
             // 8방향 이동 입력 처리
-            this.handleArrowKeyInput(playerVelocity, this.speed);
+            this.handleArrowKeyInput(playerVelocity, this.status.speed);
 
             if (this.slash) { // 이 지점에서 this.slash가 여전히 존재하는지 확인
                 const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
@@ -307,7 +307,29 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.scene.setCollisionOfPlayerAttack(magic);
     }
 
-    handleRoll(playerVelocity) {
+    // 공격력 조절 메서드
+    adjustAttackPower(multiplier) {
+        this.status.swordATK *= multiplier;
+        this.status.bowATK *= multiplier;
+        this.status.magicATK *= multiplier;
+
+        console.log(`Attack power adjusted by a factor of ${multiplier}.`);
+        console.log('New sword ATK: ' + this.status.swordATK);
+        console.log('New bow ATK: ' + this.status.bowATK);
+        console.log('New magic ATK: ' + this.status.magicATK);
+    }
+
+    // 공격 스킬 쿨타임 조절 메서드
+    adjustCooldown(amount) {
+        this.status.swordCooldown = Math.max(this.status.swordCooldown + amount, 0);
+        this.status.magicCooldown = Math.max(this.status.magicCooldown + amount, 0);
+
+        console.log(`Cooldowns adjusted by ${amount} seconds.`);
+        console.log('New sword cooldown: ' + this.status.swordCooldown);
+        console.log('New magic cooldown: ' + this.status.magicCooldown);
+    }
+
+    handleRoll(playerVelocity){
 
         // 슬래쉬 객체 제거
         this.removeSlash();
