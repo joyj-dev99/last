@@ -33,13 +33,26 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             coin : 0,
             // 이동 속도 초기화
             speed: 3.5,
-            // 공격 스킬 쿨타임 초기화 (초 단위)
+            rollingCoolTime: 500,
             swordCoolTime: 3000,  // 검 공격 쿨타임 3초
             magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
             arrowCount: 3 //화살의 갯수
         };
 
+        this.isRolling = true;
+        this.isRollingOverLayCoolingDown = false;
+        this.rollingCooldownElapsed = 0;
+
         this.isSlash = true;
+        this.isSlashOverLayCoolingDown = false;
+        this.slashCooldownElapsed = 0;
+
+        this.isMagic = true;
+        this.isMagicOverLayCoolingDown = false;
+        this.magicCooldownElapsed = 0;
+
+
+
         this.scene = scene;
         scene.add.existing(this);
 
@@ -173,7 +186,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         container.setScrollFactor(0);
 
         return { button, skillSprite, overlay, container};
-
     }
     
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
@@ -192,6 +204,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.audio('sound_player_bow', 'assets/audio/sound_player_bow.mp3');
         scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.mp3');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
+
+        scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', { frameWidth: 16, frameHeight: 16 });
 
         Slash.preload(scene);
         Arrow.preload(scene);
