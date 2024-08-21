@@ -48,8 +48,8 @@ export default class HeartIndicator {//extends Phaser.GameObjects.Sprite
         // 반복문을 사용하여 num만큼 별 생성
         for (let i = 1; i <= maxHeart; i++) {
   
-            let x = init_x + 32 * (Math.floor((i-1)%maxCnt));
-            let y = init_y +  32 * (Math.floor((i-1)/maxCnt));
+            let x = init_x + 16 * (Math.floor((i-1)%maxCnt));
+            let y = init_y +  16 * (Math.floor((i-1)/maxCnt));
 
             let image_name;
             if(nowHeart >= i*2){
@@ -61,7 +61,7 @@ export default class HeartIndicator {//extends Phaser.GameObjects.Sprite
             else if(nowHeart < i*2-1 ){
                 image_name = 'no_heart';
             }
-            let heart = this.scene.add.image(x, y, image_name).setScrollFactor(0);
+            let heart = this.scene.add.image(x, y, image_name).setScale(0.5).setScrollFactor(0);
 
             this.heartArr.push(heart);
         }
