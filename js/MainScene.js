@@ -56,8 +56,8 @@ export default class MainScene extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 3;
-        this.mapNumber = data.mapNumber || 4;
+        this.stageNumber = data.stageNumber || 1;
+        this.mapNumber = data.mapNumber || 2;
         this.playerStatus = data.playerStatus || null;
         this.skipTutorial = data.skipTutorial || false;
 
@@ -997,8 +997,8 @@ export default class MainScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
 
         // X, Y 위치를 화면의 상단 우측으로 설정
-        const x = this.sys.game.config.width - 120;/// 2
-        const y = 40; 
+        const x = 15;/// 2
+        const y = 6; 
 
         // 상단 coins:{누적갯수} 텍스트 박스 표시
         this.coinIndicatorText = TextIndicator.createText(this, x, y, `Coins: ${this.player.status.coin}`, {
@@ -1007,14 +1007,14 @@ export default class MainScene extends Phaser.Scene {
             fill: '#000', // 글씨 색상 검은색
             backgroundColor: 'rgba(255, 255, 255, 0.5)', // 배경 투명한 흰색
             padding: {
-                x: 10, // 좌우 패딩
-                y: 5  // 상하 패딩
+                x: 4, // 좌우 패딩
+                y: 0  // 상하 패딩
             }
         });
         // 계속 상단에 고정되도록 UI 레이어 설정
         TextIndicator.setScrollFactorText(this.coinIndicatorText);
 
-        this.menuBtn = this.add.sprite(435, 28, 'setting', 22).setScale(1.3).setScrollFactor(0);//, 52
+        this.menuBtn = this.add.sprite(435, 16, 'setting', 22).setScale(1.3).setScrollFactor(0);//, 52
         this.menuBtn.setInteractive({ useHandCursor: true });
 
         this.menuBtn.on('pointerdown', () => {
@@ -1026,7 +1026,7 @@ export default class MainScene extends Phaser.Scene {
            
                 // 컨테이너 및 UI 요소 설정
                 const panel = this.add
-                    .rectangle(353, 42, 90, 45, '#FFFFFF', 0.8)
+                    .rectangle(353, 30, 90, 45, '#FFFFFF', 0.8)
                     .setOrigin(0)
                     .setStrokeStyle(8,'#FFFFFF', 1);
 
@@ -1038,12 +1038,12 @@ export default class MainScene extends Phaser.Scene {
 
                 // this.#width-25, 62
                 // 사운드
-                this.soundIcon = this.add.image(420, 55, 'status', 0).setScale(1).setVisible(true).setScrollFactor(0);
+                this.soundIcon = this.add.image(420, 43, 'status', 0).setScale(1).setVisible(true).setScrollFactor(0);
                 this.container.add(this.soundIcon);
                 // this.soundIcon.setPosition(10, 10);
 
                 // 배경음악
-                this.bgSoundIcon = this.add.image(420, 72, 'status', 1).setScale(1).setVisible(true).setScrollFactor(0);
+                this.bgSoundIcon = this.add.image(420, 60, 'status', 1).setScale(1).setVisible(true).setScrollFactor(0);
                 this.container.add(this.bgSoundIcon);
                 // this.nextBtnImage.setPosition(20, 20);
 
@@ -1060,14 +1060,14 @@ export default class MainScene extends Phaser.Scene {
 
 
                 // 대화 텍스트 객체 추가
-                this.uiText = this.add.text(360, 50, '사운드', {
+                this.uiText = this.add.text(360, 38, '사운드', {
                     ...UI_TEXT_STYLE,
                     ...{ fontSize: '10px' },
                 }).setScrollFactor(0);
                 this.container.add(this.uiText);
 
                 // 대화 텍스트 객체 추가
-                this.uiText2 = this.add.text(360, 68, '배경음악', {
+                this.uiText2 = this.add.text(360, 56, '배경음악', {
                     ...UI_TEXT_STYLE,
                     ...{ fontSize: '10px' },
                 }).setScrollFactor(0);

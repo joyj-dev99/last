@@ -28,7 +28,7 @@ export default class HeartIndicator {//extends Phaser.GameObjects.Sprite
         
     }
 
-    setHeart(nowHeart, maxHeart = 6) {
+    setHeart(nowHeart, maxHeart) {
 
         // 다 지우고
         this.heartArr.forEach((heart) => {
@@ -37,7 +37,7 @@ export default class HeartIndicator {//extends Phaser.GameObjects.Sprite
 
         // 0,1,2 패턴으로 차례로 image 설정
         const init_x = 20;
-        const init_y = 20; 
+        const init_y = 36; 
         const maxCnt = 5;
      
         nowHeart = nowHeart*2;
