@@ -1,5 +1,8 @@
 import Tutorial from "./Tutorial.js";
 
+
+const { type } = window.gameConfig;
+
 export default class StageManager {
     constructor(scene, player, chord, dialog, skipTutorial) {
         this.scene = scene;
@@ -137,7 +140,12 @@ export default class StageManager {
                 
                 this.startBattleSequence();
             });
-            this.dialog.addInstructions('space');
+            if(type == 'pc'){
+                this.dialog.addInstructions('space');
+            }
+            else if(type == 'mobile'){
+                this.dialog.addInstructions('next');
+            }
         }
     }
 
@@ -281,7 +289,13 @@ export default class StageManager {
                     this.dialog.showDialogModal(dialogueMessages, () => {
                         this.startBattleSequence();
                     });
-                    this.dialog.addInstructions('space');
+
+                    if(type == 'pc'){
+                        this.dialog.addInstructions('space');
+                    }
+                    else if(type == 'mobile'){
+                        this.dialog.addInstructions('next');
+                    }
                     // 충돌 이벤트 제거
                     unsubscribe4();
                 }

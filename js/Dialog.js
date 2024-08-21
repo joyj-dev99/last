@@ -6,6 +6,8 @@ const UI_TEXT_STYLE = Object.freeze({
     wordWrap: { width: 0 },
 });
 
+const { type } = window.gameConfig;
+
 export default class Dialog  {
 
     /** @type {Phaser.Scene} */
@@ -104,22 +106,10 @@ export default class Dialog  {
         this.#container.add(this.#uiText);
 
 
-        // 다음 버튼
-        this.nextBtnImage = this.#scene.add.image(this.#width-25, 62, 'nextBtnImage').setScale(1).setVisible(true).setScrollFactor(0);
-
-        this.#container.add(this.nextBtnImage);
-
-        this.nextBtnImage.setInteractive({ useHandCursor: true });
-        this.nextBtnImage.on('pointerdown', () => {
-            console.log('nextBtnImage  pointerdown');
-            this.onSpaceKeyPressed();
-        })
-        .on('pointerover', () => {
-            this.nextBtnImage.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
-        })
-        .on('pointerout', () => {
-            this.nextBtnImage.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
-        });
+        // if(type == 'mobile'){
+            
+        // }
+       
 
         // 스페이스바 입력 감지
         this.#scene.input.keyboard.on('keydown-SPACE', () => {
@@ -139,7 +129,7 @@ export default class Dialog  {
         this.#nameText.setDepth(dialogDepth);
         this.#portrait.setDepth(dialogDepth);
         this.#uiText.setDepth(dialogDepth);
-        this.nextBtnImage.setDepth(dialogDepth);
+        // this.nextBtnImage.setDepth(dialogDepth);
 
 
         this.#container.setScrollFactor(0); // 컨테이너 자체에도 적용
@@ -165,33 +155,38 @@ export default class Dialog  {
         // 기존 UI 요소 제거
         this.clearInstructions();
         if (key === 'map') {
-            // 스페이스 키 이미지 추가
-            const spaceSprite = this.#scene.add.sprite(this.#width - 120, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
-            this.#container.add(spaceSprite);
-            this.#currentInstructions.push(spaceSprite);  // 요소 추적
+            if(type == 'pc'){
+                // 스페이스 키 이미지 추가
+                const spaceSprite = this.#scene.add.sprite(this.#width - 120, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
+                this.#container.add(spaceSprite);
+                this.#currentInstructions.push(spaceSprite);  // 요소 추적
 
-            // "선택" 텍스트 추가
-            const selectText = this.#scene.add.text(this.#width - 90, this.#height - 15, '선택', {
-                fontFamily: 'Arial',
-                fontSize: '12px',
-                color: 'white'
-            }).setScrollFactor(0);
-            this.#container.add(selectText);
-            this.#currentInstructions.push(selectText);  // 요소 추적
+                // "선택" 텍스트 추가
+                const selectText = this.#scene.add.text(this.#width - 90, this.#height - 15, '선택', {
+                    fontFamily: 'Arial',
+                    fontSize: '12px',
+                    color: 'white'
+                }).setScrollFactor(0);
+                this.#container.add(selectText);
+                this.#currentInstructions.push(selectText);  // 요소 추적
 
-            // ESC 키 이미지 추가
-            const escKeySprite = this.#scene.add.sprite(this.#width - 50, this.#height - 10, 'keyboard_extas', 1).setOrigin(0.5, 0.5).setScrollFactor(0);
-            this.#container.add(escKeySprite);
-            this.#currentInstructions.push(escKeySprite);  // 요소 추적
+                // ESC 키 이미지 추가
+                const escKeySprite = this.#scene.add.sprite(this.#width - 50, this.#height - 10, 'keyboard_extas', 1).setOrigin(0.5, 0.5).setScrollFactor(0);
+                this.#container.add(escKeySprite);
+                this.#currentInstructions.push(escKeySprite);  // 요소 추적
 
-            // "취소" 텍스트 추가
-            const cancelText = this.#scene.add.text(this.#width - 30, this.#height - 15, '취소', {
-                fontFamily: 'Arial',
-                fontSize: '12px',
-                color: 'white'
-            }).setScrollFactor(0);
-            this.#container.add(cancelText);
-            this.#currentInstructions.push(cancelText);  // 요소 추적
+                // "취소" 텍스트 추가
+                const cancelText = this.#scene.add.text(this.#width - 30, this.#height - 15, '취소', {
+                    fontFamily: 'Arial',
+                    fontSize: '12px',
+                    color: 'white'
+                }).setScrollFactor(0);
+                this.#container.add(cancelText);
+                this.#currentInstructions.push(cancelText);  // 요소 추적
+            }
+            else if(type == 'mobile'){
+            }
+            
         } else if (key === 'space') {
             // 스페이스 키 이미지 추가
             const spaceSprite = this.#scene.add.sprite(this.#width - 70, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
@@ -205,6 +200,26 @@ export default class Dialog  {
             }).setScrollFactor(0);
             this.#container.add(continueText);
             this.#currentInstructions.push(continueText);  // 요소 추적
+        }
+        else if (key === 'next') {
+            // 스페이스 키 이미지 추가
+            // 다음 버튼
+            this.nextBtnImage = this.#scene.add.image(this.#width-25, 62, 'nextBtnImage').setScale(1).setVisible(true).setScrollFactor(0);
+
+            this.#container.add(this.nextBtnImage);
+
+            this.nextBtnImage.setInteractive({ useHandCursor: true });
+            this.nextBtnImage.on('pointerdown', () => {
+                console.log('nextBtnImage  pointerdown');
+                this.onSpaceKeyPressed();
+            })
+            .on('pointerover', () => {
+                this.nextBtnImage.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
+            })
+            .on('pointerout', () => {
+                this.nextBtnImage.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
+            });
+            this.#currentInstructions.push(this.nextBtnImage);  // 요소 추적
         }
     }
 
