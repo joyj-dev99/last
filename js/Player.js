@@ -126,8 +126,56 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
 
+        // 구르기 버튼과 그 오버레이
+        const { button: btnRolling, skillSprite: rollingSkill, overlay: overlayRolling, container: containerRolling } = this.createButtonWithOverlay(scene, 20, 200, 'Skills and Spells 16', 138);
+        this.btnRollingCoolTime = btnRolling;
+        this.rollingSkillSprite = rollingSkill;
+        this.overLayRollingCoolTime = overlayRolling;
+        this.containerRollingCoolTime = containerRolling;
+
+        // 슬래시 버튼과 그 오버레이
+        const { button: btnSlash, skillSprite: slashSkill, overlay: overlaySlash, container: containerSlash } = this.createButtonWithOverlay(scene, 20, 230, 'Weapons and Equipment 16', 68);
+        this.btnSlashCoolTime = btnSlash;
+        this.slashSkillSprite = slashSkill;
+        this.overLaySlashCoolTime = overlaySlash;
+        this.containerSlashCoolTime = containerSlash;
+
+        // 애로우 버튼과 그 오버레이
+        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, 50, 230, 'Weapons and Equipment 16', 1);
+        this.btnArrowCoolTime = btnArrow;
+        this.arrowSkillSprite = arrowSkill;
+        this.overLayArrowCoolTime = overlayArrow;
+        this.containerArrowCoolTime = containerArrow;
+
+        // 마법 버튼과 그 오버레이
+        const { button: btnMagic, skillSprite: magicSkill, overlay: overlayMagic, container: containerMagic } = this.createButtonWithOverlay(scene, 80, 230, 'Skills and Spells 16', 1056);
+        this.btnMagicCoolTime = btnMagic;
+        this.magicSkillSprite = magicSkill;
+        this.overLayMagicCoolTime = overlayMagic;
+        this.containerMagicCoolTime = containerMagic;
     }
 
+    createButtonWithOverlay(scene, x, y, spriteKey, spriteIndex) {
+        // 버튼 이미지 생성
+        const button = scene.add.image(0, 0, 'button_indicator');
+        button.setScale(0.05);
+        
+        const skillSprite = scene.add.sprite(0, 0, spriteKey, spriteIndex).setOrigin(0.5, 0.5);
+
+        // 오버레이 생성 (반투명한 검은색 사각형)
+        const overlay = scene.add.graphics();
+        overlay.fillStyle(0x000000, 0.5);
+        overlay.fillRect(-13, -13, button.width * button.scaleX, button.height * button.scaleY);
+        overlay.setVisible(false);
+
+        // 컨테이너 생성, 버튼과 오버레이를 추가
+        const container = scene.add.container(x, y, [button, skillSprite, overlay]);
+        container.setScrollFactor(0);
+
+        return { button, skillSprite, overlay, container};
+
+    }
+    
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
     static preload(scene) {
         scene.load.atlas('player', 'assets/player/player.png', 'assets/player/player_atlas.json');
