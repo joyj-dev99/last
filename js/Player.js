@@ -168,26 +168,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.containerMagicCoolTime = containerMagic;
     }
 
-    createButtonWithOverlay(scene, x, y, spriteKey, spriteIndex) {
-        // 버튼 이미지 생성
-        const button = scene.add.image(0, 0, 'button_indicator');
-        button.setScale(0.05);
-        
-        const skillSprite = scene.add.sprite(0, 0, spriteKey, spriteIndex).setOrigin(0.5, 0.5);
-
-        // 오버레이 생성 (반투명한 검은색 사각형)
-        const overlay = scene.add.graphics();
-        overlay.fillStyle(0x000000, 0.5);
-        overlay.fillRect(-13, -13, button.width * button.scaleX, button.height * button.scaleY);
-        overlay.setVisible(false);
-
-        // 컨테이너 생성, 버튼과 오버레이를 추가
-        const container = scene.add.container(x, y, [button, skillSprite, overlay]);
-        container.setScrollFactor(0);
-
-        return { button, skillSprite, overlay, container};
-    }
-
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
     static preload(scene) {
         scene.load.atlas('player', 'assets/player/player.png', 'assets/player/player_atlas.json');
