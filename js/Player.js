@@ -40,6 +40,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         };
 
         this.isSlash = true;
+        this.scene = scene;
+        scene.add.existing(this);
 
         // Phaser.Physics.Matter.Matter에서 Body와 Bodies 객체를 가져옴
         // Bodies는 간단한 물리 바디를 생성할 때 사용되고, Body는 이러한 바디를 조작할 때 사용
@@ -167,7 +169,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     update(time, delta) {
         if (!this.isAlive) return;
-        this.coolTimeIndicator(delta);
+        // this.coolTimeIndicator(delta);
         let playerVelocity = new Phaser.Math.Vector2();
 
         // 제자리

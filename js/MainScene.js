@@ -78,7 +78,7 @@ export default class MainScene extends Phaser.Scene {
         this.chordEnd = {x: 0, y: 0};
 
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
-        this.isInDialogue = false;
+        this.isInDialogue = true;
 
         this.isMapSelectionActive = false; // UI 활성화 플래그
 
@@ -1273,7 +1273,7 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 화살에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.bowATK, gameObjectB);
                     if (result === 'death') {
-                        this.iteamDrop(gameObjectA);
+                        // this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -1283,7 +1283,7 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 칼날에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.swordATK, gameObjectB);
                     if (result === 'death') {
-                        this.iteamDrop(gameObjectA);
+                        // this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -1291,7 +1291,7 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 마법에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.magicATK, gameObjectB);
                     if (result === 'death') {
-                        this.iteamDrop(gameObjectA);
+                        // this.iteamDrop(gameObjectA);
                         // 몬스터 배열에서 해당 몬스터 제거
 
                         this.removeMonsterFromArr(gameObjectA);
