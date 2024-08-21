@@ -30,8 +30,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             arrowCount : 0 //화살의 갯수
         };
 
-        this.scene = scene;
-        scene.add.existing(this);
+        this.isSlash = true;
+
         // Phaser.Physics.Matter.Matter에서 Body와 Bodies 객체를 가져옴
         // Bodies는 간단한 물리 바디를 생성할 때 사용되고, Body는 이러한 바디를 조작할 때 사용
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;     
@@ -180,7 +180,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if (!this.hitByMonster && !this.isRolling) {
 
             // 8방향 이동 입력 처리
-            this.handleArrowKeyInput(playerVelocity, this.status.speed );
+            this.handleArrowKeyInput(playerVelocity, this.status.speed);
             
             if(this.slash){ // 이 지점에서 this.slash가 여전히 존재하는지 확인
                 const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
