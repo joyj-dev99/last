@@ -420,10 +420,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 이동 상태에 따른 속도 설정
         if (this.isMoving) {
-            console.log("this.isMoving이 true");
-            console.log("this.anims.currentAnim.key " + this.anims.currentAnim.key);
-            console.log("this.slash " + this.slash);
-            console.log("this.isMovingUpward" + this.isMovingUpward);
+            // console.log("this.isMoving이 true");
+            // console.log("this.anims.currentAnim.key " + this.anims.currentAnim.key);
+            // console.log("this.slash " + this.slash);
+            // console.log("this.isMovingUpward" + this.isMovingUpward);
 
             //슬래쉬 값이 존재하지 않고, 활을 쏘지 않을때만, 마법을 부리지 않을때만 달리기 애니메이션을 실행한다
             if (this.slash === null && !this.isShootingBow && !this.isCastingSpell) {
@@ -449,9 +449,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(playerVelocity.x, playerVelocity.y);
 
         } else {
-            console.log("this.isMoving이 false");
-            console.log("this.isShootingBow " + this.isShootingBow);
-            console.log("this.isCastingSpell " + this.isCastingSpell);
+            // console.log("this.isMoving이 false");
+            // console.log("this.isShootingBow " + this.isShootingBow);
+            // console.log("this.isCastingSpell " + this.isCastingSpell);
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
         }
     }

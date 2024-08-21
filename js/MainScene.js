@@ -171,7 +171,6 @@ export default class MainScene extends Phaser.Scene {
             frameHeight: 32, // 각 프레임의 높이
         });
 
-
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
