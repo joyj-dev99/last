@@ -723,10 +723,10 @@ export default class MainScene extends Phaser.Scene {
     }
 
 
-    update() {
+    update(time,delta) {
         this.heartIndicator.setHeart(this.player.status.nowHeart, this.player.status.maxHeart);
         if (this.isInDialogue || this.isMapSelectionActive || !this.player.isAlive) return;
-        this.player.update();
+        this.player.update(time,delta);
         this.monsterArr.forEach((monster) => {
             monster.update();
         });

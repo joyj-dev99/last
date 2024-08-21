@@ -3,17 +3,6 @@ import {PLAYER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY}
 import TextIndicator from "./TextIndicator.js";
 export default class Item extends Phaser.Physics.Matter.Sprite {
 
-    // 코인 데이터 
-    static COIN = {
-        type : 'coin',
-        texture : 'coin',
-        frame : null,
-        scale : 0.5,
-        // 상단 누적코인 갯수 표시하는 text 객체
-        // textIndicator : this.coinIndicatorText,
-        message : '+10 coin'
-    };
-
     // 하트 데이터 
     static Heart = {
         type : 'heart',

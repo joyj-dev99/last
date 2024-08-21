@@ -30,7 +30,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //마법 공격력
             magicATK: 10,
             // 가지고 있는 coin
-            coin : 0,
+            coin: 0,
             // 이동 속도 초기화
             speed: 3.5,
             rollingCoolTime: 500,
@@ -234,9 +234,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 슬래시 쿨타임
             if (this.isSlash === true) {
                 this.isSlash = false;
-                this.scene.time.delayedCall(this.slashCoolTime, () => {
+                this.scene.time.delayedCall(this.swordCoolTime, () => {
                     this.isSlash = true;
                 });
+                if (!this.isSlashOverLayCoolingDown) {
+                    this.isSlashOverLayCoolingDown = true;
+                    this.slashCooldownElapsed = 0;
+                    this.overLaySlashCoolTime.setVisible(true);
+                }
             } else if (this.isSlash === false && this.comboState === 0) {
                 return;
             }
@@ -261,8 +266,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             // 8방향 이동 입력 처리
             this.handleArrowKeyInput(playerVelocity, this.status.speed);
-            
-            if(this.slash){ // 이 지점에서 this.slash가 여전히 존재하는지 확인
+
+            if (this.slash) { // 이 지점에서 this.slash가 여전히 존재하는지 확인
                 const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
                 // 플레이어 위치에 slash 객체 동기화
                 this.slash.setPosition(this.x + offsetX, this.y);
@@ -360,7 +365,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         if (this.isRolling) {
             this.cancelRoll(); // 구르기를 즉시 중단
         }
-
+        if (this.magicCooldownElapsed !== 0) {
+            return;
+        }
+        if (!this.isMagicOverLayCoolingDown) {
+            this.isMagicOverLayCoolingDown = true;
+            this.magicCooldownElapsed = 0;
+            this.overLayMagicCoolTime.setVisible(true);
+        }
         //검 공격 콤보 상태 초기화
         this.resetComboState();
         // 슬래쉬 객체 제거
@@ -399,7 +411,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         console.log('New magic cooldown: ' + this.status.magicCooldown);
     }
 
-    handleRoll(playerVelocity){
+    handleRoll(playerVelocity) {
 
         if (!this.canRoll) {
             console.log("Rolling is currently disabled.");
@@ -519,19 +531,26 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
         }
     }
-    
+
     // 이동 속도를 조절하는 함수
     adjustSpeed(multiplier) {
         this.status.speed *= multiplier;
     }
 
-    resetComboState(){
+    resetComboState() {
         // 다른 동작이 시작될때는, 콤보 상태를 초기화
         this.comboState = 0;
     }
 
     startRoll(playerVelocity) {
-
+        if (this.rollingCooldownElapsed !== 0) {
+            return;
+        }
+        if (!this.isRollingOverLayCoolingDown) {
+            this.isRollingOverLayCoolingDown = true;
+            this.rollingCooldownElapsed = 0;
+            this.overLayRollingCoolTime.setVisible(true);
+        }
         // 구르기가 시작될 때 콤보 상태를 초기화
         this.resetComboState();
 
@@ -687,10 +706,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     // maxHeart와 nowHeart를 amount만큼 증가
     increaseMaxHeart(amount) {
         console.log('increaseMaxHeart');
-        
+
         this.status.maxHeart += amount;
         this.status.nowHeart += amount;
-        
+
         console.log('this.status.maxHeart : ' + this.status.maxHeart);
         console.log('this.status.nowHeart : ' + this.status.nowHeart);
     }
@@ -740,29 +759,89 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.scene.scene.start('BattleResultScene', {result});
         });
     }
+
     stopMove() {
         this.isMoving = false;
         this.setVelocity(0, 0);
 
     }
 
-    // coolTimeIndicator(delta){
-    //     let remainingTimeRatio = 0 / this.slashCoolTime;
-    //     this.overLaySlashCoolTime.clear();
-    //     this.overLaySlashCoolTime.fillStyle(0x000000, 0.5);
-    //     this.overLaySlashCoolTime.fillRect(
-    //         -this.btnSlashCoolTime.width / 2,
-    //         this.btnSlashCoolTime.height / 2 - this.btnSlashCoolTime.height * remainingTimeRatio,
-    //         this.btnSlashCoolTime.width,
-    //         this.btnSlashCoolTime.height * remainingTimeRatio
-    //     );
-    //
-    //     if (0 >= this.slashCoolTime) {
-    //         // 쿨타임이 완료되면 초기화
-    //         isCoolingDown = false;
-    //         cooldownElapsed = 0;
-    //         this.overLaySlashCoolTime.setVisible(false);
-    //     }
-    // }
+    coolTimeIndicator(delta, isCoolingDown, cooldownElapsed, coolTime, overlay, button) {
+        if (isCoolingDown) {
+            // 쿨타임이 진행 중이면 경과 시간 갱신
+            cooldownElapsed += delta;
+    
+            // 쿨타임 게이지의 남은 시간 비율 계산 (0에서 1 사이 값)
+            let remainingTimeRatio = 1 - (cooldownElapsed / coolTime);
+    
+            // 오버레이 초기화
+            overlay.clear();
+            overlay.fillStyle(0x000000, 0.5);
+            
+            // 남은 시간 비율에 따라 오버레이 크기 조정
+            const overlayHeight = button.height * button.scaleY * remainingTimeRatio;
+            const overlayY = button.y - button.height * button.scaleY / 2 + (button.height * button.scaleY - overlayHeight);
+    
+            overlay.fillRect(
+                button.x - button.width * button.scaleX / 2, 
+                overlayY, 
+                button.width * button.scaleX, 
+                overlayHeight
+            );
+    
+            if (cooldownElapsed >= coolTime) {
+                // 쿨타임이 완료되면 초기화
+                isCoolingDown = false;
+                cooldownElapsed = 0;
+                overlay.setVisible(false);
+            } else {
+                overlay.setVisible(true);
+            }
+        }
+    
+        return { isCoolingDown, cooldownElapsed };
+    }
+
+    rollingCoolTimeIndicator(delta) {
+        const result = this.coolTimeIndicator(
+            delta,
+            this.isRollingOverLayCoolingDown,
+            this.rollingCooldownElapsed,
+            this.status.rollingCoolTime,
+            this.overLayRollingCoolTime,
+            this.btnRollingCoolTime
+        );
+    
+        this.isRollingOverLayCoolingDown = result.isCoolingDown;
+        this.rollingCooldownElapsed = result.cooldownElapsed;
+    }
+    
+    slashCoolTimeIndicator(delta) {
+        const result = this.coolTimeIndicator(
+            delta,
+            this.isSlashOverLayCoolingDown,
+            this.slashCooldownElapsed,
+            this.status.swordCoolTime,
+            this.overLaySlashCoolTime,
+            this.btnSlashCoolTime
+        );
+    
+        this.isSlashOverLayCoolingDown = result.isCoolingDown;
+        this.slashCooldownElapsed = result.cooldownElapsed;
+    }
+    
+    magicCoolTimeIndicator(delta) {
+        const result = this.coolTimeIndicator(
+            delta,
+            this.isMagicOverLayCoolingDown,
+            this.magicCooldownElapsed,
+            this.status.magicCoolTime,
+            this.overLayMagicCoolTime,
+            this.btnMagicCoolTime
+        );
+    
+        this.isMagicOverLayCoolingDown = result.isCoolingDown;
+        this.magicCooldownElapsed = result.cooldownElapsed;
+    }
 
 }
