@@ -289,7 +289,7 @@ export default class Tutorial{
 
             // 손 표시, 원 표시
             // - 원형 표시, 손가락 가리키는 표시
-            this.pointer = scene.add.image(80, 140, 'pointer');
+            this.pointer = scene.add.image(80, 135, 'pointer');
             scene.add.existing(this.pointer);  
             this.pointer.setScale(0.2);
             this.pointer.setRotation(Phaser.Math.DegToRad(180)); // 방향을 180도 회전
@@ -300,7 +300,7 @@ export default class Tutorial{
             // 선의 스타일 설정 (두께, 색상 등)
             this.graphics.lineStyle(2, 0xffffff); // 두께 2, 흰색 테두리
             // 원 그리기 (x, y, 반지름)
-            this.graphics.strokeCircle(80, 195, 40); // (200, 200) 위치에 반지름 50의 원
+            this.graphics.strokeCircle(80, 200, 39); // (200, 200) 위치에 반지름 50의 원
             // 카메라에 고정시키기
             this.graphics.setScrollFactor(0);
 
@@ -605,7 +605,8 @@ export default class Tutorial{
         else if(this.type === 'mobile'){
             // 손 표시, 원 표시
             // - 원형 표시, 손가락 가리키는 표시
-            this.pointer = scene.add.image(365, 160, 'pointer');
+            this.pointer = scene.add.image(372, 160, 'pointer');
+            this.pointer.setDepth(1001);
             scene.add.existing(this.pointer);   
             this.pointer.setScale(0.2);
             this.pointer.setRotation(Phaser.Math.DegToRad(180)); // 방향을 180도 회전
@@ -616,11 +617,13 @@ export default class Tutorial{
             // 선의 스타일 설정 (두께, 색상 등)
             this.graphics.lineStyle(2, 0xffffff); // 두께 2, 흰색 테두리
             // 원 그리기 (x, y, 반지름)
-            this.graphics.strokeCircle(365, 205, 25); // (200, 200) 위치에 반지름 50의 원
+            this.graphics.strokeCircle(372, 220, 33); // (200, 200) 위치에 반지름 50의 원
+
+            this.graphics.setDepth(1001);
             // 카메라에 고정시키기
             this.graphics.setScrollFactor(0);
-
         }
+
     }
 
     endzKeyControlExplanation(){
@@ -692,53 +695,53 @@ export default class Tutorial{
     /*
     * c키 조작방법 시작
     */
-        startcKeyControlExplanation(scene, x, y){
-            console.log('c키 조작방법 시작');
-            
-            // 키 입력을 위한 기본 커서 키 설정
-            let cursors = scene.input.keyboard.createCursorKeys();
-    
-            let keyboard_c = new Phaser.Physics.Matter.Sprite(scene.matter.world, x, y, 'keyboard', 18);
-            keyboard_c.setScale(2);
-            scene.add.existing(keyboard_c);  
-            this.keyboard_c = keyboard_c;
-    
-            this.키조작설명순서 = [SPELL];
-            
-            // c키 애니메이션 제작
-            scene.anims.create({
-                key: 'c_key',
-                frames: [
-                    { key: 'c_key', frame: 'c_key_0' }, 
-                    { key: 'c_key', frame: 'c_key_1' }  
-                ],
-                frameRate: 8,
-                repeat: -1
-            });
-            
-            // c키 애니메이션 완료 후 원래 이미지로 돌아가기
-            keyboard_c.on('animationstop', function () {
-                console.log('animation stop '); 
-                keyboard_c.setTexture('keyboard', 18); 
-            }, this);
-    
-            let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
-            console.log('관련된 값 return 값 : ');
-            console.dir(관련된값);
-            for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
-                관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
-            }
-            
+    startcKeyControlExplanation(scene, x, y){
+        console.log('c키 조작방법 시작');
+        
+        // 키 입력을 위한 기본 커서 키 설정
+        let cursors = scene.input.keyboard.createCursorKeys();
+
+        let keyboard_c = new Phaser.Physics.Matter.Sprite(scene.matter.world, x, y, 'keyboard', 18);
+        keyboard_c.setScale(2);
+        scene.add.existing(keyboard_c);  
+        this.keyboard_c = keyboard_c;
+
+        this.키조작설명순서 = [SPELL];
+        
+        // c키 애니메이션 제작
+        scene.anims.create({
+            key: 'c_key',
+            frames: [
+                { key: 'c_key', frame: 'c_key_0' }, 
+                { key: 'c_key', frame: 'c_key_1' }  
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+        
+        // c키 애니메이션 완료 후 원래 이미지로 돌아가기
+        keyboard_c.on('animationstop', function () {
+            console.log('animation stop '); 
+            keyboard_c.setTexture('keyboard', 18); 
+        }, this);
+
+        let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
+        console.log('관련된 값 return 값 : ');
+        console.dir(관련된값);
+        for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
+            관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
         }
+        
+    }
     
-        /*
-        * c키 조작방법 종료
-        */
-        endcKeyControlExplanation(){
-            if(this.keyboard_c){
-                this.keyboard_c.destroy();
-            }
+    /*
+    * c키 조작방법 종료
+    */
+    endcKeyControlExplanation(){
+        if(this.keyboard_c){
+            this.keyboard_c.destroy();
         }
+    }
 
 
     startshiftKeyControlExplanation(scene, sensor_x, sensor_y){
@@ -802,7 +805,8 @@ export default class Tutorial{
 
             // 손 표시, 원 표시
             // - 원형 표시, 손가락 가리키는 표시
-            this.pointer = scene.add.image(400, 160, 'pointer');
+            this.pointer = scene.add.image(420, 160, 'pointer');
+            this.pointer.setDepth(1001);
             scene.add.existing(this.pointer);   
             this.pointer.setScale(0.2);
             this.pointer.setRotation(Phaser.Math.DegToRad(180)); // 방향을 180도 회전
@@ -810,10 +814,12 @@ export default class Tutorial{
 
             // 새로운 그래픽스 객체 생성
             this.graphics = scene.add.graphics();
+            this.graphics.setDepth(1001);
+
             // 선의 스타일 설정 (두께, 색상 등)
             this.graphics.lineStyle(2, 0xffffff); // 두께 2, 흰색 테두리
             // 원 그리기 (x, y, 반지름)
-            this.graphics.strokeCircle(400, 205, 25); // (200, 200) 위치에 반지름 50의 원
+            this.graphics.strokeCircle(420, 220, 33); // (200, 200) 위치에 반지름 50의 원
             // 카메라에 고정시키기
             this.graphics.setScrollFactor(0);
 

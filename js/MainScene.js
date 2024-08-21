@@ -166,6 +166,12 @@ export default class MainScene extends Phaser.Scene {
             frameHeight: 32, // 각 프레임의 높이
         });
 
+        this.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', {
+            frameWidth: 32, // 각 프레임의 너비
+            frameHeight: 32, // 각 프레임의 높이
+        });
+
+
         Player.preload(this);
         Monster.preload(this);
         MonsterBossPumpkin.preload(this);
@@ -371,145 +377,151 @@ export default class MainScene extends Phaser.Scene {
             // this.joystick.setVisible(false); // 조이스틱 컨테이너를 숨김
 
             
-        // 버튼 스타일 (폰트 크기 조절)
-        const buttonTextStyle = { font: "8px Arial", fill: "#000000" };
-        // 검 공격의 grapics1에 depth 설정하니까 다 플레이어 아래로 감..? 왜지?
-        const dialogDepth = 101;
+            // 버튼 스타일 (폰트 크기 조절)
+            const buttonTextStyle = { font: "8px Arial", fill: "#000000" };
+            // 검 공격의 grapics1에 depth 설정하니까 다 플레이어 아래로 감..? 왜지?
+            const dialogDepth = 101;
 
-        // 검 공격 버튼
-        const text1 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 20, '검 공격', buttonTextStyle)
-        // .setDepth(dialogDepth)
-        .setOrigin(0.5).setScrollFactor(0);
+            // 검 공격 버튼
+            const text1 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 20, '검 공격', buttonTextStyle)
+            // .setDepth(dialogDepth)
+            .setOrigin(0.5).setScrollFactor(0);
 
-        // 새로운 그래픽스 객체 생성
-        this.graphics1 = this.add.graphics();
-        // 바탕 투명한 흰색 설정 (투명도 0.5)
-        this.graphics1.fillStyle(0x000000, 0.5);
-        // 사각형 채우기 (x, y, width, height)
-        this.graphics1.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
-        // 선의 스타일 설정 (두께, 색상 등)
-        this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-        // 사각형 테두리 그리기
-        this.graphics1.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
-        // 카메라에 고정시키기
-        this.graphics1.setDepth(dialogDepth).setScrollFactor(0);//.setDepth(dialogDepth)
-        
-        // 버튼 생성 검
-        this.button = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 40,'Skills and Spells' , 68)
-        .setScale(0.75)
-        // .setDepth(dialogDepth)
-        .setInteractive()
-        .setScrollFactor(0);
-
-
-
-        // 구르기 버튼
-        const text2 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 20, '구르기', buttonTextStyle)
-        .setOrigin(0.5).setScrollFactor(0);
-
-        // 새로운 그래픽스 객체 생성
-        this.graphics2 = this.add.graphics();
-        // 바탕 투명한 흰색 설정 (투명도 0.5)
-        this.graphics2.fillStyle(0x000000, 0.5);
-        // 사각형 채우기 (x, y, width, height)
-        this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 60,  42, 50);
-        // 선의 스타일 설정 (두께, 색상 등)
-        this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-        // 사각형 테두리 그리기
-        this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 60, 42, 50);
-        // 카메라에 고정시키기
-        this.graphics2.setScrollFactor(0);
-
-        // 버튼 생성 구르기
-        this.button2 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 40, 'Skills and Spells' , 138)       
-                    .setScale(0.75)
-                    .setInteractive()
-                    .setScrollFactor(0);
+            // 새로운 그래픽스 객체 생성
+            this.graphics1 = this.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            this.graphics1.fillStyle(0x000000, 0.5);
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics1.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
+            // 선의 스타일 설정 (두께, 색상 등)
+            this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics1.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
+            // 카메라에 고정시키기
+            this.graphics1.setScrollFactor(0);//.setDepth(dialogDepth)
+            
+            // 버튼 생성 검
+            this.button = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 40,'Weapons and Equipment' , 68)
+            .setScale(0.75)
+            // .setDepth(dialogDepth)
+            .setInteractive()
+            .setScrollFactor(0);
 
 
-                    
-        // 활 공격 버튼
-        const text3 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 80, '활 공격', buttonTextStyle)
-        .setOrigin(0.5).setScrollFactor(0);
 
-        // 새로운 그래픽스 객체 생성
-        this.graphics3 = this.add.graphics();
-        // 바탕 투명한 흰색 설정 (투명도 0.5)
-        this.graphics3.fillStyle(0x000000, 0.5);
-        // 사각형 채우기 (x, y, width, height)
-        this.graphics1.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
-        // 선의 스타일 설정 (두께, 색상 등)
-        this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-        // 사각형 테두리 그리기
-        this.graphics1.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
-        // 카메라에 고정시키기
-        this.graphics3.setScrollFactor(0);
+            // 구르기 버튼
+            const text2 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 20, '구르기', buttonTextStyle)
+            .setOrigin(0.5).setScrollFactor(0);
+            text2.setDepth(100);
 
-        // 버튼 생성 화살
-        this.button3 = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 100,'Skills and Spells' , 127)
+
+            // 새로운 그래픽스 객체 생성
+            this.graphics2 = this.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            this.graphics2.fillStyle(0x000000, 0.5);
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 60,  42, 50);
+            // 선의 스타일 설정 (두께, 색상 등)
+            this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 60, 42, 50);
+            // 카메라에 고정시키기
+            this.graphics2.setScrollFactor(0);
+
+            this.graphics2.setDepth(99);
+
+
+            // 버튼 생성 구르기
+            this.button2 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 40, 'Skills and Spells' , 138)       
                         .setScale(0.75)
                         .setInteractive()
                         .setScrollFactor(0);
 
+            this.button2.setDepth(100);
 
-        // 마법 공격 버튼
-        const text4 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 80, '마법 공격', buttonTextStyle)
-        .setOrigin(0.5).setScrollFactor(0);
+                    
+            // 활 공격 버튼
+            const text3 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 80, '활 공격', buttonTextStyle)
+            .setOrigin(0.5).setScrollFactor(0);
 
-        // 새로운 그래픽스 객체 생성
-        this.graphics4 = this.add.graphics();
-        // 바탕 투명한 흰색 설정 (투명도 0.5)
-        this.graphics4.fillStyle(0x000000, 0.5); 
-        // 사각형 채우기 (x, y, width, height)
-        this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
-        // 선의 스타일 설정 (두께, 색상 등)
-        this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-        // 사각형 테두리 그리기
-        this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
-        // 카메라에 고정시키기
-        this.graphics4.setScrollFactor(0);
+            // 새로운 그래픽스 객체 생성
+            this.graphics3 = this.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            this.graphics3.fillStyle(0x000000, 0.5);
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics1.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
+            // 선의 스타일 설정 (두께, 색상 등)
+            this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics1.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
+            // 카메라에 고정시키기
+            this.graphics3.setScrollFactor(0);
 
-        // 버튼 생성 마법
-        this.button4 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 100, 'Skills and Spells', 1056)
-                    .setScale(0.75)
-                    .setInteractive()
-                    .setScrollFactor(0);
+            // 버튼 생성 화살
+            this.button3 = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 100,'Weapons and Equipment' , 73)
+                            .setScale(0.75)
+                            .setInteractive()
+                            .setScrollFactor(0);
+
+
+            // 마법 공격 버튼
+            const text4 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 80, '마법 공격', buttonTextStyle)
+            .setOrigin(0.5).setScrollFactor(0);
+
+            // 새로운 그래픽스 객체 생성
+            this.graphics4 = this.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            this.graphics4.fillStyle(0x000000, 0.5); 
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
+            // 선의 스타일 설정 (두께, 색상 등)
+            this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
+            // 카메라에 고정시키기
+            this.graphics4.setScrollFactor(0);
+
+            // 버튼 생성 마법
+            this.button4 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 100, 'Skills and Spells', 1056)
+                        .setScale(0.75)
+                        .setInteractive()
+                        .setScrollFactor(0);
         
 
-        // 버튼을 눌렀을 때 (pointerdown)
-        this.button.on('pointerdown', () => {
-            console.log('Button pressed down!');
-            this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+            // 버튼을 눌렀을 때 (pointerdown)
+            this.button.on('pointerdown', () => {
+                console.log('Button pressed down!');
+                this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
 
-            // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-        const zKeyDownEvent = new KeyboardEvent('keydown', {
-            key: 'z',
-            code: 'KeyZ',
-            keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
-            bubbles: true,
-            cancelable: true
-        });
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+            const zKeyDownEvent = new KeyboardEvent('keydown', {
+                key: 'z',
+                code: 'KeyZ',
+                keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+                bubbles: true,
+                cancelable: true
+            });
 
-        window.dispatchEvent(zKeyDownEvent);
+            window.dispatchEvent(zKeyDownEvent);
 
-        });
+            });
 
-        // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
-        this.button.on('pointerup', () => {
-            console.log('Button released!');
-            this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-            // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.button.on('pointerup', () => {
+                console.log('Button released!');
+                this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
 
-            // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-        const zKeyUpEvent = new KeyboardEvent('keyup', {
-            key: 'z',
-            code: 'KeyZ',
-            keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
-            bubbles: true,
-            cancelable: true
-        });
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+            const zKeyUpEvent = new KeyboardEvent('keyup', {
+                key: 'z',
+                code: 'KeyZ',
+                keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+                bubbles: true,
+                cancelable: true
+            });
 
-        window.dispatchEvent(zKeyUpEvent);
+            window.dispatchEvent(zKeyUpEvent);
 
         });
 
@@ -518,7 +530,6 @@ export default class MainScene extends Phaser.Scene {
             console.log('Pointer out of button!');
             this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
         });
-
 
 
         // 버튼을 눌렀을 때 (pointerdown)
@@ -564,51 +575,48 @@ export default class MainScene extends Phaser.Scene {
             this.button2.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
         });
 
-        
-        //    // 버튼을 눌렀을 때 (pointerdown)
-        //    this.button3.on('pointerdown', () => {
-        //        console.log('Button pressed down!');
-        //        this.button3.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+           // 버튼을 눌렀을 때 (pointerdown)
+           this.button3.on('pointerdown', () => {
+               console.log('Button pressed down!');
+               this.button3.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
   
-        //        // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-        //       const shiftKeyDownEvent = new KeyboardEvent('keydown', {
-        //           key: 'Shift',
-        //           code: 'ShiftLeft',
-        //           keyCode: Phaser.Input.Keyboard.KeyCodes.X,
-        //           bubbles: true,
-        //           cancelable: true
-        //       });
+               // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+              const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+                  key: 'Shift',
+                  code: 'ShiftLeft',
+                  keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                  bubbles: true,
+                  cancelable: true
+              });
   
-        //       window.dispatchEvent(shiftKeyDownEvent);
+              window.dispatchEvent(shiftKeyDownEvent);
   
-        //    });
+           });
    
-        //    // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
-        //    this.button3.on('pointerup', () => {
-        //        console.log('Button released!');
-        //        this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-        //        // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+           // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+           this.button3.on('pointerup', () => {
+               console.log('Button released!');
+               this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+               // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
   
-        //           // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-        //       const shiftKeyUpEvent = new KeyboardEvent('keyup', {
-        //           key: 'Shift',
-        //           code: 'ShiftLeft',
-        //           keyCode: Phaser.Input.Keyboard.KeyCodes.X,
-        //           bubbles: true,
-        //           cancelable: true
-        //       });
+                  // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+              const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+                  key: 'Shift',
+                  code: 'ShiftLeft',
+                  keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                  bubbles: true,
+                  cancelable: true
+              });
   
-        //       window.dispatchEvent(shiftKeyUpEvent);
+              window.dispatchEvent(shiftKeyUpEvent);
   
-        //    });
+           });
    
-        //    // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
-        //    this.button3.on('pointerout', () => {
-        //        console.log('Pointer out of button!');
-        //        this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-        //    });
-  
-
+           // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+           this.button3.on('pointerout', () => {
+               console.log('Pointer out of button!');
+               this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+           });
 
             // 버튼을 눌렀을 때 (pointerdown)
             this.button4.on('pointerdown', () => {
