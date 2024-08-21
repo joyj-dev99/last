@@ -26,8 +26,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             speed: 3.5,
             // 공격 스킬 쿨타임 초기화 (초 단위)
             swordCooldown: 5,  // 검 공격 쿨타임 5초
-            bowCooldown: 7,    // 활 공격 쿨타임 7초
-            magicCooldown: 10  // 마법 공격 쿨타임 10초
+            magicCooldown: 10,  // 마법 공격 쿨타임 10초
+            arrowNum : 0 //화살의 갯수
         };
 
         this.scene = scene;
@@ -254,6 +254,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.scene.setCollisionOfPlayerAttack(arrow);
     }
 
+    // 화살의 갯수를 증가시키는 함수
+    addArrows(amount) {
+        this.status.arrowNum += amount;
+        console.log(`현재 화살의 갯수: ${this.status.arrowNum}`);
+    }
 
     handleSpell(){
         if(this.isRolling){
@@ -291,12 +296,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     // 공격 스킬 쿨타임 조절 메서드
     adjustCooldown(amount) {
         this.status.swordCooldown = Math.max(this.status.swordCooldown + amount, 0);
-        this.status.bowCooldown = Math.max(this.status.bowCooldown + amount, 0);
         this.status.magicCooldown = Math.max(this.status.magicCooldown + amount, 0);
 
         console.log(`Cooldowns adjusted by ${amount} seconds.`);
         console.log('New sword cooldown: ' + this.status.swordCooldown);
-        console.log('New bow cooldown: ' + this.status.bowCooldown);
         console.log('New magic cooldown: ' + this.status.magicCooldown);
     }
 

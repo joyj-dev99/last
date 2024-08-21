@@ -231,6 +231,24 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         drap_per: 0.7  // 드랍 확률 (70%)
     };
 
+    // 화살(1개) 아이템 데이터
+    static arrow_ITEM = {
+        type: 'arrow',
+        texture: 'arrow', 
+        frame: 0,  
+        scale: 0.5,
+        message: '화살 +1개'
+    };
+
+    // 화살(10개) 아이템 데이터
+    static arrow_10_ITEM = {
+        type: 'arrow_10',
+        texture: 'arrow_10', 
+        frame: 0,  
+        scale: 0.5,
+        message: '화살 +10개'
+    };
+
     // Item.setData(this.coinIndicatorText,this.heartIndicator);
     // static setData(textIndicator, heartIndicator){
     //     Item.COIN_ITEM.textIndicator = textIndicator;
@@ -336,7 +354,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', { frameWidth: 32, frameHeight: 32 } );
         scene.load.spritesheet('Loot and Treasure', 'assets/item/Loot and Treasure.png', { frameWidth: 32, frameHeight: 32 } );
         scene.load.spritesheet('Alchemy and Potions', 'assets/item/Alchemy and Potions.png', { frameWidth: 32, frameHeight: 32 } );
-        
+        scene.load.image('arrow', 'assets/player/arrow.png');
+        scene.load.image('arrow_10', 'assets/player/arrow_10.jpg');
     }
 
     // 아이템 적용 메소드
@@ -462,7 +481,18 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             // 모든 공격 스킬의 공격력을 25% 감소시킴
             player.adjustAttackPower(0.75);  
         }
+        //화살 1개
+        else if(this.itemType.type == 'arrow'){
+            // 플레이어가 가진 화살이 1개 늘어남
+            player.addArrow(1);
 
+        }
+        //화살 10개
+        else if(this.itemType.type == 'arrow_10'){
+            // 플레이어가 가진 화살이 1개 늘어남
+            player.addArrow(10);
+
+        }
         
         let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
             fontFamily: 'GalmuriMono7, sans-serif',
