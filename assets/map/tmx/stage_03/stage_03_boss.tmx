@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="7">
  <tileset firstgid="1" name="Lab Tileset" tilewidth="32" tileheight="32" tilecount="40" columns="5">
-  <image source="../Lab Tileset.png" width="160" height="256"/>
+  <image source="../../Lab Tileset.png" width="160" height="256"/>
   <tile id="0">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -114,7 +114,7 @@
   </tile>
  </tileset>
  <tileset firstgid="41" name="Modern_Office_32x32" tilewidth="32" tileheight="32" tilecount="848" columns="16">
-  <image source="../Modern_Office_32x32.png" width="512" height="1696"/>
+  <image source="../../Modern_Office_32x32.png" width="512" height="1696"/>
  </tileset>
  <layer id="1" name="floor" width="15" height="15">
   <data encoding="csv">

@@ -1,0 +1,429 @@
+{ "compressionlevel":-1,
+ "height":15,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 12, 12, 12, 12, 12, 0, 0, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 0, 0, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0,
+            0, 0, 0, 0, 0, 0, 12, 12, 12, 12, 0, 0, 0, 0, 0],
+         "height":15,
+         "id":1,
+         "name":"floor",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[1, 2, 4, 4, 4, 2, 2, 2, 2, 4, 4, 4, 4, 4, 5,
+            6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 10,
+            6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+            6, 2, 2, 2, 2, 2, 5, 0, 0, 1, 2, 2, 2, 2, 10,
+            11, 7, 7, 7, 7, 7, 10, 0, 0, 6, 7, 7, 7, 7, 15],
+         "height":15,
+         "id":2,
+         "name":"wall",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0,
+            0, 20, 17, 20, 19, 20, 18, 20, 17, 19, 18, 21, 21, 21, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0,
+            0, 0, 0, 0, 28, 0, 0, 0, 0, 0, 28, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0,
+            0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":15,
+         "id":3,
+         "name":"decor1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":15,
+         "id":4,
+         "name":"decor2",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"object",
+         "objects":[
+                {
+                 "height":0,
+                 "id":1,
+                 "name":"chordStart",
+                 "point":true,
+                 "rotation":0,
+                 "type":"chord",
+                 "visible":true,
+                 "width":0,
+                 "x":228.667,
+                 "y":398
+                }, 
+                {
+                 "height":0,
+                 "id":2,
+                 "name":"playerStart",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":266,
+                 "y":398
+                }, 
+                {
+                 "height":0,
+                 "id":3,
+                 "name":"chordBattle",
+                 "point":true,
+                 "rotation":0,
+                 "type":"chord",
+                 "visible":true,
+                 "width":0,
+                 "x":256.667,
+                 "y":469.333
+                }, 
+                {
+                 "height":0,
+                 "id":4,
+                 "name":"chordEnd",
+                 "point":true,
+                 "rotation":0,
+                 "type":"chord",
+                 "visible":true,
+                 "width":0,
+                 "x":306,
+                 "y":280.667
+                }, 
+                {
+                 "height":0,
+                 "id":5,
+                 "name":"alchemist",
+                 "point":true,
+                 "rotation":0,
+                 "type":"Monster",
+                 "visible":true,
+                 "width":0,
+                 "x":203.333,
+                 "y":255.333
+                }, 
+                {
+                 "height":0,
+                 "id":6,
+                 "name":"Wolfgang",
+                 "point":true,
+                 "rotation":0,
+                 "type":"Monster",
+                 "visible":true,
+                 "width":0,
+                 "x":250.667,
+                 "y":254.667
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":6,
+ "nextobjectid":7,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.11.0",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "columns":5,
+         "firstgid":1,
+         "image":"..\/Lab Tileset.png",
+         "imageheight":256,
+         "imagewidth":160,
+         "margin":0,
+         "name":"Lab Tileset",
+         "spacing":0,
+         "tilecount":40,
+         "tileheight":32,
+         "tiles":[
+                {
+                 "id":0,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":1,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":2,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":3,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":4,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":5,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":6,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":7,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":8,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":9,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":10,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":14,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":16,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":17,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":18,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                },
+            
+                {
+                 "id":19,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":22,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":23,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":24,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":27,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":28,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":29,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }],
+         "tilewidth":32
+        }, 
+        {
+         "columns":16,
+         "firstgid":41,
+         "image":"..\/Modern_Office_32x32.png",
+         "imageheight":1696,
+         "imagewidth":512,
+         "margin":0,
+         "name":"Modern_Office_32x32",
+         "spacing":0,
+         "tilecount":848,
+         "tileheight":32,
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "type":"map",
+ "version":"1.10",
+ "width":15
+}

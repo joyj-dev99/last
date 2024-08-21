@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="15">
+ <editorsettings>
+  <export target="../../stage_02/stage_02_05.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="Forest-Prairie Tileset v1" tilewidth="32" tileheight="32" tilecount="567" columns="21">
+  <image source="../../Forest-Prairie Tileset v1.png" width="672" height="864"/>
+  <tile id="80">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="87">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="568" name="Royal Dungeon Tileset" tilewidth="32" tileheight="32" tilecount="396" columns="18">
+  <image source="../../Royal Dungeon Tileset.png" width="576" height="704"/>
+ </tileset>
+ <tileset firstgid="964" name="Modern_Office_32x32" tilewidth="32" tileheight="32" tilecount="848" columns="16">
+  <image source="../../Modern_Office_32x32.png" width="512" height="1696"/>
+ </tileset>
+ <tileset firstgid="1812" name="Room_Builder_Office_32x32" tilewidth="32" tileheight="32" tilecount="224" columns="16">
+  <image source="../../Room_Builder_Office_32x32.png" width="512" height="448"/>
+ </tileset>
+ <layer id="1" name="floor" width="15" height="10" locked="1" opacity="0.9">
+  <data encoding="csv">
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,
+1871,1871,1871,1820,1820,1820,1820,1820,1820,1820,1820,1820,1820,1871,1871,
+1871,1871,1871,1820,1820,1820,1820,1820,1820,1820,1820,1820,1820,1871,1871,
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,
+1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1871,1820,1871
+</data>
+ </layer>
+ <layer id="2" name="cliff" width="15" height="10" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,1835,1989,1989,1989,1989,1989,1989,1989,1989,1989,1989,1837,0,
+0,0,1851,2005,2005,2005,2005,2005,2005,2005,2005,2005,2005,1853,0,
+0,0,1851,0,0,0,0,0,0,0,0,0,0,1853,0,
+0,0,1851,0,0,0,0,0,0,0,0,0,0,1853,0,
+0,0,1851,0,0,0,0,0,0,0,0,0,0,1853,0,
+0,0,1851,0,0,0,0,0,0,0,0,0,0,1853,0,
+0,0,1851,0,0,0,0,0,0,0,0,0,0,1853,0,
+1989,1989,1990,0,0,0,0,0,0,0,0,0,0,1853,0,
+2005,2005,2006,0,0,0,0,0,0,0,0,0,0,1988,1989
+</data>
+ </layer>
+ <layer id="3" name="decor1" width="15" height="10" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1073,1842,1842,1842,1842,1842,1842,1842,1842,1842,0,0,
+0,0,0,1089,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1089,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1089,0,0,1476,1477,0,0,0,0,0,0,0,
+0,0,0,1857,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1857,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1857,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="decor2" width="15" height="10" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1034,1036,0,0,0,0,1034,1036,0,0,0,
+0,0,0,0,1066,1068,0,1034,1036,0,1066,1068,0,0,0,
+0,0,0,0,0,0,0,1066,1068,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="5" name="object">
+  <object id="5" name="item" x="259.755" y="166.196">
+   <point/>
+  </object>
+  <object id="9" name="playerStart" x="302.428" y="286.785">
+   <point/>
+  </object>
+  <object id="10" name="chordStart" x="230.992" y="286.785">
+   <point/>
+  </object>
+  <object id="11" name="milestone" x="202.314" y="285.742">
+   <point/>
+  </object>
+  <object id="12" name="box" x="369.052" y="125.697">
+   <point/>
+  </object>
+  <object id="13" name="box" x="338.868" y="126.364">
+   <point/>
+  </object>
+  <object id="14" name="box" x="162.681" y="130.826">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

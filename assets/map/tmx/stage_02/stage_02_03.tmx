@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="14">
+ <editorsettings>
+  <export target="../../stage_02/stage_02_03.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="Royal Dungeon Tileset" tilewidth="32" tileheight="32" tilecount="396" columns="18">
-  <image source="../Royal Dungeon Tileset.png" width="576" height="704"/>
+  <image source="../../Royal Dungeon Tileset.png" width="576" height="704"/>
   <tile id="10">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -33,6 +36,51 @@
    </properties>
   </tile>
   <tile id="152">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="226">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="227">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="228">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="244">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="245">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="246">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="262">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="263">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="264">
    <properties>
     <property name="collides" type="bool" value="true"/>
    </properties>
@@ -80,7 +128,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,263,264,264,264,264,264,265,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="4" name="decor2" width="30" height="10">
+ <layer id="4" name="decor2" width="30" height="10" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -119,7 +167,7 @@
   <object id="9" name="ratfolk" type="monster" x="386.913" y="154.765">
    <point/>
   </object>
-  <object id="10" name="mini goblin" type="monster" x="499.573" y="219.63">
+  <object id="10" name="mini goblin" type="monster" x="500.998" y="192.55">
    <point/>
   </object>
   <object id="11" name="mini goblin" type="monster" x="573.542" y="150.213">
