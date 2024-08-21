@@ -430,11 +430,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             if (this.slash === null && !this.isShootingBow && !this.isCastingSpell) {
                 if (this.isMovingUpward) {
                     this.anims.play('player_run_upward', true);
-                    console.log('위로 달리기 애니메이션 실행');
+                    // console.log('위로 달리기 애니메이션 실행');
 
                 } else {
                     this.anims.play('player_run', true);
-                    console.log('달리기 애니메이션 실행');
+                    // console.log('달리기 애니메이션 실행');
                 }
             }
 

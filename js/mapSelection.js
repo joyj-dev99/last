@@ -1,10 +1,53 @@
+export function mapPreload(scene) {
+    scene.load.image('heart_icon', "assets/map/icon/heart_icon.png");
+    scene.load.image('skill_icon', "assets/map/icon/skill_icon.png");
+    scene.load.image('item_icon', "assets/map/icon/item_icon.png");
+    scene.load.image('mystery_icon', "assets/map/icon/mystery_icon.png");
+    scene.load.image('skull_icon', "assets/map/icon/skull_icon.png");
+    scene.load.image('gift_icon', "assets/map/icon/gift_icon.png");
+    
+    scene.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
+    scene.load.tilemapTiledJSON("stage_01_tutorial", "assets/map/stage_01/stage_01_tutorial.json");
+    scene.load.tilemapTiledJSON("stage_01_01", "assets/map/stage_01/stage_01_01.json");
+    scene.load.tilemapTiledJSON("stage_01_02", "assets/map/stage_01/stage_01_02.json");
+    scene.load.tilemapTiledJSON("stage_01_03", "assets/map/stage_01/stage_01_03.json");
+    scene.load.tilemapTiledJSON("stage_01_04", "assets/map/stage_01/stage_01_04.json");
+    scene.load.tilemapTiledJSON("stage_01_05", "assets/map/stage_01/stage_01_05.json");
+    scene.load.tilemapTiledJSON("stage_01_06", "assets/map/stage_01/stage_01_06.json");
+    scene.load.tilemapTiledJSON("stage_01_07", "assets/map/stage_01/stage_01_07.json");
+    scene.load.tilemapTiledJSON("stage_01_08", "assets/map/stage_01/stage_01_08.json");
+    scene.load.tilemapTiledJSON("stage_01_09", "assets/map/stage_01/stage_01_09.json");
+    scene.load.tilemapTiledJSON("stage_01_10", "assets/map/stage_01/stage_01_10.json");
+}
+
+export const mapAttributes = {
+    1: [1, 2, 3, 4],  // 속성 1~4번 중 하나 랜덤 선택
+    2: [1, 2, 3, 4],
+    3: [1, 2, 3, 4],
+    4: [1, 2, 3, 4],
+    5: [1, 2, 3, 4],
+    6: [1, 2, 3, 4],
+    7: [1, 2, 3, 4],
+    8: [5],  // 속성 5번
+    9: [5],  // 속성 5번
+    10: [6]   // 속성 6번
+};
+
+export const attributeIcons = {
+    1: "heart_icon",  // 하트 드랍
+    2: "skill_icon",  // 스킬 드랍
+    3: "item_icon",   // 아이템 드랍
+    4: "mystery_icon",  // 알 수 없는 보상
+    5: "skull_icon",  // 몬스터 2배
+    6: "gift_icon"    // 아이템만 드랍
+};
+
 // Dialog 클래스를 전역에서 사용할 수 있도록 선언
 let dialog;
 
-export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
+export function showMapSelectionUI(scene, mapSelections, onSelect, onCancel) {
     console.log("Map Selection UI is being shown.");
 
-    
     let selectedIndex = 0;
     const mapContainers = [];
 
@@ -24,23 +67,25 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
     const textPadding = 20;
     const iconPadding = 10;
 
-    paths.forEach((pathText, index) => {
+    mapSelections.forEach((selection, index) => {
+        const { mapNumber, iconKey } = selection;
+        console.log('선택지 생성 : ', index, mapNumber, iconKey);
+
         // 스프라이트 버튼 생성
         const buttonSprite = scene.add.sprite(0, 0, 'mapButton', 0).setOrigin(0.5, 0.5);
         buttonSprite.setDisplaySize(140, 35); // 크기 조정
 
         // 텍스트 생성 및 위치 조정
+        const pathText = paths[index];
         const text = scene.add.text(-buttonSprite.displayWidth / 4 + textPadding, 0, pathText, {
             fontSize: '18px',
             fill: '#fff'
         }).setOrigin(0.5, 0.5);
 
         // 아이콘 생성 및 위치 조정 (아이콘이 있는 경우에만)
-        const iconInfo = pathIcons.find(p => p.text === pathText);
         let icon = null;
-        if (iconInfo && iconInfo.icon) {
-            icon = scene.add.image(buttonSprite.displayWidth / 2.5 - iconPadding, 0, iconInfo.icon);
-            icon.setScale(0.7);  // 아이콘 크기 조절
+        if (iconKey) {
+            icon = scene.add.image(buttonSprite.displayWidth / 4 + iconPadding, 0, iconKey);
         }
 
         // 컨테이너에 버튼, 텍스트, 아이콘 추가
@@ -86,13 +131,13 @@ export function showMapSelectionUI(scene, selectedMaps, onSelect, onCancel) {
     const handleKeyDown = (event) => {
         if (!scene.isMapSelectionReady) return;
         if (event.code === 'ArrowUp') {
-            selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : paths.length - 1;
+            selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : mapSelections.length - 1;
             updateSelection();
         } else if (event.code === 'ArrowDown') {
-            selectedIndex = (selectedIndex < paths.length - 1) ? selectedIndex + 1 : 0;
+            selectedIndex = (selectedIndex < mapSelections.length - 1) ? selectedIndex + 1 : 0;
             updateSelection();
         } else if (event.code === 'Space') {
-            onSelect(selectedMaps[selectedIndex]);
+            onSelect(mapSelections[selectedIndex].mapNumber, mapSelections[selectedIndex].mapAttribute);
             cleanup();
         } else if (event.code === 'Escape') {
             onCancel();

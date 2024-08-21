@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="12">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="15">
  <editorsettings>
   <export target="stage_01_03.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Forest-Prairie Tileset v1" tilewidth="32" tileheight="32" tilecount="567" columns="21">
-  <image source="../Forest-Prairie Tileset v1.png" width="672" height="864"/>
+  <image source="../../Forest-Prairie Tileset v1.png" width="672" height="864"/>
   <tile id="128">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -734,6 +734,15 @@
    <point/>
   </object>
   <object id="11" name="lemon" type="monster" x="696.51" y="153.584">
+   <point/>
+  </object>
+  <object id="12" name="box" x="849.233" y="248.049">
+   <point/>
+  </object>
+  <object id="13" name="box" x="881.003" y="245.606">
+   <point/>
+  </object>
+  <object id="14" name="box" x="109.973" y="254.159">
    <point/>
   </object>
  </objectgroup>
