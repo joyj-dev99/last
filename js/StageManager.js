@@ -357,7 +357,7 @@ export default class StageManager {
         if(mapAttribute === 1){
             Item.dropHeart(this.scene, this.player, dropX, dropY);
         }else if(mapAttribute === 2){
-            Item.dropRandomItem(this.scene, dropX, dropY);
+            Item.dropRandomItem(this.scene, this.player, dropX, dropY);
         }else if(mapAttribute === 3){
             Item.dropRandomReward(this.scene, this.player, dropX, dropY);
         }
