@@ -3,6 +3,7 @@ import ProgressIndicator from "./ProgressIndicator.js";
 import TextIndicator from "./TextIndicator.js";
 import Item from "./Item.js";
 import Tutorial from "./Tutorial.js";
+import MeatCoin from "./MeatCoin.js";
 
 import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
@@ -208,6 +209,7 @@ export default class MainScene extends Phaser.Scene {
         Thelma.preload(this);
         Item.preload(this);
         Tutorial.preload(this);
+        MeatCoin.preload(this);
 
         ProgressIndicator.preload(this);
         HeartIndicator.preload(this);
@@ -227,6 +229,8 @@ export default class MainScene extends Phaser.Scene {
         // 씬이 시작될때 페이드인 효과 적용
         this.cameras.main.fadeIn(1000, 0, 0, 0);
         this.setupWorld(this.stageNumber, this.mapNumber);
+
+        this.meatcoin = new MeatCoin();
 
         this.getItemSound = this.sound.add(`get_item`, {
             volume: 0.7 // Set the volume (0 to 1)
@@ -1273,7 +1277,7 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 화살에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.bowATK, gameObjectB);
                     if (result === 'death') {
-                        // this.iteamDrop(gameObjectA);
+                        this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -1283,7 +1287,7 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 칼날에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.swordATK, gameObjectB);
                     if (result === 'death') {
-                        // this.iteamDrop(gameObjectA);
+                        this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -1291,7 +1295,7 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 마법에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.magicATK, gameObjectB);
                     if (result === 'death') {
-                        // this.iteamDrop(gameObjectA);
+                        this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
                         // 몬스터 배열에서 해당 몬스터 제거
 
                         this.removeMonsterFromArr(gameObjectA);
