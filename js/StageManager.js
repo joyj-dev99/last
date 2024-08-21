@@ -60,7 +60,7 @@ export default class StageManager {
                     {name : '맥스', portrait : 'MaxPotrait', message : '헛소리 하지말고, 저리가서 연주나 해.'},
                 ];
             } else if (stageNumber == 1 && mapNumber == 3) {
-                this.setBGM('forest_boss');
+                this.setBGM('forest_default');
                 dialogueMessages = [
                     {name : '맥스', portrait : 'MaxPotrait', message : '이번엔 호박이야? 가지가지 하는군...'},
                     {name : '코드', portrait : 'ChordPotrait', message : '이 호박은 다른 몬스터들보다 좀더 강해보여요.'},
@@ -91,7 +91,7 @@ export default class StageManager {
                     {name : '맥스', portrait : 'MaxPotrait', message : '여기서 무슨 일이 벌어지고 있긴 한가보군.'},
                 ];
             } else if (stageNumber == 2 && mapNumber == 4) {
-                this.setBGM('dungeon_boss');
+                this.setBGM('dungeon_default');
                 dialogueMessages = [
                     {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '누구냐! 감히 우리 베이비들에게 손을 대다니!'},
                     {name : '네크로맨서', portrait : 'NecromancerPotrait', message : '대가를 치르게 해주마!'},
@@ -128,7 +128,7 @@ export default class StageManager {
                 ];
             }
             else if (stageNumber == 3 && mapNumber == 4) {
-                this.setBGM('room_boss');
+                this.setBGM('room_default');
                 dialogueMessages = [
                     {name : '볼프강', portrait : null, message : '오, 맥스. 드디어 왔구나.'},
                     {name : '볼프강', portrait : null, message : '내 연구의 결실을 확인할 시간이야!'},
@@ -136,7 +136,7 @@ export default class StageManager {
                     {name : '맥스', portrait : 'MaxPotrait', message : '볼프강! 내 피같은 돈 돌려받으러 왔다!'},
                 ];
             } else {
-                this.setBGM('room_boss');
+                this.setBGM('forest_default');
                 dialogueMessages = [
                     {name : '맥스', portrait : 'MaxPotrait', message : '대화 아직 안만듦'}
                 ];

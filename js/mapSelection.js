@@ -1,22 +1,9 @@
-export function mapPreload(scene) {
+export function mapSlectionPreload(scene) {
     scene.load.image('heart_icon', "assets/map/icon/heart_icon.png");
     scene.load.image('item_icon', "assets/map/icon/item_icon.png");
     scene.load.image('mystery_icon', "assets/map/icon/mystery_icon.png");
     scene.load.image('monster_icon', "assets/map/icon/monster_icon.png");
     scene.load.image('gift_icon', "assets/map/icon/gift_icon.png");
-    
-    scene.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-    scene.load.tilemapTiledJSON("stage_01_tutorial", "assets/map/stage_01/stage_01_tutorial.json");
-    scene.load.tilemapTiledJSON("stage_01_01", "assets/map/stage_01/stage_01_01.json");
-    scene.load.tilemapTiledJSON("stage_01_02", "assets/map/stage_01/stage_01_02.json");
-    scene.load.tilemapTiledJSON("stage_01_03", "assets/map/stage_01/stage_01_03.json");
-    scene.load.tilemapTiledJSON("stage_01_04", "assets/map/stage_01/stage_01_04.json");
-    scene.load.tilemapTiledJSON("stage_01_05", "assets/map/stage_01/stage_01_05.json");
-    scene.load.tilemapTiledJSON("stage_01_06", "assets/map/stage_01/stage_01_06.json");
-    scene.load.tilemapTiledJSON("stage_01_07", "assets/map/stage_01/stage_01_07.json");
-    scene.load.tilemapTiledJSON("stage_01_08", "assets/map/stage_01/stage_01_08.json");
-    scene.load.tilemapTiledJSON("stage_01_09", "assets/map/stage_01/stage_01_09.json");
-    scene.load.tilemapTiledJSON("stage_01_10", "assets/map/stage_01/stage_01_10.json");
 }
 
 export const mapAttributes = {
