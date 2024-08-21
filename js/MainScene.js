@@ -326,22 +326,22 @@ export default class MainScene extends Phaser.Scene {
             const mapSelections = selectedMaps.map(mapNumber=> {
                 // 해당 맵의 속성 가져오기
                 const attributes = mapAttributes[mapNumber];
-                const selectedAttribute = Phaser.Utils.Array.GetRandom(attributes);  // 속성 랜덤 선택
-                const iconKey = attributeIcons[selectedAttribute];  // 속성에 해당하는 아이콘 가져오기
+                const attributeNumber = Phaser.Utils.Array.GetRandom(attributes);  // 속성 랜덤 선택
+                const iconKey = attributeIcons[attributeNumber];  // 속성에 해당하는 아이콘 가져오기
 
-                return { mapNumber, iconKey };
+                return { mapNumber, attributeNumber, iconKey };
             });
 
             // showMapSelectionUI 함수 호출
-            showMapSelectionUI.call(this, this, mapSelections, (selectedMapNumber, mapAttribute) => {
-                console.log(`Moving to map number ${selectedMapNumber}...mapAttribute : `, mapAttribute);
+            showMapSelectionUI.call(this, this, mapSelections, (selectedMapNumber, selectedAttribute) => {
+                console.log(`Moving to map number ${selectedMapNumber}...mapAttribute : `, selectedAttribute);
 
                 this.isMapSelectionActive = false; // UI 비활성화
                 this.scene.start('MainScene', { 
                     stageNumber : this.stageNumber, 
                     partNumber: this.partNumber + 1,
                     mapNumber: selectedMapNumber,
-                    mapAttribute: mapAttribute, 
+                    mapAttribute: selectedAttribute, 
                     playerStatus : this.player.status 
                 });
                 this.backgroundMusic.stop();
@@ -881,6 +881,11 @@ export default class MainScene extends Phaser.Scene {
                     this.player.status = this.playerStatus;
                 }
             }
+
+            //선물 맵의 아이템 위치
+            if(name === 'item'){
+                Item.dropRandomReward(x,y);
+            }
         });
 
         // 몬스터 생성 - 플레이어가 생성된 이후에 생성되어야 함.
@@ -1256,7 +1261,7 @@ export default class MainScene extends Phaser.Scene {
         // 배열이 비었으면 전투 종료 메서드 실행
         if (this.monsterArr.length === 0) {
             this.time.delayedCall(1000, () => {
-                this.stageManager.setStageEnd(this.stageNumber, this.mapNumber);
+                this.stageManager.setStageEnd(this.stageNumber, this.mapNumber, this.mapAttribute);
             }, [], this);
         }
     }
