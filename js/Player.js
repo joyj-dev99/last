@@ -33,23 +33,20 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             coin: 0,
             // 이동 속도 초기화
             speed: 3.5,
-            // 공격 스킬 쿨타임 초기화 (초 단위)
-            swordCoolTime: 3000,  // 검 공격 쿨타임 3초
+            rollingCoolTime: 500,
+            swordCoolTime: 1000,  // 검 공격 쿨타임 3초
             magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
             arrowCount: 3 //화살의 갯수
         };
 
-        this.rollingCoolTime = 500;
         this.isRolling = true;
         this.isRollingOverLayCoolingDown = false;
         this.rollingCooldownElapsed = 0;
 
-        this.swordCoolTime = 1000;
         this.isSlash = true;
         this.isSlashOverLayCoolingDown = false;
         this.slashCooldownElapsed = 0;
 
-        this.magicCoolTime = 10000;
         this.isMagic = true;
         this.isMagicOverLayCoolingDown = false;
         this.magicCooldownElapsed = 0;
@@ -799,7 +796,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             delta,
             this.isRollingOverLayCoolingDown,
             this.rollingCooldownElapsed,
-            this.rollingCoolTime,
+            this.status.rollingCoolTime,
             this.overLayRollingCoolTime,
             this.btnRollingCoolTime
         );
@@ -813,7 +810,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             delta,
             this.isSlashOverLayCoolingDown,
             this.slashCooldownElapsed,
-            this.swordCoolTime,
+            this.status.swordCoolTime,
             this.overLaySlashCoolTime,
             this.btnSlashCoolTime
         );
@@ -827,7 +824,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             delta,
             this.isMagicOverLayCoolingDown,
             this.magicCooldownElapsed,
-            this.magicCoolTime,
+            this.status.magicCoolTime,
             this.overLayMagicCoolTime,
             this.btnMagicCoolTime
         );
