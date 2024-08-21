@@ -97,9 +97,14 @@ export default class MonsterLemon extends Monster {
     }
 
     destroyBullets() {
-        this.bullets.children.each(bullet => {
-            bullet.destroy();
-        }, this);
+
+        console.log('this.bullets.children : '+this.bullets.children);
+        if(this.bullets.children){
+            this.bullets.children.each(bullet => {
+                bullet.destroy();
+            }, this);
+        }
+   
     }
 
     itemDrop() {
