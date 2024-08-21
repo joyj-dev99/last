@@ -2,7 +2,16 @@ import Arrow from "./Arrow.js";
 import Magic from "./Magic.js";
 import Slash from "./Slash.js";
 
-import {PLAYER_CATEGORY, MONSTER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY, BOUNDARY_CATEGORY, ITEM_CATEGORY} from "./constants.js";
+import {
+    PLAYER_CATEGORY,
+    MONSTER_CATEGORY,
+    TILE_CATEGORY,
+    OBJECT_CATEGORY,
+    MONSTER_ATTACK_CATEGORY,
+    SENSOR_CATEGORY,
+    BOUNDARY_CATEGORY,
+    ITEM_CATEGORY
+} from "./constants.js";
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -12,14 +21,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 상태 정보 초기화
         this.status = {
             name: '맥스',
-            maxHeart : 3,
-            nowHeart : 3,
+            maxHeart: 3,
+            nowHeart: 3,
             //검 공격력
-            swordATK : 20,
+            swordATK: 20,
             //활 공격력
-            bowATK : 10,
+            bowATK: 10,
             //마법 공격력
-            magicATK : 10,
+            magicATK: 10,
             // 가지고 있는 coin
             coin : 0,
             // 이동 속도 초기화
@@ -34,16 +43,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // Phaser.Physics.Matter.Matter에서 Body와 Bodies 객체를 가져옴
         // Bodies는 간단한 물리 바디를 생성할 때 사용되고, Body는 이러한 바디를 조작할 때 사용
-        const { Body, Bodies } = Phaser.Physics.Matter.Matter;     
-        
+        const {Body, Bodies} = Phaser.Physics.Matter.Matter;
+
         // 플레이어 충돌체 생성
-        this.playerCollider = Bodies.rectangle(this.x, this.y, 18, 20,{ 
+        this.playerCollider = Bodies.rectangle(this.x, this.y, 18, 20, {
             isSensor: false, // 실제 물리적 충돌을 일으킴
             label: 'playerCollider',
             collisionFilter: {
                 category: PLAYER_CATEGORY, // 현재 객체 카테고리
-                mask: MONSTER_CATEGORY | OBJECT_CATEGORY | TILE_CATEGORY | MONSTER_ATTACK_CATEGORY | SENSOR_CATEGORY 
-                | BOUNDARY_CATEGORY | ITEM_CATEGORY//충돌할 대상 카테고리
+                mask: MONSTER_CATEGORY | OBJECT_CATEGORY | TILE_CATEGORY | MONSTER_ATTACK_CATEGORY | SENSOR_CATEGORY
+                    | BOUNDARY_CATEGORY | ITEM_CATEGORY//충돌할 대상 카테고리
             }
         });
 
@@ -67,8 +76,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
         // 칼 휘두르기 콤보 단계 추적 변수
-        this.comboState = 0; 
-        
+        this.comboState = 0;
+
         // 초기 방향 설정
         this.isLookingRight = true;
         this.anims.play('player_idle');
@@ -115,14 +124,31 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
 
+        // this.btnSlashCoolTime = this.scene.add.image(20, 200, 'button_indicator')
+        // this.btnSlashCoolTime.setScale(0.05);
+        // this.btnSlashCoolTime.setScrollFactor(0);
+        //
+        // // 쿨타임 오버레이 생성 (반투명한 검은색 사각형)
+        // this.overLaySlashCoolTime = this.add.graphics();
+        // this.overLaySlashCoolTime.fillStyle(0x000000, 0.5); // 검은색, 50% 투명도
+        // this.overLaySlashCoolTime.fillRect(-this.btnSlashCoolTime.width / 2, -this.btnSlashCoolTime.height / 2, this.btnSlashCoolTime.width, this.btnSlashCoolTime.height);
+        // this.overLaySlashCoolTime.setVisible(false); // 처음에는 보이지 않게 설정
+        //
+        // // 오버레이를 스프라이트로 변환
+        // this.overLaySlashCoolTime = this.add.renderTexture(this.btnSlashCoolTime.x, this.btnSlashCoolTime.y, this.btnSlashCoolTime.width, this.btnSlashCoolTime.height);
+        // this.overLaySlashCoolTime.setOrigin(0.5, 0.5);
+        // this.overLaySlashCoolTime.setTint(0x000000);
+        // this.overLaySlashCoolTime.setAlpha(0.5);
+        // this.overLaySlashCoolTime.setVisible(false);
 
     }
 
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene){
+    static preload(scene) {
         scene.load.atlas('player', 'assets/player/player.png', 'assets/player/player_atlas.json');
         scene.load.animation('playerAnim', 'assets/player/player_anim.json');
         scene.load.image('player_stun', 'assets/player/player_stun.png');
+        scene.load.image('button_indicator', 'assets/player/button_indicator.png');
 
         // Preload the sound effect for sword action
         scene.load.audio('sound_player_hit', 'assets/audio/sound_player_hit.mp3');
@@ -139,9 +165,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         Magic.preload(scene);
     }
 
-    update() {
+    update(time, delta) {
         if (!this.isAlive) return;
-
+        this.coolTimeIndicator(delta);
         let playerVelocity = new Phaser.Math.Vector2();
 
         // 제자리
@@ -154,12 +180,19 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.anims.play('player_idle', true);
         }
 
-       // 칼 휘두르기
+        // 칼 휘두르기
         // z키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
         if (Phaser.Input.Keyboard.JustDown(this.zKey)) {
-            
+            // 슬래시 쿨타임
+            if (this.isSlash === true) {
+                this.isSlash = false;
+                this.scene.time.delayedCall(this.slashCoolTime, () => {
+                    this.isSlash = true;
+                });
+            } else if (this.isSlash === false && this.comboState === 0) {
+                return;
+            }
             this.handleSlash(); // 슬래쉬 동작 처리
-        
         }
 
         // x키 누르면 해당 방향으로 활 쏘기
@@ -187,7 +220,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 // 플레이어 위치에 slash 객체 동기화
                 this.slash.setPosition(this.x + offsetX, this.y);
             }
-        
+
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
 
@@ -196,35 +229,35 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
 
-    handleSlash(){
-        if(this.isRolling){
+    handleSlash() {
+        if (this.isRolling) {
             this.cancelRoll(); // 구르기를 즉시 중단
         }
         this.isShootingBow = false; //활쏘기 중단
         this.isCastingSpell = false; // 마법 부리기 종료
 
         //첫 번째 단계는 다른 스윙이 없을 때만 실행 가능
-        if(this.comboState === 0){ 
+        if (this.comboState === 0) {
             this.swingSword(1);
             this.scene.setCollisionOfPlayerAttack(this.slash);
 
-        //두 번째와 세 번째 단계는 스윙이 진행 중일 때 입력 허용
-        }else{  
+            //두 번째와 세 번째 단계는 스윙이 진행 중일 때 입력 허용
+        } else {
             switch (this.comboState) {
                 case 1:
-            this.swingSword(2);
-            this.scene.setCollisionOfPlayerAttack(this.slash);
-                break;
+                    this.swingSword(2);
+                    this.scene.setCollisionOfPlayerAttack(this.slash);
+                    break;
                 case 2:
-            this.swingSword(3);
-            this.scene.setCollisionOfPlayerAttack(this.slash);
-                break;
+                    this.swingSword(3);
+                    this.scene.setCollisionOfPlayerAttack(this.slash);
+                    break;
             }
         }
     }
 
-    handleBow(){
-        if(this.isRolling){
+    handleBow() {
+        if (this.isRolling) {
             this.cancelRoll(); // 구르기를 즉시 중단
         }
 
@@ -237,7 +270,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.isShootingBow = true;
         this.anims.play('player_bow');
 
-       // 활 쏘기 애니메이션이 완료된 후 화살을 발사
+        // 활 쏘기 애니메이션이 완료된 후 화살을 발사
         this.once('animationcomplete-player_bow', () => {
             this.fireArrow();
             this.soundBow.play();
@@ -260,8 +293,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         console.log(`현재 화살의 갯수: ${this.status.arrowNum}`);
     }
 
-    handleSpell(){
-        if(this.isRolling){
+    handleSpell() {
+        if (this.isRolling) {
             this.cancelRoll(); // 구르기를 즉시 중단
         }
 
@@ -271,12 +304,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.removeSlash();
         this.isShootingBow = false; //활쏘기 중단
 
-        this.isCastingSpell = true; 
+        this.isCastingSpell = true;
         this.anims.play('player_spell');
         this.soundSpell.play();
 
         let magic = new Magic({
-            scene : this.scene
+            scene: this.scene
         });
         this.scene.setCollisionOfPlayerAttack(magic);
     }
@@ -322,11 +355,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 이동 상태 초기화 (방향키를 누르지 않은 경우에는)
         this.isMoving = false;
         this.isMovingUpward = false;
-    
+
         // 플레이어의 현재 위치를 가져옵니다.
         const playerX = this.x;
         const playerY = this.y;
-    
+
         // 입력 상태 확인 및 플레이어 속도와 방향 설정
         if (this.cursors.right.isDown && this.cursors.up.isDown) {
             if (playerX < this.scene.maxX && playerY > this.scene.minY) {
@@ -381,32 +414,31 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 this.isMovingUpward = true;
             }
         }
-    
+
         // 플레이어 방향 설정
         this.setFlipX(!this.isLookingRight);
-    
+
         // 이동 상태에 따른 속도 설정
-        if(this.isMoving) {
+        if (this.isMoving) {
             console.log("this.isMoving이 true");
-            console.log("this.anims.currentAnim.key "+ this.anims.currentAnim.key);
-            console.log("this.slash " + this.slash );
+            console.log("this.anims.currentAnim.key " + this.anims.currentAnim.key);
+            console.log("this.slash " + this.slash);
             console.log("this.isMovingUpward" + this.isMovingUpward);
- 
+
             //슬래쉬 값이 존재하지 않고, 활을 쏘지 않을때만, 마법을 부리지 않을때만 달리기 애니메이션을 실행한다
             if (this.slash === null && !this.isShootingBow && !this.isCastingSpell) {
-
-                if(this.isMovingUpward){
+                if (this.isMovingUpward) {
                     this.anims.play('player_run_upward', true);
                     console.log('위로 달리기 애니메이션 실행');
 
-                }else{
+                } else {
                     this.anims.play('player_run', true);
                     console.log('달리기 애니메이션 실행');
                 }
             }
 
             //데미지 애니메이션이 재생중일때도 이동가능
-            if(this.anims.currentAnim.key === 'player_damage'){
+            if (this.anims.currentAnim.key === 'player_damage') {
                 this.anims.stop();
             }
 
@@ -415,11 +447,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             playerVelocity.normalize().scale(speed);
             this.setVelocity(playerVelocity.x, playerVelocity.y);
-            
+
         } else {
             console.log("this.isMoving이 false");
-            console.log("this.isShootingBow "+ this.isShootingBow );
-            console.log("this.isCastingSpell "+ this.isCastingSpell );
+            console.log("this.isShootingBow " + this.isShootingBow);
+            console.log("this.isCastingSpell " + this.isCastingSpell);
             this.setVelocity(0, 0); // 이동하지 않을 때 속도를 0으로 설정
         }
     }
@@ -462,22 +494,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.scene.tweens.add({
                 targets: this,
                 props: {
-                    x: { value: targetX, duration: 550, ease: 'Power2' },
-                    y: { value: targetY, duration: 550, ease: 'Power2' }
+                    x: {value: targetX, duration: 550, ease: 'Power2'},
+                    y: {value: targetY, duration: 550, ease: 'Power2'}
                     // Power2는 중간 속도가 빠르고 끝에서는 느리게 감속하는 방식
                 },
                 onComplete: () => {
                     this.scene.tweens.add({
                         targets: this,
                         props: {
-                            velocityX: { value: 0, duration: 50, ease: 'Power1' },
-                            velocityY: { value: 0, duration: 50, ease: 'Power1' }
+                            velocityX: {value: 0, duration: 50, ease: 'Power1'},
+                            velocityY: {value: 0, duration: 50, ease: 'Power1'}
                             // Power1은 부드러운 가속과 감속을 제공
                         }
                     });
 
                     // 구르기 후 충돌 재활성화
-                    this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY]); 
+                    this.setCollidesWith([MONSTER_CATEGORY, OBJECT_CATEGORY, TILE_CATEGORY, MONSTER_ATTACK_CATEGORY, SENSOR_CATEGORY]);
                 }
             });
         }
@@ -530,8 +562,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.status.nowHeart -= amount;
         this.status.nowHeart = this.status.nowHeart < 0 ? 0 : this.status.nowHeart;
         console.log('player takeDamage, hp : ', this.status.nowHeart);
-        
-        if(this.status.nowHeart === 0){
+
+        if (this.status.nowHeart === 0) {
             this.isAlive = false;
             this.scene.time.removeAllEvents();
             console.log("플레이어 죽음");
@@ -539,30 +571,30 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.soundDeath.play();
             this.handlePlayerDeath();
             return 'death';
-        } else{
+        } else {
             this.anims.play('player_damage');
             this.soundDamage.play();
         }
-        
+
 
     }
 
-    /** 
-     * @param {Phaser.GameObjects.GameObject} source 
-     */ 
+    /**
+     * @param {Phaser.GameObjects.GameObject} source
+     */
     applyKnockback(source) {
         // 충돌 방향 계산
         const impactDirection = new Phaser.Math.Vector2(this.x - source.x, this.y - source.y);
-    
+
         // 밀려나는 방향으로 힘과 속도를 동시에 적용
         impactDirection.normalize().scale(1);
-        const force = { x: impactDirection.x * 0.1, y: impactDirection.y * 0.1 };
+        const force = {x: impactDirection.x * 0.1, y: impactDirection.y * 0.1};
         this.setVelocity(impactDirection.x, impactDirection.y);
 
         // Phaser에서 Matter 객체를 올바르게 참조합니다.
         const Matter = Phaser.Physics.Matter.Matter;
         Matter.Body.applyForce(this.body, this.body.position, force);
-        
+
         // 일정 시간 후 속도를 0으로 설정하여 멈춤
         this.scene.time.delayedCall(200, () => {
             this.setVelocity(0, 0);
@@ -574,18 +606,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     // 코인 획득 (코인 추가)
-    addCoin(amount){
+    addCoin(amount) {
         console.log('addCoin');
         this.status.coin += amount;
-        console.log(' this.status.coin : '+ this.status.coin);
+        console.log(' this.status.coin : ' + this.status.coin);
     }
 
 
     // 체력 amount만큼 증가
-    increaseHeart(amount){
+    increaseHeart(amount) {
         console.log('increaseHeart');
         this.status.nowHeart = this.status.nowHeart + amount > this.status.maxHeart ? this.status.maxHeart : this.status.nowHeart + amount;
-        console.log('this.status.nowHeart : '+ this.status.nowHeart);
+        console.log('this.status.nowHeart : ' + this.status.nowHeart);
     }
 
     // maxHeart와 nowHeart를 amount만큼 증가
@@ -601,25 +633,24 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
 
     // 힘 amount만큼 증가
-    increaseATK(amount){
+    increaseATK(amount) {
         console.log('increaseATK');
         this.status.swordATK += amount;
         this.status.bowATK += amount;
         this.status.magicATK += amount;
-        console.log('this.status.swordATK : '+ this.status.swordATK);
-        console.log('this.status.bowATK : '+ this.status.bowATK);
-        console.log('this.status.magicATK : '+ this.status.magicATK);
+        console.log('this.status.swordATK : ' + this.status.swordATK);
+        console.log('this.status.bowATK : ' + this.status.bowATK);
+        console.log('this.status.magicATK : ' + this.status.magicATK);
     }
 
     // 애니메이션이 완료되었을 때 실행될 로직을 중앙화
     handleAnimationComplete(animation, frame) {
-        if( animation.key === 'player_roll'){
+        if (animation.key === 'player_roll') {
             this.isRolling = false;
             this.anims.play('player_idle', true);
-        }
-        else if( animation.key === 'player_sword_1' ||
+        } else if (animation.key === 'player_sword_1' ||
             animation.key === 'player_sword_2' ||
-            animation.key === 'player_sword_3'){
+            animation.key === 'player_sword_3') {
 
             // 슬래쉬 객체 제거 (검 휘두르기 종료)
             this.removeSlash();
@@ -645,10 +676,29 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.scene.scene.start('BattleResultScene', {result});
         });
     }
-
     stopMove() {
         this.isMoving = false;
         this.setVelocity(0, 0);
 
     }
+
+    // coolTimeIndicator(delta){
+    //     let remainingTimeRatio = 0 / this.slashCoolTime;
+    //     this.overLaySlashCoolTime.clear();
+    //     this.overLaySlashCoolTime.fillStyle(0x000000, 0.5);
+    //     this.overLaySlashCoolTime.fillRect(
+    //         -this.btnSlashCoolTime.width / 2,
+    //         this.btnSlashCoolTime.height / 2 - this.btnSlashCoolTime.height * remainingTimeRatio,
+    //         this.btnSlashCoolTime.width,
+    //         this.btnSlashCoolTime.height * remainingTimeRatio
+    //     );
+    //
+    //     if (0 >= this.slashCoolTime) {
+    //         // 쿨타임이 완료되면 초기화
+    //         isCoolingDown = false;
+    //         cooldownElapsed = 0;
+    //         this.overLaySlashCoolTime.setVisible(false);
+    //     }
+    // }
+
 }
