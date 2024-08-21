@@ -167,13 +167,28 @@ export default class StageManager {
                 {name : '코드', portrait : 'ChordPotrait', message : '모험을 떠나기 전에 몇가지 알려드릴게요.'},
                 {name : '코드', portrait : 'ChordPotrait', message : dialog_msg},
             ];
-            // Dialog를 사용해 대화 표시, 대화 종료 후 콜백 전달
-            this.dialog.showDialogModal(dialogueMessages, () => {
+            // // Dialog를 사용해 대화 표시, 대화 종료 후 콜백 전달
+            // this.dialog.showDialogModal(dialogueMessages, () => {
+            
+            // });
+            
+
+            // 메시지 표시가 끝난 후 콜백 처리
+              this.dialog.showDialogModal(dialogueMessages, () => {
+                
+                // this.startBattleSequence();
                 this.scene.isInDialogue = false;
                 // pc 튜토리얼
                 tutorial.startDirectionControlExplanation(this.scene, 250, this.player.y - 160, this.player);
             });
-            
+            if(type == 'pc'){
+                this.dialog.addInstructions('space');
+            }
+            else if(type == 'mobile'){
+                this.dialog.addInstructions('next');
+            }
+
+
             let sensor2 = tutorial.createSensor(this.scene, 280, this.player.y - 160, 10, 500);
             // 충돌시 이동키 설명관련 데이터 삭제
             // shift, z 한번, z 세번
