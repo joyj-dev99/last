@@ -40,7 +40,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             magicCoolTime: 5000,  
             arrowCount: 3 ,//화살의 갯수
             // 무적 상태
-            isInvincible: false
+            isInvincible: false,
+            // 구르기 가능 여부 상태
+            canRoll: true
 
         };
 
@@ -114,7 +116,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.slash = null;
         this.isShootingBow = false;
         this.isCastingSpell = false;
-        this.canRoll = true; // 구르기 가능 여부를 관리하는 변수 추가
 
 
         // 애니메이션 완료 이벤트 리스너 추가
@@ -421,7 +422,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     handleRoll(playerVelocity) {
 
-        if (!this.canRoll) {
+        if (!this.status.canRoll) {
             console.log("Rolling is currently disabled.");
             return;  // 구르기 금지 상태일 때는 아무 동작도 하지 않음
         }

@@ -1,7 +1,6 @@
 import Item from "./Item.js";
 import Tutorial from "./Tutorial.js";
 
-
 const { type } = window.gameConfig;
 
 export default class StageManager {

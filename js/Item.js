@@ -16,7 +16,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'max_heart',
         texture: 'item_02',                 
         message: '최대 하트 +1, 현재 하트 +1',
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 팬텀 망토 아이템 데이터
@@ -24,7 +24,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'phantom_cloak',
         texture: 'item_03',  
         message: '앞으로 당신은 무적입니다. 망토 덕분에 아무리 몬스터에게 맞아도 죽지 않죠!',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 신속의 장화 아이템 데이터
@@ -32,7 +32,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'swift_boots',
         texture: 'item_04', 
         message: '신속의 장화 덕분에 이동속도 25% 증가!',   
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
         
     // 알 수 없는 부적 아이템 데이터
@@ -40,7 +40,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'unknown_amulet',
         texture: 'item_05',  
         message: '나이스! 공격 스킬 쿨타임 3초 감소',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 양자 모래시계 아이템 데이터
@@ -48,7 +48,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'quantum_hourglass',
         texture: 'item_06',  
         message: '이런, 공격스킬 쿨타임 3초 증가',   
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 1  // 드랍 확률 (10%)
     };
 
     // 허리에 좋은 약초 아이템 데이터
@@ -56,7 +56,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'herbal_medicine',
         texture: 'item_07',  
         message: '허리에 바른 약초가 마르려면, 앞으로 구르기는 금지입니다.', 
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 1  // 드랍 확률 (10%)
     };
 
     // 해적의 금고 아이템 데이터
@@ -64,7 +64,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'pirates_safe',
         texture: 'item_08', 
         message: '해적에게 코인을 도난당하셨군요. 코인 초기화',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
         
     // 고대의 묘약 아이템 데이터
@@ -72,7 +72,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'ancient_potion',
         texture: 'item_09',  
         message: '묘약을 마셨더니 배탈이 났군요. 이동속도 25% 감소',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 두꺼운 장갑 아이템 데이터
@@ -80,7 +80,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'heavy_gloves',
         texture: 'item_10',  
         message: '두꺼운 장갑을 끼니, 무기가 잘 안잡히죠? 공격력 25% 감소',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 화살(1개) 아이템 데이터
@@ -306,7 +306,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         // 허리에 좋은 약초
         else if(this.itemType.type == 'herbal_medicine'){
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-            player.canRoll = false;  // 구르기 금지를 영구적으로 적용
+            player.status.canRoll = false;  // 구르기 금지를 영구적으로 적용
         }
         //해적의 금고
         else if(this.itemType.type == 'pirates_safe'){
