@@ -241,7 +241,7 @@ export default class MonsterBossWolfgang extends Phaser.Physics.Matter.Sprite {
             radius: 5, // 반지름을 작게 설정하여 충돌 범위 축소
         });
         bullet.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
-        bullet.setCollidesWith([PLAYER_CATEGORY,OBJECT_CATEGORY]);
+        bullet.setCollidesWith([PLAYER_CATEGORY, OBJECT_CATEGORY]);
         bullet.setFixedRotation();
         bullet.setFrictionAir(0);
         bullet.setMass(1);
@@ -305,18 +305,22 @@ export default class MonsterBossWolfgang extends Phaser.Physics.Matter.Sprite {
     }
 
     timeOutBullets() {
-        this.bullets.children.each(bullet => {
-            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
-            const elapsedTime = this.scene.time.now - bullet.creationTime;
-            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration || bullet.x > this.mapSize - 10 || bullet.x <= 10 || bullet.y > this.mapSize - 10 || bullet.y <= 10) {
-                bullet.destroy();
-            }
-        }, this);
+        if (this.bullets) {
+            this.bullets.children.each(bullet => {
+                const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
+                const elapsedTime = this.scene.time.now - bullet.creationTime;
+                if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration || bullet.x > this.mapSize - 10 || bullet.x <= 10 || bullet.y > this.mapSize - 10 || bullet.y <= 10) {
+                    bullet.destroy();
+                }
+            }, this);
+        }
     }
 
     destroyBullets() {
-        this.bullets.children.each(bullet => {
-            bullet.destroy();
-        }, this);
+        if (this.bullets) {
+            this.bullets.children.each(bullet => {
+                bullet.destroy();
+            }, this);
+        }
     }
 }

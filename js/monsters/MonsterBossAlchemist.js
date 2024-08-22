@@ -312,45 +312,49 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
     }
 
     timeOutBullets() {
-        this.bullets.children.each(bullet => {
-            const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
-            const elapsedTime = this.scene.time.now - bullet.creationTime;
-            if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
-                const poison = this.scene.matter.add.image(bullet.x, bullet.y, 'alchemist_poison', null, {
-                    shape: 'circle'
-                });
-                poison.setStatic(true);
-                poison.setScale(0.001);
-                poison.setAlpha(1);
-                poison.damage = 0.5;
-                // 충돌 카테고리 설정
-                poison.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
-                poison.setCollidesWith([PLAYER_CATEGORY]);
-                // 충격파 확장 애니메이션
-                this.scene.tweens.add({
-                    targets: poison,
-                    scaleX: 0.05,
-                    scaleY: 0.05,
-                    alpha: 0.2, // 점점 투명해짐
-                    duration: 3000,
-                    onComplete: () => {
-                        poison.destroy();
-                    }
-                });
-                this.scene.setCollisionOfMonsterShortAttack(poison);
-                bullet.destroy();
+        if (this.bullets) {
+            this.bullets.children.each(bullet => {
+                const bulletDistance = Phaser.Math.Distance.Between(bullet.startX, bullet.startY, bullet.x, bullet.y);
+                const elapsedTime = this.scene.time.now - bullet.creationTime;
+                if (bulletDistance > this.bulletDistance || elapsedTime > this.bulletDuration) {
+                    const poison = this.scene.matter.add.image(bullet.x, bullet.y, 'alchemist_poison', null, {
+                        shape: 'circle'
+                    });
+                    poison.setStatic(true);
+                    poison.setScale(0.001);
+                    poison.setAlpha(1);
+                    poison.damage = 0.5;
+                    // 충돌 카테고리 설정
+                    poison.setCollisionCategory(MONSTER_ATTACK_CATEGORY);
+                    poison.setCollidesWith([PLAYER_CATEGORY]);
+                    // 충격파 확장 애니메이션
+                    this.scene.tweens.add({
+                        targets: poison,
+                        scaleX: 0.05,
+                        scaleY: 0.05,
+                        alpha: 0.2, // 점점 투명해짐
+                        duration: 3000,
+                        onComplete: () => {
+                            poison.destroy();
+                        }
+                    });
+                    this.scene.setCollisionOfMonsterShortAttack(poison);
+                    bullet.destroy();
 
-            } else if (bullet.x > this.mapSize - 10 || bullet.x <= 10 || bullet.y > this.mapSize - 10 || bullet.y <= 10) {
-                bullet.destroy();
+                } else if (bullet.x > this.mapSize - 10 || bullet.x <= 10 || bullet.y > this.mapSize - 10 || bullet.y <= 10) {
+                    bullet.destroy();
 
-            }
-        }, this);
+                }
+            }, this);
+        }
     }
 
     destroyBullets() {
-        this.bullets.children.each(bullet => {
-            bullet.destroy();
-        }, this);
+        if (this.bullets) {
+            this.bullets.children.each(bullet => {
+                bullet.destroy();
+            }, this);
+        }
     }
 
 }

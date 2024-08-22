@@ -73,7 +73,9 @@ export default class MonsterMiniGoblin extends Monster {
     }
 
     destroy() {
-        this.shockwave.destroy();
+        if (this.shockwave !== undefined) {
+            this.shockwave.destroy();
+        }
         this.attackEvent.remove();
         super.destroy();
     }
