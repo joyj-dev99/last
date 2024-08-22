@@ -115,8 +115,6 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             }
         });
         this.setExistingBody(itemCollider);
-
-        this.canBuy = true;
         
         // 가격 텍스트
         this.priceText = scene.add.text(x, y + 20, `${this.price} G`, {
@@ -371,7 +369,7 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             // 아이템 효과 
         }
         
-        dialog.showDialogModal(dialogMessages);
+        // dialog.showDialogModal(dialogMessages);
 
         // 3초 후에 다이얼로그를 닫음
         setTimeout(() => {
