@@ -226,6 +226,10 @@ export default class Tutorial{
                             this.player.handleSlash();
                         }, 400); // 두 번째 슬래쉬 후 200ms 추가 지연 (총 400ms 후 실행)
 
+                        this.dialog.showDialogModal([
+                            {name : '코드', portrait : 'ChordPotrait', message: 'x키를 눌러보세요.' }
+                        ]);
+
                     }else if(관련된값.anim_keys[0] === "left_key" && 관련된값.anim_keys[1] === "shift_key"){
                         this.player.handleRoll(this.player.body.velocity);
                         // 현재 플레이어의 이동속도 전달
@@ -233,6 +237,10 @@ export default class Tutorial{
                     else if(관련된값.anim_keys[0] === "x_key"){
                         console.log("x_key 누름");
                         this.player.handleBow();
+
+                        this.dialog.showDialogModal([
+                            {name : '코드', portrait : 'ChordPotrait', message: 'c키를 눌러보세요.' }
+                        ]);
 
                     }else if(관련된값.anim_keys[0] === "c_key"){
                         console.log("c_key 누름");
@@ -533,7 +541,7 @@ export default class Tutorial{
     }
 
 
-    startzKeyControlExplanation(scene, sensor_x, sensor_y){
+    startATKKeyControlExplanation(scene, sensor_x, sensor_y){
         console.log('z키 조작방법 시작');
 
         if(this.type === 'pc'){
@@ -546,7 +554,17 @@ export default class Tutorial{
             scene.add.existing(keyboard_z);  
             this.keyboard_z = keyboard_z;
 
-            this.키조작설명순서 = [SWORD1, SWORD2, SWORD3];
+            let keyboard_x = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x, sensor_y+130, 'keyboard', 39);
+            keyboard_x.setScale(2);
+            scene.add.existing(keyboard_x);  
+            this.keyboard_x = keyboard_x;
+
+            let keyboard_c = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x +30, sensor_y+130, 'keyboard', 18);
+            keyboard_c.setScale(2);
+            scene.add.existing(keyboard_c);  
+            this.keyboard_c = keyboard_c;
+
+            this.키조작설명순서 = [SWORD1, SWORD2, SWORD3, BOW, SPELL];
 
             // z키 관련 애니메이션 제작
             scene.anims.create({
@@ -560,6 +578,17 @@ export default class Tutorial{
                 }],
                 frameRate : 8,
                 repeat : -1
+            });
+
+            // x키 애니메이션 제작
+            scene.anims.create({
+                key: 'x_key',
+                frames: [
+                    { key: 'x_key', frame: 'x_key_0' }, 
+                    { key: 'x_key', frame: 'x_key_1' }  
+                ],
+                frameRate: 8,
+                repeat: -1
             });
 
             scene.anims.create({
@@ -588,12 +617,34 @@ export default class Tutorial{
                 repeat: -1      // 반복 설정
             });
             
+            // c키 애니메이션 제작
+            scene.anims.create({
+                key: 'c_key',
+                frames: [
+                    { key: 'c_key', frame: 'c_key_0' }, 
+                    { key: 'c_key', frame: 'c_key_1' }  
+                ],
+                frameRate: 8,
+                repeat: -1
+            });
+
             // z키 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_z.on('animationstop', function () {
                 console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
                 keyboard_z.setTexture('keyboard', 41); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
             }, this);
-            
+        
+            // x키 애니메이션 완료 후 원래 이미지로 돌아가기
+            keyboard_x.on('animationstop', function () {
+                console.log('animation stop '); 
+                keyboard_x.setTexture('keyboard', 39); 
+            }, this);
+
+            // c키 애니메이션 완료 후 원래 이미지로 돌아가기
+            keyboard_c.on('animationstop', function () {
+                console.log('animation stop '); 
+                keyboard_c.setTexture('keyboard', 18); 
+            }, this);
 
             let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
             console.log('관련된 값 return 값 : ');
@@ -626,10 +677,18 @@ export default class Tutorial{
 
     }
 
-    endzKeyControlExplanation(){
-        console.log('z키 조작방법 끝');
+    endATKKeyControlExplanation(){
+        console.log('공격키 조작방법 끝');
         if(this.keyboard_z){
             this.keyboard_z.destroy();
+        }
+
+        if(this.keyboard_x){
+            this.keyboard_x.destroy();
+        }
+
+        if(this.keyboard_c){
+            this.keyboard_c.destroy();
         }
 
         if(this.pointer){
@@ -640,109 +699,7 @@ export default class Tutorial{
         }
 
     }
-
-    /*
-    * x키 조작방법 시작
-    */
-    startxKeyControlExplanation(scene, x, y){
-        console.log('x키 조작방법 시작');
-        
-        // 키 입력을 위한 기본 커서 키 설정
-        let cursors = scene.input.keyboard.createCursorKeys();
-
-        let keyboard_x = new Phaser.Physics.Matter.Sprite(scene.matter.world, x, y, 'keyboard', 39);
-        keyboard_x.setScale(2);
-        scene.add.existing(keyboard_x);  
-        this.keyboard_x = keyboard_x;
-
-        this.키조작설명순서 = [BOW];
-        
-        // x키 애니메이션 제작
-        scene.anims.create({
-            key: 'x_key',
-            frames: [
-                { key: 'x_key', frame: 'x_key_0' }, 
-                { key: 'x_key', frame: 'x_key_1' }  
-            ],
-            frameRate: 8,
-            repeat: -1
-        });
-        
-        // x키 애니메이션 완료 후 원래 이미지로 돌아가기
-        keyboard_x.on('animationstop', function () {
-            console.log('animation stop '); 
-            keyboard_x.setTexture('keyboard', 39); 
-        }, this);
-
-        let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
-        console.log('관련된 값 return 값 : ');
-        console.dir(관련된값);
-        for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
-            관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
-        }
-        
-    }
-
-    /*
-    * x키 조작방법 종료
-    */
-    endxKeyControlExplanation(){
-        if(this.keyboard_x){
-            this.keyboard_x.destroy();
-        }
-    }
-
-    /*
-    * c키 조작방법 시작
-    */
-    startcKeyControlExplanation(scene, x, y){
-        console.log('c키 조작방법 시작');
-        
-        // 키 입력을 위한 기본 커서 키 설정
-        let cursors = scene.input.keyboard.createCursorKeys();
-
-        let keyboard_c = new Phaser.Physics.Matter.Sprite(scene.matter.world, x, y, 'keyboard', 18);
-        keyboard_c.setScale(2);
-        scene.add.existing(keyboard_c);  
-        this.keyboard_c = keyboard_c;
-
-        this.키조작설명순서 = [SPELL];
-        
-        // c키 애니메이션 제작
-        scene.anims.create({
-            key: 'c_key',
-            frames: [
-                { key: 'c_key', frame: 'c_key_0' }, 
-                { key: 'c_key', frame: 'c_key_1' }  
-            ],
-            frameRate: 8,
-            repeat: -1
-        });
-        
-        // c키 애니메이션 완료 후 원래 이미지로 돌아가기
-        keyboard_c.on('animationstop', function () {
-            console.log('animation stop '); 
-            keyboard_c.setTexture('keyboard', 18); 
-        }, this);
-
-        let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
-        console.log('관련된 값 return 값 : ');
-        console.dir(관련된값);
-        for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
-            관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
-        }
-        
-    }
     
-    /*
-    * c키 조작방법 종료
-    */
-    endcKeyControlExplanation(){
-        if(this.keyboard_c){
-            this.keyboard_c.destroy();
-        }
-    }
-
 
     startshiftKeyControlExplanation(scene, sensor_x, sensor_y){
         console.log('shift키 조작방법 시작');

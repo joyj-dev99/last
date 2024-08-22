@@ -229,8 +229,8 @@ export default class StageManager {
                     ];
                     this.dialog.showDialogModal(dialogueMessages, () => {
                         this.scene.isInDialogue = false;
-                        // z키 설명 시작
-                        tutorial.startzKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
+                        // 공격키 설명 시작
+                        tutorial.startATKKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
                     });
     
                     // 충돌 이벤트 제거
@@ -254,7 +254,7 @@ export default class StageManager {
                     // 오른쪽 사인 제거
                     tutorial.removeRightSign();
                     // z키 조작 설명 끝
-                    tutorial.endzKeyControlExplanation();
+                    tutorial.endATKKeyControlExplanation();
 
                     if(type === 'pc'){
                         dialog_msg = '방향키와 함께 shift 키를 누르면 구를 수 있어요!';
@@ -353,7 +353,14 @@ export default class StageManager {
         const dropX = this.scene.chordEnd.x;
         const dropY = this.scene.chordEnd.y + 30;
 
-        if(mapAttribute === 1){
+        if(mapNumber === 'boss'){
+            // 첫 번째 아이템 드랍
+            const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
+            console.log("첫번째 아이템 드랍" + firstItem.itemType.type);
+            // 두 번째 아이템 드랍 (첫 번째 아이템과 다른 종류로)
+            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY + 40, this.dialog, firstItem.itemType);
+            console.log("두번째 아이템 드랍" +secondItem.itemType.type);
+        }else if(mapAttribute === 1){
             Item.dropHeart(this.scene, this.player, dropX, dropY, this.dialog);
         }else if(mapAttribute === 2){
             Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog);
