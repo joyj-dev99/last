@@ -232,42 +232,43 @@ export default class StageManager {
         });
 
 
-        let sensor3 = tutorial.createSensor(this.scene, this.player.x + 300, this.player.y - 160, 10, 500);
-        // 충돌시 이동키 설명관련 데이터 삭제
-        const unsubscribe3 = this.scene.matterCollision.addOnCollideStart({
-            objectA: this.player,
-            objectB: sensor3,
-            callback: eventData => {
-                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                console.log("플레이어와 센서3 충돌");
-                this.scene.isInDialogue = true;
-                this.player.stopMove();
-                // 센서 제거
-                tutorial.onSensorHit(this.scene, bodyB);
-                // 오른쪽 사인 제거
-                tutorial.removeRightSign();
-                // z키 조작 설명 끝
-                tutorial.endATKKeyControlExplanation();
+        let sensor3 = tutorial.createSensor(this.scene, 380, this.player.y - 160, 10, 500);
+            // 충돌시 이동키 설명관련 데이터 삭제
+            const unsubscribe3 = this.scene.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: sensor3,
+                callback: eventData => {
+                    const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
+                    console.log("플레이어와 센서3 충돌");
+                    this.scene.isInDialogue = true;
+                    this.player.stopMove();
+                    // 센서 제거
+                    tutorial.onSensorHit(this.scene, bodyB);
+                    // 오른쪽 사인 제거
+                    tutorial.removeRightSign();
+                    // z키 조작 설명 끝
+                    tutorial.endATKKeyControlExplanation();
 
-                if (type === 'pc') {
-                    dialog_msg = '방향키와 함께 shift 키를 누르면 구를 수 있어요!';
-                } else if (type === 'mobile') {
-                    dialog_msg = '이동조작기와 함께 구르기 버튼을 누르면 구를 수 있어요!';
-                }
+                    if(type === 'pc'){
+                        dialog_msg = '방향키와 함께 shift 키를 누르면 구를 수 있어요!';
+                    }
+                    else if(type === 'mobile'){
+                        dialog_msg = '이동조작기와 함께 구르기 버튼을 누르면 구를 수 있어요!';
+                    }
+        
 
-
-                const dialogueMessages = [
-                    {name: '코드', portrait: 'ChordPotrait', message: dialog_msg},
-                    {name: '코드', portrait: 'ChordPotrait', message: '공격을 피해야 할 때, 구르기를 사용해보세요.'},
-                ];
-                // 메시지 표시가 끝난 후 콜백 처리
-                this.dialog.showDialogModal(dialogueMessages, () => {
-                    this.scene.isInDialogue = false;
-                    // shift 키 설명 시작
-                    tutorial.startshiftKeyControlExplanation(this.scene, this.player.x + 50, this.player.y - 160);
-                });
-                // 충돌 이벤트 제거
-                unsubscribe3();
+                    const dialogueMessages = [
+                        {name : '코드', portrait : 'ChordPotrait', message : dialog_msg},
+                        {name : '코드', portrait : 'ChordPotrait', message : '공격을 피해야 할 때, 구르기를 사용해보세요.'},
+                    ];
+                    // 메시지 표시가 끝난 후 콜백 처리
+                    this.dialog.showDialogModal(dialogueMessages, () => {
+                        this.scene.isInDialogue = false;
+                        // shift 키 설명 시작
+                        tutorial.startshiftKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
+                    });
+                    // 충돌 이벤트 제거
+                    unsubscribe3();
             }
         });
 
@@ -381,7 +382,7 @@ export default class StageManager {
         const dropX = this.scene.chordEnd.x;
         const dropY = this.scene.chordEnd.y + 30;
 
-        if (mapNumber === 'boss') {
+        if(mapNumber === 'boss') {
             this.scene.boss_monster_clear.play();
             // 첫 번째 아이템 드랍
             const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
