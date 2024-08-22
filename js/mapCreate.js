@@ -319,36 +319,6 @@ export function setupMap(scene, stageNumber, mapNumber) {
             }
         }
 
-        //선물 맵의 아이템 위치
-        if(name === 'item'){
-
-            // 아이템 리스트 정의
-            const items = [
-                Item.MaxHeart_ITEM,
-                Item.PhantomCloak_ITEM,
-                Item.SwiftBoots_ITEM,
-                Item.UnknownAmulet_ITEM,
-                Item.QuantumHourglass_ITEM,
-                Item.HerbalMedicine_ITEM,
-                Item.PiratesSafe_ITEM,
-                Item.AncientPotion_ITEM,
-                Item.HeavyGloves_ITEM,
-                Item.arrow_10_ITEM
-            ];
-            // 랜덤으로 하나의 아이템 선택
-            const randomItem = items[Math.floor(Math.random() * items.length)];
-
-            // 선택된 아이템을 itemType으로 설정
-            scene.item = new Item({
-                scene: scene,
-                x: x,
-                y: y,
-                itemType: randomItem
-            });
-            // console.log("scene.player" + scene.player); 
-            // console.log("scene.item"+ scene.item);
-        
-
             // 충돌 이벤트 설정
             const unsubscribe = scene.matterCollision.addOnCollideStart({
                 objectA: scene.player,
@@ -363,7 +333,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
                 }
             });
     
-        }});
+    }});
 
     // 몬스터 생성 - 플레이어가 생성된 이후에 생성되어야 함.
     objectLayer.objects.forEach(object => {
