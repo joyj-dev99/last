@@ -59,6 +59,18 @@ export function mapCreatePreload(scene) {
     scene.load.tilemapTiledJSON("stage_02_09", "assets/map/stage_02/stage_02_09.json");
     scene.load.tilemapTiledJSON("stage_02_10", "assets/map/stage_02/stage_02_10.json");
     scene.load.tilemapTiledJSON("stage_02_boss", "assets/map/stage_02/stage_02_boss.json");
+
+    scene.load.tilemapTiledJSON("stage_03_01", "assets/map/stage_03/stage_03_01.json");
+    scene.load.tilemapTiledJSON("stage_03_02", "assets/map/stage_03/stage_03_02.json");
+    scene.load.tilemapTiledJSON("stage_03_03", "assets/map/stage_03/stage_03_03.json");
+    scene.load.tilemapTiledJSON("stage_03_04", "assets/map/stage_03/stage_03_04.json");
+    scene.load.tilemapTiledJSON("stage_03_05", "assets/map/stage_03/stage_03_05.json");
+    scene.load.tilemapTiledJSON("stage_03_06", "assets/map/stage_03/stage_03_06.json");
+    scene.load.tilemapTiledJSON("stage_03_07", "assets/map/stage_03/stage_03_07.json");
+    scene.load.tilemapTiledJSON("stage_03_08", "assets/map/stage_03/stage_03_08.json");
+    scene.load.tilemapTiledJSON("stage_03_09", "assets/map/stage_03/stage_03_09.json");
+    scene.load.tilemapTiledJSON("stage_03_10", "assets/map/stage_03/stage_03_10.json");
+    scene.load.tilemapTiledJSON("stage_03_boss", "assets/map/stage_03/stage_03_boss.json");
 }
 
 export function setMapSize(scene, stageNumber, mapNumber) {
