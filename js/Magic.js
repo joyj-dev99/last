@@ -10,7 +10,7 @@ export default class Magic extends Phaser.Physics.Matter.Sprite {
         const player = scene.player;
         const monsterArr = scene.monsterArr;
         // 마법이 도달할 수 있는 최대 거리
-        const REACH = 150;
+        const REACH = 200;
 
         // 현재 플레이어가 바라보고 있는 방향 벡터
         const directionVector = new Phaser.Math.Vector2(player.isLookingRight ? 1 : -1, 0);
