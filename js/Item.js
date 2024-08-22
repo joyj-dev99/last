@@ -1,5 +1,5 @@
 import {PLAYER_CATEGORY, TILE_CATEGORY, OBJECT_CATEGORY, PLAYER_ATTACK_CATEGORY} from "./constants.js";
-
+import {coinLocalStorageReset} from './localStorage.js';
 import TextIndicator from "./TextIndicator.js";
 export default class Item extends Phaser.Physics.Matter.Sprite {
 
@@ -23,7 +23,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static PhantomCloak_ITEM = {
         type: 'phantom_cloak',
         texture: 'item_03',  
-        message: '10초 동안 무적!',  
+        message: '앞으로 당신은 무적입니다. 망토 덕분에 아무리 몬스터에게 맞아도 죽지 않죠!',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -31,7 +31,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static SwiftBoots_ITEM = {
         type: 'swift_boots',
         texture: 'item_04', 
-        message: '이동속도 25% 증가',   
+        message: '신속의 장화 덕분에 이동속도 25% 증가!',   
         drap_per: 0.1  // 드랍 확률 (10%)
     };
         
@@ -39,7 +39,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static UnknownAmulet_ITEM = {
         type: 'unknown_amulet',
         texture: 'item_05',  
-        message: '나이스! 쿨타임 3초 감소',  
+        message: '나이스! 공격 스킬 쿨타임 3초 감소',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -47,7 +47,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static QuantumHourglass_ITEM = {
         type: 'quantum_hourglass',
         texture: 'item_06',  
-        message: '이런, 쿨타임 3초 증가',   
+        message: '이런, 공격스킬 쿨타임 3초 증가',   
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -55,7 +55,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     static HerbalMedicine_ITEM = {
         type: 'herbal_medicine',
         texture: 'item_07',  
-        message: '약초가 마를때까지 30초동안 구르기 금지!', 
+        message: '허리에 바른 약초가 마르려면, 앞으로 구르기는 금지입니다.', 
         drap_per: 0.1  // 드랍 확률 (10%)
     };
 
@@ -64,7 +64,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'pirates_safe',
         texture: 'item_08', 
         message: '해적에게 코인을 도난당하셨군요. 코인 초기화',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0.9  // 드랍 확률 (10%)
     };
         
     // 고대의 묘약 아이템 데이터
@@ -120,7 +120,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
                 scene.getItemSound.play();
                 console.log("플레이어와 아이템 충돌");
                 // 아이템 효과 적용하기 및 화면에 반영하기
-                gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator, dialog);
+                gameObjectB.applyItem(gameObjectA, scene.heartIndicator, dialog);
                 unsubscribe();
             }
         });
@@ -159,6 +159,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
                 y: y,
                 itemType: selectedItem
             });
+            console.log("아이템 드랍");
 
             // 플레이어와 아이템 충돌 이벤트 설정
             const unsubscribe = scene.matterCollision.addOnCollideStart({
@@ -169,7 +170,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
                     scene.getItemSound.play();
                     console.log("플레이어와 아이템 충돌");
                     // 아이템 효과 적용하기 및 화면에 반영하기
-                    gameObjectB.applyItem(gameObjectA, scene.textIndicator, scene.heartIndicator, dialog);
+                    gameObjectB.applyItem(gameObjectA, scene.heartIndicator, dialog);
                     unsubscribe();
                 }
             });
@@ -230,7 +231,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
 
     // 아이템 적용 메소드
     // 아이템마다 상속으로 처리할 수도 있을 듯
-    applyItem(player, textIndicator, heartIndicator, dialog) {
+    applyItem(player, heartIndicator, dialog) {
 
         let dialogMessages = [];
 
@@ -267,32 +268,15 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
 
         }
-        //팬텀 망토
+        // 팬텀 망토
         else if(this.itemType.type == 'phantom_cloak'){
-            // 플레이어를 무적 상태로 설정
             dialogMessages.push({ name: '코드', portrait: 'ChordPotrait', message: this.itemType.message });
-            dialog.showDialogModal(dialogMessages, () => {
-                player.setInvincible(true);
-                this.destroy();
-                this.scene.time.delayedCall(20000, () => {
-                    player.setInvincible(false);
-                    console.log('Phantom Cloak effect ended!');
-                });
-            });
-            return;
+            player.setInvincible(true);  // 무적을 영구적으로 적용
         }
-        //신속의 장화
+        // 신속의 장화
         else if(this.itemType.type == 'swift_boots'){
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-            dialog.showDialogModal(dialogMessages, () => {
-                player.adjustSpeed(1.25);
-                this.destroy();
-                this.scene.time.delayedCall(60000, () => {
-                    player.adjustSpeed(1 / 1.25);
-                    console.log('Swift Boots effect ended.');
-                });
-            });
-            return;
+            player.adjustSpeed(1.25);  // 이동속도 증가를 영구적으로 적용
         }
         //알수 없는 부적
         else if(this.itemType.type == 'unknown_amulet'){
@@ -306,40 +290,25 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             player.adjustCooldown(3);
         }
-        //허리에 좋은 약초
+        // 허리에 좋은 약초
         else if(this.itemType.type == 'herbal_medicine'){
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-            dialog.showDialogModal(dialogMessages, () => {
-                player.canRoll = false;
-                this.destroy();
-                this.scene.time.delayedCall(30000, () => {
-                    player.canRoll = true;
-                    console.log('Rolling is now enabled again.');
-                });
-            });
-            return;
-
+            player.canRoll = false;  // 구르기 금지를 영구적으로 적용
         }
         //해적의 금고
         else if(this.itemType.type == 'pirates_safe'){
             // 플레이어의 코인을 0으로 초기화
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             player.status.coin = 0;
+            coinLocalStorageReset();     
+            //ui 변경
+            this.scene.coinIndicatorText.setText(`Coins : ${player.status.coin}`);
             
         }
-        //고대의 묘약
+        // 고대의 묘약
         else if(this.itemType.type == 'ancient_potion'){
-            // 이동속도를 25% 감소시킴
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-            dialog.showDialogModal(dialogMessages, () => {
-                player.adjustSpeed(0.75);
-                this.destroy();
-                this.scene.time.delayedCall(60000, () => {
-                    player.adjustSpeed(1 / 0.75);
-                    console.log('Ancient Potion effect ended.');
-                });
-            });
-            return;
+            player.adjustSpeed(0.75);  // 이동속도 감소를 영구적으로 적용
         }
         //두꺼운 장갑
         else if(this.itemType.type == 'heavy_gloves'){
