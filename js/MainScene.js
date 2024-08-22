@@ -50,7 +50,7 @@ export default class MainScene extends Phaser.Scene {
     init(data) {
         this.stageNumber = data.stageNumber || 3;
         this.partNumber = data.partNumber || 1;
-        this.mapNumber = data.mapNumber || 8;
+        this.mapNumber = data.mapNumber || 'boss';
         console.log('init mapNumber : ', this.mapNumber);
         this.mapAttribute = data.mapAttribute || 4;
         this.battleEnd = data.battleEnd || false;
@@ -98,21 +98,21 @@ export default class MainScene extends Phaser.Scene {
         this.load.spritesheet('setting', 'assets/ui/Blue_Buttons_Pixel2.png', { frameWidth: 16, frameHeight: 16 });
         this.load.spritesheet('status', 'assets/ui/on_off.png', { frameWidth: 32, frameHeight: 16 });
 
-        // 버튼에 사용할 이미지 로드
-        this.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', {
-            frameWidth: 32, // 각 프레임의 너비
-            frameHeight: 32, // 각 프레임의 높이
-        });
+        // // 버튼에 사용할 이미지 로드
+        // this.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', {
+        //     frameWidth: 32, // 각 프레임의 너비
+        //     frameHeight: 32, // 각 프레임의 높이
+        // });
 
-        this.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', {
-            frameWidth: 32, // 각 프레임의 너비
-            frameHeight: 32, // 각 프레임의 높이
-        });
+        // this.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', {
+        //     frameWidth: 32, // 각 프레임의 너비
+        //     frameHeight: 32, // 각 프레임의 높이
+        // });
 
-        this.load.spritesheet('Sword And Arrow', 'assets/item/Sword And Arrow.png', {
-            frameWidth: 32, // 각 프레임의 너비
-            frameHeight: 32, // 각 프레임의 높이
-        });
+        // this.load.spritesheet('Sword And Arrow', 'assets/item/Sword And Arrow.png', {
+        //     frameWidth: 32, // 각 프레임의 너비
+        //     frameHeight: 32, // 각 프레임의 높이
+        // });
 
         Player.preload(this);
         Monster.preload(this);

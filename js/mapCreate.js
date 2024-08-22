@@ -130,7 +130,7 @@ export function setMapSize(scene, stageNumber, mapNumber) {
         scene.maxX = 406;
         scene.minY = 74;
         scene.maxY = 278;
-    } else if (stageNumber === 3 && mapNumber == 11) { // 보스맵
+    } else if (stageNumber === 3) { // 보스맵
         scene.mapWidth = 480;
         scene.mapHigth = 480;
         scene.minX = 74;
@@ -145,10 +145,10 @@ export function setupMap(scene, stageNumber, mapNumber) {
     let mapKey;
     if (mapNumber === 0) {
         mapKey = `stage_01_tutorial`;
-    } else if (mapNumber > 9) {
-        mapKey = `stage_0${stageNumber}_${mapNumber}`;
-    } else {
+    } else if (mapNumber < 9) {
         mapKey = `stage_0${stageNumber}_0${mapNumber}`;
+    } else {
+        mapKey = `stage_0${stageNumber}_${mapNumber}`;
     }
 
     console.log(`Loading map with key: ${mapKey}`);
@@ -238,7 +238,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
             }
         });
 
-    } else if (stageNumber === 3 && mapNumber === 11) {
+    } else if (stageNumber === 3) {
 
         const Tileset = map.addTilesetImage("Lab Tileset", "labTileset");
 
