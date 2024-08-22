@@ -231,7 +231,6 @@ export default class StageManager {
             }
         });
 
-
         let sensor3 = tutorial.createSensor(this.scene, 380, this.player.y - 160, 10, 500);
             // 충돌시 이동키 설명관련 데이터 삭제
             const unsubscribe3 = this.scene.matterCollision.addOnCollideStart({
@@ -382,7 +381,7 @@ export default class StageManager {
         const dropX = this.scene.chordEnd.x;
         const dropY = this.scene.chordEnd.y + 30;
 
-        if(mapNumber === 'boss') {
+        if(mapNumber === 'boss'){
             this.scene.boss_monster_clear.play();
             // 첫 번째 아이템 드랍
             const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
