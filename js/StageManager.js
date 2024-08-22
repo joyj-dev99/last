@@ -231,7 +231,7 @@ export default class StageManager {
             }
         });
 
-        let sensor3 = tutorial.createSensor(this.scene, 380, this.player.y - 160, 10, 500);
+            let sensor3 = tutorial.createSensor(this.scene, 380, this.player.y - 160, 10, 500);
             // 충돌시 이동키 설명관련 데이터 삭제
             const unsubscribe3 = this.scene.matterCollision.addOnCollideStart({
                 objectA: this.player,
