@@ -32,6 +32,9 @@ export default class Tutorial{
         this.dialog = dialog;
 
         this.type = type;
+        this.scene = scene;
+
+        this.boundaries = []; // 경계들을 저장할 배열
     }
     
     static preload(scene) {
@@ -53,26 +56,60 @@ export default class Tutorial{
 
     }
 
+    createBoundary(xArray) {
+        xArray.forEach(x => {
+            const boundary = this.scene.matter.add.rectangle(
+                x,
+                this.scene.scale.height / 2,
+                10,
+                this.scene.scale.height,
+                {
+                    isStatic: true, // 경계가 움직이지 않도록 설정
+                    isSensor: false, // 실제로 충돌하는 객체로 만듦
+                    collisionFilter: {
+                        category: BOUNDARY_CATEGORY,
+                        mask: PLAYER_CATEGORY
+                    }
+                }
+            );
+    
+            // 경계를 저장 (x 좌표와 함께)
+            this.boundaries.push({ x, boundary });
+            
+            // Matter 월드에 이 경계를 추가
+            this.scene.matter.world.add(boundary);
+        });
+    }
+    
+    removeBoundary(x) {
+        // x 좌표에 해당하는 경계를 찾음
+        const index = this.boundaries.findIndex(b => b.x === x);
+        
+        if (index !== -1) {
+            const { boundary } = this.boundaries[index];
+            
+            // Matter 월드에서 경계를 제거
+            this.scene.matter.world.remove(boundary);
+            
+            // 배열에서 경계를 제거
+            this.boundaries.splice(index, 1);
+
+            // 물리엔진 갱신
+            this.scene.matter.world.engine.world.bodies = this.scene.matter.world.engine.world.bodies.filter(body => body !== boundary);
+        }
+    }
+
     // 방향키 조작법 설명 시작
     startDirectionControlExplanation(scene, sensor_x, sensor_y){
 
         if(this.type === 'pc'){
 
-            // x = 200 에 고정된 보이지 않는 경계 생성
-            this.boundary = scene.matter.add.rectangle(200, scene.scale.height / 2, 10, scene.scale.height, {
-                isStatic: true, // 이 속성으로 경계가 움직이지 않도록 설정
-                isSensor: false, // 센서가 아니라 실제로 충돌하는 객체로 만듦
-                collisionFilter:{
-                    category: BOUNDARY_CATEGORY,
-                    mask: PLAYER_CATEGORY
-                }
-            });
-
-            // Matter 월드에 이 경계를 추가
-            scene.matter.world.add(this.boundary);
+           // 경계 3개 생성하기
+            const boundaryPositions = [200, 340, 400]; // 경계의 x 좌표
+            this.boundaryPositions = [...boundaryPositions]; // 초기화 및 복사
+            this.createBoundary(boundaryPositions);
 
             console.log('방향키 조작방법 시작');
-            
             
             // 키 입력을 위한 기본 커서 키 설정
             let cursors = scene.input.keyboard.createCursorKeys();
@@ -259,18 +296,15 @@ export default class Tutorial{
                 if(this.키조작설명순서.length == 0){
                     console.log('조작키 설명 완료');
 
-                // 0.5초 후에 오른쪽 사인 생성
+                    // 0.5초 후에 오른쪽 사인 생성 및 경계 제거
                     setTimeout(() => {
                         this.createRightSign(scene, this.player.x + 30, this.player.y - 30);
-
-                        // 경계를 제거하여 이동 허용
-                        scene.matter.world.remove(this.boundary);
-
-                        // 물리엔진 갱신
-                        scene.matter.world.engine.world.bodies = scene.matter.world.engine.world.bodies.filter(body => body !== this.boundary);
-
+                        
+                        // 현재 경계 제거
+                        // 배열의 첫 번째 요소를 제거
+                        let removeX = this.boundaryPositions.shift();
+                        this.removeBoundary(removeX);
                     }, 1000);
-
                 }
                 else {                
                     console.log('조작키 설명 남음');
@@ -481,6 +515,7 @@ export default class Tutorial{
     endDirectionControlExplanation(){
         
         console.log('방향키 조작방법 끝');
+
         // 메모리에서 완전히 제거
         if(this.keyboard_up){
             this.keyboard_up.destroy();
@@ -495,21 +530,6 @@ export default class Tutorial{
             this.keyboard_right.destroy();
         }
 
-        if(this.pointer){
-            this.pointer.destroy();
-        }
-        if(this.graphics){
-            this.graphics.destroy();
-        }
-
-    }
-
-    endzKeyControlExplanation(){
-        console.log('z키 조작방법 끝');
-        if(this.keyboard_z){
-            this.keyboard_z.destroy();
-        }
-        
         if(this.pointer){
             this.pointer.destroy();
         }
@@ -542,6 +562,7 @@ export default class Tutorial{
 
 
     startATKKeyControlExplanation(scene, sensor_x, sensor_y){
+
         console.log('z키 조작방법 시작');
 
         if(this.type === 'pc'){
@@ -549,7 +570,7 @@ export default class Tutorial{
             // 키 입력을 위한 기본 커서 키 설정
             let cursors = scene.input.keyboard.createCursorKeys();
 
-            let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-30, sensor_y+130, 'keyboard', 41);
+            let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-50, sensor_y+130, 'keyboard', 41);
             keyboard_z.setScale(2);
             scene.add.existing(keyboard_z);  
             this.keyboard_z = keyboard_z;
@@ -652,6 +673,7 @@ export default class Tutorial{
             for (let i = 0; i < 관련된값['anim_keyboards'].length; i++) {
                 관련된값.anim_keyboards[i].play(관련된값.anim_keys[i]);
             }
+
         }
         else if(this.type === 'mobile'){
             // 손 표시, 원 표시
@@ -674,11 +696,11 @@ export default class Tutorial{
             // 카메라에 고정시키기
             this.graphics.setScrollFactor(0);
         }
-
     }
 
     endATKKeyControlExplanation(){
         console.log('공격키 조작방법 끝');
+
         if(this.keyboard_z){
             this.keyboard_z.destroy();
         }
@@ -697,13 +719,14 @@ export default class Tutorial{
         if(this.graphics){
             this.graphics.destroy();
         }
+        
 
     }
     
 
     startshiftKeyControlExplanation(scene, sensor_x, sensor_y){
         console.log('shift키 조작방법 시작');
-                
+
         if(this.type === 'pc'){
 
             // 키 입력을 위한 기본 커서 키 설정
@@ -716,7 +739,7 @@ export default class Tutorial{
             this.keyboard_left = keyboard_left;
 
             // shift 키보드 스프라이트 생성
-            let keyboard_shift  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+25, sensor_y+130, 'keyboard_shift_key', 0);
+            let keyboard_shift  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x, sensor_y+130, 'keyboard_shift_key', 0);
             keyboard_shift.setScale(2);
             scene.add.existing(keyboard_shift); 
             this.keyboard_shift = keyboard_shift;
