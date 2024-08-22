@@ -19,6 +19,7 @@ export default class StageManager {
         scene.load.audio("dungeon_boss", "assets/audio/background/dungeon/dungeon_boss.mp3");
         scene.load.audio("room_default", "assets/audio/background/room/room_default.mp3");
         scene.load.audio("room_boss", "assets/audio/background/room/room_boss.mp3");
+        
     }
 
     /**
@@ -354,6 +355,7 @@ export default class StageManager {
         const dropY = this.player.y;
 
         if(mapNumber === 'boss'){
+            this.scene.boss_monster_clear.play();
             // 첫 번째 아이템 드랍
             const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
             console.log("첫번째 아이템 드랍" + firstItem.itemType.type);
@@ -361,12 +363,16 @@ export default class StageManager {
             const secondItem = Item.dropRandomItem(this.scene, this.player, dropX-40, dropY, this.dialog, firstItem.itemType);
             console.log("두번째 아이템 드랍" +secondItem.itemType.type);
         }else if(mapAttribute === 1){
+            this.scene.monster_clear.play();
             Item.dropHeart(this.scene, this.player, dropX, dropY, this.dialog);
         }else if(mapAttribute === 2){
+            this.scene.monster_clear.play();
             Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog);
         }else if(mapAttribute === 3){
+            this.scene.monster_clear.play();
             Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog)
         }else if(mapAttribute === 4){
+            this.scene.monster_clear.play();
             // 첫 번째 아이템 드랍
             const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
             console.log("첫번째 아이템 드랍" + firstItem.itemType.type);

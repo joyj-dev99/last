@@ -227,6 +227,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.image('item_09', 'assets/item/item_09.png');
         scene.load.image('item_10', 'assets/item/item_10.png');
         scene.load.image('item_11', 'assets/item/arrow_10.png');
+        
     }
 
     // 아이템 적용 메소드

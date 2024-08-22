@@ -93,6 +93,8 @@ export default class MainScene extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
+        this.load.audio("monster_clear", "assets/audio/팡파르 나팔소리.mp3");
+        this.load.audio("boss_monster_clear", "assets/audio/노래방 100점.mp3");
 
         // 설정
         this.load.spritesheet('setting', 'assets/ui/Blue_Buttons_Pixel2.png', {frameWidth: 16, frameHeight: 16});
@@ -173,6 +175,12 @@ export default class MainScene extends Phaser.Scene {
             volume: 0.5 // Set the volume (0 to 1)
         });
         this.smallShotSound = this.sound.add(`small_shot`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+        this.monster_clear = this.sound.add(`monster_clear`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+        this.boss_monster_clear = this.sound.add(`boss_monster_clear`, {
             volume: 0.5 // Set the volume (0 to 1)
         });
 
