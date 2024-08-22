@@ -19,7 +19,7 @@ import {
     MONSTER_ATTACK_CATEGORY
 } from "./constants.js";
 
-const { type } = window.gameConfig;
+const {type} = window.gameConfig;
 
 export default class StoreScene extends Phaser.Scene {
     constructor() {
@@ -77,12 +77,12 @@ export default class StoreScene extends Phaser.Scene {
 
         if (this.stageNumber === 1) {
             const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
-    
+
             const floor = map.createLayer("floor", forestTileset, 0, 0);
             map.createLayer("cliff", forestTileset, 0, 0);
             map.createLayer("decor1", forestTileset, 0, 0);
             map.createLayer("decor2", forestTileset, 0, 0);
-    
+
             // 충돌이 필요한 타일 설정
             floor.setCollisionByProperty({collides: true});
             // 타일맵 레이어를 물리적으로 변환
@@ -95,15 +95,15 @@ export default class StoreScene extends Phaser.Scene {
                 }
             });
         } else if (this.stageNumber === 2) {
-          
+
             const dungeonTileset = map.addTilesetImage("Royal Dungeon Tileset", "dungeonTileset");
             const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
-    
+
             const floor = map.createLayer("floor", dungeonTileset, 0, 0);
             const wall = map.createLayer("cliff", dungeonTileset, 0, 0);
             map.createLayer("decor1", dungeonTileset, 0, 0);
             map.createLayer("decor2", forestTileset, 0, 0);
-    
+
             // 충돌이 필요한 타일 설정
             floor.setCollisionByProperty({collides: true});
             wall.setCollisionByProperty({collides: true});
@@ -123,16 +123,16 @@ export default class StoreScene extends Phaser.Scene {
                     tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
                 }
             });
-    
+
         } else if (this.stageNumber === 3) {
             const Tileset = map.addTilesetImage("Modern_Office_32x32", "officeTileset");
             const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "roomBuilderTileset");
-    
+
             const floor = map.createLayer("floor", Tileset2, 0, 0);
             const wall = map.createLayer("cliff", Tileset2, 0, 0);
             map.createLayer("decor1", Tileset, 0, 0);
             map.createLayer("decor2", Tileset, 0, 0);
-    
+
             // 충돌이 필요한 타일 설정
             floor.setCollisionByProperty({collides: true});
             wall.setCollisionByProperty({collides: true});
@@ -152,24 +152,24 @@ export default class StoreScene extends Phaser.Scene {
                     tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
                 }
             });
-    
+
         }
 
         //오브젝트 레이어 관련 코드
         const objectLayer = map.getObjectLayer('object');
         objectLayer.objects.forEach(object => {
             // 각 오브젝트의 속성에 접근
-            const { x, y, width, height, name, type, properties } = object;
+            const {x, y, width, height, name, type, properties} = object;
             console.log(`Object: ${name}, Type: ${type}, X: ${x}, Y: ${y}`);
-    
+
             // 코드 생성 위치 설정
             if (name === 'chord') {
-                    this.chord = new Chord({
-                        scene: this,
-                        x: x,
-                        y: y
-                    });
-                }
+                this.chord = new Chord({
+                    scene: this,
+                    x: x,
+                    y: y
+                });
+            }
 
             // 델마
             if (name === 'thelma') {
@@ -211,6 +211,14 @@ export default class StoreScene extends Phaser.Scene {
                     x: x,
                     y: y
                 });
+                this.player.status = this.playerStatus;
+                this.player.arrowCountText.setText(this.player.status.arrowCount)
+                this.player.arrowCountText.setText(this.player.status.arrowCount)
+                if (this.player.status.arrowCount === 0) {
+                    this.player.overLayArrowCoolTime.setVisible(true);
+                }else {
+                    this.player.overLayArrowCoolTime.setVisible(false);
+                }
             }
         });
 
@@ -255,14 +263,19 @@ export default class StoreScene extends Phaser.Scene {
             console.log(`Moving to map number ${this.mapNumber}`);
 
             this.isMapSelectionActive = false; // UI 비활성화
-            this.scene.start('MainScene', { 
-                stageNumber : this.stageNumber, 
-                partNumber: this.partNumber,
-                mapNumber: this.mapNumber,
-                mapAttribute: 0,
-                battleEnd : true,
-                playerStatus : this.player.status 
-            });
+
+            let mainScene = this.scene.get('MainScene');
+            mainScene.returnStoreStatus = this.player.status;
+            this.scene.stop('StoreScene');
+            // this.scene.start('MainScene', {
+            //     stageNumber : this.stageNumber,
+            //     partNumber: this.partNumber,
+            //     mapNumber: this.mapNumber,
+            //     mapAttribute: 0,
+            //     battleEnd : true,
+            //     playerStatus : this.player.status
+            // });
+
         }
         if (this.milestone) {
             // 플레이어와 표지판 충돌 이벤트 설정
@@ -295,7 +308,6 @@ export default class StoreScene extends Phaser.Scene {
         }
 
 
-
         //  // Play background music
         // this.backgroundMusic = this.sound.add('night_default', {
         //     volume: 0.3, // Set the volume (0 to 1)
@@ -306,7 +318,7 @@ export default class StoreScene extends Phaser.Scene {
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.chord.startPlayLute();
             // this.backgroundMusic.play();
-            
+
         });
 
         // 플레이어 움직임에 따라 카메라 이동
@@ -315,7 +327,7 @@ export default class StoreScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
 
 
-        if(type === 'mobile'){
+        if (type === 'mobile') {
             // 가상 조이스틱 생성
             // 조이스틱 조작 시 player 에서 update를 실행할 때 신호를 준다.
             // or player 함수를 사용한다
@@ -325,7 +337,7 @@ export default class StoreScene extends Phaser.Scene {
                 radius: 100,
                 base: this.add.circle(0, 0, 30, 0x888888),
                 thumb: this.add.circle(0, 0, 15, 0xcccccc),
-                dir: '8dir', 
+                dir: '8dir',
                 forceMin: 16,
             }).on('update', this.updateJoystickState, this);
         }
@@ -338,7 +350,7 @@ export default class StoreScene extends Phaser.Scene {
 
         // X, Y 위치를 화면의 상단 우측으로 설정
         const x = 15;/// 2
-        const y = 6; 
+        const y = 6;
 
         // 상단 coins:{누적갯수} 텍스트 박스 표시
         this.coinIndicatorText = TextIndicator.createText(this, x, y, `Coins: ${this.player.status.coin}`, {
@@ -362,17 +374,21 @@ export default class StoreScene extends Phaser.Scene {
 
     update() {
         this.player.update();
-
+        if (this.player.status.arrowCount === 0) {
+            this.player.overLayArrowCoolTime.setVisible(true);
+        }else {
+            this.player.overLayArrowCoolTime.setVisible(false);
+        }
         this.itemArr.forEach(item => {
             item.updatePurchaseAvailability(this.player.status.coin);
         });
     }
 
-    updateJoystickState(){
+    updateJoystickState() {
 
         var cursorKeys = this.joystick.createCursorKeys();
         let playerKeys = this.player.cursors;
-        
+
         playerKeys.right.isDown = cursorKeys.right.isDown;
         playerKeys.left.isDown = cursorKeys.left.isDown;
         playerKeys.up.isDown = cursorKeys.up.isDown;

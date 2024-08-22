@@ -1,0 +1,32 @@
+{
+    "anims": [
+        {
+            "key": "flag_waving",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "store_flag",
+                    "frame": "flag_animation_0"
+                },
+                {
+                    "key": "store_flag",
+                    "frame": "flag_animation_1"
+                },
+                {
+                    "key": "store_flag",
+                    "frame": "flag_animation_2"
+                },
+                {
+                    "key": "store_flag",
+                    "frame": "flag_animation_3"
+                },
+                {
+                    "key": "store_flag",
+                    "frame": "flag_animation_4"
+                }
+            ]
+        }
+    ]
+}

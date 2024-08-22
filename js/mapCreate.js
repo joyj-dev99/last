@@ -28,6 +28,7 @@ import MonsterAngel from "./monsters/MonsterAngel.js";
 import MonsterGolem from "./monsters/MonsterGolem.js";
 import MonsterBossAlchemist from "./monsters/MonsterBossAlchemist.js";
 import MonsterBossWolfgang from "./monsters/MonsterBossWolfgang.js";
+import StoreFlag from "./objects/StoreFlag.js";
 
 export function mapCreatePreload(scene) {
     scene.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
@@ -35,6 +36,8 @@ export function mapCreatePreload(scene) {
     scene.load.image("officeTileset", "assets/map/Modern_Office_32x32.png");
     scene.load.image("roomBuilderTileset", "assets/map/Room_Builder_Office_32x32.png");
     scene.load.image("labTileset", "assets/map/Lab Tileset.png");
+
+
 
     scene.load.tilemapTiledJSON("stage_01_tutorial", "assets/map/stage_01/stage_01_tutorial.json");
     scene.load.tilemapTiledJSON("stage_01_01", "assets/map/stage_01/stage_01_01.json");
