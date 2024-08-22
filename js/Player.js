@@ -3,6 +3,7 @@ import Magic from "./Magic.js";
 import Slash from "./Slash.js";
 
 import {saveCoinsToLocalStorage,loadCoinsFromLocalStorage} from './localStorage.js';
+const {type} = window.gameConfig;
 
 import {
     PLAYER_CATEGORY,
@@ -148,45 +149,341 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         if (this.hiddenFlag) return;
 
+        let rollImgName, rollIndexNum, spriteScale, slashImgName, slashIndexNum, magicIndexNum, magicImgName, arrowImgName, arrowIndexNum;
+        let roll_x, roll_y, slash_X, slash_y, magic_x, magic_y, arrow_x, arrow_y;
+        // 'Weapons and Equipment 16', 68, spriteScale);
+        if(type == 'mobile'){
+            rollImgName = 'roll_32';
+            rollIndexNum = null; 
+            slashImgName = 'sword_32';
+            slashIndexNum = null;
+            magicIndexNum = null;
+            arrowIndexNum = null;
+            magicImgName = 'magic_32';
+            arrowImgName = 'arrow_32';
+            spriteScale = 0.1;
+
+            let width = scene.sys.game.config.width;
+            let height = scene.sys.game.config.height;
+
+            roll_x = width - 30;
+            roll_y = height - 95;
+            slash_X = width - 30;
+            slash_y = height - 35;
+            arrow_x = width - 85;
+            arrow_y = height - 35;
+            magic_x = width - 140;
+            magic_y = height - 35;
+        }
+        else if(type == 'pc'){
+            rollImgName = 'Skills and Spells 16';
+            rollIndexNum = 138;//'Skills and Spells 16', 138
+            spriteScale = 0.05;
+            slashImgName = 'Weapons and Equipment 16';
+            slashIndexNum = 68; 
+            arrowImgName = 'Weapons and Equipment 16';
+            arrowIndexNum = 1;
+            magicImgName = 'Skills and Spells 16';
+            magicIndexNum = 1056;
+            roll_x = 20;
+            roll_y = 200;
+            slash_X = 20;
+            slash_y = 230;
+            arrow_x = 50;
+            arrow_y = 230;
+            magic_x = 80;
+            magic_y = 230;
+        }
+
         // 구르기 버튼과 그 오버레이
-        const { button: btnRolling, skillSprite: rollingSkill, overlay: overlayRolling, container: containerRolling } = this.createButtonWithOverlay(scene, 20, 200, 'Skills and Spells 16', 138);
+        const { button: btnRolling, skillSprite: rollingSkill, overlay: overlayRolling, container: containerRolling } = this.createButtonWithOverlay(scene, roll_x, roll_y, rollImgName, rollIndexNum, spriteScale);
         this.btnRollingCoolTime = btnRolling;
         this.rollingSkillSprite = rollingSkill;
         this.overLayRollingCoolTime = overlayRolling;
         this.containerRollingCoolTime = containerRolling;
 
         // 슬래시 버튼과 그 오버레이
-        const { button: btnSlash, skillSprite: slashSkill, overlay: overlaySlash, container: containerSlash } = this.createButtonWithOverlay(scene, 20, 230, 'Weapons and Equipment 16', 68);
+        const { button: btnSlash, skillSprite: slashSkill, overlay: overlaySlash, container: containerSlash } = this.createButtonWithOverlay(scene, slash_X, slash_y, slashImgName, slashIndexNum, spriteScale);
         this.btnSlashCoolTime = btnSlash;
         this.slashSkillSprite = slashSkill;
         this.overLaySlashCoolTime = overlaySlash;
         this.containerSlashCoolTime = containerSlash;
 
         // 애로우 버튼과 그 오버레이
-        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, 50, 230, 'Weapons and Equipment 16', 1);
+        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, arrow_x, arrow_y, arrowImgName, arrowIndexNum, spriteScale);
         this.btnArrowCoolTime = btnArrow;
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
         this.containerArrowCoolTime = containerArrow;
 
-        // 화살 남은 갯수 text
-        // 텍스트 스타일 (폰트 크기 조절)
-        const buttonTextStyle = { font: "18px Arial", fill: "#000000" };
-        this.arrowCountText = this.scene.add.text(50, 230, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
-
 
         // 마법 버튼과 그 오버레이
-        const { button: btnMagic, skillSprite: magicSkill, overlay: overlayMagic, container: containerMagic } = this.createButtonWithOverlay(scene, 80, 230, 'Skills and Spells 16', 1056);
+        const { button: btnMagic, skillSprite: magicSkill, overlay: overlayMagic, container: containerMagic } = this.createButtonWithOverlay(scene, magic_x, magic_y, magicImgName, magicIndexNum, spriteScale);
         this.btnMagicCoolTime = btnMagic;
         this.magicSkillSprite = magicSkill;
         this.overLayMagicCoolTime = overlayMagic;
         this.containerMagicCoolTime = containerMagic;
+
+        if(type == 'mobile'){
+            // 버튼 클릭 이벤트 리스너 설정
+
+        // 화살 남은 갯수 text
+        // 텍스트 스타일 (폰트 크기 조절)
+        const buttonTextStyle = { font: "30px Arial", fill: "#000000" };
+        this.arrowCountText = this.scene.add.text(arrow_x, arrow_y, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
+
+            // 새로운 그래픽스 객체 생성
+            this.graphics1 = scene.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            // this.graphics1.fillStyle(0x000000, 0.5);
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics1.fillRect(arrow_x-26, arrow_y-26, this.btnArrowCoolTime.width*spriteScale, this.btnArrowCoolTime.height*spriteScale);
+            // 선의 스타일 설정 (두께, 색상 등)
+            // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics1.strokeRect(arrow_x-26, arrow_y-26, this.btnArrowCoolTime.width*spriteScale, this.btnArrowCoolTime.height*spriteScale);
+            // 카메라에 고정시키기
+            this.graphics1.setScrollFactor(0);//.setDepth(dialogDepth)
+            this.graphics1.setInteractive(new Phaser.Geom.Rectangle(arrow_x - 26, arrow_y-26, this.btnArrowCoolTime.width*spriteScale, this.btnArrowCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+
+                
+            // 버튼을 눌렀을 때 (pointerdown)
+            this.graphics1.on('pointerdown', () => {
+                console.log('Button pressed down!');
+                // this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyDownEvent = new KeyboardEvent('keydown', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyDownEvent);
+
+            });
+
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.graphics1.on('pointerup', () => {
+                console.log('Button released!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyUpEvent = new KeyboardEvent('keyup', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyUpEvent);
+
+            });
+
+            // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+            this.graphics1.on('pointerout', () => {
+                console.log('Pointer out of button!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+            });
+
+            // 새로운 그래픽스 객체 생성
+            this.graphics2 = scene.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            // this.graphics1.fillStyle(0x000000, 0.5);
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics2.fillRect(magic_x-26, magic_y-26, this.btnMagicCoolTime.width*spriteScale, this.btnMagicCoolTime.height*spriteScale);
+            // 선의 스타일 설정 (두께, 색상 등)
+            // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics2.strokeRect(magic_x-26, magic_y-26, this.btnMagicCoolTime.width*spriteScale, this.btnMagicCoolTime.height*spriteScale);
+            // 카메라에 고정시키기
+            this.graphics2.setScrollFactor(0);//.setDepth(dialogDepth)
+            this.graphics2.setInteractive(new Phaser.Geom.Rectangle(magic_x - 26, magic_y-26, this.btnMagicCoolTime.width*spriteScale, this.btnMagicCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+
+                
+            // 버튼을 눌렀을 때 (pointerdown)
+            this.graphics2.on('pointerdown', () => {
+                console.log('Button pressed down!');
+                // this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyDownEvent = new KeyboardEvent('keydown', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.C,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyDownEvent);
+
+            });
+
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.graphics2.on('pointerup', () => {
+                console.log('Button released!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyUpEvent = new KeyboardEvent('keyup', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.C,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyUpEvent);
+
+            });
+
+            // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+            this.graphics2.on('pointerout', () => {
+                console.log('Pointer out of button!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+            });
+
+
+            // 새로운 그래픽스 객체 생성
+            this.graphics3 = scene.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            // this.graphics1.fillStyle(0x000000, 0.5);
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics3.fillRect(slash_X-26, slash_y-26, this.btnSlashCoolTime.width*spriteScale, this.btnSlashCoolTime.height*spriteScale);
+            // 선의 스타일 설정 (두께, 색상 등)
+            // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics3.strokeRect(slash_X-26, slash_y-26, this.btnSlashCoolTime.width*spriteScale, this.btnSlashCoolTime.height*spriteScale);
+            // 카메라에 고정시키기
+            this.graphics3.setScrollFactor(0);//.setDepth(dialogDepth)
+            this.graphics3.setInteractive(new Phaser.Geom.Rectangle(slash_X - 26, slash_y-26, this.btnSlashCoolTime.width*spriteScale, this.btnSlashCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+
+                
+            // 버튼을 눌렀을 때 (pointerdown)
+            this.graphics3.on('pointerdown', () => {
+                console.log('Button pressed down!');
+                // this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyDownEvent = new KeyboardEvent('keydown', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyDownEvent);
+
+            });
+
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.graphics3.on('pointerup', () => {
+                console.log('Button released!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyUpEvent = new KeyboardEvent('keyup', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyUpEvent);
+
+            });
+
+            // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+            this.graphics3.on('pointerout', () => {
+                console.log('Pointer out of button!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+            });
+
+
+
+            // 새로운 그래픽스 객체 생성
+            this.graphics4 = scene.add.graphics();
+            // 바탕 투명한 흰색 설정 (투명도 0.5)
+            // this.graphics1.fillStyle(0x000000, 0.5);
+            // 사각형 채우기 (x, y, width, height)
+            this.graphics4.fillRect(roll_x-26, roll_y-26, this.btnRollingCoolTime.width*spriteScale, this.btnRollingCoolTime.height*spriteScale);
+            // 선의 스타일 설정 (두께, 색상 등)
+            // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+            // 사각형 테두리 그리기
+            this.graphics4.strokeRect(roll_x-26, roll_y-26, this.btnRollingCoolTime.width*spriteScale, this.btnRollingCoolTime.height*spriteScale);
+            // 카메라에 고정시키기
+            this.graphics4.setScrollFactor(0);//.setDepth(dialogDepth)
+            this.graphics4.setInteractive(new Phaser.Geom.Rectangle(roll_x - 26, roll_y-26, this.btnRollingCoolTime.width*spriteScale, this.btnRollingCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+
+                
+            // 버튼을 눌렀을 때 (pointerdown)
+            this.graphics4.on('pointerdown', () => {
+                console.log('Button pressed down!');
+                // this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyDownEvent = new KeyboardEvent('keydown', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyDownEvent);
+
+            });
+
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.graphics4.on('pointerup', () => {
+                console.log('Button released!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyUpEvent = new KeyboardEvent('keyup', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyUpEvent);
+
+            });
+
+            // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+            this.graphics4.on('pointerout', () => {
+                console.log('Pointer out of button!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+            });
+
+
+        }
+        else if(type == 'pc'){
+            
+            // 화살 남은 갯수 text
+            // 텍스트 스타일 (폰트 크기 조절)
+            const buttonTextStyle = { font: "18px Arial", fill: "#000000" };
+            this.arrowCountText = this.scene.add.text(arrow_x, arrow_y, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
+
+        }
+
     }
 
-    createButtonWithOverlay(scene, x, y, spriteKey, spriteIndex) {
+    createButtonWithOverlay(scene, x, y, spriteKey, spriteIndex, spriteScale) {
         // 버튼 이미지 생성
         const button = scene.add.image(0, 0, 'button_indicator');
-        button.setScale(0.05);
+        button.setScale(spriteScale);
         
         const skillSprite = scene.add.sprite(0, 0, spriteKey, spriteIndex).setOrigin(0.5, 0.5);
 
@@ -222,6 +519,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', { frameWidth: 16, frameHeight: 16 });
         scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', { frameWidth: 16, frameHeight: 16 });
+
+        scene.load.image('arrow_32', 'assets/player/arrow_32.png');
+        scene.load.image('magic_32', 'assets/player/magic_32.png');
+        scene.load.image('roll_32', 'assets/player/roll_32.png');
+        scene.load.image('sword_32', 'assets/player/sword_32.png');
+
 
         Slash.preload(scene);
         Arrow.preload(scene);
@@ -362,9 +665,19 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         console.log('this.status.arrowCount --');
         this.status.arrowCount--;
         console.log('this.status.arrowCount : '+this.status.arrowCount);
-        this.scene.setArrowBtnStatus(this.status.arrowCount);
+        // this.scene.setArrowBtnStatus(this.status.arrowCount);
         if(this.status.arrowCount == 0){
             this.overLayArrowCoolTime.setVisible(true);
+            this.overLayArrowCoolTime.clear();
+            this.overLayArrowCoolTime.fillStyle(0x808080, 0.5); // 회색(0x808080) 색상 사용
+            this.overLayArrowCoolTime.fillRect(
+                this.btnArrowCoolTime.x - this.btnArrowCoolTime.width * this.btnArrowCoolTime.scaleX / 2, 
+                this.btnArrowCoolTime.y - this.btnArrowCoolTime.height * this.btnArrowCoolTime.scaleY / 2, 
+                this.btnArrowCoolTime.width * this.btnArrowCoolTime.scaleX, 
+                this.btnArrowCoolTime.height * this.btnArrowCoolTime.scaleY
+            );
+            this.overLayArrowCoolTime.setVisible(true);
+            
         }
 
         this.arrowCountText.setText(this.status.arrowCount);
@@ -376,7 +689,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // 모바일 화살 비활성화 풀기
         // if(this.status.arrowCount <= 0){
-        //     this.scene.setArrowListener();
+        //     this.scene.addArrows();
         // }
         this.status.arrowCount += amount;
         console.log(`현재 화살의 갯수: ${this.status.arrowCount}`);
