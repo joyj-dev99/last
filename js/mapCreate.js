@@ -10,7 +10,7 @@ import {
 import Player from "./Player.js";
 import Chord from "./character/Chord.js";
 import Milestone from "./objects/Milestone.js";
-import Item from './Item.js';
+import Item from "./Item.js";
 
 import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";

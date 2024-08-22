@@ -50,7 +50,7 @@ export default class MainScene extends Phaser.Scene {
     init(data) {
         this.stageNumber = data.stageNumber || 1;
         this.partNumber = data.partNumber || 1;
-        this.mapNumber = data.mapNumber || 3;
+        this.mapNumber = data.mapNumber || 1;
         console.log('init mapNumber : ', this.mapNumber);
         this.mapAttribute = data.mapAttribute || 2
         this.battleEnd = data.battleEnd || false;
