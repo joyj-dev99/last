@@ -336,10 +336,10 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         
         this.destroy();
 
-        // 3초 후에 다이얼로그를 닫음
+        // 5초 후에 다이얼로그를 닫음
         setTimeout(() => {
             dialog.hideDialogModal(); 
-        }, 3000);
+        }, 5000);
         
 
         return true;
