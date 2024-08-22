@@ -16,7 +16,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'max_heart',
         texture: 'item_02',                 
         message: '최대 하트 +1, 현재 하트 +1',
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 팬텀 망토 아이템 데이터
@@ -24,7 +24,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'phantom_cloak',
         texture: 'item_03',  
         message: '앞으로 당신은 무적입니다. 망토 덕분에 아무리 몬스터에게 맞아도 죽지 않죠!',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 신속의 장화 아이템 데이터
@@ -32,7 +32,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'swift_boots',
         texture: 'item_04', 
         message: '신속의 장화 덕분에 이동속도 25% 증가!',   
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
         
     // 알 수 없는 부적 아이템 데이터
@@ -40,7 +40,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'unknown_amulet',
         texture: 'item_05',  
         message: '나이스! 공격 스킬 쿨타임 3초 감소',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 양자 모래시계 아이템 데이터
@@ -48,7 +48,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'quantum_hourglass',
         texture: 'item_06',  
         message: '이런, 공격스킬 쿨타임 3초 증가',   
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 허리에 좋은 약초 아이템 데이터
@@ -56,7 +56,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'herbal_medicine',
         texture: 'item_07',  
         message: '허리에 바른 약초가 마르려면, 앞으로 구르기는 금지입니다.', 
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 1  // 드랍 확률 (10%)
     };
 
     // 해적의 금고 아이템 데이터
@@ -64,15 +64,15 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'pirates_safe',
         texture: 'item_08', 
         message: '해적에게 코인을 도난당하셨군요. 코인 초기화',  
-        drap_per: 0.9  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
         
     // 고대의 묘약 아이템 데이터
     static AncientPotion_ITEM = {
         type: 'ancient_potion',
-        texture: 'item_9',  
+        texture: 'item_09',  
         message: '묘약을 마셨더니 배탈이 났군요. 이동속도 25% 감소',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 두꺼운 장갑 아이템 데이터
@@ -80,25 +80,17 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'heavy_gloves',
         texture: 'item_10',  
         message: '두꺼운 장갑을 끼니, 무기가 잘 안잡히죠? 공격력 25% 감소',  
-        drap_per: 0.1  // 드랍 확률 (10%)
-    };
-
-    // 화살(1개) 아이템 데이터
-    static arrow_ITEM = {
-        type: 'arrow',
-        texture: 'arrow', 
-        frame: 0,  
-        scale: 0.5,
-        message: '화살 +1개'
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 화살(10개) 아이템 데이터
     static arrow_10_ITEM = {
         type: 'arrow_10',
-        texture: 'arrow_10', 
+        texture: 'item_11', 
         frame: 0,  
         scale: 0.5,
-        message: '화살 +10개'
+        message: '화살 +10개',
+        drap_per: 1  // 드랍 확률 (10%)
     };
 
 
@@ -127,7 +119,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     }
 
     // 랜덤 아이템 드랍 메서드
-    static dropRandomItem(scene, player, x, y, dialog) {
+    static dropRandomItem(scene, player, x, y, dialog, excludeItemType = null) {
         const items = [
             Item.MaxHeart_ITEM,
             Item.PhantomCloak_ITEM,
@@ -137,14 +129,18 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             Item.HerbalMedicine_ITEM,
             Item.PiratesSafe_ITEM,
             Item.AncientPotion_ITEM,
-            Item.HeavyGloves_ITEM
+            Item.HeavyGloves_ITEM,
+            Item.arrow_10_ITEM
         ];
 
-        const totalDropRate = items.reduce((acc, item) => acc + item.drap_per, 0);
+        // 제외할 아이템 타입이 있는 경우 필터링
+        const filteredItems = excludeItemType ? items.filter(item => item !== excludeItemType) : items;
+
+        const totalDropRate = filteredItems.reduce((acc, item) => acc + item.drap_per, 0);
         let randomValue = Math.random() * totalDropRate;
 
         let selectedItem = null;
-        for (let oneItem of items) {
+        for (let oneItem of filteredItems) {
             if (randomValue < oneItem.drap_per) {
                 selectedItem = oneItem;
                 break;  // 조건을 만족하면 루프 종료
@@ -159,7 +155,6 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
                 y: y,
                 itemType: selectedItem
             });
-            console.log("아이템 드랍");
 
             // 플레이어와 아이템 충돌 이벤트 설정
             const unsubscribe = scene.matterCollision.addOnCollideStart({
@@ -174,6 +169,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
                     unsubscribe();
                 }
             });
+
+            return item;  // 선택된 아이템을 리턴하여 첫 번째 아이템 정보 전달
         }
     }
 
@@ -227,6 +224,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.image('item_08', 'assets/item/item_08.png');
         scene.load.image('item_09', 'assets/item/item_09.png');
         scene.load.image('item_10', 'assets/item/item_10.png');
+        scene.load.image('item_11', 'assets/item/arrow_10.png');
     }
 
     // 아이템 적용 메소드
@@ -272,6 +270,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         else if(this.itemType.type == 'phantom_cloak'){
             dialogMessages.push({ name: '코드', portrait: 'ChordPotrait', message: this.itemType.message });
             player.setInvincible(true);  // 무적을 영구적으로 적용
+            
         }
         // 신속의 장화
         else if(this.itemType.type == 'swift_boots'){
@@ -280,20 +279,27 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         }
         //알수 없는 부적
         else if(this.itemType.type == 'unknown_amulet'){
-            // 이미지 잘못됨
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-            player.adjustCooldown(-3); 
+            console.log('sword cooldown: ' + player.status.swordCoolTime);
+            console.log('magic cooldown: ' + player.status.magicCoolTime );
+            player.adjustCooldown(-3000); 
+            console.log('New sword cooldown: ' + player.status.swordCoolTime);
+            console.log('New magic cooldown: ' + player.status.magicCoolTime );
 
         }
         //양자 모래시계
         else if(this.itemType.type == 'quantum_hourglass'){
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-            player.adjustCooldown(3);
+            console.log('sword cooldown: ' + player.status.swordCoolTime);
+            console.log('magic cooldown: ' + player.status.magicCoolTime );
+            player.adjustCooldown(3000);
+            console.log('New sword cooldown: ' + player.status.swordCoolTime);
+            console.log('New magic cooldown: ' + player.status.magicCoolTime );
         }
         // 허리에 좋은 약초
         else if(this.itemType.type == 'herbal_medicine'){
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-            player.canRoll = false;  // 구르기 금지를 영구적으로 적용
+            player.status.canRoll = false;  // 구르기 금지를 영구적으로 적용
         }
         //해적의 금고
         else if(this.itemType.type == 'pirates_safe'){
@@ -313,21 +319,15 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         //두꺼운 장갑
         else if(this.itemType.type == 'heavy_gloves'){
             // 모든 공격 스킬의 공격력을 25% 감소시킴
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             player.adjustAttackPower(0.75);  
-            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-        }
-        //화살 1개
-        else if(this.itemType.type == 'arrow'){
-            // 플레이어가 가진 화살이 1개 늘어남
-            player.addArrow(1);
-            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-
+            
         }
         //화살 10개
         else if(this.itemType.type == 'arrow_10'){
             // 플레이어가 가진 화살이 10개 늘어남
-            player.addArrow(10);
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
+            player.addArrows(10);
 
         }
         dialog.showDialogModal(dialogMessages);

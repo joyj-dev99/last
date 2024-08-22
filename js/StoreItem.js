@@ -1,4 +1,5 @@
 import {PLAYER_CATEGORY, ITEM_CATEGORY} from './constants.js';
+import {coinLocalStorageReset} from './localStorage.js';
 
 const itemData = {
     1: {
@@ -11,19 +12,19 @@ const itemData = {
         texture: "item_02",
         name: "천사의 심장",
         price: 150,
-        description: "천사의 심장? 최대 체력 하트 1개 늘어났으니까, 하루 더 버티시든 말든 알아서 하세요."
+        description: "최대 하트 +1, 현재 하트 +1, 하루 더 버티시든 말든 알아서 하세요."
     },
     3: {
         texture: "item_03",
         name: "팬텀 망토",
         price: 80,
-        description: "이 망토? 10초 동안 적들이 못 본다고요. 근데 10초밖에 안 되니까, 그 안에 다 처리하세요."
+        description: "이 망토를 쓰면 몸이 투명해진다고요. 몬스터에게 아무리 맞아도 데미지가 없죠."
     },
     4: {
         texture: "item_04",
         name: "신속의 장화",
         price: 100,
-        description: "신속의 장화 덕에 이동 속도 25% 빨라졌다네요. 장화에 깃든 마법 덕분이라나? 딱 1분이니까, 그동안 알아서 굴러다니세요."
+        description: "신속의 장화 덕에 이동 속도 25% 빨라졌다네요. 장화에 깃든 마법 덕분이라나?"
     },
     5: {
         texture: "item_05",
@@ -41,7 +42,7 @@ const itemData = {
         texture: "item_07",
         name: "허리에 좋은 약초",
         price: 150,
-        description: "허리에 약초 발랐다니까, 약초 마를 때까지 기다리세요. 30초 동안 구르기 금지라네요."
+        description: "허리에 약초 발랐다니까, 약초 마를 때까지 기다리세요. 앞으로 구르기 금지라네요."
     },
     8: {
         texture: "item_08",
@@ -53,7 +54,7 @@ const itemData = {
         texture: "item_09",
         name: "고대의 묘약",
         price: 100,
-        description: "물약 마시고 배탈 났다구요? 유통기한 2천 년 지났는데, 그 정도는 각오해야죠. 1분동안 이동속도 25% 감소요."
+        description: "물약 마시고 배탈 났다구요? 유통기한 2천 년 지났는데, 그 정도는 각오해야죠. 이동속도 25% 감소요."
     },
     10: {
         texture: "item_10",
@@ -218,90 +219,105 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         const player = this.scene.player;
         console.log('item 효과적용 : ' + this.name);
 
-        dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+        
         // 붉은 하트
         if(this.itemKey == 1){
             // 체력 +1 적용
             player.increaseHeart(1);
             this.scene.heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
+        
+            // 텍스트 띄우기
+            let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
+                fontFamily: 'GalmuriMono7, sans-serif',
+                fontSize: '8px', //8배수 단위로 늘어나야 잘 보임
+                // fill: '#FFFFFF',
+                fill: '#000000',
+                resolution:2
+            });
+
+            this.scene.time.delayedCall(2000, () => {
+                // gpt가 이 지연 호출이 정확히 실행될 때 text 객체가 이미 파괴되었을 가능성이 있습니다. 
+                // 안전하게 처리하려면 text가 존재할 때만 제거하도록 할 수 있습니다.
+                // 라면서 확인하라고 해서 추가한 코드
+                if (text) {
+                    TextIndicator.removeText(text);
+                }
+            });
         }
         //천사의 심장
         else if(this.itemKey == 2){
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
             player.increaseMaxHeart(1);
             heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
 
         }
         //팬텀 망토
         else if(this.itemKey == 3){
-            // 플레이어를 무적 상태로 설정
-            dialog.showDialogModal(dialogMessages, () => {
-                player.setInvincible(true);
-                this.destroy();
-                this.scene.time.delayedCall(20000, () => {
-                    player.setInvincible(false);
-                    console.log('Phantom Cloak effect ended!');
-                });
-            });
-            return;
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            player.setInvincible(true);  // 무적을 영구적으로 적용
         }
         //신속의 장화
         else if(this.itemKey == 4){
-            dialog.showDialogModal(dialogMessages, () => {
-                player.adjustSpeed(1.25);
-                this.destroy();
-                this.scene.time.delayedCall(60000, () => {
-                    player.adjustSpeed(1 / 1.25);
-                    console.log('Swift Boots effect ended.');
-                });
-            });
-            return;
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            player.adjustSpeed(1.25);  // 이동속도 증가를 영구적으로 적용
         }
         //알수 없는 부적
         else if(this.itemKey == 5){
-            player.adjustCooldown(-3); 
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            player.adjustCooldown(-3000); 
 
         }
         //양자 모래시계
         else if(this.itemKey == 6){
-            player.adjustCooldown(3);
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            player.adjustCooldown(3000);
         }
         //허리에 좋은 약초
         else if(this.itemKey == 7){
-            dialog.showDialogModal(dialogMessages, () => {
-                player.canRoll = false;
-                this.destroy();
-                this.scene.time.delayedCall(30000, () => {
-                    player.canRoll = true;
-                    console.log('Rolling is now enabled again.');
-                });
-            });
-            return;
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            player.status.canRoll = false;  // 구르기 금지를 영구적으로 적용
 
         }
         //해적의 금고
         else if(this.itemKey == 8){
             // 플레이어의 코인을 0으로 초기화
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
             player.status.coin = 0;
+            coinLocalStorageReset();     
+            //ui 변경
+            this.scene.coinIndicatorText.setText(`Coins : ${player.status.coin}`);
             
         }
         //고대의 묘약
         else if(this.itemKey == 9){
-            // 이동속도를 25% 감소시킴
-            dialog.showDialogModal(dialogMessages, () => {
-                player.adjustSpeed(0.75);
-                this.destroy();
-                this.scene.time.delayedCall(60000, () => {
-                    player.adjustSpeed(1 / 0.75);
-                    console.log('Ancient Potion effect ended.');
-                });
-            });
-            return;
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            player.adjustSpeed(0.75);  // 이동속도 감소를 영구적으로 적용
         }
         //두꺼운 장갑
         else if(this.itemKey == 10){
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
             // 모든 공격 스킬의 공격력을 25% 감소시킴
             player.adjustAttackPower(0.75);  
         }
-        // dialog.showDialogModal(dialogMessages);
+        //화살 10개
+        else if(this.itemKey == 11){
+            // 플레이어가 가진 화살이 10개 늘어남
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            player.addArrows(10);
+
+        }
+        //마법사의 목걸이
+        else if(this.itemKey == 12){
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+            // 아이템 효과 
+        }
+        
+        dialog.showDialogModal(dialogMessages);
+
+        // 3초 후에 다이얼로그를 닫음
+        setTimeout(() => {
+            dialog.hideDialogModal(); 
+        }, 3000);
+
     }
 }

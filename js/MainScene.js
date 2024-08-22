@@ -52,7 +52,7 @@ export default class MainScene extends Phaser.Scene {
         this.partNumber = data.partNumber || 1;
         this.mapNumber = data.mapNumber || 8;
         console.log('init mapNumber : ', this.mapNumber);
-        this.mapAttribute = data.mapAttribute || 2;
+        this.mapAttribute = data.mapAttribute || 4;
         this.battleEnd = data.battleEnd || false;
         
         this.playerStatus = data.playerStatus || null;
@@ -60,6 +60,7 @@ export default class MainScene extends Phaser.Scene {
 
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
+        // arrowCount: 13으로 잘 넘어옴
 
         // 현재 스테이지에 살아있는 몬스터 객체를 담은 배열
         this.monsterArr = [];
@@ -181,8 +182,10 @@ export default class MainScene extends Phaser.Scene {
         }
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
+        // 화살 갯수 UI 업데이트
+        this.player.arrowCountText.setText(this.player.status.arrowCount);
         
-        //페이드인 완료 후 게임 실행
+        //페이드인 완료 후 게임 실행   
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.time.delayedCall(1000, () => {
                 console.log('camerafadeincomplete');
@@ -928,6 +931,7 @@ export default class MainScene extends Phaser.Scene {
         
     }
 
+
     setArrowListener(){
         // 버튼을 눌렀을 때 (pointerdown)
         this.graphics3.on('pointerdown', () => {
@@ -971,10 +975,11 @@ export default class MainScene extends Phaser.Scene {
                 console.log('Pointer out of button!');
                 this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
             });
-           
+
     }
 
     addArrows(arrowCount){
+    if (type === 'mobile') {
 
         if(this.arrowCounttext){
             this.arrowCounttext.destroy();
@@ -982,14 +987,18 @@ export default class MainScene extends Phaser.Scene {
         // 버튼 스타일 (폰트 크기 조절)
         const buttonTextStyle = { font: "18px Arial", fill: "#FFFFFF" };
         console.log("setArrowBtnStatus arrowCount : "+arrowCount);
-        // this.graphics3.
         this.arrowCounttext = this.add.text(this.cameras.main.width - 80, this.cameras.main.height - 95, arrowCount, buttonTextStyle)
             .setOrigin(0.5).setScrollFactor(0);
 
-        if(arrowCount > 0){
-            this.graphics3.setDepth(100);
-            this.button3.setDepth(100);
-        }
+            if (arrowCount > 0) {
+                // 모바일 환경에서만 실행
+
+                    if (this.graphics3 && this.button3) {
+                        this.graphics3.setDepth(100);
+                        this.button3.setDepth(100);
+                    }
+                }
+            }
         
     }
 

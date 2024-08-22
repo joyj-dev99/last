@@ -23,8 +23,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 상태 정보 초기화
         this.status = {
             name: '맥스',
-            maxHeart: 7,
-            nowHeart: 7,
+            maxHeart: 15,
+            nowHeart: 15,
             //검 공격력
             swordATK: 20,
             //활 공격력
@@ -36,9 +36,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 이동 속도 초기화
             speed: 3.5,
             rollingCoolTime: 500,
-            swordCoolTime: 1000,  // 검 공격 쿨타임 3초
-            magicCoolTime: 10000,  // 마법 공격 쿨타임 10초
-            arrowCount: 3 //화살의 갯수
+            swordCoolTime: 1000,  
+            magicCoolTime: 5000,  
+            arrowCount: 3 ,//화살의 갯수
+            // 무적 상태
+            isInvincible: false,
+            // 구르기 가능 여부 상태
+            canRoll: true
+
         };
 
         this.isRolling = true;
@@ -111,8 +116,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.slash = null;
         this.isShootingBow = false;
         this.isCastingSpell = false;
-        this.isInvincible = false; // 무적 상태를 나타내는 변수
-        this.canRoll = true; // 구르기 가능 여부를 관리하는 변수 추가
 
 
         // 애니메이션 완료 이벤트 리스너 추가
@@ -161,6 +164,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
         this.containerArrowCoolTime = containerArrow;
+
         // 화살 남은 갯수 text
         // 텍스트 스타일 (폰트 크기 조절)
         const buttonTextStyle = { font: "18px Arial", fill: "#000000" };
@@ -241,7 +245,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 슬래시 쿨타임
             if (this.isSlash === true) {
                 this.isSlash = false;
-                this.scene.time.delayedCall(this.swordCoolTime, () => {
+                this.scene.time.delayedCall(this.status.swordCoolTime, () => {
                     this.isSlash = true;
                 });
                 if (!this.isSlashOverLayCoolingDown) {
@@ -366,12 +370,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     // 화살의 갯수를 증가시키는 함수
     addArrows(amount) {
 
-        if(this.status.arrowCount <= 0){
-            this.scene.setArrowListener();
-        }
+        // 모바일 화살 비활성화 풀기
+        // if(this.status.arrowCount <= 0){
+        //     this.scene.setArrowListener();
+        // }
         this.status.arrowCount += amount;
         console.log(`현재 화살의 갯수: ${this.status.arrowCount}`);
-        this.scene.addArrows(this.status.arrowCount);
+
+        //화면 ui에 화살갯수 표시
+        this.arrowCountText.setText(this.status.arrowCount);
     }
 
     handleSpell() {
@@ -408,25 +415,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.status.bowATK *= multiplier;
         this.status.magicATK *= multiplier;
 
-        console.log(`Attack power adjusted by a factor of ${multiplier}.`);
-        console.log('New sword ATK: ' + this.status.swordATK);
-        console.log('New bow ATK: ' + this.status.bowATK);
-        console.log('New magic ATK: ' + this.status.magicATK);
     }
 
     // 공격 스킬 쿨타임 조절 메서드
     adjustCooldown(amount) {
-        this.status.swordCooldown = Math.max(this.status.swordCooldown + amount, 0);
-        this.status.magicCooldown = Math.max(this.status.magicCooldown + amount, 0);
+        this.status.swordCoolTime = Math.max(this.status.swordCoolTime + amount, 0);
+        this.status.magicCoolTime = Math.max(this.status.magicCoolTime + amount, 0);
 
-        console.log(`Cooldowns adjusted by ${amount} seconds.`);
-        console.log('New sword cooldown: ' + this.status.swordCooldown);
-        console.log('New magic cooldown: ' + this.status.magicCooldown);
     }
 
     handleRoll(playerVelocity) {
 
-        if (!this.canRoll) {
+        if (!this.status.canRoll) {
             console.log("Rolling is currently disabled.");
             return;  // 구르기 금지 상태일 때는 아무 동작도 하지 않음
         }
@@ -642,8 +642,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
     }
 
-    setInvincible(isInvincible) {
-        this.isInvincible = isInvincible;
+    setInvincible(boolean) {
+        this.status.isInvincible = boolean;
     }
 
     takeDamage(amount) {
@@ -651,8 +651,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.isShootingBow = false; //활쏘기 중단
         this.isCastingSpell = false; // 마법 부리기 종료
 
+        console.log("isInvincible" + this.status.isInvincible);
+
         if (this.isRolling) return;
-        if (this.isInvincible) return;
+        if (this.status.isInvincible) return;
 
         this.hitByMonster = true;
         this.status.nowHeart -= amount;
@@ -790,7 +792,24 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    coolTimeIndicator(delta, isCoolingDown, cooldownElapsed, coolTime, overlay, button) {
+    coolTimeIndicator(delta, isCoolingDown, cooldownElapsed, coolTime, overlay, button, isEnabled = true) {
+
+        // 약초먹었을떄, 구르기 비활성화
+        if (!isEnabled) {
+            // 만약 isEnabled가 false라면 쿨타임 오버레이를 회색으로 채우고, 비활성화된 상태로 유지
+            overlay.clear();
+            overlay.fillStyle(0x808080, 0.5); // 회색(0x808080) 색상 사용
+            overlay.fillRect(
+                button.x - button.width * button.scaleX / 2, 
+                button.y - button.height * button.scaleY / 2, 
+                button.width * button.scaleX, 
+                button.height * button.scaleY
+            );
+            overlay.setVisible(true);
+            return { isCoolingDown: true, cooldownElapsed: 0 }; // 쿨타임 중으로 유지
+        }
+
+
         if (isCoolingDown) {
             // 쿨타임이 진행 중이면 경과 시간 갱신
             cooldownElapsed += delta;
@@ -828,13 +847,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
 
     rollingCoolTimeIndicator(delta) {
+        const isEnabled = this.status.canRoll;  // 구르기 가능 여부를 기반으로 활성화 여부 결정
         const result = this.coolTimeIndicator(
             delta,
             this.isRollingOverLayCoolingDown,
             this.rollingCooldownElapsed,
             this.status.rollingCoolTime,
             this.overLayRollingCoolTime,
-            this.btnRollingCoolTime
+            this.btnRollingCoolTime,
+            isEnabled // 활성화 여부 전달
         );
     
         this.isRollingOverLayCoolingDown = result.isCoolingDown;
