@@ -1,5 +1,6 @@
 import {PLAYER_CATEGORY, ITEM_CATEGORY} from './constants.js';
 import {coinLocalStorageReset} from './localStorage.js';
+const {type} = window.gameConfig;
 
 const itemData = {
     1: {
@@ -136,15 +137,65 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             wordWrap: { width: 150 }
         }).setOrigin(0.5, 0.5).setVisible(false);
 
-        // F 키 이미지 및 텍스트
-        this.buyKeySprite = scene.add.sprite(x, y + 50, 'keyboard_letter_symbols', 21).setOrigin(0.5, 0.5).setVisible(false);
-        this.buyText = scene.add.text(x + 20, y + 50, '구매', {
-            fontSize: '14px',
-            color: '#fff',
-            align: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            padding: { left: 5, right: 5, top: 2, bottom: 2 },
-        }).setOrigin(0.5, 0.5).setVisible(false);
+        if(type == 'pc'){
+            // F 키 이미지 및 텍스트
+            this.buyKeySprite = scene.add.sprite(x, y + 50, 'keyboard_letter_symbols', 21).setOrigin(0.5, 0.5).setVisible(false);
+            this.buyText = scene.add.text(x + 20, y + 50, '구매', {
+                fontSize: '14px',
+                color: '#fff',
+                align: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                padding: { left: 5, right: 5, top: 2, bottom: 2 },
+            }).setOrigin(0.5, 0.5).setVisible(false);
+        }
+        else if(type == 'mobile'){
+            this.buyKeySprite = scene.add.image(x, y + 40, 'buy').setOrigin(0.5, 0.5).setVisible(false);
+            this.buyKeySprite.setInteractive({ useHandCursor: true });
+            this.buyKeySprite.on('pointerdown', () => {
+                console.log('buyKeySprite  pointerdown');
+                const zKeyUpEvent = new KeyboardEvent('keydown', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.F,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyUpEvent);
+            });
+
+            
+            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+            this.buyKeySprite.on('pointerup', () => {
+                console.log('Button released!');
+                // this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+                const zKeyUpEvent = new KeyboardEvent('keyup', {
+                    key: 'z',
+                    code: 'KeyZ',
+                    keyCode: Phaser.Input.Keyboard.KeyCodes.F,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                window.dispatchEvent(zKeyUpEvent);
+
+            });
+
+            // .on('pointerover', () => {
+            //     this.nextBtnImage.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
+            // })
+            // .on('pointerout', () => {
+            //     this.nextBtnImage.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
+            // });d.image(this.#width-25, 62, 'nextBtnImage').setScale(1).setVisible(true).setScrollFactor(0);
+
+        }
+
+
+
+
     }
 
     static preload(scene) {
@@ -160,6 +211,8 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         scene.load.image('item_10', 'assets/item/item_10.png');
         scene.load.image('item_11', 'assets/item/arrow_10.png');
         scene.load.image('item_12', 'assets/item/item_12.png');
+        scene.load.image('buy', 'assets/ui/buy.png');
+
     }
 
     updatePurchaseAvailability(playerCoins) {
@@ -174,18 +227,24 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
 
     // 아이템 정보 보여주기
     showItemInfo() {
-        this.nameText.setVisible(true);
+        if(this.nameText)
+            this.nameText.setVisible(true);
         if (this.canBuy) {
-            this.buyKeySprite.setVisible(true);
-            this.buyText.setVisible(true);
+            if(this.buyKeySprite)   
+                this.buyKeySprite.setVisible(true);
+            if(this.buyText)
+               this.buyText.setVisible(true);
         }
     }
 
     // 아이템 정보 숨기기
     hideItemInfo() {
-        this.nameText.setVisible(false);
-        this.buyKeySprite.setVisible(false);
-        this.buyText.setVisible(false);
+        if(this.nameText)
+           this.nameText.setVisible(false);
+        if(this.buyKeySprite)   
+            this.buyKeySprite.setVisible(false);
+        if(this.buyText)
+            this.buyText.setVisible(false);
     }
 
     // 아이템 구매 처리
