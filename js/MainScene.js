@@ -905,7 +905,11 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 화살에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.bowATK, gameObjectB);
                     if (result === 'death') {
-                        this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        if (gameObjectA instanceof Monster) { // 일반 몬스터일 경우
+                            this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        } else { // 보스 몬스터일 경우
+                            this.meatcoin.bossCoinDrop(this, gameObjectA.x, gameObjectA.y);
+                        }                        
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -915,7 +919,11 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 칼날에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.swordATK, gameObjectB);
                     if (result === 'death') {
-                        this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        if (gameObjectA instanceof Monster) { // 일반 몬스터일 경우
+                            this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        } else { // 보스 몬스터일 경우
+                            this.meatcoin.bossCoinDrop(this, gameObjectA.x, gameObjectA.y);
+                        }  
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -923,7 +931,11 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 마법에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.magicATK, gameObjectB);
                     if (result === 'death') {
-                        this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        if (gameObjectA instanceof Monster) { // 일반 몬스터일 경우
+                            this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        } else { // 보스 몬스터일 경우
+                            this.meatcoin.bossCoinDrop(this, gameObjectA.x, gameObjectA.y);
+                        }  
                         // 몬스터 배열에서 해당 몬스터 제거
 
                         this.removeMonsterFromArr(gameObjectA);
