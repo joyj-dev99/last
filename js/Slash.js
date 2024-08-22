@@ -15,7 +15,7 @@ export default class Slash extends Phaser.Physics.Matter.Sprite {
         this.play('slash_1');
 
         // Scale the sprite visually
-        this.setScale(2);
+        // this.setScale(2);
 
         // 물리적 바디 설정
         const {Body, Bodies} = Phaser.Physics.Matter.Matter;
