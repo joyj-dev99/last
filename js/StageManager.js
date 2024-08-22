@@ -361,8 +361,12 @@ export default class StageManager {
         }else if(mapAttribute === 3){
             Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog)
         }else if(mapAttribute === 4){
-            Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog);
-            Item.dropRandomReward(this.scene, this.player, dropX, dropY + 20, this.dialog);
+            // 첫 번째 아이템 드랍
+            const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
+            console.log("첫번째 아이템 드랍" + firstItem.itemType.type);
+            // 두 번째 아이템 드랍 (첫 번째 아이템과 다른 종류로)
+            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY + 40, this.dialog, firstItem.itemType);
+            console.log("두번째 아이템 드랍" +secondItem.itemType.type);
         }
 
         let dialogueMessages;
