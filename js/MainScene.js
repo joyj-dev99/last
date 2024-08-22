@@ -48,9 +48,9 @@ export default class MainScene extends Phaser.Scene {
     // 씬이 시작되기 전에 호출되는 메서드로 안전하게 데이터를 초기화할 수 있음.
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
-        this.stageNumber = data.stageNumber || 3;
+        this.stageNumber = data.stageNumber || 1;
         this.partNumber = data.partNumber || 1;
-        this.mapNumber = data.mapNumber || 8;
+        this.mapNumber = data.mapNumber || 1;
         console.log('init mapNumber : ', this.mapNumber);
         this.mapAttribute = data.mapAttribute || 4;
         this.battleEnd = data.battleEnd || false;
@@ -227,7 +227,35 @@ export default class MainScene extends Phaser.Scene {
             this.input.keyboard.off('keydown-E', goToNextHandler);
             // UI가 이미 활성화된 경우 이중 실행 방지
             if (this.isMapSelectionActive) return;
-        
+
+
+            if(this.partNumber === 4){
+                // 보스맵으로 이동
+                let selectedAttribute = null;
+                this.scene.start('MainScene', { 
+                    stageNumber : this.stageNumber, 
+                    partNumber: this.partNumber + 1,
+                    mapNumber: 'boss',
+                    mapAttribute: selectedAttribute || null, 
+                    playerStatus : this.player.status 
+                });
+                this.backgroundMusic.stop();
+                this.dialog.hideDialogModal();  // 선택 후 대화창 숨기기
+            }
+            else if(this.mapNumber === 'boss'){
+                // 보스맵으로 이동  
+                let selectedAttribute = null;
+                this.scene.start('NightScene', { 
+                    stageNumber : this.stageNumber, 
+                    partNumber: this.partNumber + 1,
+                    mapNumber: 'night',
+                    mapAttribute: selectedAttribute || null, 
+                    playerStatus : this.player.status 
+                });
+                this.backgroundMusic.stop();
+                this.dialog.hideDialogModal();  // 선택 후 대화창 숨기기
+            }
+
             this.isMapSelectionActive = true; // UI 활성화 플래그 설정
 
             // 10개의 맵 중에서 랜덤하게 3개의 맵을 선택
@@ -242,6 +270,7 @@ export default class MainScene extends Phaser.Scene {
 
                 return { mapNumber, attributeNumber, iconKey };
             });
+
 
             // showMapSelectionUI 함수 호출
             showMapSelectionUI.call(this, this, mapSelections, (selectedMapNumber, selectedAttribute) => {

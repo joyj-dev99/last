@@ -10,6 +10,7 @@ import {
 import Player from "./Player.js";
 import Chord from "./character/Chord.js";
 import Milestone from "./objects/Milestone.js";
+import Item from "./Item.js";
 
 import MonsterTomato from "./monsters/MonsterTomato.js";
 import MonsterEggplant from "./monsters/MonsterEggplant.js";
@@ -88,7 +89,7 @@ export function setMapSize(scene, stageNumber, mapNumber) {
         scene.maxX = 406;
         scene.minY = 74;
         scene.maxY = 278;
-    } else if (stageNumber === 1 && mapNumber == 11) { // 보스맵
+    } else if (stageNumber === 1 && mapNumber == 'boss') { // 보스맵
         scene.mapWidth = 480;
         scene.mapHigth = 480;
         scene.minX = 74;
@@ -109,7 +110,7 @@ export function setMapSize(scene, stageNumber, mapNumber) {
         scene.maxX = 406;
         scene.minY = 74;
         scene.maxY = 278;
-    } else if (stageNumber === 2 && mapNumber == 11) { // 보스맵
+    } else if (stageNumber === 2 && mapNumber == 'boss') { // 보스맵
         scene.mapWidth = 480;
         scene.mapHigth = 480;
         scene.minX = 74;
@@ -130,7 +131,7 @@ export function setMapSize(scene, stageNumber, mapNumber) {
         scene.maxX = 406;
         scene.minY = 74;
         scene.maxY = 278;
-    } else if (stageNumber === 3 && mapNumber == 11) { // 보스맵
+    } else if (stageNumber === 3 && mapNumber == 'boss') { // 보스맵
         scene.mapWidth = 480;
         scene.mapHigth = 480;
         scene.minX = 74;
@@ -145,10 +146,10 @@ export function setupMap(scene, stageNumber, mapNumber) {
     let mapKey;
     if (mapNumber === 0) {
         mapKey = `stage_01_tutorial`;
-    } else if (mapNumber > 9) {
-        mapKey = `stage_0${stageNumber}_${mapNumber}`;
-    } else {
+    } else if (mapNumber <= 9) {
         mapKey = `stage_0${stageNumber}_0${mapNumber}`;
+    } else {
+        mapKey = `stage_0${stageNumber}_${mapNumber}`;
     }
 
     console.log(`Loading map with key: ${mapKey}`);
@@ -238,7 +239,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
             }
         });
 
-    } else if (stageNumber === 3 && mapNumber === 11) {
+    } else if (stageNumber === 3 && mapNumber === 'boss') {
 
         const Tileset = map.addTilesetImage("Lab Tileset", "labTileset");
 
@@ -320,7 +321,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
 
         //선물 맵의 아이템 위치
         if(name === 'item'){
-            Item.dropRandomReward(x,y);
+            Item.dropRandomReward(scene,scene.player,x,y,scene.dialog);
         }
     });
 
