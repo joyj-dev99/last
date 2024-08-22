@@ -48,7 +48,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'quantum_hourglass',
         texture: 'item_06',  
         message: '이런, 공격스킬 쿨타임 3초 증가',   
-        drap_per: 1  // 드랍 확률 (10%)
+        drap_per: 0  // 드랍 확률 (10%)
     };
 
     // 허리에 좋은 약초 아이템 데이터
@@ -83,22 +83,14 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         drap_per: 0  // 드랍 확률 (10%)
     };
 
-    // 화살(1개) 아이템 데이터
-    static arrow_ITEM = {
-        type: 'arrow',
-        texture: 'arrow', 
-        frame: 0,  
-        scale: 0.5,
-        message: '화살 +1개'
-    };
-
     // 화살(10개) 아이템 데이터
     static arrow_10_ITEM = {
         type: 'arrow_10',
-        texture: 'arrow_10', 
+        texture: 'item_11', 
         frame: 0,  
         scale: 0.5,
-        message: '화살 +10개'
+        message: '화살 +10개',
+        drap_per: 1  // 드랍 확률 (10%)
     };
 
 
@@ -137,7 +129,8 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
             Item.HerbalMedicine_ITEM,
             Item.PiratesSafe_ITEM,
             Item.AncientPotion_ITEM,
-            Item.HeavyGloves_ITEM
+            Item.HeavyGloves_ITEM,
+            Item.arrow_10_ITEM
         ];
 
         // 제외할 아이템 타입이 있는 경우 필터링
@@ -231,6 +224,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         scene.load.image('item_08', 'assets/item/item_08.png');
         scene.load.image('item_09', 'assets/item/item_09.png');
         scene.load.image('item_10', 'assets/item/item_10.png');
+        scene.load.image('item_11', 'assets/item/arrow_10.png');
     }
 
     // 아이템 적용 메소드
@@ -285,7 +279,6 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         }
         //알수 없는 부적
         else if(this.itemType.type == 'unknown_amulet'){
-            // 이미지 잘못됨
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             console.log('sword cooldown: ' + player.status.swordCoolTime);
             console.log('magic cooldown: ' + player.status.magicCoolTime );
@@ -326,22 +319,15 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         //두꺼운 장갑
         else if(this.itemType.type == 'heavy_gloves'){
             // 모든 공격 스킬의 공격력을 25% 감소시킴
+            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             player.adjustAttackPower(0.75);  
-            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
             
-        }
-        //화살 1개
-        else if(this.itemType.type == 'arrow'){
-            // 플레이어가 가진 화살이 1개 늘어남
-            player.addArrow(1);
-            dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
-
         }
         //화살 10개
         else if(this.itemType.type == 'arrow_10'){
             // 플레이어가 가진 화살이 10개 늘어남
-            player.addArrow(10);
             dialogMessages.push({ name: "코드", portrait: 'ChordPotrait', message: this.itemType.message });
+            player.addArrows(10);
 
         }
         dialog.showDialogModal(dialogMessages);

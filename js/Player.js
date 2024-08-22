@@ -23,8 +23,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 상태 정보 초기화
         this.status = {
             name: '맥스',
-            maxHeart: 10,
-            nowHeart: 10,
+            maxHeart: 15,
+            nowHeart: 15,
             //검 공격력
             swordATK: 20,
             //활 공격력
@@ -164,6 +164,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
         this.containerArrowCoolTime = containerArrow;
+
         // 화살 남은 갯수 text
         // 텍스트 스타일 (폰트 크기 조절)
         const buttonTextStyle = { font: "18px Arial", fill: "#000000" };
@@ -369,12 +370,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     // 화살의 갯수를 증가시키는 함수
     addArrows(amount) {
 
-        if(this.status.arrowCount <= 0){
-            this.scene.setArrowListener();
-        }
+        // 모바일 화살 비활성화 풀기
+        // if(this.status.arrowCount <= 0){
+        //     this.scene.setArrowListener();
+        // }
         this.status.arrowCount += amount;
         console.log(`현재 화살의 갯수: ${this.status.arrowCount}`);
-        this.scene.addArrows(this.status.arrowCount);
+
+        //화면 ui에 화살갯수 표시
+        this.arrowCountText.setText(this.status.arrowCount);
     }
 
     handleSpell() {
