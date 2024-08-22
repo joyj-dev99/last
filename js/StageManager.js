@@ -353,7 +353,14 @@ export default class StageManager {
         const dropX = this.scene.chordEnd.x;
         const dropY = this.scene.chordEnd.y + 30;
 
-        if(mapAttribute === 1){
+        if(mapNumber === 'boss'){
+            // 첫 번째 아이템 드랍
+            const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
+            console.log("첫번째 아이템 드랍" + firstItem.itemType.type);
+            // 두 번째 아이템 드랍 (첫 번째 아이템과 다른 종류로)
+            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY + 40, this.dialog, firstItem.itemType);
+            console.log("두번째 아이템 드랍" +secondItem.itemType.type);
+        }else if(mapAttribute === 1){
             Item.dropHeart(this.scene, this.player, dropX, dropY, this.dialog);
         }else if(mapAttribute === 2){
             Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog);
