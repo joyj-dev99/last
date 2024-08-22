@@ -5,13 +5,12 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
             frameWidth: 230,
             frameHeight: 180
         });
-        scene.load.image('banner', 'assets/ui/UI_Flat_Banner_01_Downward.png');
     }
 
     constructor(scene, texture, stageNumber, mapNumber, key) {
         // X, Y 위치를 화면의 상단 우측으로 설정
         const x = scene.sys.game.config.width / 2;/// 2 -65
-        const y = 15; 
+        const y = 35; 
         
         super(scene, x, y, texture);
         scene.add.existing(this);
@@ -21,22 +20,28 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
         // 스크롤에 영향을 받지 않도록 설정
         this.setScrollFactor(0);
 
-        if (key === 'store') {
-            this.setVisible(false);
-        }
-
-        this.stageText = scene.add.text(x, y, this.getStageName(stageNumber, key), {
+        this.stageText = scene.add.text(x, y- 20, this.getStageName(stageNumber, key), {
             fontFamily: 'Galmuri11, sans-serif',
+            fontSize: '14px',
             fill: '#000000',
-            align: 'center',
+            align: 'center', 
             backgroundColor: 'rgba(255, 255, 255, 0.5)'  // 반투명한 검은색 배경
         }).setOrigin(0.5, 0.5);  // 텍스트를 중앙 정렬
 
         this.stageText.setScrollFactor(0);
         this.stageText.setDepth(1001);
+        this.setDepth(1000);
 
         this.setScale(0.5);
         this.setProgress(mapNumber);
+
+        if (key === 'store' ) {
+            this.setVisible(false);
+        } else if (mapNumber === 'boss'|| mapNumber > 10) {
+            
+        }
+        this.setVisible(false);
+            this.stageText.setVisible(false);
         
     }
 
