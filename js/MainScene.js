@@ -52,7 +52,7 @@ export default class MainScene extends Phaser.Scene {
         this.partNumber = data.partNumber || 1;
         this.mapNumber = data.mapNumber || 1;
         console.log('init mapNumber : ', this.mapNumber);
-        this.mapAttribute = data.mapAttribute || 4;
+        this.mapAttribute = data.mapAttribute || 2
         this.battleEnd = data.battleEnd || false;
         
         this.playerStatus = data.playerStatus || null;

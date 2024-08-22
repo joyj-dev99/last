@@ -16,7 +16,7 @@ export const mapAttributes = {
     7: [1, 2, 3],
     8: [4],  
     9: [4],  
-    10:[5]  
+    10:[5] 
 };
 
 export const attributeIcons = {
