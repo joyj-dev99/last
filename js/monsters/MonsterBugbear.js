@@ -45,13 +45,19 @@ export default class MonsterBugbear extends Monster {
     monsterAttackPlayerBySkill() {
         if (this.isBattleStared === true && this.isArmor === true && this.isFollowing === true) {
             this.isArmor = false;
-            this.setStatic(true)
-            this.anims.play(`${this.monsterType}_block2`, true);
-            this.scene.time.delayedCall(7000, () => {
-                this.anims.play(`${this.monsterType}_move`, true);
-                this.setStatic(false)
-                this.isArmor = true;
-            });
+            if (this !== undefined && this.anims !== undefined) {
+                this.anims.play(`${this.monsterType}_block2`, true);
+                this.setStatic(true)
+            }
+            if (this.scene !== undefined) {
+                this.scene.time.delayedCall(3000, () => {
+                    this.isArmor = true;
+                    if (this !== undefined && this.anims !== undefined) {
+                        this.anims.play(`${this.monsterType}_move`, true);
+                        this.setStatic(false)
+                    }
+                });
+            }
         }
     }
 }
