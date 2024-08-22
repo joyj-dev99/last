@@ -16,6 +16,8 @@ import MonsterBossWolfgang from "./monsters/MonsterBossWolfgang.js";
 
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
+import StoreFlag from "./objects/StoreFlag.js";
+
 
 import Arrow from "./Arrow.js";
 import Slash from "./Slash.js";
@@ -50,7 +52,7 @@ export default class MainScene extends Phaser.Scene {
     init(data) {
         this.stageNumber = data.stageNumber || 1;
         this.partNumber = data.partNumber || 1;
-        this.mapNumber = data.mapNumber || 0;
+        this.mapNumber = data.mapNumber || 1;
         console.log('init mapNumber : ', this.mapNumber);
         this.mapAttribute = data.mapAttribute || 1;
         this.battleEnd = data.battleEnd || false;
@@ -134,6 +136,7 @@ export default class MainScene extends Phaser.Scene {
         HeartIndicator.preload(this);
         StageManager.preload(this);
 
+        StoreFlag.preload(this);
         Milestone.preload(this);
         Dialog.preload(this);
 
@@ -655,6 +658,7 @@ export default class MainScene extends Phaser.Scene {
 
 
     update(time, delta) {
+        this.stageManager.update();
         this.heartIndicator.setHeart(this.player.status.nowHeart, this.player.status.maxHeart);
         if (this.isInDialogue || this.isMapSelectionActive || !this.player.isAlive) return;
         this.player.update(time, delta);
