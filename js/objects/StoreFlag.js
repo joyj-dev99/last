@@ -43,7 +43,6 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
     // 상호작용 가능 표시를 보여주는 메서드
     showInteractPrompt() {
         if (!this.interativeKeyImg) {
-
             if (type === 'mobile') {
                 this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImg');//, 52
                 // Make the sprite interactive
