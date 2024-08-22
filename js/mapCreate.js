@@ -182,7 +182,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
             }
         });
     } else if (stageNumber === 2) {
-      
+
         const dungeonTileset = map.addTilesetImage("Royal Dungeon Tileset", "dungeonTileset");
 
         const floor = map.createLayer("floor", dungeonTileset, 0, 0);
@@ -274,6 +274,26 @@ export function setupMap(scene, stageNumber, mapNumber) {
     console.log('map : ' + map);
     console.dir(map);
     console.log('objectLayer : ' + objectLayer);
+
+    // 먼저 playerStart 오브젝트를 처리
+    // 그래야 선물맵의 아이템과 충돌 이벤트가 실행될 수 있음
+    objectLayer.objects.forEach(object => {
+        const {x, y, name, type} = object;
+
+        if (name === 'playerStart') {
+            scene.player = new Player({
+                scene: scene,
+                x: x,
+                y: y
+            });
+            scene.player.setDepth(100);
+            if (scene.playerStatus != null) {
+                scene.player.status = scene.playerStatus;
+            }
+            // console.log("scene.player 생성됨:", scene.player);
+        }
+    });
+
     objectLayer.objects.forEach(object => {
         // 각 오브젝트의 속성에 접근
         const {x, y, name, type} = object;
@@ -306,18 +326,34 @@ export function setupMap(scene, stageNumber, mapNumber) {
             });
         }
 
-        // 플레이어 시작 위치 설정
-        if (name === 'playerStart') {
-            scene.player = new Player({
+        //선물 맵의 아이템 위치
+        if(name === 'item'){
+
+            // 아이템 리스트 정의
+            const items = [
+                Item.MaxHeart_ITEM,
+                Item.PhantomCloak_ITEM,
+                Item.SwiftBoots_ITEM,
+                Item.UnknownAmulet_ITEM,
+                Item.QuantumHourglass_ITEM,
+                Item.HerbalMedicine_ITEM,
+                Item.PiratesSafe_ITEM,
+                Item.AncientPotion_ITEM,
+                Item.HeavyGloves_ITEM,
+                Item.arrow_10_ITEM
+            ];
+            // 랜덤으로 하나의 아이템 선택
+            const randomItem = items[Math.floor(Math.random() * items.length)];
+
+            // 선택된 아이템을 itemType으로 설정
+            scene.item = new Item({
                 scene: scene,
                 x: x,
-                y: y
+                y: y,
+                itemType: randomItem
             });
-            scene.player.setDepth(100);
-            if (scene.playerStatus != null) {
-                scene.player.status = scene.playerStatus;
-            }
-        }
+            // console.log("scene.player" + scene.player); 
+            // console.log("scene.item"+ scene.item);
 
             // 충돌 이벤트 설정
             const unsubscribe = scene.matterCollision.addOnCollideStart({
