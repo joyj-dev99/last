@@ -332,7 +332,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
                     unsubscribe();
                 }
             });
-    
+
     }});
 
     // 몬스터 생성 - 플레이어가 생성된 이후에 생성되어야 함.
