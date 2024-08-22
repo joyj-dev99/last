@@ -109,12 +109,15 @@ export default class MonsterSpider extends Monster {
     destroy() {
         this.destroyBullets();
         super.destroy();
+
     }
 
     destroyBullets() {
-        this.bullets.children.each(bullet => {
-            bullet.destroy();
-        }, this);
+        if (this.bullets.children) {
+            this.bullets.children.each(bullet => {
+                bullet.destroy();
+            }, this);
+        }
     }
 
 }

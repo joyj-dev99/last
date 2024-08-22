@@ -31,7 +31,7 @@ export default class MonsterFly extends Monster {
             player: player
         });
         this.attackEvent = this.scene.time.addEvent({
-            delay: 1000,
+            delay: 2000,
             callback: this.monsterAttackPlayerBySkill,
             callbackScope: this,
             loop: true
