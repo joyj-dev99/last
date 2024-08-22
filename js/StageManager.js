@@ -21,6 +21,7 @@ export default class StageManager {
         scene.load.audio("dungeon_boss", "assets/audio/background/dungeon/dungeon_boss.mp3");
         scene.load.audio("room_default", "assets/audio/background/room/room_default.mp3");
         scene.load.audio("room_boss", "assets/audio/background/room/room_boss.mp3");
+        
     }
 
     /**
@@ -378,8 +379,8 @@ export default class StageManager {
 
         console.log("mapAttribute " + mapAttribute);
         // 맵의 속성에 따라서, 아이템 or 하트 or 랜덤 보상을 드랍한다.
-        const dropX = this.scene.chordEnd.x;
-        const dropY = this.scene.chordEnd.y + 30;
+        const dropX = this.player.x -50;
+        const dropY = this.player.y;
 
         if(mapNumber === 'boss'){
             this.scene.boss_monster_clear.play();
