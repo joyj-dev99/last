@@ -145,7 +145,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
     let mapKey;
     if (mapNumber === 0) {
         mapKey = `stage_01_tutorial`;
-    } else if (mapNumber < 9) {
+    } else if (mapNumber < 10) {
         mapKey = `stage_0${stageNumber}_0${mapNumber}`;
     } else {
         mapKey = `stage_0${stageNumber}_${mapNumber}`;
