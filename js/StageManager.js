@@ -382,25 +382,30 @@ export default class StageManager {
         const dropY = this.scene.chordEnd.y + 30;
 
         if (mapNumber === 'boss') {
+            this.scene.boss_monster_clear.play();
             // 첫 번째 아이템 드랍
             const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
             console.log("첫번째 아이템 드랍" + firstItem.itemType.type);
             // 두 번째 아이템 드랍 (첫 번째 아이템과 다른 종류로)
-            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY + 40, this.dialog, firstItem.itemType);
-            console.log("두번째 아이템 드랍" + secondItem.itemType.type);
-        } else if (mapAttribute === 1) {
+            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX-40, dropY, this.dialog, firstItem.itemType);
+            console.log("두번째 아이템 드랍" +secondItem.itemType.type);
+        }else if(mapAttribute === 1){
+            this.scene.monster_clear.play();
             Item.dropHeart(this.scene, this.player, dropX, dropY, this.dialog);
-        } else if (mapAttribute === 2) {
+        }else if(mapAttribute === 2){
+            this.scene.monster_clear.play();
             Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog);
-        } else if (mapAttribute === 3) {
+        }else if(mapAttribute === 3){
+            this.scene.monster_clear.play();
             Item.dropRandomReward(this.scene, this.player, dropX, dropY, this.dialog)
-        } else if (mapAttribute === 4) {
+        }else if(mapAttribute === 4){
+            this.scene.monster_clear.play();
             // 첫 번째 아이템 드랍
             const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
             console.log("첫번째 아이템 드랍" + firstItem.itemType.type);
             // 두 번째 아이템 드랍 (첫 번째 아이템과 다른 종류로)
-            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY + 40, this.dialog, firstItem.itemType);
-            console.log("두번째 아이템 드랍" + secondItem.itemType.type);
+            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX - 40, dropY, this.dialog, firstItem.itemType);
+            console.log("두번째 아이템 드랍" +secondItem.itemType.type);
         }
 
         let dialogueMessages;
