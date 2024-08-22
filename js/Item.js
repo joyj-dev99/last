@@ -6,9 +6,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 하트 데이터 
     static Heart = {
         type : 'heart',
-        texture : 'Skills and Spells',
-        frame : 130,
-        scale : 0.5,
+        texture : 'item_01',
         message : '하트 +1'
     };
 
@@ -16,9 +14,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 천사의 심장 아이템 데이터
     static MaxHeart_ITEM = {
         type: 'max_heart',
-        texture: 'Skills and Spells',  
-        frame: 1105,           
-        scale: 0.5,            
+        texture: 'item_02',                 
         message: '최대 하트 +1, 현재 하트 +1',
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -26,9 +22,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 팬텀 망토 아이템 데이터
     static PhantomCloak_ITEM = {
         type: 'phantom_cloak',
-        texture: 'Weapons and Equipment',  
-        frame: 1259,  
-        scale: 0.5,
+        texture: 'item_03',  
         message: '10초 동안 무적!',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -36,9 +30,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 신속의 장화 아이템 데이터
     static SwiftBoots_ITEM = {
         type: 'swift_boots',
-        texture: 'Weapons and Equipment', 
-        frame: 1858,  
-        scale: 0.5,
+        texture: 'item_04', 
         message: '이동속도 25% 증가',   
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -46,9 +38,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 알 수 없는 부적 아이템 데이터
     static UnknownAmulet_ITEM = {
         type: 'unknown_amulet',
-        texture: 'Loot and Treasure',  
-        frame: 90,  
-        scale: 0.5,
+        texture: 'item_05',  
         message: '나이스! 쿨타임 3초 감소',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -56,9 +46,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 양자 모래시계 아이템 데이터
     static QuantumHourglass_ITEM = {
         type: 'quantum_hourglass',
-        texture: 'Loot and Treasure',  
-        frame: 180,  
-        scale: 0.5,
+        texture: 'item_06',  
         message: '이런, 쿨타임 3초 증가',   
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -66,9 +54,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 허리에 좋은 약초 아이템 데이터
     static HerbalMedicine_ITEM = {
         type: 'herbal_medicine',
-        texture: 'Alchemy and Potions',  
-        frame: 31,  
-        scale: 0.5,
+        texture: 'item_07',  
         message: '약초가 마를때까지 30초동안 구르기 금지!', 
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -76,9 +62,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 해적의 금고 아이템 데이터
     static PiratesSafe_ITEM = {
         type: 'pirates_safe',
-        texture: 'Loot and Treasure', 
-        frame: 107,  
-        scale: 0.5,
+        texture: 'item_08', 
         message: '해적에게 코인을 도난당하셨군요. 코인 초기화',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -86,9 +70,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 고대의 묘약 아이템 데이터
     static AncientPotion_ITEM = {
         type: 'ancient_potion',
-        texture: 'Loot and Treasure',  
-        frame: 25,  
-        scale: 0.5,
+        texture: 'item_9',  
         message: '묘약을 마셨더니 배탈이 났군요. 이동속도 25% 감소',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -96,9 +78,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     // 두꺼운 장갑 아이템 데이터
     static HeavyGloves_ITEM = {
         type: 'heavy_gloves',
-        texture: 'Weapons and Equipment',  
-        frame: 47,  
-        scale: 0.5,
+        texture: 'item_10',  
         message: '두꺼운 장갑을 끼니, 무기가 잘 안잡히죠? 공격력 25% 감소',  
         drap_per: 0.1  // 드랍 확률 (10%)
     };
@@ -213,10 +193,10 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         let {scene, x, y, itemType} = data;
 
         // COIN에서 scale 값을 받아오고, 기본값은 1로 설정
-        let scale = itemType.scale !== undefined ? itemType.scale : 1;
+        // let scale = itemType.scale !== undefined ? itemType.scale : 1;
 
         // Matter.js 물리를 사용하여 지정된 texture로 (x, y) 위치에 플레이어 스프라이트를 생성
-        super(scene.matter.world, x, y, itemType.texture, itemType.frame);
+        super(scene.matter.world, x, y, itemType.texture, 0);
 
         // 플레이어 스프라이트를 장면에 추가하여 화면에 렌더링되고 다른 게임 객체들과 상호작용
         // 화면에 아이템 보이게하기
@@ -225,7 +205,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         // 밀리지 않도록 객체를 고정
         this.setStatic(true);
         // 크기 설정 (코인 크기 0.5배로 설정)
-        this.setScale(scale);
+        // this.setScale(scale);
 
         // 충돌 이벤트 리스너 추가
         // scene.matter.world.on('collisionstart', this.handleCollision, this);
@@ -236,18 +216,16 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     }
 
     static preload(scene) {
-        scene.load.spritesheet('fruit', 'assets/item/fruits asset.png', { frameWidth: 16, frameHeight: 16 });
-        scene.load.image('pumpkin', 'assets/item/pumpkin.png');
-        scene.load.image('cheese', 'assets/item/cheese.png');
-        scene.load.image('meat', 'assets/item/meat.png');
-        scene.load.spritesheet('potion', 'assets/item/potion.png', { frameWidth: 24, frameHeight: 24 });
-        scene.load.image('eggplant', 'assets/item/eggplant.png');
-        scene.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', { frameWidth: 32, frameHeight: 32 } );
-        scene.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', { frameWidth: 32, frameHeight: 32 } );
-        scene.load.spritesheet('Loot and Treasure', 'assets/item/Loot and Treasure.png', { frameWidth: 32, frameHeight: 32 } );
-        scene.load.spritesheet('Alchemy and Potions', 'assets/item/Alchemy and Potions.png', { frameWidth: 32, frameHeight: 32 } );
-        scene.load.image('arrow', 'assets/player/arrow.png');
-        scene.load.image('arrow_10', 'assets/player/arrow_10.jpg');
+        scene.load.image('item_01', 'assets/item/item_01.png');
+        scene.load.image('item_02', 'assets/item/item_02.png');
+        scene.load.image('item_03', 'assets/item/item_03.png');
+        scene.load.image('item_04', 'assets/item/item_04.png');
+        scene.load.image('item_05', 'assets/item/item_05.png');
+        scene.load.image('item_06', 'assets/item/item_06.png');
+        scene.load.image('item_07', 'assets/item/item_07.png');
+        scene.load.image('item_08', 'assets/item/item_08.png');
+        scene.load.image('item_09', 'assets/item/item_09.png');
+        scene.load.image('item_10', 'assets/item/item_10.png');
     }
 
     // 아이템 적용 메소드

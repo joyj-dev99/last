@@ -66,6 +66,12 @@ const itemData = {
         name: "화살 10개",
         price: 50,
         description: "유비무환. 화살은 언제나 소중하죠."
+    },
+    12: {
+        texture: "item_12",
+        name: "마법사의 목걸이",
+        price: 200,
+        description: "어떤 마법사가 남긴 목걸이예요. C키를 누르면 주위에 번개가 치는 걸 볼 수 있죠."
     }
 };
 
@@ -84,6 +90,7 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         // Matter.js 물리를 사용하여 지정된 texture로 (x, y) 위치에 스프라이트를 생성
         super(scene.matter.world, x, y, itemConfig.texture, 0);
         this.scene = scene;
+        this.itemKey = itemKey;
         this.name = itemConfig.name;
         this.description = itemConfig.description;
         this.price = itemConfig.price;
@@ -124,7 +131,7 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             color: '#fff',
             align: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            padding: { left: 5, right: 5, top: 2, bottom: 2 },
+            padding: { left: 2, right: 2, top: 2, bottom: 2 },
             wordWrap: { width: 150 }
         }).setOrigin(0.5, 0.5).setVisible(false);
 
@@ -134,6 +141,8 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             fontSize: '14px',
             color: '#fff',
             align: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            padding: { left: 5, right: 5, top: 2, bottom: 2 },
         }).setOrigin(0.5, 0.5).setVisible(false);
     }
 
@@ -148,7 +157,8 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         scene.load.image('item_08', 'assets/item/item_08.png');
         scene.load.image('item_09', 'assets/item/item_09.png');
         scene.load.image('item_10', 'assets/item/item_10.png');
-        scene.load.image('item_11', 'assets/player/arrow_10.jpg')
+        scene.load.image('item_11', 'assets/item/arrow_10.png');
+        scene.load.image('item_12', 'assets/item/item_12.png');
     }
 
     updatePurchaseAvailability(playerCoins) {
@@ -180,9 +190,11 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
     // 아이템 구매 처리
     buyItem() {
         // 플레이어의 코인을 차감
-        this.scene.player.status.coin -= this.price;
-        this.scene.coinIndicatorText.setText(`Coins: ${this.scene.player.status.coin}`);
+        this.scene.player.subtractCoins(this.price);
         console.log(`${this.name}을(를) ${this.price} G에 구매했습니다!`);
+
+        // 아이템 효과 적용
+        this.applyItem();
 
         // this.scene.itemArr에서 해당 아이템 삭제
         const itemIndex = this.scene.itemArr.indexOf(this);
@@ -198,5 +210,98 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
 
         // 해당 아이템 객체를 destroy
         this.destroy();
+    }
+
+    applyItem() {
+        let dialogMessages = [];
+        const dialog = this.scene.dialog;
+        const player = this.scene.player;
+        console.log('item 효과적용 : ' + this.name);
+
+        dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
+        // 붉은 하트
+        if(this.itemKey == 1){
+            // 체력 +1 적용
+            player.increaseHeart(1);
+            this.scene.heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
+        }
+        //천사의 심장
+        else if(this.itemKey == 2){
+            player.increaseMaxHeart(1);
+            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
+
+        }
+        //팬텀 망토
+        else if(this.itemKey == 3){
+            // 플레이어를 무적 상태로 설정
+            dialog.showDialogModal(dialogMessages, () => {
+                player.setInvincible(true);
+                this.destroy();
+                this.scene.time.delayedCall(20000, () => {
+                    player.setInvincible(false);
+                    console.log('Phantom Cloak effect ended!');
+                });
+            });
+            return;
+        }
+        //신속의 장화
+        else if(this.itemKey == 4){
+            dialog.showDialogModal(dialogMessages, () => {
+                player.adjustSpeed(1.25);
+                this.destroy();
+                this.scene.time.delayedCall(60000, () => {
+                    player.adjustSpeed(1 / 1.25);
+                    console.log('Swift Boots effect ended.');
+                });
+            });
+            return;
+        }
+        //알수 없는 부적
+        else if(this.itemKey == 5){
+            player.adjustCooldown(-3); 
+
+        }
+        //양자 모래시계
+        else if(this.itemKey == 6){
+            player.adjustCooldown(3);
+        }
+        //허리에 좋은 약초
+        else if(this.itemKey == 7){
+            dialog.showDialogModal(dialogMessages, () => {
+                player.canRoll = false;
+                this.destroy();
+                this.scene.time.delayedCall(30000, () => {
+                    player.canRoll = true;
+                    console.log('Rolling is now enabled again.');
+                });
+            });
+            return;
+
+        }
+        //해적의 금고
+        else if(this.itemKey == 8){
+            // 플레이어의 코인을 0으로 초기화
+            player.status.coin = 0;
+            
+        }
+        //고대의 묘약
+        else if(this.itemKey == 9){
+            // 이동속도를 25% 감소시킴
+            dialog.showDialogModal(dialogMessages, () => {
+                player.adjustSpeed(0.75);
+                this.destroy();
+                this.scene.time.delayedCall(60000, () => {
+                    player.adjustSpeed(1 / 0.75);
+                    console.log('Ancient Potion effect ended.');
+                });
+            });
+            return;
+        }
+        //두꺼운 장갑
+        else if(this.itemKey == 10){
+            // 모든 공격 스킬의 공격력을 25% 감소시킴
+            player.adjustAttackPower(0.75);  
+        }
+        // dialog.showDialogModal(dialogMessages);
     }
 }

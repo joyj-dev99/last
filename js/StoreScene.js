@@ -9,6 +9,16 @@ import Milestone from "./objects/Milestone.js";
 import StoreItem from "./StoreItem.js";
 import Dialog from "./Dialog.js";
 
+import {
+    PLAYER_CATEGORY,
+    MONSTER_CATEGORY,
+    TILE_CATEGORY,
+    OBJECT_CATEGORY,
+    PLAYER_ATTACK_CATEGORY,
+    SENSOR_CATEGORY,
+    MONSTER_ATTACK_CATEGORY
+} from "./constants.js";
+
 const { type } = window.gameConfig;
 
 export default class StoreScene extends Phaser.Scene {
@@ -20,6 +30,7 @@ export default class StoreScene extends Phaser.Scene {
     // data : 이전 씬에서 'this.scene.start('MainScene', data)와 같은 방식으로 전달된 데이터
     init(data) {
         this.stageNumber = data.stageNumber || 1;
+        this.partNumber = data.partNumber || 1;
         this.mapNumber = data.mapNumber || 5;
         this.playerStatus = data.playerStatus || null;
 
@@ -38,7 +49,13 @@ export default class StoreScene extends Phaser.Scene {
 
     preload() {
         this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-        this.load.tilemapTiledJSON("stage_01_store_map", "assets/map/stage_01/stage_01_store.json");
+        this.load.image("dungeonTileset", "assets/map/Royal Dungeon Tileset.png");
+        this.load.image("officeTileset", "assets/map/Modern_Office_32x32.png");
+        this.load.image("roomBuilderTileset", "assets/map/Room_Builder_Office_32x32.png");
+
+        this.load.tilemapTiledJSON("stage_01_store", "assets/map/stage_01/stage_01_store.json");
+        this.load.tilemapTiledJSON("stage_02_store", "assets/map/stage_02/stage_02_store.json");
+        this.load.tilemapTiledJSON("stage_03_store", "assets/map/stage_03/stage_03_store.json");
 
         Player.preload(this);
         Chord.preload(this);
@@ -46,7 +63,8 @@ export default class StoreScene extends Phaser.Scene {
         Milestone.preload(this);
         StoreItem.preload(this);
         Dialog.preload(this);
-
+        ProgressIndicator.preload(this);
+        HeartIndicator.preload(this);
         this.load.audio("get_item", "assets/audio/get_item.wav");
     }
 
@@ -55,20 +73,90 @@ export default class StoreScene extends Phaser.Scene {
         this.cameras.main.fadeIn(1000, 0, 0, 0);
 
         this.matter.world.setBounds();
-        this.map = this.make.tilemap({key: `stage_0${this.stageNumber}_store_map`});
-        const forestTileset = this.map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
-        
-        this.floorLayer = this.map.createLayer("floor", forestTileset, 0, 0);
-        this.cliffLayer = this.map.createLayer("cliff", forestTileset, 0, 0);
-        this.decor1Layer = this.map.createLayer("decor1", forestTileset, 0, 0);
-        this.decor2Layer = this.map.createLayer("decor2", forestTileset, 0, 0);
+        const map = this.make.tilemap({key: `stage_0${this.stageNumber}_store`});
 
-        // 충돌설정
-        this.floorLayer.setCollisionByProperty({collides: true});
-        this.matter.world.convertTilemapLayer(this.floorLayer);
+        if (this.stageNumber === 1) {
+            const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
+    
+            const floor = map.createLayer("floor", forestTileset, 0, 0);
+            map.createLayer("cliff", forestTileset, 0, 0);
+            map.createLayer("decor1", forestTileset, 0, 0);
+            map.createLayer("decor2", forestTileset, 0, 0);
+    
+            // 충돌이 필요한 타일 설정
+            floor.setCollisionByProperty({collides: true});
+            // 타일맵 레이어를 물리적으로 변환
+            this.matter.world.convertTilemapLayer(floor);
+            // 충돌 카테고리 설정
+            floor.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+        } else if (this.stageNumber === 2) {
+          
+            const dungeonTileset = map.addTilesetImage("Royal Dungeon Tileset", "dungeonTileset");
+            const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
+    
+            const floor = map.createLayer("floor", dungeonTileset, 0, 0);
+            const wall = map.createLayer("cliff", dungeonTileset, 0, 0);
+            map.createLayer("decor1", dungeonTileset, 0, 0);
+            map.createLayer("decor2", forestTileset, 0, 0);
+    
+            // 충돌이 필요한 타일 설정
+            floor.setCollisionByProperty({collides: true});
+            wall.setCollisionByProperty({collides: true});
+            // 타일맵 레이어를 물리적으로 변환
+            this.matter.world.convertTilemapLayer(floor);
+            this.matter.world.convertTilemapLayer(wall);
+            // 충돌 카테고리 설정
+            floor.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+            wall.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+    
+        } else if (this.stageNumber === 3) {
+            const Tileset = map.addTilesetImage("Modern_Office_32x32", "officeTileset");
+            const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "roomBuilderTileset");
+    
+            const floor = map.createLayer("floor", Tileset2, 0, 0);
+            const wall = map.createLayer("cliff", Tileset2, 0, 0);
+            map.createLayer("decor1", Tileset, 0, 0);
+            map.createLayer("decor2", Tileset, 0, 0);
+    
+            // 충돌이 필요한 타일 설정
+            floor.setCollisionByProperty({collides: true});
+            wall.setCollisionByProperty({collides: true});
+            // 타일맵 레이어를 물리적으로 변환
+            this.matter.world.convertTilemapLayer(floor);
+            this.matter.world.convertTilemapLayer(wall);
+            // 충돌 카테고리 설정
+            floor.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+            wall.forEachTile(tile => {
+                if (tile.physics.matterBody) {
+                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
+                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
+                }
+            });
+    
+        }
 
         //오브젝트 레이어 관련 코드
-        const objectLayer = this.map.getObjectLayer('object');
+        const objectLayer = map.getObjectLayer('object');
         objectLayer.objects.forEach(object => {
             // 각 오브젝트의 속성에 접근
             const { x, y, width, height, name, type, properties } = object;
@@ -100,12 +188,17 @@ export default class StoreScene extends Phaser.Scene {
                 });
             }
 
-            if (name === 'item') {
-                const itemKey = Math.floor(Math.random() * 11) + 1;
+            if (type === 'item') {
+                let itemKey;
+                if (name === 'item1') {
+                    itemKey = 11;
+                } else {
+                    itemKey = Math.floor(Math.random() * 10) + 1;
+                }
                 let item = new StoreItem({
                     scene: this,
                     x: x,
-                    y: y,
+                    y: y - 10,
                     itemKey: itemKey
                 });
                 this.itemArr.push(item);
@@ -157,6 +250,52 @@ export default class StoreScene extends Phaser.Scene {
             }
         });
 
+        // 이전 맵으로 돌아가는 이벤트 핸들러
+        const goBackToMap = (event) => {
+            console.log(`Moving to map number ${this.mapNumber}`);
+
+            this.isMapSelectionActive = false; // UI 비활성화
+            this.scene.start('MainScene', { 
+                stageNumber : this.stageNumber, 
+                partNumber: this.partNumber,
+                mapNumber: this.mapNumber,
+                mapAttribute: 0,
+                battleEnd : true,
+                playerStatus : this.player.status 
+            });
+        }
+        if (this.milestone) {
+            // 플레이어와 표지판 충돌 이벤트 설정
+            this.matterCollision.addOnCollideStart({
+                objectA: this.player,
+                objectB: this.milestone,
+                callback: eventData => {
+                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                    console.log("플레이어와 표지판 충돌");
+                    // 상호작용 가능 키 표시
+                    gameObjectB.showInteractPrompt();
+                    // 키보드 입력 이벤트 설정
+                    this.input.keyboard.on('keydown-E', goBackToMap);
+                }
+            });
+
+
+            this.matterCollision.addOnCollideEnd({
+                objectA: this.player,
+                objectB: this.milestone,
+                callback: eventData => {
+                    const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                    console.log("플레이어와 표지판 떨어짐");
+                    // 상호작용 가능 키 숨기기
+                    gameObjectB.hideInteractPrompt();
+                    // 키보드 입력 이벤트 해제
+                    this.input.keyboard.off('keydown-E', goBackToMap);
+                }
+            });
+        }
+
+
+
         //  // Play background music
         // this.backgroundMusic = this.sound.add('night_default', {
         //     volume: 0.3, // Set the volume (0 to 1)
@@ -191,12 +330,11 @@ export default class StoreScene extends Phaser.Scene {
             }).on('update', this.updateJoystickState, this);
         }
 
-        if (this.partNumber < 4) {
-            // 스테이지 진행률 UI
-            this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.partNumber);
-        }
+        // 스테이지 진행률 UI
+        this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.partNumber, 'store');
         // 하트(체력) UI
-        this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
+        this.heartIndicator = new HeartIndicator(this);
+        this.heartIndicator.setHeart(this.player.status.nowHeart, this.player.status.maxHeart);
 
         // X, Y 위치를 화면의 상단 우측으로 설정
         const x = 15;/// 2
