@@ -28,16 +28,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //검 공격력
             swordATK: 100,
             //활 공격력
-            bowATK: 10,
+            bowATK: 50,
             //마법 공격력
-            magicATK: 10,
+            magicATK: 150,
             // 가지고 있는 coin
             coin: loadCoinsFromLocalStorage(),
             // 이동 속도 초기화
             speed: 3.5,
             rollingCoolTime: 500,
             swordCoolTime: 1000,  
-            magicCoolTime: 5000,  
+            magicCoolTime: 2000,
             arrowCount: 3 ,//화살의 갯수
             // 무적 상태
             isInvincible: false,
@@ -283,7 +283,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.handleArrowKeyInput(playerVelocity, this.status.speed);
 
             if (this.slash) { // 이 지점에서 this.slash가 여전히 존재하는지 확인
-                const offsetX = this.isLookingRight ? 10 : -10; // 플레이어 방향에 따른 오프셋 설정
+                const offsetX = this.isLookingRight ? 20 : -20; // 플레이어 방향에 따른 오프셋 설정
                 // 플레이어 위치에 slash 객체 동기화
                 this.slash.setPosition(this.x + offsetX, this.y);
             }

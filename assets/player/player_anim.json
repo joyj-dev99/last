@@ -380,7 +380,7 @@
             "key": "player_bow",
             "type": "frames",
             "repeat": 0,
-            "frameRate": 12,
+            "frameRate": 100,
             "frames": [
                 {
                     "key": "player",
