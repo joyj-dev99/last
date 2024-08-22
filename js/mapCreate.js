@@ -89,7 +89,7 @@ export function setMapSize(scene, stageNumber, mapNumber) {
         scene.maxX = 406;
         scene.minY = 74;
         scene.maxY = 278;
-    } else if (stageNumber === 1 && mapNumber == 'boss') { // 보스맵
+    } else if (stageNumber === 1) { // 보스맵
         scene.mapWidth = 480;
         scene.mapHigth = 480;
         scene.minX = 74;
@@ -110,7 +110,7 @@ export function setMapSize(scene, stageNumber, mapNumber) {
         scene.maxX = 406;
         scene.minY = 74;
         scene.maxY = 278;
-    } else if (stageNumber === 2 && mapNumber == 'boss') { // 보스맵
+    } else if (stageNumber === 2) { // 보스맵
         scene.mapWidth = 480;
         scene.mapHigth = 480;
         scene.minX = 74;
@@ -131,7 +131,7 @@ export function setMapSize(scene, stageNumber, mapNumber) {
         scene.maxX = 406;
         scene.minY = 74;
         scene.maxY = 278;
-    } else if (stageNumber === 3 && mapNumber == 'boss') { // 보스맵
+    } else if (stageNumber === 3) { // 보스맵
         scene.mapWidth = 480;
         scene.mapHigth = 480;
         scene.minX = 74;
@@ -146,7 +146,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
     let mapKey;
     if (mapNumber === 0) {
         mapKey = `stage_01_tutorial`;
-    } else if (mapNumber <= 9) {
+    } else if (mapNumber < 10) {
         mapKey = `stage_0${stageNumber}_0${mapNumber}`;
     } else {
         mapKey = `stage_0${stageNumber}_${mapNumber}`;
@@ -239,7 +239,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
             }
         });
 
-    } else if (stageNumber === 3 && mapNumber === 'boss') {
+    } else if (stageNumber === 3) {
 
         const Tileset = map.addTilesetImage("Lab Tileset", "labTileset");
 
