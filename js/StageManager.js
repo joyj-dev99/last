@@ -229,8 +229,8 @@ export default class StageManager {
                     ];
                     this.dialog.showDialogModal(dialogueMessages, () => {
                         this.scene.isInDialogue = false;
-                        // z키 설명 시작
-                        tutorial.startzKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
+                        // 공격키 설명 시작
+                        tutorial.startATKKeyControlExplanation(this.scene, this.player.x +50, this.player.y - 160);
                     });
     
                     // 충돌 이벤트 제거
@@ -254,7 +254,7 @@ export default class StageManager {
                     // 오른쪽 사인 제거
                     tutorial.removeRightSign();
                     // z키 조작 설명 끝
-                    tutorial.endzKeyControlExplanation();
+                    tutorial.endATKKeyControlExplanation();
 
                     if(type === 'pc'){
                         dialog_msg = '방향키와 함께 shift 키를 누르면 구를 수 있어요!';
