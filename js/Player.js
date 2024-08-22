@@ -23,8 +23,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 상태 정보 초기화
         this.status = {
             name: '맥스',
-            maxHeart: 7,
-            nowHeart: 7,
+            maxHeart: 10,
+            nowHeart: 10,
             //검 공격력
             swordATK: 20,
             //활 공격력
@@ -788,7 +788,24 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    coolTimeIndicator(delta, isCoolingDown, cooldownElapsed, coolTime, overlay, button) {
+    coolTimeIndicator(delta, isCoolingDown, cooldownElapsed, coolTime, overlay, button, isEnabled = true) {
+
+        // 약초먹었을떄, 구르기 비활성화
+        if (!isEnabled) {
+            // 만약 isEnabled가 false라면 쿨타임 오버레이를 회색으로 채우고, 비활성화된 상태로 유지
+            overlay.clear();
+            overlay.fillStyle(0x808080, 0.5); // 회색(0x808080) 색상 사용
+            overlay.fillRect(
+                button.x - button.width * button.scaleX / 2, 
+                button.y - button.height * button.scaleY / 2, 
+                button.width * button.scaleX, 
+                button.height * button.scaleY
+            );
+            overlay.setVisible(true);
+            return { isCoolingDown: true, cooldownElapsed: 0 }; // 쿨타임 중으로 유지
+        }
+
+
         if (isCoolingDown) {
             // 쿨타임이 진행 중이면 경과 시간 갱신
             cooldownElapsed += delta;
@@ -826,13 +843,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
 
     rollingCoolTimeIndicator(delta) {
+        const isEnabled = this.status.canRoll;  // 구르기 가능 여부를 기반으로 활성화 여부 결정
         const result = this.coolTimeIndicator(
             delta,
             this.isRollingOverLayCoolingDown,
             this.rollingCooldownElapsed,
             this.status.rollingCoolTime,
             this.overLayRollingCoolTime,
-            this.btnRollingCoolTime
+            this.btnRollingCoolTime,
+            isEnabled // 활성화 여부 전달
         );
     
         this.isRollingOverLayCoolingDown = result.isCoolingDown;
