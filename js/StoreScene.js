@@ -322,7 +322,7 @@ export default class StoreScene extends Phaser.Scene {
             this.joystick = this.plugins.get('rexVirtualJoystick').add(this, {
                 x: 80,
                 y: 200,
-                radius: 100,
+                radius: 28,
                 base: this.add.circle(0, 0, 30, 0x888888),
                 thumb: this.add.circle(0, 0, 15, 0xcccccc),
                 dir: '8dir', 
