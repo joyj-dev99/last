@@ -215,7 +215,7 @@ export default class NightScene extends Phaser.Scene {
                 base: this.add.circle(0, 0, 30, 0x888888),
                 thumb: this.add.circle(0, 0, 15, 0xcccccc),
                 dir: '8dir', 
-                forceMin: 16,
+                forceMin: 1,
             }).on('update', this.updateJoystickState, this);
         }
 
