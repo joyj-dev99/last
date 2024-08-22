@@ -42,7 +42,7 @@ export default class MeatCoin {
             }
         });
         // 플레이어에게 코인 추가
-        scene.player.addCoin(coinAmount);
+        scene.player.addCoins(coinAmount);
     }
 
 

@@ -198,8 +198,8 @@ export function setupMap(scene, stageNumber, mapNumber) {
         });
 
     } else if (stageNumber === 3 && mapNumber <= 10) {
-        const Tileset = map.addTilesetImage("Modern_Office_32x32", "Tileset");
-        const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "Tileset2");
+        const Tileset = map.addTilesetImage("Modern_Office_32x32", "officeTileset");
+        const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "roomBuilderTileset");
 
         const floor = map.createLayer("floor", Tileset2, 0, 0);
         const wall = map.createLayer("wall", Tileset2, 0, 0);
@@ -228,7 +228,7 @@ export function setupMap(scene, stageNumber, mapNumber) {
 
     } else if (stageNumber === 3 && mapNumber === 11) {
 
-        const Tileset = map.addTilesetImage("Lab Tileset", "Tileset3");
+        const Tileset = map.addTilesetImage("Lab Tileset", "labTileset");
 
         map.createLayer("floor", Tileset, 0, 0);
         const wall = map.createLayer("wall", Tileset, 0, 0);

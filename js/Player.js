@@ -2,6 +2,8 @@ import Arrow from "./Arrow.js";
 import Magic from "./Magic.js";
 import Slash from "./Slash.js";
 
+import {saveCoinsToLocalStorage,loadCoinsFromLocalStorage} from './localStorage.js';
+
 import {
     PLAYER_CATEGORY,
     MONSTER_CATEGORY,
@@ -30,7 +32,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             //마법 공격력
             magicATK: 10,
             // 가지고 있는 coin
-            coin: 200,
+            coin: loadCoinsFromLocalStorage(),
             // 이동 속도 초기화
             speed: 3.5,
             rollingCoolTime: 500,
@@ -699,11 +701,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     // 코인 획득 (코인 추가)
-    addCoin(amount) {
-        console.log('addCoin');
+    addCoins(amount) {
         this.status.coin += amount;
+        saveCoinsToLocalStorage(this.status.coin);
         this.scene.coinIndicatorText.setText(`Coins : ${this.status.coin}`);
-        console.log(' this.status.coin : ' + this.status.coin);
+        console.log('addCoins - this.status.coin : ' + this.status.coin);
+    }
+
+    subtractCoins(amount) {
+        if (this.status.coin >= amount) {
+            this.status.coin -= amount;
+            saveCoinsToLocalStorage(this.status.coin);
+            this.scene.coinIndicatorText.setText(`Coins : ${this.status.coin}`);
+            console.log('subtractCoins - this.status.coin : ' + this.status.coin);
+        } else {
+            console.log('코인이 부족합니다.');
+        }
     }
 
 

@@ -234,7 +234,9 @@ export default class Dialog  {
     static preload(scene) {
         scene.load.image('MaxPotrait', 'assets/npc/potrait/max.png'); 
         scene.load.image('ChordPotrait', 'assets/npc/potrait/chord.png'); 
+        scene.load.image('ThelmaPotrait', 'assets/npc/potrait/thelma.png'); 
         scene.load.image('NecromancerPotrait', 'assets/npc/potrait/necromancer.png'); 
+
         scene.load.spritesheet('keyboard_extas', 'assets/ui/Keyboard Extras.png', {
             frameWidth: 32, // 각 프레임의 너비
             frameHeight: 16, // 각 프레임의 높이
