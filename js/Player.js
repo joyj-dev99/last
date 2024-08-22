@@ -17,7 +17,7 @@ import {
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
-        let {scene, x, y} = data;
+        let {scene, x, y, hiddenFlag} = data;
         super(scene.matter.world, x, y, 'player', 'player_idle_01');
 
         // 플레이어 상태 정보 초기화
@@ -45,6 +45,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             canRoll: true
 
         };
+
+        this.hiddenFlag = hiddenFlag;
 
         this.isRolling = true;
         this.isRollingOverLayCoolingDown = false;
@@ -143,6 +145,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.soundRoll = this.scene.sound.add(`sound_player_roll`, {
             volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
+
+        if (this.hiddenFlag) return;
 
         // 구르기 버튼과 그 오버레이
         const { button: btnRolling, skillSprite: rollingSkill, overlay: overlayRolling, container: containerRolling } = this.createButtonWithOverlay(scene, 20, 200, 'Skills and Spells 16', 138);

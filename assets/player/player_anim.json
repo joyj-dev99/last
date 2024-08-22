@@ -19,8 +19,8 @@
         {
             "key": "player_look_around",
             "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
+            "repeat": 0,
+            "frameRate": 10,
             "frames": [
                 {
                     "key": "player",
