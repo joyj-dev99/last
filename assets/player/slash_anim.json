@@ -1,26 +1,98 @@
 {
     "anims": [
         {
-            "key": "slash",
+            "key": "slash_1",
             "type": "frames",
-            "repeat": -1,
-            "frameRate": 15,
+            "repeat": 0,
+            "frameRate": 12,
             "frames": [
                 {
                     "key": "slash",
-                    "frame": "fe1002_01"
+                    "frame": "slash_1_0"
                 },
                 {
                     "key": "slash",
-                    "frame": "fe1002_02"
+                    "frame": "slash_1_1"
                 },
                 {
                     "key": "slash",
-                    "frame": "fe1002_03"
+                    "frame": "slash_1_2"
                 },
                 {
                     "key": "slash",
-                    "frame": "fe1002_04"
+                    "frame": "slash_1_4"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_1_5"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_1_6"
+                }
+            ]
+        },
+        {
+            "key": "slash_2",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "slash",
+                    "frame": "slash_2_0"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_2_1"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_2_2"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_2_3"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_2_4"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_2_5"
+                }
+            ]
+        },
+        {
+            "key": "slash_3",
+            "type": "frames",
+            "repeat": 0,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "slash",
+                    "frame": "slash_3_0"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_3_1"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_3_2"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_3_3"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_3_4"
+                },
+                {
+                    "key": "slash",
+                    "frame": "slash_3_5"
                 }
             ]
         }

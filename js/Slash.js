@@ -4,14 +4,15 @@ export default class Slash extends Phaser.Physics.Matter.Sprite {
 
     constructor(scene, x, y) {
 
-        super(scene.matter.world, x, y, 'slash', 'fe1002_01');
+        super(scene.matter.world, x, y, 'slash', 'slash_1_0');
 
         // 플레이어 스프라이트를 장면에 추가하여 화면에 렌더링되고 다른 게임 객체들과 상호작용
         // 화면에 아이템 보이게하기
         scene.add.existing(this);
 
         // Initialize the animation
-        this.play('slash');
+        // slash_anim.json의 key를 작성함
+        this.play('slash_1');
 
         // Scale the sprite visually
         this.setScale(2);

@@ -633,6 +633,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 단계에 따른 애니메이션 재생
         const swordAnimKey = `player_sword_${stage}`;
         this.anims.play(swordAnimKey, true);
+        // 슬래쉬 애니메이션 재생
+        this.slash.play(`slash_${stage}`);
 
         this.comboState = stage;
         console.log(`칼 휘두르기 ${stage}단계`);
