@@ -305,6 +305,7 @@ export default class StageManager {
             objectB: this.storeFlag,
             callback: eventData => {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("storeFlag addOnCollideStart");
                 // 상호작용 가능 키 표시
                 gameObjectB.showInteractPrompt();
                 // 키보드 입력 이벤트 설정
@@ -317,6 +318,7 @@ export default class StageManager {
             objectB: this.storeFlag,
             callback: eventData => {
                 const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("storeFlag addOnCollideEnd");
                 // 상호작용 가능 키 숨기기
                 gameObjectB.hideInteractPrompt();
                 // 키보드 입력 이벤트 해제
