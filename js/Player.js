@@ -519,6 +519,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', { frameWidth: 16, frameHeight: 16 });
         scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.image('arrow_16', 'assets/item/arrow_16.png');
 
         scene.load.image('arrow_32', 'assets/player/arrow_32.png');
         scene.load.image('magic_32', 'assets/player/magic_32.png');

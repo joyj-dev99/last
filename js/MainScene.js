@@ -201,7 +201,7 @@ export default class MainScene extends Phaser.Scene {
             this.time.delayedCall(1000, () => {
                 console.log('camerafadeincomplete');
 
-                this.stageManager.setStageStart(this.stageNumber, this.mapNumber, type);
+                this.stageManager.setStageStart(this.stageNumber, this.partNumber, this.mapNumber, type);
             }, [], this);
         });
 
@@ -699,8 +699,6 @@ export default class MainScene extends Phaser.Scene {
 
 
             if (this.container == undefined) {
-
-
                 // 컨테이너 및 UI 요소 설정
                 const panel = this.add
                     .rectangle(353, 30, 90, 45, '#FFFFFF', 0.8)
@@ -972,7 +970,6 @@ export default class MainScene extends Phaser.Scene {
                 }
             }
         });
-
     }
 
     // 동적으로 생성된 몬스터 원거리 공격에 대한 충돌 이벤트 추가, 몸통박치기의 경우 이 메서드 사용하면 안됨

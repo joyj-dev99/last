@@ -231,10 +231,14 @@ export default class Tutorial{
                     if(관련된값.anim_keys[0] === "z_key"){
                         console.log(관련된값.anim_keys[0] + " 누름");
                         this.player.handleSlash(); // 첫 번째 슬래쉬
-                    
+                        
+                        this.scene.isInDialogue = true;
+                        this.player.stopMove();
                         this.dialog.showDialogModal([
-                            {name : '코드', portrait : 'ChordPotrait', message: 'z키를 연달아 2번 눌러보세요.' }
-                        ]);
+                            {name : '맥스', portrait : 'MaxPotrait', message: 'z키를 연달아 2번 누르면 연속으로 공격할 수 있어.' }
+                        ], () => {
+                            this.scene.isInDialogue = false;
+                        });
 
                     }else if(관련된값.anim_keys[0] === "z_key_double"){
                         console.log(관련된값.anim_keys[0] + " 누름");
@@ -245,9 +249,14 @@ export default class Tutorial{
                             this.player.handleSlash();
                         }, 200); // 200ms 지연 후 실행
 
+                        this.scene.isInDialogue = true;
+                        this.player.stopMove();
                         this.dialog.showDialogModal([
-                            {name : '코드', portrait : 'ChordPotrait', message: 'z키를 연달아 3번 눌러보세요.' }
-                        ]);
+                            {name : '맥스', portrait : 'MaxPotrait', message: '검 공격은 3번까지 연속으로 공격이 가능해.' },
+                            {name : '맥스', portrait : 'MaxPotrait', message: 'z키를 3번 연달아 눌러보자.' }
+                        ], () => {
+                            this.scene.isInDialogue = false;
+                        });
 
                     }else if(관련된값.anim_keys[0] === "z_key_triple"){
                         console.log(관련된값.anim_keys[0] + " 누름");
@@ -263,9 +272,14 @@ export default class Tutorial{
                             this.player.handleSlash();
                         }, 400); // 두 번째 슬래쉬 후 200ms 추가 지연 (총 400ms 후 실행)
 
+                        this.scene.isInDialogue = true;
+                        this.player.stopMove();
                         this.dialog.showDialogModal([
-                            {name : '코드', portrait : 'ChordPotrait', message: 'x키를 눌러보세요.' }
-                        ]);
+                            {name : '맥스', portrait : 'MaxPotrait', message: 'X키를 눌러서 활을 쏠 수 있어.' },
+                            {name : '맥스', portrait : 'MaxPotrait', message: '소지하고 있는 화살의 갯수만큼만 쏠 수 있으니 잘 확인하자.' }
+                        ], () => {
+                            this.scene.isInDialogue = false;
+                        });
 
                     }else if(관련된값.anim_keys[0] === "left_key" && 관련된값.anim_keys[1] === "shift_key"){
                         this.player.handleRoll(this.player.body.velocity);
@@ -275,9 +289,14 @@ export default class Tutorial{
                         console.log("x_key 누름");
                         this.player.handleBow();
 
+                        this.scene.isInDialogue = true;
+                        this.player.stopMove();
                         this.dialog.showDialogModal([
-                            {name : '코드', portrait : 'ChordPotrait', message: 'c키를 눌러보세요.' }
-                        ]);
+                            {name : '맥스', portrait : 'MaxPotrait', message: 'C키를 눌러서 번개 마법을 쓸 수 있어' },
+                            {name : '맥스', portrait : 'MaxPotrait', message: '마법은 한 번 쓰면, 다시 쓸 수 있게 되기까지 시간이 걸려.' }
+                        ], () => {
+                            this.scene.isInDialogue = false;
+                        });
 
                     }else if(관련된값.anim_keys[0] === "c_key"){
                         console.log("c_key 누름");
