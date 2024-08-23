@@ -9,8 +9,10 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
         // Matter.js 물리를 사용하여 지정된 texture로 (x, y) 위치에 스프라이트를 생성
         super(scene.matter.world, x, y, 'storeFlag', 'flag_animation_0');
         this.scene = scene;
+
+
         // 화면에 렌더링 + 다른 게임 객체들과 상호작용 가능해짐
-        scene.add.existing(this);
+        this.scene.add.existing(this);
 
         // 물리적 바디 설정
         const {Body, Bodies} = Phaser.Physics.Matter.Matter;
