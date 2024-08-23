@@ -163,7 +163,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.containerSlashCoolTime = containerSlash;
 
         // 애로우 버튼과 그 오버레이
-        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, 50, 230, 'arrow_16', 0);
+        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, arrow_x, arrow_y, arrowImgName, arrowIndexNum, spriteScale);
         this.btnArrowCoolTime = btnArrow;
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
