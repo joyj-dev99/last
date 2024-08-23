@@ -326,5 +326,30 @@ export default class StageManager {
                 this.scene.scene.start('BattleResultScene', {result});
             });
         }
+        this.scene.isInDialogue = false;
+    }
+
+    update() {
+        if (this.scene.returnStoreStatus !== undefined) {
+            this.scene.returnStoreStatus = undefined;
+            this.storeFlag.destroy();
+            this.scene.player.arrowCountText.setText(this.scene.player.status.arrowCount);
+            this.scene.coinIndicatorText.setText(`Coins : ${this.scene.player.status.coin}`);
+            if (this.scene.player.status.arrowCount === 0) {
+                this.scene.player.overLayArrowCoolTime.setVisible(true);
+            } else {
+                this.scene.player.overLayArrowCoolTime.setVisible(false);
+            }
+        }
+    }
+
+    goToStore() {
+        this.scene.scene.launch('StoreScene', {
+            stageNumber: this.scene.stageNumber,
+            partNumber: this.scene.partNumber,
+            mapNumber: 0,
+            mapAttribute: true,
+            playerStatus: this.scene.player.status
+        });
     }
 }
