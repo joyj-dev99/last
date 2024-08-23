@@ -25,7 +25,7 @@ export default class Bonfire extends Phaser.Physics.Matter.Sprite {
             label: 'bonfire',
             collisionFilter: {
                 category: OBJECT_CATEGORY, // 현재 객체 카테고리
-                mask: PLAYER_CATEGORY, MONSTER_CATEGORY
+                mask: PLAYER_CATEGORY | MONSTER_CATEGORY
             } 
         });
         this.setExistingBody(bonfireCollider);

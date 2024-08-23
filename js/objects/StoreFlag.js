@@ -10,7 +10,6 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
         super(scene.matter.world, x, y, 'storeFlag', 'flag_animation_0');
         this.scene = scene;
 
-
         // 화면에 렌더링 + 다른 게임 객체들과 상호작용 가능해짐
         this.scene.add.existing(this);
 
@@ -23,19 +22,44 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
             label: 'storeFlag',
             collisionFilter: {
                 category: OBJECT_CATEGORY, // 현재 객체 카테고리
-                mask: PLAYER_CATEGORY, MONSTER_CATEGORY
+                mask: PLAYER_CATEGORY | MONSTER_CATEGORY
             }
         });
         this.setExistingBody(signCollider);
         this.setScale(0.5);
 
+        // this.anims.fromJSON(this.cache.json.get('flagAnimations'));
+
+        this.anims.create({
+            key: 'flag_waving',
+            frames: this.anims.generateFrameNames('storeFlag', {
+                prefix: 'flag_animation_',
+                start: 0,
+                end: 4,
+                zeroPad: 0
+            }),
+            frameRate: 8,
+            repeat: -1
+        });
+
+        // StoreFlag 객체에서 애니메이션 실행
+        if (this.anims.exists('flag_waving')) {
+            this.play('flag_waving');
+        } else {
+            console.error('Animation flag_waving does not exist.');
+        }
 
     }
 
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
     static preload(scene) {
+        console.log('Preloading resources for StoreFlag...');
         scene.load.atlas('storeFlag', 'assets/objects/storeFlag/store_flag.png', 'assets/objects/storeFlag/store_flag_atlas.json');
+        console.log('Atlas loaded:', 'store_flag');
+
         scene.load.animation('storeFlagAnim', 'assets/objects/storeFlag/store_flag_anim.json');
+        console.log('Animation loaded:', 'flag_waving');
+
         scene.load.spritesheet('keybordImg', 'assets/ui/Keyboard Letters and Symbols.png', {
             frameWidth: 16,
             frameHeight: 16
