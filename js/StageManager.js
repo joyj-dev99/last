@@ -391,7 +391,7 @@ export default class StageManager {
             mapAttribute: true,
             playerStatus: this.scene.player.status
         });
-        this.storeFlag.hideInteractPrompt();
+        // this.storeFlag.hideInteractPrompt();
     }
 
 }
