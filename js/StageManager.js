@@ -72,7 +72,8 @@ export default class StageManager {
                 // 대화
                 dialogueMessages = null;
             }
-            else if (stageNumber == 3 && partNumber == 4) {
+
+            else if (stageNumber == 3 && mapNumber === 'boss') {
                 this.setBGM('room_boss');
                 this.scene.isInDialogue = true;
                 dialogueMessages = [
