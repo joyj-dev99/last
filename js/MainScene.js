@@ -891,7 +891,9 @@ export default class MainScene extends Phaser.Scene {
         }
         // 배열이 비었으면 전투 종료 메서드 실행
         if (this.monsterArr.length === 0) {
+            console.log('this.monsterArr.length === 0');
             this.time.delayedCall(1000, () => {
+                console.log('delayedCall 1000 setStageEnd 시작');
                 this.stageManager.setStageEnd(this.stageNumber, this.mapNumber, this.mapAttribute);
             }, [], this);
         }
