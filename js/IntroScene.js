@@ -818,7 +818,7 @@ export default class IntroScene extends Phaser.Scene {
                     this.fadeOutBGM();
 
                     this.cameras.main.once('camerafadeoutcomplete', () => {
-                        this.scene.start('MineScene');  // 메인 씬으로 이동
+                        this.scene.start('MainScene');  // 메인 씬으로 이동
                     });
                 });
             });
