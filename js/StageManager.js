@@ -13,7 +13,7 @@ export default class StageManager {
         this.skipTutorial = skipTutorial;
     }
 
-    static preload(scene) {
+    static preload(scene){
         scene.load.audio("forest_default", "assets/suno/battle_1.wav");
         scene.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
         scene.load.audio("dungeon_default", "assets/audio/background/dungeon/dungeon_default.mp3");
