@@ -240,7 +240,7 @@ export default class MainScene extends Phaser.Scene {
             if (this.isMapSelectionActive) return;
             if (this.monsterArr.length !== 0) return;
 
-            if (this.partNumber === 4) {
+            if (this.partNumber === 3) {
                 // 보스맵으로 이동
                 let selectedAttribute = null;
                 this.scene.start('MainScene', {
