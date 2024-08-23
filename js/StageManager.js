@@ -365,7 +365,6 @@ export default class StageManager {
             }
         });
 
-
         this.scene.matterCollision.addOnCollideEnd({
             objectA: this.player,
             objectB: this.storeFlag,
@@ -518,7 +517,7 @@ export default class StageManager {
     update() {
         if (this.scene.returnStoreStatus !== undefined) {
             this.scene.returnStoreStatus = undefined;
-
+            this.storeFlag.destroy();
             this.scene.player.arrowCountText.setText(this.scene.player.status.arrowCount);
             this.scene.coinIndicatorText.setText(`Coins : ${this.scene.player.status.coin}`);
             if (this.scene.player.status.arrowCount === 0) {
@@ -538,4 +537,5 @@ export default class StageManager {
             playerStatus: this.scene.player.status
         });
     }
+
 }

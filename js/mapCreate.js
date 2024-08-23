@@ -28,7 +28,6 @@ import MonsterAngel from "./monsters/MonsterAngel.js";
 import MonsterGolem from "./monsters/MonsterGolem.js";
 import MonsterBossAlchemist from "./monsters/MonsterBossAlchemist.js";
 import MonsterBossWolfgang from "./monsters/MonsterBossWolfgang.js";
-import StoreFlag from "./objects/StoreFlag.js";
 
 export function mapCreatePreload(scene) {
     scene.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
