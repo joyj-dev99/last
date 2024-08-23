@@ -312,7 +312,7 @@ export default class StageManager {
                 this.scene.input.keyboard.on('keydown-E', this.goToStore);
             }
         });
-
+      
         this.scene.matterCollision.addOnCollideEnd({
             objectA: this.player,
             objectB: this.storeFlag,
@@ -368,9 +368,12 @@ export default class StageManager {
 
     update() {
         console.log('StageManager update()');
-
         if (this.scene.returnStoreStatus !== undefined) {
             this.scene.returnStoreStatus = undefined;
+            // 모바일에서 this.scene.matterCollision.addOnCollideEnd 실행 안함...
+            // 다시 mainScene으로 돌아오면 실행해야 하는데..
+            this.storeFlag.hideInteractPrompt();
+            console.log('StageManager update() hideInteractPrompt()');
             this.storeFlag.destroy();
             console.log('StageManager this.storeFlag.destroy()');
             this.scene.player.arrowCountText.setText(this.scene.player.status.arrowCount);
