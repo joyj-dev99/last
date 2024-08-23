@@ -1,5 +1,4 @@
 import {PLAYER_CATEGORY, OBJECT_CATEGORY} from "../constants.js";
-import SpeechBubble from "../SpeechBubble.js";
 
 export default class Chord extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
@@ -46,13 +45,6 @@ export default class Chord extends Phaser.Physics.Matter.Sprite {
             animation.key === 'chord_ready') {
             this.anims.play('chord_sing', true);
         }
-    }
-
-    showSpeechBubble(contents, onDestroyCallback) {
-
-        // SpeechBubble 클래스 인스턴스 생성
-        new SpeechBubble(this.scene, contents, onDestroyCallback, 'Chord');
-    
     }
 
     setLocation(x, y) {

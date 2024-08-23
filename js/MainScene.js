@@ -50,7 +50,7 @@ export default class MainScene extends Phaser.Scene {
     init(data) {
         this.stageNumber = data.stageNumber || 1;
         this.partNumber = data.partNumber || 1;
-        this.mapNumber = data.mapNumber || 8;
+        this.mapNumber = data.mapNumber || 1;
         console.log('init mapNumber : ', this.mapNumber);
         this.mapAttribute = data.mapAttribute || 1;
         this.battleEnd = data.battleEnd || false;
@@ -190,7 +190,7 @@ export default class MainScene extends Phaser.Scene {
             this.time.delayedCall(1000, () => {
                 console.log('camerafadeincomplete');
 
-                this.stageManager.setStageStart(this.stageNumber, this.mapNumber, type);
+                this.stageManager.setStageStart(this.stageNumber, this.partNumber, this.mapNumber, type);
             }, [], this);
         });
 
@@ -687,8 +687,6 @@ export default class MainScene extends Phaser.Scene {
 
 
             if (this.container == undefined) {
-
-
                 // 컨테이너 및 UI 요소 설정
                 const panel = this.add
                     .rectangle(353, 30, 90, 45, '#FFFFFF', 0.8)
@@ -937,8 +935,6 @@ export default class MainScene extends Phaser.Scene {
                 }
             }
         });
-
-
     }
 
     setArrowBtnStatus(arrowCount) {
@@ -962,8 +958,6 @@ export default class MainScene extends Phaser.Scene {
                 this.button3.setDepth(0);
             }
         }
-
-
     }
 
 
@@ -1034,7 +1028,6 @@ export default class MainScene extends Phaser.Scene {
                 }
             }
         }
-
     }
 
     setCollisionOfMonsterShortAttack(attack) {

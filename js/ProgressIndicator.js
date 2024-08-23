@@ -7,7 +7,7 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
         });
     }
 
-    constructor(scene, texture, stageNumber, mapNumber, key) {
+    constructor(scene, texture, key) {
         // X, Y 위치를 화면의 상단 우측으로 설정
         const x = scene.sys.game.config.width / 2;/// 2 -65
         const y = 35; 
@@ -20,7 +20,7 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
         // 스크롤에 영향을 받지 않도록 설정
         this.setScrollFactor(0);
 
-        this.stageText = scene.add.text(x, y- 20, this.getStageName(stageNumber, key), {
+        this.stageText = scene.add.text(x, y- 20, this.getStageName(scene.stageNumber, key), {
             fontFamily: 'Galmuri11, sans-serif',
             fontSize: '14px',
             fill: '#000000',
@@ -33,16 +33,14 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
         this.setDepth(1000);
 
         this.setScale(0.5);
-        this.setProgress(mapNumber);
+        this.setProgress(scene.mapNumber);
 
         if (key === 'store' ) {
             this.setVisible(false);
-        } else if (mapNumber === 'boss'|| mapNumber > 10) {
-            
-        }
-        this.setVisible(false);
+        } else if (scene.mapNumber === 'boss') {
+            this.setVisible(false);
             this.stageText.setVisible(false);
-        
+        }
     }
 
     getStageName(stageNumber, key) {
@@ -59,6 +57,11 @@ export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
 
     setProgress(frameIndex) {
         this.setFrame(frameIndex);
+    }
+
+    setShow(textVisible, progressVisible) {
+        this.stageText.setVisible(textVisible);
+        this.setVisible(progressVisible);
     }
 
 }

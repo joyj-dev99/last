@@ -163,7 +163,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.containerSlashCoolTime = containerSlash;
 
         // 애로우 버튼과 그 오버레이
-        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, 50, 230, 'Weapons and Equipment 16', 1);
+        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, 50, 230, 'arrow_16', 0);
         this.btnArrowCoolTime = btnArrow;
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
@@ -222,6 +222,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', { frameWidth: 16, frameHeight: 16 });
         scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.image('arrow_16', 'assets/item/arrow_16.png');
 
         Slash.preload(scene);
         Arrow.preload(scene);
