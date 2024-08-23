@@ -3,12 +3,12 @@ const UI_TEXT_STYLE = Object.freeze({
     // fontFamily: KENNEY_FUTURE_NARROW_FONT_NAME,
     color: 'white',
     fontSize: '20px',
-    wordWrap: { width: 0 },
+    wordWrap: {width: 0},
 });
 
-const { type } = window.gameConfig;
+const {type} = window.gameConfig;
 
-export default class Dialog  {
+export default class Dialog {
 
     /** @type {Phaser.Scene} */
     #scene;
@@ -39,7 +39,7 @@ export default class Dialog  {
      * - `name`: 발신자의 이름
      * - `portrait`: 초상화 이미지의 키
      * - `message`: 대화의 텍스트
-     * 
+     *
      * 이 속성은 텍스트 애니메이션이 진행 중일 때 사용자가 스페이스바를 눌렀을 경우,
      * 현재 메시지를 완전히 표시하는 데 사용됩니다.
      */
@@ -71,13 +71,13 @@ export default class Dialog  {
         const panel = this.#scene.add
             .rectangle(0, 0, this.#width, this.#height, '#000000', 0.8)
             .setOrigin(0)
-            .setStrokeStyle(8,'#000000', 1);
+            .setStrokeStyle(8, '#000000', 1);
 
         console.log('Panel:', panel);
 
 
         this.#container = this.#scene.add.container(0, 0, [panel]);
-        
+
         // 모든 요소에 setScrollFactor(0) 적용
         panel.setScrollFactor(0);
 
@@ -96,15 +96,15 @@ export default class Dialog  {
         // 대화 텍스트 객체 추가
         this.#uiText = this.#scene.add.text(90, 30, '', {
             ...UI_TEXT_STYLE,
-            ...{ wordWrap: { width: this.#width - 100 }, fontSize: '15px' },
+            ...{wordWrap: {width: this.#width - 100}, fontSize: '15px'},
         }).setScrollFactor(0);
         this.#container.add(this.#uiText);
 
 
         // if(type == 'mobile'){
-            
+
         // }
-       
+
 
         // 스페이스바 입력 감지
         this.#scene.input.keyboard.on('keydown-SPACE', () => {
@@ -128,7 +128,7 @@ export default class Dialog  {
 
 
         this.#container.setScrollFactor(0); // 컨테이너 자체에도 적용
-        
+
         this.hideDialogModal();
 
         // 스페이스바 입력 감지
@@ -140,7 +140,7 @@ export default class Dialog  {
         this.#scene.scale.on('resize', this.handleResize, this);
 
         this.onCompleteCallback = null;  // 대화 종료 시 호출될 콜백 저장
-        
+
         console.log('this.#container.getAt(0):', this.#container.getAt(0));
         console.log('생성자 끝');
 
@@ -150,7 +150,7 @@ export default class Dialog  {
         // 기존 UI 요소 제거
         this.clearInstructions();
         if (key === 'map') {
-            if(type == 'pc'){
+            if (type == 'pc') {
                 // 스페이스 키 이미지 추가
                 const spaceSprite = this.#scene.add.sprite(this.#width - 120, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
                 this.#container.add(spaceSprite);
@@ -178,10 +178,9 @@ export default class Dialog  {
                 }).setScrollFactor(0);
                 this.#container.add(cancelText);
                 this.#currentInstructions.push(cancelText);  // 요소 추적
+            } else if (type == 'mobile') {
             }
-            else if(type == 'mobile'){
-            }
-            
+
         } else if (key === 'space') {
             // 스페이스 키 이미지 추가
             const spaceSprite = this.#scene.add.sprite(this.#width - 70, this.#height - 10, 'keyboard_extas', 10).setOrigin(0.5, 0.5).setScrollFactor(0);
@@ -195,25 +194,24 @@ export default class Dialog  {
             }).setScrollFactor(0);
             this.#container.add(continueText);
             this.#currentInstructions.push(continueText);  // 요소 추적
-        }
-        else if (key === 'next') {
+        } else if (key === 'next') {
             // 스페이스 키 이미지 추가
             // 다음 버튼
-            this.nextBtnImage = this.#scene.add.image(this.#width-25, 62, 'nextBtnImage').setScale(1).setVisible(true).setScrollFactor(0);
+            this.nextBtnImage = this.#scene.add.image(this.#width - 25, 62, 'nextBtnImage').setScale(1).setVisible(true).setScrollFactor(0);
 
             this.#container.add(this.nextBtnImage);
 
-            this.nextBtnImage.setInteractive({ useHandCursor: true });
+            this.nextBtnImage.setInteractive({useHandCursor: true});
             this.nextBtnImage.on('pointerdown', () => {
                 console.log('nextBtnImage  pointerdown');
                 this.onSpaceKeyPressed();
             })
-            .on('pointerover', () => {
-                this.nextBtnImage.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
-            })
-            .on('pointerout', () => {
-                this.nextBtnImage.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
-            });
+                .on('pointerover', () => {
+                    this.nextBtnImage.setScale(1.05); // 마우스를 올리면 크기가 5% 커짐
+                })
+                .on('pointerout', () => {
+                    this.nextBtnImage.setScale(1); // 마우스를 떼면 원래 크기로 돌아감
+                });
             this.#currentInstructions.push(this.nextBtnImage);  // 요소 추적
         }
     }
@@ -227,11 +225,11 @@ export default class Dialog  {
     }
 
     static preload(scene) {
-        scene.load.image('MaxPotrait', 'assets/npc/potrait/max.png'); 
-        scene.load.image('ChordPotrait', 'assets/npc/potrait/chord.png'); 
-        scene.load.image('ThelmaPotrait', 'assets/npc/potrait/thelma.png'); 
-        scene.load.image('WolfgangPotrait', 'assets/npc/potrait/wolfgang.png'); 
-        scene.load.image('NecromancerPotrait', 'assets/npc/potrait/necromancer.png'); 
+        scene.load.image('MaxPotrait', 'assets/npc/potrait/max.png');
+        scene.load.image('ChordPotrait', 'assets/npc/potrait/chord.png');
+        scene.load.image('ThelmaPotrait', 'assets/npc/potrait/thelma.png');
+        scene.load.image('WolfgangPotrait', 'assets/npc/potrait/wolfgang.png');
+        scene.load.image('NecromancerPotrait', 'assets/npc/potrait/necromancer.png');
 
         scene.load.spritesheet('keyboard_extas', 'assets/ui/Keyboard Extras.png', {
             frameWidth: 32, // 각 프레임의 너비
@@ -290,11 +288,12 @@ export default class Dialog  {
      * @param {Function} [onComplete] - 대화 종료 후 실행될 콜백
      */
     showDialogModal(messages, onComplete) {
-
-        console.log('showDialogModal');
+        if (messages.length <= 0) return;
+        console.log('showDialogModal', messages);
 
         this.#messagesToShow = [...messages];
         this.onCompleteCallback = onComplete || null;
+        console.log(this.#messagesToShow);
 
         const screenWidth = this.#scene.scale.width;
         const screenHeight = this.#scene.scale.height;
@@ -319,8 +318,8 @@ export default class Dialog  {
             this.#textAnimationPlaying = false;
             return;
         }
-        const { name, portrait, message } = this.#messagesToShow.shift();
-        this.#currentMessage = { name, portrait, message }; // 현재 메시지 저장
+        const {name, portrait, message} = this.#messagesToShow.shift();
+        this.#currentMessage = {name, portrait, message}; // 현재 메시지 저장
 
         this.#nameText.setText(name);
         // portrait 값이 null이면 초상화 숨기기, 그렇지 않으면 표시
@@ -331,7 +330,7 @@ export default class Dialog  {
         }
 
         this.#uiText.setText('').setAlpha(1);
-        
+
         this.animateText(this.#scene, this.#uiText, message, {
             delay: 50, // 애니메이션 속도(밀리초)
             callback: () => {
@@ -342,14 +341,14 @@ export default class Dialog  {
     }
 
     /**
-    * 텍스트를 한 글자씩 순차적으로 표시하는 함수
+     * 텍스트를 한 글자씩 순차적으로 표시하는 함수
      * @param {Phaser.Scene} scene - 현재 장면
      * @param {Phaser.GameObjects.Text} textObject - 텍스트 객체
      * @param {string} message - 표시할 메시지
      * @param {{delay: number, callback: function}} options - 옵션: 딜레이와 콜백
      */
     animateText(scene, textObject, message, options) {
-        const { delay, callback } = options;
+        const {delay, callback} = options;
         let i = 0;
 
         // 기존 타이머가 있을 경우 제거
@@ -359,7 +358,7 @@ export default class Dialog  {
 
         // 텍스트를 초기화합니다.
         textObject.setText('');
-        
+
         // 타이머 생성
         textObject.timer = scene.time.addEvent({
             delay: delay,
