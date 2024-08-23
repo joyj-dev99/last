@@ -33,7 +33,6 @@ export default class StoreScene extends Phaser.Scene {
         this.partNumber = data.partNumber || 1;
         this.mapNumber = data.mapNumber || 5;
         this.playerStatus = data.playerStatus || null;
-
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
         this.isInDialogue = true;
 
@@ -216,7 +215,7 @@ export default class StoreScene extends Phaser.Scene {
                 this.player.arrowCountText.setText(this.player.status.arrowCount)
                 if (this.player.status.arrowCount === 0) {
                     this.player.overLayArrowCoolTime.setVisible(true);
-                }else {
+                } else {
                     this.player.overLayArrowCoolTime.setVisible(false);
                 }
             }
@@ -337,7 +336,7 @@ export default class StoreScene extends Phaser.Scene {
                 radius: 28,
                 base: this.add.circle(0, 0, 30, 0x888888),
                 thumb: this.add.circle(0, 0, 15, 0xcccccc),
-                dir: '8dir', 
+                dir: '8dir',
                 forceMin: 1,
             }).on('update', this.updateJoystickState, this);
         }
@@ -376,7 +375,7 @@ export default class StoreScene extends Phaser.Scene {
         this.player.update();
         if (this.player.status.arrowCount === 0) {
             this.player.overLayArrowCoolTime.setVisible(true);
-        }else {
+        } else {
             this.player.overLayArrowCoolTime.setVisible(false);
         }
         this.itemArr.forEach(item => {

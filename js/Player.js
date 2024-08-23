@@ -2,7 +2,8 @@ import Arrow from "./Arrow.js";
 import Magic from "./Magic.js";
 import Slash from "./Slash.js";
 
-import {saveCoinsToLocalStorage,loadCoinsFromLocalStorage} from './localStorage.js';
+import {saveCoinsToLocalStorage, loadCoinsFromLocalStorage} from './localStorage.js';
+
 const {type} = window.gameConfig;
 
 import {
@@ -37,9 +38,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 이동 속도 초기화
             speed: 3.5,
             rollingCoolTime: 500,
-            swordCoolTime: 1000,  
+            swordCoolTime: 1000,
             magicCoolTime: 2000,
-            arrowCount: 3 ,//화살의 갯수
+            arrowCount: 3,//화살의 갯수
             // 무적 상태
             isInvincible: false,
             // 구르기 가능 여부 상태
@@ -60,7 +61,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.isMagic = true;
         this.isMagicOverLayCoolingDown = false;
         this.magicCooldownElapsed = 0;
-
 
 
         this.scene = scene;
@@ -149,12 +149,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         if (this.hiddenFlag) return;
 
-        let rollImgName, rollIndexNum, spriteScale, slashImgName, slashIndexNum, magicIndexNum, magicImgName, arrowImgName, arrowIndexNum;
+        let rollImgName, rollIndexNum, spriteScale, slashImgName, slashIndexNum, magicIndexNum, magicImgName,
+            arrowImgName, arrowIndexNum;
         let roll_x, roll_y, slash_X, slash_y, magic_x, magic_y, arrow_x, arrow_y;
         // 'Weapons and Equipment 16', 68, spriteScale);
-        if(type == 'mobile'){
+        if (type == 'mobile') {
             rollImgName = 'roll_32';
-            rollIndexNum = null; 
+            rollIndexNum = null;
             slashImgName = 'sword_32';
             slashIndexNum = null;
             magicIndexNum = null;
@@ -174,13 +175,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             arrow_y = height - 35;
             magic_x = width - 140;
             magic_y = height - 35;
-        }
-        else if(type == 'pc'){
+        } else if (type == 'pc') {
             rollImgName = 'Skills and Spells 16';
             rollIndexNum = 138;//'Skills and Spells 16', 138
             spriteScale = 0.05;
             slashImgName = 'Weapons and Equipment 16';
-            slashIndexNum = 68; 
+            slashIndexNum = 68;
             arrowImgName = 'Weapons and Equipment 16';
             arrowIndexNum = 1;
             magicImgName = 'Skills and Spells 16';
@@ -196,21 +196,36 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         }
 
         // 구르기 버튼과 그 오버레이
-        const { button: btnRolling, skillSprite: rollingSkill, overlay: overlayRolling, container: containerRolling } = this.createButtonWithOverlay(scene, roll_x, roll_y, rollImgName, rollIndexNum, spriteScale);
+        const {
+            button: btnRolling,
+            skillSprite: rollingSkill,
+            overlay: overlayRolling,
+            container: containerRolling
+        } = this.createButtonWithOverlay(scene, roll_x, roll_y, rollImgName, rollIndexNum, spriteScale);
         this.btnRollingCoolTime = btnRolling;
         this.rollingSkillSprite = rollingSkill;
         this.overLayRollingCoolTime = overlayRolling;
         this.containerRollingCoolTime = containerRolling;
 
         // 슬래시 버튼과 그 오버레이
-        const { button: btnSlash, skillSprite: slashSkill, overlay: overlaySlash, container: containerSlash } = this.createButtonWithOverlay(scene, slash_X, slash_y, slashImgName, slashIndexNum, spriteScale);
+        const {
+            button: btnSlash,
+            skillSprite: slashSkill,
+            overlay: overlaySlash,
+            container: containerSlash
+        } = this.createButtonWithOverlay(scene, slash_X, slash_y, slashImgName, slashIndexNum, spriteScale);
         this.btnSlashCoolTime = btnSlash;
         this.slashSkillSprite = slashSkill;
         this.overLaySlashCoolTime = overlaySlash;
         this.containerSlashCoolTime = containerSlash;
 
         // 애로우 버튼과 그 오버레이
-        const { button: btnArrow, skillSprite: arrowSkill, overlay: overlayArrow, container: containerArrow } = this.createButtonWithOverlay(scene, arrow_x, arrow_y, arrowImgName, arrowIndexNum, spriteScale);
+        const {
+            button: btnArrow,
+            skillSprite: arrowSkill,
+            overlay: overlayArrow,
+            container: containerArrow
+        } = this.createButtonWithOverlay(scene, arrow_x, arrow_y, arrowImgName, arrowIndexNum, spriteScale);
         this.btnArrowCoolTime = btnArrow;
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
@@ -218,35 +233,40 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
 
         // 마법 버튼과 그 오버레이
-        const { button: btnMagic, skillSprite: magicSkill, overlay: overlayMagic, container: containerMagic } = this.createButtonWithOverlay(scene, magic_x, magic_y, magicImgName, magicIndexNum, spriteScale);
+        const {
+            button: btnMagic,
+            skillSprite: magicSkill,
+            overlay: overlayMagic,
+            container: containerMagic
+        } = this.createButtonWithOverlay(scene, magic_x, magic_y, magicImgName, magicIndexNum, spriteScale);
         this.btnMagicCoolTime = btnMagic;
         this.magicSkillSprite = magicSkill;
         this.overLayMagicCoolTime = overlayMagic;
         this.containerMagicCoolTime = containerMagic;
 
-        if(type == 'mobile'){
+        if (type == 'mobile') {
             // 버튼 클릭 이벤트 리스너 설정
 
-        // 화살 남은 갯수 text
-        // 텍스트 스타일 (폰트 크기 조절)
-        const buttonTextStyle = { font: "30px Arial", fill: "#000000" };
-        this.arrowCountText = this.scene.add.text(arrow_x, arrow_y, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
+            // 화살 남은 갯수 text
+            // 텍스트 스타일 (폰트 크기 조절)
+            const buttonTextStyle = {font: "30px Arial", fill: "#000000"};
+            this.arrowCountText = this.scene.add.text(arrow_x, arrow_y, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
 
             // 새로운 그래픽스 객체 생성
             this.graphics1 = scene.add.graphics();
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics1.fillRect(arrow_x-26, arrow_y-26, this.btnArrowCoolTime.width*spriteScale, this.btnArrowCoolTime.height*spriteScale);
+            this.graphics1.fillRect(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * spriteScale, this.btnArrowCoolTime.height * spriteScale);
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics1.strokeRect(arrow_x-26, arrow_y-26, this.btnArrowCoolTime.width*spriteScale, this.btnArrowCoolTime.height*spriteScale);
+            this.graphics1.strokeRect(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * spriteScale, this.btnArrowCoolTime.height * spriteScale);
             // 카메라에 고정시키기
             this.graphics1.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics1.setInteractive(new Phaser.Geom.Rectangle(arrow_x - 26, arrow_y-26, this.btnArrowCoolTime.width*spriteScale, this.btnArrowCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics1.setInteractive(new Phaser.Geom.Rectangle(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * spriteScale, this.btnArrowCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
 
-                
+
             // 버튼을 눌렀을 때 (pointerdown)
             this.graphics1.on('pointerdown', () => {
                 console.log('Button pressed down!');
@@ -295,16 +315,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics2.fillRect(magic_x-26, magic_y-26, this.btnMagicCoolTime.width*spriteScale, this.btnMagicCoolTime.height*spriteScale);
+            this.graphics2.fillRect(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * spriteScale, this.btnMagicCoolTime.height * spriteScale);
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics2.strokeRect(magic_x-26, magic_y-26, this.btnMagicCoolTime.width*spriteScale, this.btnMagicCoolTime.height*spriteScale);
+            this.graphics2.strokeRect(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * spriteScale, this.btnMagicCoolTime.height * spriteScale);
             // 카메라에 고정시키기
             this.graphics2.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics2.setInteractive(new Phaser.Geom.Rectangle(magic_x - 26, magic_y-26, this.btnMagicCoolTime.width*spriteScale, this.btnMagicCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics2.setInteractive(new Phaser.Geom.Rectangle(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * spriteScale, this.btnMagicCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
 
-                
+
             // 버튼을 눌렀을 때 (pointerdown)
             this.graphics2.on('pointerdown', () => {
                 console.log('Button pressed down!');
@@ -354,16 +374,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics3.fillRect(slash_X-26, slash_y-26, this.btnSlashCoolTime.width*spriteScale, this.btnSlashCoolTime.height*spriteScale);
+            this.graphics3.fillRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * spriteScale, this.btnSlashCoolTime.height * spriteScale);
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics3.strokeRect(slash_X-26, slash_y-26, this.btnSlashCoolTime.width*spriteScale, this.btnSlashCoolTime.height*spriteScale);
+            this.graphics3.strokeRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * spriteScale, this.btnSlashCoolTime.height * spriteScale);
             // 카메라에 고정시키기
             this.graphics3.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics3.setInteractive(new Phaser.Geom.Rectangle(slash_X - 26, slash_y-26, this.btnSlashCoolTime.width*spriteScale, this.btnSlashCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics3.setInteractive(new Phaser.Geom.Rectangle(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * spriteScale, this.btnSlashCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
 
-                
+
             // 버튼을 눌렀을 때 (pointerdown)
             this.graphics3.on('pointerdown', () => {
                 console.log('Button pressed down!');
@@ -408,22 +428,21 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             });
 
 
-
             // 새로운 그래픽스 객체 생성
             this.graphics4 = scene.add.graphics();
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics4.fillRect(roll_x-26, roll_y-26, this.btnRollingCoolTime.width*spriteScale, this.btnRollingCoolTime.height*spriteScale);
+            this.graphics4.fillRect(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * spriteScale, this.btnRollingCoolTime.height * spriteScale);
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics4.strokeRect(roll_x-26, roll_y-26, this.btnRollingCoolTime.width*spriteScale, this.btnRollingCoolTime.height*spriteScale);
+            this.graphics4.strokeRect(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * spriteScale, this.btnRollingCoolTime.height * spriteScale);
             // 카메라에 고정시키기
             this.graphics4.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics4.setInteractive(new Phaser.Geom.Rectangle(roll_x - 26, roll_y-26, this.btnRollingCoolTime.width*spriteScale, this.btnRollingCoolTime.height*spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics4.setInteractive(new Phaser.Geom.Rectangle(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * spriteScale, this.btnRollingCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
 
-                
+
             // 버튼을 눌렀을 때 (pointerdown)
             this.graphics4.on('pointerdown', () => {
                 console.log('Button pressed down!');
@@ -468,12 +487,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             });
 
 
-        }
-        else if(type == 'pc'){
-            
+        } else if (type == 'pc') {
+
             // 화살 남은 갯수 text
             // 텍스트 스타일 (폰트 크기 조절)
-            const buttonTextStyle = { font: "18px Arial", fill: "#000000" };
+            const buttonTextStyle = {font: "18px Arial", fill: "#000000"};
             this.arrowCountText = this.scene.add.text(arrow_x, arrow_y, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
 
         }
@@ -484,7 +502,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 버튼 이미지 생성
         const button = scene.add.image(0, 0, 'button_indicator');
         button.setScale(spriteScale);
-        
+
         const skillSprite = scene.add.sprite(0, 0, spriteKey, spriteIndex).setOrigin(0.5, 0.5);
 
         // 오버레이 생성 (반투명한 검은색 사각형)
@@ -497,9 +515,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         const container = scene.add.container(x, y, [button, skillSprite, overlay]);
         container.setScrollFactor(0);
 
-        return { button, skillSprite, overlay, container};
+        return {button, skillSprite, overlay, container};
     }
-    
+
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
     static preload(scene) {
         scene.load.atlas('player', 'assets/player/player.png', 'assets/player/player_atlas.json');
@@ -517,8 +535,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.mp3');
         scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
 
-        scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', { frameWidth: 16, frameHeight: 16 });
-        scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', { frameWidth: 16, frameHeight: 16 });
+        scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
         scene.load.image('arrow_16', 'assets/item/arrow_16.png');
 
         scene.load.image('arrow_32', 'assets/player/arrow_32.png');
@@ -550,6 +574,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 칼 휘두르기
         // z키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
         if (Phaser.Input.Keyboard.JustDown(this.zKey)) {
+            if(this.scene.scene.isActive('StoreScene') === true)return;
+
             // 슬래시 쿨타임
             if (this.isSlash === true) {
                 this.isSlash = false;
@@ -569,15 +595,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         // x키 누르면 해당 방향으로 활 쏘기
         if (Phaser.Input.Keyboard.JustDown(this.xKey)) {
-            if(this.status.arrowCount > 0)
+            if(this.scene.scene.isActive('StoreScene') === true)return;
+            if (this.status.arrowCount > 0)
                 this.handleBow(); //활쏘기 동작 처리
         }
 
         //c키 누르면 마법 생성.
         if (Phaser.Input.Keyboard.JustDown(this.cKey)) {
+            if(this.scene.scene.isActive('StoreScene') === true)return;
             this.handleSpell(); //마법 부리기
         }
-
 
         // 8방향 이동과 구르기
         // 몬스터와 부딪힌 상태가 아니고, 구르는 상태가 아닐때
@@ -594,6 +621,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
+                if(this.scene.scene.isActive('StoreScene') === true)return;
 
                 this.handleRoll(playerVelocity); // 구르기
             }
@@ -665,24 +693,24 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         console.log('this.status.arrowCount --');
         this.status.arrowCount--;
-        console.log('this.status.arrowCount : '+this.status.arrowCount);
+        console.log('this.status.arrowCount : ' + this.status.arrowCount);
         // this.scene.setArrowBtnStatus(this.status.arrowCount);
-        if(this.status.arrowCount == 0){
+        if (this.status.arrowCount == 0) {
             this.overLayArrowCoolTime.setVisible(true);
             this.overLayArrowCoolTime.clear();
             this.overLayArrowCoolTime.fillStyle(0x808080, 0.5); // 회색(0x808080) 색상 사용
             this.overLayArrowCoolTime.fillRect(
-                this.btnArrowCoolTime.x - this.btnArrowCoolTime.width * this.btnArrowCoolTime.scaleX / 2, 
-                this.btnArrowCoolTime.y - this.btnArrowCoolTime.height * this.btnArrowCoolTime.scaleY / 2, 
-                this.btnArrowCoolTime.width * this.btnArrowCoolTime.scaleX, 
+                this.btnArrowCoolTime.x - this.btnArrowCoolTime.width * this.btnArrowCoolTime.scaleX / 2,
+                this.btnArrowCoolTime.y - this.btnArrowCoolTime.height * this.btnArrowCoolTime.scaleY / 2,
+                this.btnArrowCoolTime.width * this.btnArrowCoolTime.scaleX,
                 this.btnArrowCoolTime.height * this.btnArrowCoolTime.scaleY
             );
             this.overLayArrowCoolTime.setVisible(true);
-            
+
         }
 
         this.arrowCountText.setText(this.status.arrowCount);
-        
+
     }
 
     // 화살의 갯수를 증가시키는 함수
@@ -1120,38 +1148,38 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             overlay.clear();
             overlay.fillStyle(0x808080, 0.5); // 회색(0x808080) 색상 사용
             overlay.fillRect(
-                button.x - button.width * button.scaleX / 2, 
-                button.y - button.height * button.scaleY / 2, 
-                button.width * button.scaleX, 
+                button.x - button.width * button.scaleX / 2,
+                button.y - button.height * button.scaleY / 2,
+                button.width * button.scaleX,
                 button.height * button.scaleY
             );
             overlay.setVisible(true);
-            return { isCoolingDown: true, cooldownElapsed: 0 }; // 쿨타임 중으로 유지
+            return {isCoolingDown: true, cooldownElapsed: 0}; // 쿨타임 중으로 유지
         }
 
 
         if (isCoolingDown) {
             // 쿨타임이 진행 중이면 경과 시간 갱신
             cooldownElapsed += delta;
-    
+
             // 쿨타임 게이지의 남은 시간 비율 계산 (0에서 1 사이 값)
             let remainingTimeRatio = 1 - (cooldownElapsed / coolTime);
-    
+
             // 오버레이 초기화
             overlay.clear();
             overlay.fillStyle(0x000000, 0.5);
-            
+
             // 남은 시간 비율에 따라 오버레이 크기 조정
             const overlayHeight = button.height * button.scaleY * remainingTimeRatio;
             const overlayY = button.y - button.height * button.scaleY / 2 + (button.height * button.scaleY - overlayHeight);
-    
+
             overlay.fillRect(
-                button.x - button.width * button.scaleX / 2, 
-                overlayY, 
-                button.width * button.scaleX, 
+                button.x - button.width * button.scaleX / 2,
+                overlayY,
+                button.width * button.scaleX,
                 overlayHeight
             );
-    
+
             if (cooldownElapsed >= coolTime) {
                 // 쿨타임이 완료되면 초기화
                 isCoolingDown = false;
@@ -1161,8 +1189,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
                 overlay.setVisible(true);
             }
         }
-    
-        return { isCoolingDown, cooldownElapsed };
+
+        return {isCoolingDown, cooldownElapsed};
     }
 
 
@@ -1177,11 +1205,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.btnRollingCoolTime,
             isEnabled // 활성화 여부 전달
         );
-    
+
         this.isRollingOverLayCoolingDown = result.isCoolingDown;
         this.rollingCooldownElapsed = result.cooldownElapsed;
     }
-    
+
     slashCoolTimeIndicator(delta) {
         const result = this.coolTimeIndicator(
             delta,
@@ -1191,11 +1219,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.overLaySlashCoolTime,
             this.btnSlashCoolTime
         );
-    
+
         this.isSlashOverLayCoolingDown = result.isCoolingDown;
         this.slashCooldownElapsed = result.cooldownElapsed;
     }
-    
+
     magicCoolTimeIndicator(delta) {
         const result = this.coolTimeIndicator(
             delta,
@@ -1205,7 +1233,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.overLayMagicCoolTime,
             this.btnMagicCoolTime
         );
-    
+
         this.isMagicOverLayCoolingDown = result.isCoolingDown;
         this.magicCooldownElapsed = result.cooldownElapsed;
     }

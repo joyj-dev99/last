@@ -13,7 +13,7 @@ export default class StageManager {
         this.skipTutorial = skipTutorial;
     }
 
-    static preload(scene){
+    static preload(scene) {
         scene.load.audio("forest_default", "assets/suno/battle_1.wav");
         scene.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
         scene.load.audio("dungeon_default", "assets/audio/background/dungeon/dungeon_default.mp3");
@@ -52,7 +52,7 @@ export default class StageManager {
                 this.setBGM('forest_default');
                 this.scene.isInDialogue = true;
                 dialogueMessages = [
-                    {name : '맥스', portrait : 'MaxPotrait', message : '가자. 에덴으로.'},
+                    {name: '맥스', portrait: 'MaxPotrait', message: '가자. 에덴으로.'},
                 ];
             } else if (stageNumber == 1 && partNumber < 4) {
                 this.setBGM('forest_default');
@@ -66,20 +66,17 @@ export default class StageManager {
             } else if (stageNumber == 2 && partNumber == 4) {
                 this.setBGM('dungeon_boss');
                 dialogueMessages = null;
-            } 
-            else if (stageNumber == 3 && partNumber < 4) {
+            } else if (stageNumber == 3 && partNumber < 4) {
                 this.setBGM('room_default');
                 // 대화
                 dialogueMessages = null;
-            }
-
-            else if (stageNumber == 3 && mapNumber === 'boss') {
+            } else if (stageNumber == 3 && mapNumber === 'boss') {
                 this.setBGM('room_boss');
                 this.scene.isInDialogue = true;
                 dialogueMessages = [
-                    {name : '볼프강', portrait : 'WolfgangPotrait', message : '오, 맥스. 드디어 왔구나.'},
-                    {name : '볼프강', portrait : 'WolfgangPotrait', message : '쥐새끼처럼 내 연구소를 들쑤시고 다녔다지?'},
-                    {name : '맥스', portrait : 'MaxPotrait', message : '볼프강! 가만두지 않겠다!'},
+                    {name: '볼프강', portrait: 'WolfgangPotrait', message: '오, 맥스. 드디어 왔구나.'},
+                    {name: '볼프강', portrait: 'WolfgangPotrait', message: '쥐새끼처럼 내 연구소를 들쑤시고 다녔다지?'},
+                    {name: '맥스', portrait: 'MaxPotrait', message: '볼프강! 가만두지 않겠다!'},
                 ];
             }
             if (dialogueMessages != null) {
@@ -87,10 +84,9 @@ export default class StageManager {
                 this.dialog.showDialogModal(dialogueMessages, () => {
                     this.startBattleSequence();
                 });
-                if(type == 'pc'){
+                if (type == 'pc') {
                     this.dialog.addInstructions('space');
-                }
-                else if(type == 'mobile'){
+                } else if (type == 'mobile') {
                     this.dialog.addInstructions('next');
                 }
             } else {
@@ -369,6 +365,7 @@ export default class StageManager {
         if (this.scene.returnStoreStatus !== undefined) {
             this.scene.returnStoreStatus = undefined;
             this.storeFlag.destroy();
+
             this.scene.player.arrowCountText.setText(this.scene.player.status.arrowCount);
             this.scene.coinIndicatorText.setText(`Coins : ${this.scene.player.status.coin}`);
             if (this.scene.player.status.arrowCount === 0) {
@@ -380,12 +377,13 @@ export default class StageManager {
     }
 
     goToStore() {
+
         this.scene.scene.launch('StoreScene', {
             stageNumber: this.scene.stageNumber,
             partNumber: this.scene.partNumber,
             mapNumber: 0,
             mapAttribute: true,
-            playerStatus: this.scene.player.status
+            playerStatus: this.scene.player.status,
         });
     }
 
