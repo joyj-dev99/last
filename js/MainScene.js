@@ -953,7 +953,6 @@ export default class MainScene extends Phaser.Scene {
 
     }
 
-
     setCollisionOfMonsterShortAttack(attack) {
         this.matterCollision.addOnCollideStart({
             objectA: this.player, // 플레이어
