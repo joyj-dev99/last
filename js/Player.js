@@ -25,8 +25,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 플레이어 상태 정보 초기화
         this.status = {
             name: '맥스',
-            maxHeart: 15,
-            nowHeart: 15,
+            maxHeart: 5,
+            nowHeart: 5,
             //검 공격력
             swordATK: 100,
             //활 공격력

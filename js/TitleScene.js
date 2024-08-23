@@ -19,7 +19,7 @@ export default class TitleScene extends Phaser.Scene {
 
     create() {
         // 페이드인 효과 적용
-        this.cameras.main.fadeIn(2000, 0, 0, 0);
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
 
         const mapWidth = 454;
         const mapHieght = 256;

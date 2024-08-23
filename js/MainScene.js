@@ -205,7 +205,7 @@ export default class MainScene extends Phaser.Scene {
             }, [], this);
         });
 
-
+       
         // 플레이어와 몬스터 충돌 이벤트 설정
         this.matterCollision.addOnCollideStart({
             objectA: this.player,
