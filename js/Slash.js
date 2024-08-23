@@ -1,28 +1,29 @@
 import {MONSTER_CATEGORY, PLAYER_ATTACK_CATEGORY, PLAYER_ATTACK_GROUP} from "./constants.js";
 
-export default class Slash extends Phaser.Physics.Matter.Sprite{
+export default class Slash extends Phaser.Physics.Matter.Sprite {
 
-    constructor(scene, x, y){
+    constructor(scene, x, y) {
 
-        super(scene.matter.world, x, y, 'slash', 'fe1002_01');
+        super(scene.matter.world, x, y, 'slash', 'slash_1_0');
 
         // 플레이어 스프라이트를 장면에 추가하여 화면에 렌더링되고 다른 게임 객체들과 상호작용
         // 화면에 아이템 보이게하기
-        scene.add.existing(this);  
+        scene.add.existing(this);
 
         // Initialize the animation
-        this.play('slash');
+        // slash_anim.json의 key를 작성함
+        this.play('slash_1');
 
         // Scale the sprite visually
-        this.setScale(1.5);
+        // this.setScale(2);
 
         // 물리적 바디 설정
-        const { Body, Bodies } = Phaser.Physics.Matter.Matter;
+        const {Body, Bodies} = Phaser.Physics.Matter.Matter;
         //물리적 바디가 초기 시각적 스프라이트 위치와 일치
-        const slashCollider = Bodies.rectangle(this.x, this.y, 35, 35, { 
+        const slashCollider = Bodies.rectangle(this.x, this.y, 35 * 1.5, 35 * 1.5, {
             isSensor: false,
-            isStatic: false, 
-            label: 'slash' 
+            isStatic: false,
+            label: 'slash'
         });
         this.setExistingBody(slashCollider);
         //충돌로 인한 회전을 방지

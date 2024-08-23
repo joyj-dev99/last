@@ -90,8 +90,10 @@ export default class MonsterGolem extends Monster {
     }
 
     destroy() {
+        if (this.golemBeam !== undefined){
+            this.golemBeam.destroy();
+        }
         this.attackEvent.remove();
-        this.golemBeam.destroy();
         super.destroy();
     }
 

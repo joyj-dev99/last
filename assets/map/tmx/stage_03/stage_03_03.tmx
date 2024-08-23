@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="10">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="14">
  <tileset firstgid="1" name="Modern_Office_32x32" tilewidth="32" tileheight="32" tilecount="848" columns="16">
-  <image source="../Modern_Office_32x32.png" width="512" height="1696"/>
+  <image source="../../Modern_Office_32x32.png" width="512" height="1696"/>
  </tileset>
  <tileset firstgid="849" name="Room_Builder_Office_32x32" tilewidth="32" tileheight="32" tilecount="224" columns="16">
-  <image source="../Room_Builder_Office_32x32.png" width="512" height="448"/>
+  <image source="../../Room_Builder_Office_32x32.png" width="512" height="448"/>
   <tile id="80">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -374,12 +374,12 @@
 1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042
 </data>
  </layer>
- <layer id="4" name="decor1" width="30" height="10" locked="1">
+ <layer id="4" name="decor1" width="30" height="10">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,894,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,894,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,894,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-879,879,879,879,879,879,879,879,879,879,879,879,879,880,0,0,0,879,879,879,879,879,879,879,879,879,879,879,879,879,
+0,0,0,0,0,0,0,0,0,0,0,0,0,264,265,264,265,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,264,265,264,265,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,264,265,264,265,0,0,0,0,0,0,0,0,0,0,0,0,0,
+879,879,879,879,879,879,879,879,879,879,879,879,879,280,281,280,281,879,879,879,879,879,879,879,879,879,879,879,879,879,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -403,13 +403,13 @@
 </data>
  </layer>
  <objectgroup id="6" name="object">
-  <object id="1" name="chordStart" type="chord" x="30.6667" y="148">
+  <object id="1" name="chordStart" type="chord" x="62.2755" y="155.662">
    <point/>
   </object>
-  <object id="2" name="playerStart" x="34.6667" y="221.333">
+  <object id="2" name="playerStart" x="41.3716" y="219.417">
    <point/>
   </object>
-  <object id="3" name="chordBattle" type="chord" x="478.667" y="58.6667">
+  <object id="3" name="chordBattle" type="chord" x="398.208" y="118.053">
    <point/>
   </object>
   <object id="4" name="milestone" x="930.667" y="168">
@@ -418,13 +418,25 @@
   <object id="5" name="chordEnd" type="chord" x="878.667" y="166.667">
    <point/>
   </object>
-  <object id="6" name="golem" type="monster" x="248" y="194.667">
+  <object id="6" name="eggplant" type="monster" x="205.782" y="188.74">
    <point/>
   </object>
-  <object id="7" name="golem" type="monster" x="460" y="177.333">
+  <object id="7" name="golem" type="monster" x="467.662" y="227.141">
    <point/>
   </object>
-  <object id="8" name="golem" type="monster" x="697.333" y="216">
+  <object id="8" name="eggplant" type="monster" x="657.935" y="217.265">
+   <point/>
+  </object>
+  <object id="10" name="lemon" type="monster" x="588.475" y="168.178">
+   <point/>
+  </object>
+  <object id="11" name="golem" type="monster" x="297.89" y="162.834">
+   <point/>
+  </object>
+  <object id="12" name="lemon" type="monster" x="329.929" y="236.178">
+   <point/>
+  </object>
+  <object id="13" name="golem" type="monster" x="764.885" y="166.967">
    <point/>
   </object>
  </objectgroup>

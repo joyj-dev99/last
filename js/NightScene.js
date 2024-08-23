@@ -30,9 +30,9 @@ export default class NightScene extends Phaser.Scene {
 
     preload() {
         this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-        this.load.tilemapTiledJSON("stage_01_night_map", "assets/map/stage_01_night.json");
+        this.load.tilemapTiledJSON("stage_01_night_map", "assets/map/stage_01/stage_01_night.json");
         this.load.image("labTileset", "assets/map/Lab Tileset.png");
-        this.load.tilemapTiledJSON("stage_02_night_map", "assets/map/stage_02_night.json");
+        this.load.tilemapTiledJSON("stage_02_night_map", "assets/map/stage_02/stage_02_night.json");
 
         // 배경음악 로드
         this.load.audio("night_default", "assets/audio/background/night/night_default.mp3");
@@ -47,7 +47,7 @@ export default class NightScene extends Phaser.Scene {
         this.cameras.main.fadeIn(1000, 0, 0, 0);
 
         this.matter.world.setBounds();
-        this.map = this.make.tilemap({key: `stage_0${this.stageNumber}_night_map`});
+        this.map = this.make.tilemap({key: `stage_0${this.stageNumber}_night_map`});//
         const forestTileset = this.map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
         const labTileset = this.map.addTilesetImage("Lab Tileset", "labTileset");
         
@@ -211,11 +211,11 @@ export default class NightScene extends Phaser.Scene {
             this.joystick = this.plugins.get('rexVirtualJoystick').add(this, {
                 x: 80,
                 y: 200,
-                radius: 100,
+                radius: 28,
                 base: this.add.circle(0, 0, 30, 0x888888),
                 thumb: this.add.circle(0, 0, 15, 0xcccccc),
                 dir: '8dir', 
-                forceMin: 16,
+                forceMin: 1,
             }).on('update', this.updateJoystickState, this);
         }
 

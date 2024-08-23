@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="17">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="24">
  <tileset firstgid="1" name="Modern_Office_32x32" tilewidth="32" tileheight="32" tilecount="848" columns="16">
-  <image source="../Modern_Office_32x32.png" width="512" height="1696"/>
+  <image source="../../Modern_Office_32x32.png" width="512" height="1696"/>
   <tile id="263">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -24,7 +24,7 @@
   </tile>
  </tileset>
  <tileset firstgid="849" name="Room_Builder_Office_32x32" tilewidth="32" tileheight="32" tilecount="224" columns="16">
-  <image source="../Room_Builder_Office_32x32.png" width="512" height="448"/>
+  <image source="../../Room_Builder_Office_32x32.png" width="512" height="448"/>
   <tile id="176">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -140,7 +140,7 @@
 908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908
 </data>
  </layer>
- <layer id="2" name="wall" width="30" height="10" locked="1">
+ <layer id="2" name="wall" width="30" height="10">
   <data encoding="csv">
 1025,1027,0,0,1032,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1027,
 1029,1031,0,0,1029,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1031,
@@ -150,11 +150,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-1025,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1027,0,0,0,0,1025,
-1041,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1043,0,0,0,0,1041
+1025,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1026,1027,0,0,1025,1026,1026,
+1041,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1043,0,0,1041,1042,1042
 </data>
  </layer>
- <layer id="3" name="decor1" width="30" height="10" locked="1">
+ <layer id="3" name="decor1" width="30" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -163,9 +163,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,248,249,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,264,265,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,264,265,0,0,0
 </data>
  </layer>
  <layer id="4" name="decor2" width="30" height="10" locked="1">
@@ -183,25 +183,46 @@
 </data>
  </layer>
  <objectgroup id="5" name="object">
-  <object id="4" name="playerStart" x="84" y="108">
+  <object id="4" name="playerStart" x="80.1686" y="121.41">
    <point/>
   </object>
   <object id="5" name="chordStart" type="chord" x="178" y="114">
    <point/>
   </object>
-  <object id="6" name="milestone" x="836" y="274">
+  <object id="6" name="milestone" x="820.674" y="236.644">
    <point/>
   </object>
-  <object id="9" name="chordEnd" type="chord" x="894" y="242">
+  <object id="9" name="chordEnd" type="chord" x="854.728" y="233.379">
    <point/>
   </object>
   <object id="11" name="chordBattle" type="chord" x="466" y="116">
    <point/>
   </object>
-  <object id="13" name="angle" type="monster" x="432" y="198">
+  <object id="13" name="lemon" type="monster" x="446.782" y="173.104">
    <point/>
   </object>
-  <object id="15" name="angle" type="monster" x="510" y="198">
+  <object id="15" name="angle" type="monster" x="374.536" y="237.448">
+   <point/>
+  </object>
+  <object id="17" name="apple" type="monster" x="170.497" y="209.768">
+   <point/>
+  </object>
+  <object id="18" name="lemon" type="monster" x="533.782" y="232.588">
+   <point/>
+  </object>
+  <object id="19" name="angle" type="monster" x="234.939" y="232.925">
+   <point/>
+  </object>
+  <object id="20" name="eggplant" type="monster" x="318.004" y="160.918">
+   <point/>
+  </object>
+  <object id="21" name="angle" type="monster" x="593.864" y="171.454">
+   <point/>
+  </object>
+  <object id="22" name="tomato" type="monster" x="690.606" y="160.918">
+   <point/>
+  </object>
+  <object id="23" name="angle" type="monster" x="731.793" y="226.051">
    <point/>
   </object>
  </objectgroup>

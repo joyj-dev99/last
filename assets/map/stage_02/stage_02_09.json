@@ -1,0 +1,476 @@
+{ "compressionlevel":-1,
+ "height":10,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[9, 9, 10, 9, 9, 9, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 9, 10, 9, 9, 9, 9, 9, 8, 9, 10,
+            9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 9, 9, 8, 9, 8, 9, 9, 9, 9, 9, 9, 9, 8, 9, 10,
+            9, 9, 9, 9, 9, 9, 9, 9, 8, 9, 10, 9, 9, 10, 9, 8, 9, 8, 9, 8, 9, 9, 9, 9, 9, 9, 9, 8, 9, 10,
+            9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 9, 10, 9, 8, 9, 8, 8, 10, 10, 9, 9, 9, 9, 9, 8, 9,
+            9, 9, 9, 9, 46, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 8, 9, 10, 9, 8, 9, 8, 26, 9, 9, 9, 9, 8, 9,
+            9, 9, 9, 8, 9, 10, 9, 10, 8, 9, 9, 9, 9, 8, 10, 10, 8, 9, 9, 28, 8, 9, 8, 9, 9, 8, 9, 9, 8, 9,
+            9, 26, 9, 9, 9, 9, 9, 10, 8, 9, 8, 8, 9, 10, 10, 9, 10, 9, 8, 9, 8, 9, 8, 9, 10, 9, 8, 9, 8, 9,
+            9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 9, 9, 8, 9, 10, 10, 8, 8, 9, 9, 9, 8, 8, 9, 9, 8, 9, 46, 9,
+            9, 9, 9, 9, 9, 8, 9, 8, 9, 8, 8, 9, 9, 8, 9, 10, 9, 9, 8, 8, 8, 9, 10, 8, 9, 9, 8, 8, 8, 9,
+            9, 9, 9, 9, 9, 8, 8, 8, 9, 8, 8, 9, 28, 8, 8, 8, 9, 9, 9, 8, 8, 9, 10, 8, 9, 9, 8, 8, 8, 9],
+         "height":10,
+         "id":1,
+         "name":"floor",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
+            22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
+            40, 40, 95, 40, 74, 55, 40, 40, 58, 59, 40, 40, 92, 40, 57, 40, 40, 40, 58, 55, 59, 58, 59, 40, 91, 40, 78, 40, 58, 2,
+            0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21,
+            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 20,
+            22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 0, 0, 0, 0, 0, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
+            40, 40, 79, 58, 59, 40, 40, 58, 59, 40, 149, 40, 19, 4, 4, 4, 4, 4, 20, 40, 40, 149, 59, 40, 40, 76, 59, 40, 149, 40],
+         "height":10,
+         "id":2,
+         "name":"wall",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 165, 0,
+            0, 0, 0, 0, 0, 0, 0, 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 151, 0, 0, 0, 0, 0, 0, 0, 0, 0, 220, 183, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 237, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 201, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 227, 228, 228, 228, 228, 228, 229, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 245, 246, 246, 246, 246, 246, 247, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 263, 264, 264, 264, 264, 264, 265, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":10,
+         "id":3,
+         "name":"decor1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 220, 0, 0, 0, 0, 0, 0, 0, 0, 220, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 219, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":10,
+         "id":4,
+         "name":"decor2",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"object",
+         "objects":[
+                {
+                 "height":0,
+                 "id":1,
+                 "name":"chordStart",
+                 "point":true,
+                 "rotation":0,
+                 "type":"chord",
+                 "visible":true,
+                 "width":0,
+                 "x":21.6216,
+                 "y":136.558
+                }, 
+                {
+                 "height":0,
+                 "id":2,
+                 "name":"playerStart",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":20.4836,
+                 "y":194.595
+                }, 
+                {
+                 "height":0,
+                 "id":3,
+                 "name":"chordBattle",
+                 "point":true,
+                 "rotation":0,
+                 "type":"chord",
+                 "visible":true,
+                 "width":0,
+                 "x":495.021,
+                 "y":297.013
+                }, 
+                {
+                 "height":0,
+                 "id":5,
+                 "name":"milestone",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":881.935,
+                 "y":109.246
+                }, 
+                {
+                 "height":0,
+                 "id":6,
+                 "name":"chordEnd",
+                 "point":true,
+                 "rotation":0,
+                 "type":"chord",
+                 "visible":true,
+                 "width":0,
+                 "x":848.933,
+                 "y":109.246
+                }, 
+                {
+                 "height":0,
+                 "id":7,
+                 "name":"mini goblin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":179.801,
+                 "y":153.627
+                }, 
+                {
+                 "height":0,
+                 "id":8,
+                 "name":"spider",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":304.979,
+                 "y":227.596
+                }, 
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"ratfolk",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":386.913,
+                 "y":154.765
+                }, 
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"mini goblin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":499.573,
+                 "y":219.63
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"mini goblin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":573.542,
+                 "y":150.213
+                }, 
+                {
+                 "height":0,
+                 "id":12,
+                 "name":"ratfolk",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":712.376,
+                 "y":226.458
+                }, 
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"mini goblin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":794.31,
+                 "y":149.075
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"ratfolk",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":120.413,
+                 "y":224.299
+                }, 
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"fly",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":213.674,
+                 "y":212.494
+                }, 
+                {
+                 "height":0,
+                 "id":16,
+                 "name":"spider",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":289.228,
+                 "y":138.121
+                }, 
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"fly",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":421.446,
+                 "y":221.938
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"mini goblin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":479.292,
+                 "y":138.121
+                }, 
+                {
+                 "height":0,
+                 "id":19,
+                 "name":"spider",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":633.94,
+                 "y":219.577
+                }, 
+                {
+                 "height":0,
+                 "id":20,
+                 "name":"fly",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":670.536,
+                 "y":144.024
+                }, 
+                {
+                 "height":0,
+                 "id":21,
+                 "name":"ratfolk",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":790.949,
+                 "y":212.494
+                }, 
+                {
+                 "height":0,
+                 "id":22,
+                 "name":"mini goblin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":898.377,
+                 "y":221.938
+                }, 
+                {
+                 "height":0,
+                 "id":23,
+                 "name":"spider",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":916.085,
+                 "y":180.62
+                }, 
+                {
+                 "height":0,
+                 "id":24,
+                 "name":"fly",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":96.8028,
+                 "y":140.482
+                }, 
+                {
+                 "height":0,
+                 "id":25,
+                 "name":"spider",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":585.539,
+                 "y":229.021
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":6,
+ "nextobjectid":29,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.11.0",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "columns":18,
+         "firstgid":1,
+         "image":"..\/Royal Dungeon Tileset.png",
+         "imageheight":704,
+         "imagewidth":576,
+         "margin":0,
+         "name":"Royal Dungeon Tileset",
+         "spacing":0,
+         "tilecount":396,
+         "tileheight":32,
+         "tiles":[
+                {
+                 "id":10,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":11,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":12,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":21,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":49,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":151,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":152,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }],
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "type":"map",
+ "version":"1.10",
+ "width":30
+}

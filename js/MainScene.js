@@ -3,28 +3,21 @@ import ProgressIndicator from "./ProgressIndicator.js";
 import TextIndicator from "./TextIndicator.js";
 import Item from "./Item.js";
 import Tutorial from "./Tutorial.js";
+import MeatCoin from "./MeatCoin.js";
 
 import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
-import MonsterTomato from "./monsters/MonsterTomato.js";
-import MonsterEggplant from "./monsters/MonsterEggplant.js";
 import MonsterApple from "./monsters/MonsterApple.js";
-import MonsterLemon from "./monsters/MonsterLemon.js";
 import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
-import MonsterFly from "./monsters/MonsterFly.js";
-import MonsterSpider from "./monsters/MonsterSpider.js";
-import MonsterMiniGoblin from "./monsters/MonsterMiniGoblin.js";
-import MonsterRatfolk from "./monsters/MonsterRatfolk.js";
 import MonsterBossGoblin from "./monsters/MonsterBossGoblin.js";
 import MonsterBossNecromancer from "./monsters/MonsterBossNecromancer.js";
-import MonsterBugbear from "./monsters/MonsterBugbear.js";
-import MonsterAngel from "./monsters/MonsterAngel.js";
-import MonsterGolem from "./monsters/MonsterGolem.js";
 import MonsterBossAlchemist from "./monsters/MonsterBossAlchemist.js";
 import MonsterBossWolfgang from "./monsters/MonsterBossWolfgang.js";
 
 import Milestone from "./objects/Milestone.js";
 import Chord from "./character/Chord.js";
+import StoreFlag from "./objects/StoreFlag.js";
+
 
 import Arrow from "./Arrow.js";
 import Slash from "./Slash.js";
@@ -32,7 +25,8 @@ import Magic from "./Magic.js";
 
 import Dialog from "./Dialog.js";
 import StageManager from "./StageManager.js";
-import { mapPreload, mapAttributes, attributeIcons, showMapSelectionUI } from './mapSelection.js';
+import {mapSlectionPreload, mapAttributes, attributeIcons, showMapSelectionUI} from './mapSelection.js';
+import {mapCreatePreload, setMapSize, setupMap,} from './mapCreate.js';
 
 import {
     PLAYER_CATEGORY,
@@ -45,7 +39,7 @@ import {
 } from "./constants.js";
 import Thelma from "./character/Thelma.js";
 
-const { type } = window.gameConfig;
+const {type} = window.gameConfig;
 
 export default class MainScene extends Phaser.Scene {
 
@@ -58,14 +52,17 @@ export default class MainScene extends Phaser.Scene {
     init(data) {
         this.stageNumber = data.stageNumber || 1;
         this.partNumber = data.partNumber || 1;
-        this.mapNumber = data.mapNumber || 0;
-        this.mapAttribute = data.mapAttribute || 0;
-        
+        this.mapNumber = data.mapNumber || 1;
+        console.log('init mapNumber : ', this.mapNumber);
+        this.mapAttribute = data.mapAttribute || 1;
+        this.battleEnd = data.battleEnd || false;
+
         this.playerStatus = data.playerStatus || null;
         this.skipTutorial = data.skipTutorial || false;
 
         console.log(`스테이지 ${this.stageNumber} , 맵 : ${this.mapNumber}`);
         console.dir(this.playerStatus);
+        // arrowCount: 13으로 잘 넘어옴
 
         // 현재 스테이지에 살아있는 몬스터 객체를 담은 배열
         this.monsterArr = [];
@@ -81,90 +78,14 @@ export default class MainScene extends Phaser.Scene {
         this.isInDialogue = true;
 
         this.isMapSelectionActive = false; // UI 활성화 플래그
+        setMapSize(this, this.stageNumber, this.mapNumber);
 
-        if (this.stageNumber === 1 && this.mapNumber <= 9) { // 일반맵
-            this.mapWidth = 960;
-            this.mapHigth = 320;
-            this.minX = 10;
-            this.maxX = 950;
-            this.minY = 96;
-            this.maxY = 240;
-        } else if (this.stageManager === 1 && this.mapNumber === 10) { // 보너스맵
-            this.mapWidth = 480;
-            this.mapHigth = 320;
-            this.minX = 74;
-            this.maxX = 406;
-            this.minY = 74;
-            this.maxY = 278;
-        } else if (this.stageNumber === 1 && this.mapNumber == 11) { // 보스맵
-            this.mapWidth = 480;
-            this.mapHigth = 480;
-            this.minX = 74;
-            this.maxX = 406;
-            this.minY = 106;
-            this.maxY = 438;
-        } else if (this.stageNumber === 2 && this.mapNumber <= 9) { // 일반맵
-            this.mapWidth = 960;
-            this.mapHigth = 320;
-            this.minX = 10;
-            this.maxX = 950;
-            this.minY = 96;
-            this.maxY = 240;
-        } else if (this.stageManager === 2 && this.mapNumber === 10) { // 보너스맵
-            this.mapWidth = 480;
-            this.mapHigth = 320;
-            this.minX = 74;
-            this.maxX = 406;
-            this.minY = 74;
-            this.maxY = 278;
-        } else if (this.stageNumber === 2 && this.mapNumber == 11) { // 보스맵
-            this.mapWidth = 480;
-            this.mapHigth = 480;
-            this.minX = 74;
-            this.maxX = 406;
-            this.minY = 106;
-            this.maxY = 438;
-        } else if (this.stageNumber === 3 && this.mapNumber <= 9) { // 일반맵
-            this.mapWidth = 960;
-            this.mapHigth = 320;
-            this.minX = 10;
-            this.maxX = 950;
-            this.minY = 96;
-            this.maxY = 240;
-        } else if (this.stageManager === 3 && this.mapNumber === 10) { // 보너스맵
-            this.mapWidth = 480;
-            this.mapHigth = 320;
-            this.minX = 74;
-            this.maxX = 406;
-            this.minY = 74;
-            this.maxY = 278;
-        } else if (this.stageNumber === 3 && this.mapNumber == 11) { // 보스맵
-            this.mapWidth = 480;
-            this.mapHigth = 480;
-            this.minX = 74;
-            this.maxX = 406;
-            this.minY = 106;
-            this.maxY = 438;
-        }
+        this.input.addPointer(2); // 기본 포인터 외에 추가로 2개의 포인터를 허용
     }
 
     preload() {
-        mapPreload(this);
-
-        this.load.image("dungeonTileset", "assets/map/Royal Dungeon Tileset.png");
-        // this.load.tilemapTiledJSON("stage_02_01", "assets/map/stage_02_01.json");
-        // this.load.tilemapTiledJSON("stage_02_02", "assets/map/stage_02_02.json");
-        // this.load.tilemapTiledJSON("stage_02_03", "assets/map/stage_02_03.json");
-        // this.load.tilemapTiledJSON("stage_02_04", "assets/map/stage_02_04.json");
-
-        this.load.image("Tileset", "assets/map/Modern_Office_32x32.png");
-        this.load.image("Tileset2", "assets/map/Room_Builder_Office_32x32.png");
-        this.load.image("Tileset3", "assets/map/Lab Tileset.png");
-
-        // this.load.tilemapTiledJSON("stage_03_01", "assets/map/stage_03_01.json");
-        // this.load.tilemapTiledJSON("stage_03_02", "assets/map/stage_03_02.json");
-        // this.load.tilemapTiledJSON("stage_03_03", "assets/map/stage_03_03.json");
-        // this.load.tilemapTiledJSON("stage_03_04", "assets/map/stage_03_04.json");
+        mapCreatePreload(this);
+        mapSlectionPreload(this);
 
         // 배경음악 로드
         this.load.audio("get_item", "assets/audio/get_item.wav");
@@ -174,27 +95,28 @@ export default class MainScene extends Phaser.Scene {
         this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
         this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
         this.load.audio("small_shot", "assets/audio/small_shot.wav");
-        
-        // 설정
-        this.load.spritesheet('setting', 'assets/ui/Blue_Buttons_Pixel2.png', { frameWidth: 16, frameHeight: 16 });
-        this.load.spritesheet('status', 'assets/ui/on_off.png', { frameWidth: 32, frameHeight: 16 });
-
+        this.load.audio("monster_clear", "assets/audio/팡파르 나팔소리.mp3");
+        this.load.audio("boss_monster_clear", "assets/audio/노래방 100점.mp3");
 
         // 설정
-        this.load.spritesheet('setting', 'assets/ui/Blue_Buttons_Pixel2.png', { frameWidth: 16, frameHeight: 16 });
-        this.load.spritesheet('status', 'assets/ui/on_off.png', { frameWidth: 32, frameHeight: 16 });
+        this.load.spritesheet('setting', 'assets/ui/Blue_Buttons_Pixel2.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('status', 'assets/ui/on_off.png', {frameWidth: 32, frameHeight: 16});
 
+        // // 버튼에 사용할 이미지 로드
+        // this.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', {
+        //     frameWidth: 32, // 각 프레임의 너비
+        //     frameHeight: 32, // 각 프레임의 높이
+        // });
 
-        // 버튼에 사용할 이미지 로드
-        this.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', {
-            frameWidth: 32, // 각 프레임의 너비
-            frameHeight: 32, // 각 프레임의 높이
-        });
+        // this.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', {
+        //     frameWidth: 32, // 각 프레임의 너비
+        //     frameHeight: 32, // 각 프레임의 높이
+        // });
 
-        this.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', {
-            frameWidth: 32, // 각 프레임의 너비
-            frameHeight: 32, // 각 프레임의 높이
-        });
+        // this.load.spritesheet('Sword And Arrow', 'assets/item/Sword And Arrow.png', {
+        //     frameWidth: 32, // 각 프레임의 너비
+        //     frameHeight: 32, // 각 프레임의 높이
+        // });
 
         Player.preload(this);
         Monster.preload(this);
@@ -208,11 +130,13 @@ export default class MainScene extends Phaser.Scene {
         Thelma.preload(this);
         Item.preload(this);
         Tutorial.preload(this);
+        MeatCoin.preload(this);
 
         ProgressIndicator.preload(this);
         HeartIndicator.preload(this);
         StageManager.preload(this);
 
+        StoreFlag.preload(this);
         Milestone.preload(this);
         Dialog.preload(this);
 
@@ -224,15 +148,22 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
+        setupMap(this, this.stageNumber, this.mapNumber);
+        this.setupWorld();
+
+        //필요한 객체 생성
+        this.meatcoin = new MeatCoin();
+        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3, this.stageNumber, this.mapNumber);
+        this.stageManager = new StageManager(this, this.player, this.chord, this.dialog, this.skipTutorial);
+
         // 씬이 시작될때 페이드인 효과 적용
         this.cameras.main.fadeIn(1000, 0, 0, 0);
-        this.setupWorld(this.stageNumber, this.mapNumber);
 
         this.getItemSound = this.sound.add(`get_item`, {
             volume: 0.7 // Set the volume (0 to 1)
         });
         this.coinDropSound = this.sound.add(`coin_drop`, {
-            volume: 0.4 // Set the volume (0 to 1)
+            volume: 0.2 // Set the volume (0 to 1)
         });
         this.potionDropSound = this.sound.add(`potion_drop`, {
             volume: 0.5 // Set the volume (0 to 1)
@@ -249,7 +180,12 @@ export default class MainScene extends Phaser.Scene {
         this.smallShotSound = this.sound.add(`small_shot`, {
             volume: 0.5 // Set the volume (0 to 1)
         });
-
+        this.monster_clear = this.sound.add(`monster_clear`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
+        this.boss_monster_clear = this.sound.add(`boss_monster_clear`, {
+            volume: 0.5 // Set the volume (0 to 1)
+        });
 
         if (this.partNumber < 4) {
             // 스테이지 진행률 UI
@@ -257,29 +193,15 @@ export default class MainScene extends Phaser.Scene {
         }
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this, 'heartSheet', this.player.status.nowHeart);
-        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3, this.stageNumber, this.mapNumber);
-        this.stageManager = new StageManager(this, this.player, this.chord, this.dialog, this.skipTutorial);
-        
-        //페이드인 완료 후 게임 실행
+        // 화살 갯수 UI 업데이트
+        this.player.arrowCountText.setText(this.player.status.arrowCount);
+
+        //페이드인 완료 후 게임 실행   
         this.cameras.main.once('camerafadeincomplete', (camera) => {
             this.time.delayedCall(1000, () => {
                 console.log('camerafadeincomplete');
 
-                this.stageManager.setStageStart(this.stageNumber, this.mapNumber,type);
-
-                // if(type === 'pc'){
-                // }
-                // else if(type === 'mobile'){
-                //     if(this.stageNumber == 1 && this.mapNumber == 1){
-                //         this.isInDialogue = false;
-                //         // 튜토리얼
-
-                //     }
-                //     else{
-                //         this.stageManager.setStageStart(this.stageNumber, this.mapNumber);
-                //     }
-                    
-                // }
+                this.stageManager.setStageStart(this.stageNumber, this.partNumber, this.mapNumber, type);
             }, [], this);
         });
 
@@ -316,41 +238,69 @@ export default class MainScene extends Phaser.Scene {
             this.input.keyboard.off('keydown-E', goToNextHandler);
             // UI가 이미 활성화된 경우 이중 실행 방지
             if (this.isMapSelectionActive) return;
-        
+            if (this.monsterArr.length !== 0) return;
+
+            if (this.partNumber === 4) {
+                // 보스맵으로 이동
+                let selectedAttribute = null;
+                this.scene.start('MainScene', {
+                    stageNumber: this.stageNumber,
+                    partNumber: this.partNumber + 1,
+                    mapNumber: 'boss',
+                    mapAttribute: selectedAttribute || null,
+                    playerStatus: this.player.status
+                });
+                this.backgroundMusic.stop();
+                this.dialog.hideDialogModal();  // 선택 후 대화창 숨기기
+            } else if (this.mapNumber === 'boss') {
+                // 보스맵으로 이동  
+                let selectedAttribute = null;
+                this.scene.start('NightScene', {
+                    stageNumber: this.stageNumber,
+                    partNumber: this.partNumber + 1,
+                    mapNumber: 'night',
+                    mapAttribute: selectedAttribute || null,
+                    playerStatus: this.player.status
+                });
+                this.backgroundMusic.stop();
+                this.dialog.hideDialogModal();  // 선택 후 대화창 숨기기
+            }
+
             this.isMapSelectionActive = true; // UI 활성화 플래그 설정
 
             // 10개의 맵 중에서 랜덤하게 3개의 맵을 선택
             const maps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
             const selectedMaps = Phaser.Utils.Array.Shuffle(maps).slice(0, 3);
 
-            const mapSelections = selectedMaps.map(mapNumber=> {
+            const mapSelections = selectedMaps.map(mapNumber => {
                 // 해당 맵의 속성 가져오기
                 const attributes = mapAttributes[mapNumber];
-                const selectedAttribute = Phaser.Utils.Array.GetRandom(attributes);  // 속성 랜덤 선택
-                const iconKey = attributeIcons[selectedAttribute];  // 속성에 해당하는 아이콘 가져오기
+                const attributeNumber = Phaser.Utils.Array.GetRandom(attributes);  // 속성 랜덤 선택
+                const iconKey = attributeIcons[attributeNumber];  // 속성에 해당하는 아이콘 가져오기
 
-                return { mapNumber, iconKey };
+                return {mapNumber, attributeNumber, iconKey};
             });
 
+
             // showMapSelectionUI 함수 호출
-            showMapSelectionUI.call(this, this, mapSelections, (selectedMapNumber, mapAttribute) => {
-                console.log(`Moving to map number ${selectedMapNumber}...mapAttribute : `, mapAttribute);
+            showMapSelectionUI.call(this, this, mapSelections, (selectedMapNumber, selectedAttribute) => {
+                console.log(`Moving to map number ${selectedMapNumber}...mapAttribute : `, selectedAttribute);
 
                 this.isMapSelectionActive = false; // UI 비활성화
-                this.scene.start('MainScene', { 
-                    stageNumber : this.stageNumber, 
+                this.scene.start('MainScene', {
+                    stageNumber: this.stageNumber,
                     partNumber: this.partNumber + 1,
                     mapNumber: selectedMapNumber,
-                    mapAttribute: mapAttribute, 
-                    playerStatus : this.player.status 
+                    mapAttribute: selectedAttribute,
+                    playerStatus: this.player.status
                 });
                 this.backgroundMusic.stop();
-                dialog.hideDialogModal();  // 선택 후 대화창 숨기기
+                this.dialog.hideDialogModal();  // 선택 후 대화창 숨기기
             }, () => {
                 console.log('Map selection cancelled');
                 this.isMapSelectionActive = false; // UI 비활성화
                 this.input.keyboard.on('keydown-E', goToNextHandler);
-                dialog.hideDialogModal();  // 취소 후 대화창 숨기기
+                this.dialog.hideDialogModal();  // 취소 후 대화창 숨기기
             });
         }
         if (this.milestone) {
@@ -383,7 +333,7 @@ export default class MainScene extends Phaser.Scene {
             });
         }
 
-        if(type === 'mobile'){
+        if (type === 'mobile') {
 
             // 가상 조이스틱 생성
             // 조이스틱 조작 시 player 에서 update를 실행할 때 신호를 준다.
@@ -391,313 +341,314 @@ export default class MainScene extends Phaser.Scene {
             this.joystick = this.plugins.get('rexVirtualJoystick').add(this, {
                 x: 80,
                 y: 200,
-                radius: 100,
+                radius: 28,
                 base: this.add.circle(0, 0, 30, 0x888888),
                 thumb: this.add.circle(0, 0, 15, 0xcccccc),
-                dir: '8dir', 
-                forceMin: 16,
+                dir: '8dir',
+                forceMin: 1,
             }).on('update', this.updateJoystickState, this);
-        
+        }
             // this.joystick.setEnable(false); // 조이스틱 컨테이너를 비활성화
             // this.joystick.setVisible(false); // 조이스틱 컨테이너를 숨김
 
-            
-            // 버튼 스타일 (폰트 크기 조절)
-            const buttonTextStyle = { font: "8px Arial", fill: "#000000" };
-            // 검 공격의 grapics1에 depth 설정하니까 다 플레이어 아래로 감..? 왜지?
-            const dialogDepth = 101;
 
-            // 검 공격 버튼
-            const text1 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 20, '검 공격', buttonTextStyle)
-            // .setDepth(dialogDepth)
-            .setOrigin(0.5).setScrollFactor(0);
+        //     // 버튼 스타일 (폰트 크기 조절)
+        //     const buttonTextStyle = {font: "8px Arial", fill: "#000000"};
+        //     // 검 공격의 grapics1에 depth 설정하니까 다 플레이어 아래로 감..? 왜지?
+        //     const dialogDepth = 101;
 
-            // 새로운 그래픽스 객체 생성
-            this.graphics1 = this.add.graphics();
-            // 바탕 투명한 흰색 설정 (투명도 0.5)
-            this.graphics1.fillStyle(0x000000, 0.5);
-            // 사각형 채우기 (x, y, width, height)
-            this.graphics1.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
-            // 선의 스타일 설정 (두께, 색상 등)
-            this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-            // 사각형 테두리 그리기
-            this.graphics1.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
-            // 카메라에 고정시키기
-            this.graphics1.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics1.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50), Phaser.Geom.Rectangle.Contains);
+        //     // 검 공격 버튼
+        //     const text1 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 20, '검 공격', buttonTextStyle)
+        //         // .setDepth(dialogDepth)
+        //         .setOrigin(0.5).setScrollFactor(0);
 
-            // 버튼 생성 검
-            this.button = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 40,'Weapons and Equipment' , 68)
-            .setScale(0.75)
-            // .setDepth(dialogDepth)
-            .setScrollFactor(0);
+        //     // 새로운 그래픽스 객체 생성
+        //     this.graphics1 = this.add.graphics();
+        //     // 바탕 투명한 흰색 설정 (투명도 0.5)
+        //     this.graphics1.fillStyle(0x000000, 0.5);
+        //     // 사각형 채우기 (x, y, width, height)
+        //     this.graphics1.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
+        //     // 선의 스타일 설정 (두께, 색상 등)
+        //     this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+        //     // 사각형 테두리 그리기
+        //     this.graphics1.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50);
+        //     // 카메라에 고정시키기
+        //     this.graphics1.setScrollFactor(0);//.setDepth(dialogDepth)
+        //     this.graphics1.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 101, this.cameras.main.height - 60, 42, 50), Phaser.Geom.Rectangle.Contains);
 
-
-
-            // 구르기 버튼
-            const text2 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 20, '구르기', buttonTextStyle)
-            .setOrigin(0.5).setScrollFactor(0);
-            text2.setDepth(100);
+        //     // 버튼 생성 검
+        //     this.button = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 40, 'Sword And Arrow', 0)
+        //         .setScale(0.75)
+        //         // .setDepth(dialogDepth)
+        //         .setScrollFactor(0);
 
 
-            // 새로운 그래픽스 객체 생성
-            this.graphics2 = this.add.graphics();
-            // 바탕 투명한 흰색 설정 (투명도 0.5)
-            this.graphics2.fillStyle(0x000000, 0.5);
-            // 사각형 채우기 (x, y, width, height)
-            this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 60,  42, 50);
-            // 선의 스타일 설정 (두께, 색상 등)
-            this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-            // 사각형 테두리 그리기
-            this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 60, 42, 50);
-            // 카메라에 고정시키기
-            this.graphics2.setScrollFactor(0);
-            this.graphics2.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 50, this.cameras.main.height - 60, 42, 50), Phaser.Geom.Rectangle.Contains);
-
-            this.graphics2.setDepth(99);
+        //     // 구르기 버튼
+        //     const text2 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 20, '구르기', buttonTextStyle)
+        //         .setOrigin(0.5).setScrollFactor(0);
+        //     text2.setDepth(100);
 
 
-            // 버튼 생성 구르기
-            this.button2 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 40, 'Skills and Spells' , 138)       
-                        .setScale(0.75)
-                        .setScrollFactor(0);
+        //     // 새로운 그래픽스 객체 생성
+        //     this.graphics2 = this.add.graphics();
+        //     // 바탕 투명한 흰색 설정 (투명도 0.5)
+        //     this.graphics2.fillStyle(0x000000, 0.5);
+        //     // 사각형 채우기 (x, y, width, height)
+        //     this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 60, 42, 50);
+        //     // 선의 스타일 설정 (두께, 색상 등)
+        //     this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+        //     // 사각형 테두리 그리기
+        //     this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 60, 42, 50);
+        //     // 카메라에 고정시키기
+        //     this.graphics2.setScrollFactor(0);
+        //     this.graphics2.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 50, this.cameras.main.height - 60, 42, 50), Phaser.Geom.Rectangle.Contains);
 
-            this.button2.setDepth(100);
-
-                    
-            // 활 공격 버튼
-            const text3 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 80, '활 공격', buttonTextStyle)
-            .setOrigin(0.5).setScrollFactor(0);
-
-            // 새로운 그래픽스 객체 생성
-            this.graphics3 = this.add.graphics();
-            // 바탕 투명한 흰색 설정 (투명도 0.5)
-            this.graphics3.fillStyle(0x000000, 0.5);
-            // 사각형 채우기 (x, y, width, height)
-            this.graphics3.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
-            // 선의 스타일 설정 (두께, 색상 등)
-            this.graphics3.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-            // 사각형 테두리 그리기
-            this.graphics3.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
-            // 카메라에 고정시키기
-            this.graphics3.setScrollFactor(0);
-            // this.graphics3.setInteractive({ useHandCursor: true });
-            this.graphics3.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50), Phaser.Geom.Rectangle.Contains);
-
-            // 버튼 생성 화살
-            this.button3 = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 100,'Weapons and Equipment' , 73)
-                            .setScale(0.75)
-                            .setScrollFactor(0);
+        //     this.graphics2.setDepth(99);
 
 
-            // 마법 공격 버튼
-            const text4 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 80, '마법 공격', buttonTextStyle)
-            .setOrigin(0.5).setScrollFactor(0);
+        //     // 버튼 생성 구르기
+        //     this.button2 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 40, 'Skills and Spells', 138)
+        //         .setScale(0.75)
+        //         .setScrollFactor(0);
 
-            // 새로운 그래픽스 객체 생성
-            this.graphics4 = this.add.graphics();
-            // 바탕 투명한 흰색 설정 (투명도 0.5)
-            this.graphics4.fillStyle(0x000000, 0.5); 
-            // 사각형 채우기 (x, y, width, height)
-            this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
-            // 선의 스타일 설정 (두께, 색상 등)
-            this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
-            // 사각형 테두리 그리기
-            this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
-            // 카메라에 고정시키기
-            this.graphics4.setScrollFactor(0);
-            this.graphics4.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50), Phaser.Geom.Rectangle.Contains);
-
-            // 버튼 생성 마법
-            this.button4 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 100, 'Skills and Spells', 1056)
-                        .setScale(0.75)
-                        .setScrollFactor(0);
-        
-
-            // 버튼을 눌렀을 때 (pointerdown)
-            this.graphics1.on('pointerdown', () => {
-                console.log('Button pressed down!');
-                this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
-
-                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-            const zKeyDownEvent = new KeyboardEvent('keydown', {
-                key: 'z',
-                code: 'KeyZ',
-                keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
-                bubbles: true,
-                cancelable: true
-            });
-
-            window.dispatchEvent(zKeyDownEvent);
-
-            });
-
-            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
-            this.graphics1.on('pointerup', () => {
-                console.log('Button released!');
-                this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
-
-                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-            const zKeyUpEvent = new KeyboardEvent('keyup', {
-                key: 'z',
-                code: 'KeyZ',
-                keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
-                bubbles: true,
-                cancelable: true
-            });
-
-            window.dispatchEvent(zKeyUpEvent);
-
-        });
-
-        // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
-        this.graphics1.on('pointerout', () => {
-            console.log('Pointer out of button!');
-            this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-        });
+        //     this.button2.setDepth(100);
 
 
-        // 버튼을 눌렀을 때 (pointerdown)
-        this.graphics2.on('pointerdown', () => {
-            console.log('Button pressed down!');
-            this.button2.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+        //     // 활 공격 버튼
+        //     const text3 = this.add.text(this.cameras.main.width - 79, this.cameras.main.height - 80, '활 공격', buttonTextStyle)
+        //         .setOrigin(0.5).setScrollFactor(0);
 
-            // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-            const shiftKeyDownEvent = new KeyboardEvent('keydown', {
-                key: 'Shift',
-                code: 'ShiftLeft',
-                keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
-                bubbles: true,
-                cancelable: true
-            });
+        //     // 새로운 그래픽스 객체 생성
+        //     this.graphics3 = this.add.graphics();
+        //     // 바탕 투명한 흰색 설정 (투명도 0.5)
+        //     this.graphics3.fillStyle(0x000000, 0.5);
+        //     // 사각형 채우기 (x, y, width, height)
+        //     this.graphics3.fillRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
+        //     // 선의 스타일 설정 (두께, 색상 등)
+        //     this.graphics3.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+        //     // 사각형 테두리 그리기
+        //     this.graphics3.strokeRect(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50);
+        //     // 카메라에 고정시키기
+        //     this.graphics3.setScrollFactor(0);
+        //     // this.graphics3.setInteractive({ useHandCursor: true });
+        //     this.graphics3.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 101, this.cameras.main.height - 120, 42, 50), Phaser.Geom.Rectangle.Contains);
 
-            window.dispatchEvent(shiftKeyDownEvent);
+        //     // 버튼 생성 화살
+        //     this.button3 = this.add.image(this.cameras.main.width - 79, this.cameras.main.height - 100, 'Sword And Arrow', 11)
+        //         .setScale(0.75)
+        //         .setScrollFactor(0);
 
-        });
-
-        // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
-        this.graphics2.on('pointerup', () => {
-            console.log('Button released!');
-            this.button2.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-            // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
-
-            // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-            const shiftKeyUpEvent = new KeyboardEvent('keyup', {
-                key: 'Shift',
-                code: 'ShiftLeft',
-                keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
-                bubbles: true,
-                cancelable: true
-            });
-
-            window.dispatchEvent(shiftKeyUpEvent);
-
-        });
-
-        // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
-        this.graphics2.on('pointerout', () => {
-            console.log('Pointer out of button!');
-            this.button2.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-        });
-        // 3
-           // 버튼을 눌렀을 때 (pointerdown)
-           this.graphics3.on('pointerdown', () => {
-               console.log('graphics3 pressed down!');
-                this.button3.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
-  
-               // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-              const shiftKeyDownEvent = new KeyboardEvent('keydown', {
-                  key: 'Shift',
-                  code: 'ShiftLeft',
-                  keyCode: Phaser.Input.Keyboard.KeyCodes.X,
-                  bubbles: true,
-                  cancelable: true
-              });
-  
-              window.dispatchEvent(shiftKeyDownEvent);
-  
-           });
-   
-           // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
-           this.graphics3.on('pointerup', () => {
-               console.log('Button released!');
-               this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-               // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
-  
-                  // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-              const shiftKeyUpEvent = new KeyboardEvent('keyup', {
-                  key: 'Shift',
-                  code: 'ShiftLeft',
-                  keyCode: Phaser.Input.Keyboard.KeyCodes.X,
-                  bubbles: true,
-                  cancelable: true
-              });
-  
-              window.dispatchEvent(shiftKeyUpEvent);
-  
-           });
-   
-           // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
-           this.graphics3.on('pointerout', () => {
-               console.log('Pointer out of button!');
-               this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-           });
-
-            // 버튼을 눌렀을 때 (pointerdown)
-            this.graphics4.on('pointerdown', () => {
-                console.log('Button pressed down!');
-                this.button4.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
-   
-                // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-               const shiftKeyDownEvent = new KeyboardEvent('keydown', {
-                   key: 'Shift',
-                   code: 'ShiftLeft',
-                   keyCode: Phaser.Input.Keyboard.KeyCodes.C,
-                   bubbles: true,
-                   cancelable: true
-               });
-   
-               window.dispatchEvent(shiftKeyDownEvent);
-   
-            });
-    
-            // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
-            this.graphics4.on('pointerup', () => {
-                console.log('Button released!');
-                this.button4.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-                // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
-   
-                   // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
-               const shiftKeyUpEvent = new KeyboardEvent('keyup', {
-                   key: 'Shift',
-                   code: 'ShiftLeft',
-                   keyCode: Phaser.Input.Keyboard.KeyCodes.C,
-                   bubbles: true,
-                   cancelable: true
-               });
-   
-               window.dispatchEvent(shiftKeyUpEvent);
-   
-            });
-    
-            // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
-            this.graphics4.on('pointerout', () => {
-                console.log('Pointer out of button!');
-                this.button4.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
-            });
+        //     this.setArrowBtnStatus(this.player.status.arrowCount);
 
 
-        }
-            
+        //     // 마법 공격 버튼
+        //     const text4 = this.add.text(this.cameras.main.width - 28, this.cameras.main.height - 80, '마법 공격', buttonTextStyle)
+        //         .setOrigin(0.5).setScrollFactor(0);
+
+        //     // 새로운 그래픽스 객체 생성
+        //     this.graphics4 = this.add.graphics();
+        //     // 바탕 투명한 흰색 설정 (투명도 0.5)
+        //     this.graphics4.fillStyle(0x000000, 0.5);
+        //     // 사각형 채우기 (x, y, width, height)
+        //     this.graphics1.fillRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
+        //     // 선의 스타일 설정 (두께, 색상 등)
+        //     this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
+        //     // 사각형 테두리 그리기
+        //     this.graphics1.strokeRect(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50);
+        //     // 카메라에 고정시키기
+        //     this.graphics4.setScrollFactor(0);
+        //     this.graphics4.setInteractive(new Phaser.Geom.Rectangle(this.cameras.main.width - 50, this.cameras.main.height - 120, 42, 50), Phaser.Geom.Rectangle.Contains);
+
+        //     // 버튼 생성 마법
+        //     this.button4 = this.add.image(this.cameras.main.width - 28, this.cameras.main.height - 100, 'Skills and Spells', 1056)
+        //         .setScale(0.75)
+        //         .setScrollFactor(0);
+
+
+        //     // 버튼을 눌렀을 때 (pointerdown)
+        //     this.graphics1.on('pointerdown', () => {
+        //         console.log('Button pressed down!');
+        //         this.button.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const zKeyDownEvent = new KeyboardEvent('keydown', {
+        //             key: 'z',
+        //             code: 'KeyZ',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(zKeyDownEvent);
+
+        //     });
+
+        //     // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+        //     this.graphics1.on('pointerup', () => {
+        //         console.log('Button released!');
+        //         this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //         // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const zKeyUpEvent = new KeyboardEvent('keyup', {
+        //             key: 'z',
+        //             code: 'KeyZ',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.Z,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(zKeyUpEvent);
+
+        //     });
+
+        //     // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+        //     this.graphics1.on('pointerout', () => {
+        //         console.log('Pointer out of button!');
+        //         this.button.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //     });
+
+
+        //     // 버튼을 눌렀을 때 (pointerdown)
+        //     this.graphics2.on('pointerdown', () => {
+        //         console.log('Button pressed down!');
+        //         this.button2.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+        //             key: 'Shift',
+        //             code: 'ShiftLeft',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(shiftKeyDownEvent);
+
+        //     });
+
+        //     // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+        //     this.graphics2.on('pointerup', () => {
+        //         console.log('Button released!');
+        //         this.button2.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //         // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+        //             key: 'Shift',
+        //             code: 'ShiftLeft',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(shiftKeyUpEvent);
+
+        //     });
+
+        //     // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+        //     this.graphics2.on('pointerout', () => {
+        //         console.log('Pointer out of button!');
+        //         this.button2.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //     });
+        //     // 3
+        //     // 버튼을 눌렀을 때 (pointerdown)
+        //     this.graphics3.on('pointerdown', () => {
+        //         console.log('graphics3 pressed down!');
+        //         this.button3.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+        //             key: 'Shift',
+        //             code: 'ShiftLeft',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(shiftKeyDownEvent);
+
+        //     });
+
+        //     // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+        //     this.graphics3.on('pointerup', () => {
+        //         console.log('Button released!');
+        //         this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //         // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+        //             key: 'Shift',
+        //             code: 'ShiftLeft',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.X,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(shiftKeyUpEvent);
+
+        //     });
+
+        //     // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+        //     this.graphics3.on('pointerout', () => {
+        //         console.log('Pointer out of button!');
+        //         this.button3.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //     });
+
+        //     // 버튼을 눌렀을 때 (pointerdown)
+        //     this.graphics4.on('pointerdown', () => {
+        //         console.log('Button pressed down!');
+        //         this.button4.setScale(0.65);  // 버튼 크기를 작게 하여 눌린 것처럼 보이게 함
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const shiftKeyDownEvent = new KeyboardEvent('keydown', {
+        //             key: 'Shift',
+        //             code: 'ShiftLeft',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.C,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(shiftKeyDownEvent);
+
+        //     });
+
+        //     // 버튼에서 손가락 또는 마우스를 뗐을 때 (pointerup)
+        //     this.graphics4.on('pointerup', () => {
+        //         console.log('Button released!');
+        //         this.button4.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //         // 여기서 버튼이 떼어졌을 때의 추가 동작을 수행할 수 있습니다.
+
+        //         // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
+        //         const shiftKeyUpEvent = new KeyboardEvent('keyup', {
+        //             key: 'Shift',
+        //             code: 'ShiftLeft',
+        //             keyCode: Phaser.Input.Keyboard.KeyCodes.C,
+        //             bubbles: true,
+        //             cancelable: true
+        //         });
+
+        //         window.dispatchEvent(shiftKeyUpEvent);
+
+        //     });
+
+        //     // 버튼을 눌렀다가 버튼 바깥으로 나갔을 때 (pointerout)
+        //     this.graphics4.on('pointerout', () => {
+        //         console.log('Pointer out of button!');
+        //         this.button4.setScale(0.75);  // 버튼 크기를 원래대로 되돌림
+        //     });
+
+
+        // }
+
     }
 
 
-    updateJoystickState(){
+    updateJoystickState() {
 
         var cursorKeys = this.joystick.createCursorKeys();
         let playerKeys = this.player.cursors;
-        
+
         playerKeys.right.isDown = cursorKeys.right.isDown;
         playerKeys.left.isDown = cursorKeys.left.isDown;
         playerKeys.up.isDown = cursorKeys.up.isDown;
@@ -706,327 +657,17 @@ export default class MainScene extends Phaser.Scene {
     }
 
 
-    update() {
+    update(time, delta) {
+        this.stageManager.update();
         this.heartIndicator.setHeart(this.player.status.nowHeart, this.player.status.maxHeart);
         if (this.isInDialogue || this.isMapSelectionActive || !this.player.isAlive) return;
-        this.player.update();
+        this.player.update(time, delta);
         this.monsterArr.forEach((monster) => {
             monster.update();
         });
     }
 
-    setupWorld(stageNumber, mapNumber) {
-        let map;
-        if (mapNumber === 0) {
-            map = this.make.tilemap({key: `stage_01_tutorial`});
-        } else if (mapNumber > 9) {
-            map = this.make.tilemap({key: `stage_0${stageNumber}_${mapNumber}`});
-        } else {
-            map = this.make.tilemap({key: `stage_0${stageNumber}_0${mapNumber}`});
-        }
-
-        if (stageNumber === 1) {
-            const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
-
-            const floor = map.createLayer("floor", forestTileset, 0, 0);
-            map.createLayer("cliff", forestTileset, 0, 0);
-            map.createLayer("decor1", forestTileset, 0, 0);
-            map.createLayer("decor2", forestTileset, 0, 0);
-
-            // 충돌이 필요한 타일 설정
-            floor.setCollisionByProperty({collides: true});
-            // 타일맵 레이어를 물리적으로 변환
-            this.matter.world.convertTilemapLayer(floor);
-            // 충돌 카테고리 설정
-            floor.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-                }
-            });
-        } else if (stageNumber === 2) {
-          
-            const dungeonTileset = map.addTilesetImage("Royal Dungeon Tileset", "dungeonTileset");
-
-            const floor = map.createLayer("floor", dungeonTileset, 0, 0);
-            const wall = map.createLayer("wall", dungeonTileset, 0, 0);
-            map.createLayer("decor1", dungeonTileset, 0, 0);
-            map.createLayer("decor2", dungeonTileset, 0, 0);
-
-            // 충돌이 필요한 타일 설정
-            floor.setCollisionByProperty({collides: true});
-            wall.setCollisionByProperty({collides: true});
-            // 타일맵 레이어를 물리적으로 변환
-            this.matter.world.convertTilemapLayer(floor);
-            this.matter.world.convertTilemapLayer(wall);
-            // 충돌 카테고리 설정
-            floor.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-                }
-            });
-            wall.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-                }
-            });
-
-        } else if (stageNumber === 3 && mapNumber <= 3) {
-            const Tileset = map.addTilesetImage("Modern_Office_32x32", "Tileset");
-            const Tileset2 = map.addTilesetImage("Room_Builder_Office_32x32", "Tileset2");
-
-            const floor = map.createLayer("floor", Tileset2, 0, 0);
-            const wall = map.createLayer("wall", Tileset2, 0, 0);
-            map.createLayer("decor1", Tileset2, 0, 0);
-            map.createLayer("decor2", Tileset, 0, 0);
-
-            // 충돌이 필요한 타일 설정
-            floor.setCollisionByProperty({collides: true});
-            wall.setCollisionByProperty({collides: true});
-            // 타일맵 레이어를 물리적으로 변환
-            this.matter.world.convertTilemapLayer(floor);
-            this.matter.world.convertTilemapLayer(wall);
-            // 충돌 카테고리 설정
-            floor.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-                }
-            });
-            wall.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-                }
-            });
-
-        } else if (stageNumber === 3 && mapNumber === 4) {
-
-            const Tileset = map.addTilesetImage("Lab Tileset", "Tileset3");
-
-            map.createLayer("floor", Tileset, 0, 0);
-            const wall = map.createLayer("wall", Tileset, 0, 0);
-            const decor1 = map.createLayer("decor1", Tileset, 0, 0);
-
-            // 충돌이 필요한 타일 설정
-            wall.setCollisionByProperty({collides: true});
-            decor1.setCollisionByProperty({collides: true});
-            // 타일맵 레이어를 물리적으로 변환
-            this.matter.world.convertTilemapLayer(wall);
-            this.matter.world.convertTilemapLayer(decor1);
-            // 충돌 카테고리 설정
-            wall.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = TILE_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY;
-                }
-            });
-            decor1.forEachTile(tile => {
-                if (tile.physics.matterBody) {
-                    tile.physics.matterBody.body.collisionFilter.category = OBJECT_CATEGORY;
-                    tile.physics.matterBody.body.collisionFilter.mask = PLAYER_CATEGORY | MONSTER_CATEGORY | PLAYER_ATTACK_CATEGORY | MONSTER_ATTACK_CATEGORY;
-                }
-            });
-
-        }
-
-        //오브젝트 레이어 관련 코드
-        const objectLayer = map.getObjectLayer('object');
-        console.log('map : ' + map);
-        console.dir(map);
-        console.log('objectLayer : ' + objectLayer);
-        objectLayer.objects.forEach(object => {
-            // 각 오브젝트의 속성에 접근
-            const {x, y, name, type} = object;
-            console.log(`Object: ${name}, Type: ${type}, X: ${x}, Y: ${y}`);
-
-            // 코드 생성 위치 설정
-            if (type === 'chord') {
-                if (name === 'chordStart') {
-                    this.chord = new Chord({
-                        scene: this,
-                        x: x,
-                        y: y
-                    });
-                } else if (name === 'chordBattle') {
-                    this.chordBattle = {x: x, y: y};
-                    console.log(`chordBattle = {x: ${this.chordBattle.x}, y: ${this.chordBattle.y}`);
-
-                } else if (name === 'chordEnd') {
-                    this.chordEnd = {x: x, y: y};
-                    console.log(`chordEnd = {x: ${this.chordEnd.x}, y: ${this.chordEnd.y}`);
-                }
-            }
-
-            // 표지판
-            if (name === 'milestone') {
-                this.milestone = new Milestone({
-                    scene: this,
-                    x: x,
-                    y: y
-                });
-            }
-
-            // 플레이어 시작 위치 설정
-            if (name === 'playerStart') {
-                this.player = new Player({
-                    scene: this,
-                    x: x,
-                    y: y
-                });
-                this.player.setDepth(100);
-                if (this.playerStatus != null) {
-                    this.player.status = this.playerStatus;
-                }
-            }
-        });
-
-        // 몬스터 생성 - 플레이어가 생성된 이후에 생성되어야 함.
-        objectLayer.objects.forEach(object => {
-            const {x, y, name, type} = object;
-            if (type === 'monster') {
-                let m;
-                //몬스터 종류에 따라 다르게 생성 -> 추후 구현
-                switch (name) {
-                    case 'tomato':
-                        m = new MonsterTomato({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'eggplant':
-                        m = new MonsterEggplant({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'apple':
-                        m = new MonsterApple({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'lemon' :
-                        m = new MonsterLemon({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'pumpkin' :
-                        m = new MonsterBossPumpkin({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'fly' :
-                        m = new MonsterFly({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'spider' :
-                        m = new MonsterSpider({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'mini goblin' :
-                        m = new MonsterMiniGoblin({//MonsterMiniGoblin
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'ratfolk' :
-                        m = new MonsterRatfolk({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'goblin' :
-                        m = new MonsterBossGoblin({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'necromancer':
-                        m = new MonsterBossNecromancer({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        this.necromancer = m;
-                        break;
-                    case 'bugbear' :
-                        m = new MonsterBugbear({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'angle' :
-                        m = new MonsterAngel({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'golem' :
-                        m = new MonsterGolem({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'alchemist' :
-                        m = new MonsterBossAlchemist({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-                    case 'Wolfgang' :
-                        m = new MonsterBossWolfgang({
-                            scene: this,
-                            x: x,
-                            y: y,
-                            player: this.player // 플레이어 객체 전달
-                        });
-                        break;
-
-                    default:
-                    // console.log("몬스터 생성 : " + name);
-                }
-                this.monsterArr.push(m);
-            }
-        });
-
+    setupWorld() {
         // 플레이어 움직임에 따라 카메라 이동
         this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHigth);
         this.matter.world.setBounds(0, 0, this.mapWidth, this.mapHigth);
@@ -1034,7 +675,7 @@ export default class MainScene extends Phaser.Scene {
 
         // X, Y 위치를 화면의 상단 우측으로 설정
         const x = 15;/// 2
-        const y = 6; 
+        const y = 6;
 
         // 상단 coins:{누적갯수} 텍스트 박스 표시
         this.coinIndicatorText = TextIndicator.createText(this, x, y, `Coins: ${this.player.status.coin}`, {
@@ -1051,20 +692,18 @@ export default class MainScene extends Phaser.Scene {
         TextIndicator.setScrollFactorText(this.coinIndicatorText);
 
         this.menuBtn = this.add.sprite(435, 16, 'setting', 22).setScale(1.3).setScrollFactor(0);//, 52
-        this.menuBtn.setInteractive({ useHandCursor: true });
+        this.menuBtn.setInteractive({useHandCursor: true});
 
         this.menuBtn.on('pointerdown', () => {
             console.log('menuBtn  pointerdown');
-                
 
-            if(this.container == undefined){
 
-           
+            if (this.container == undefined) {
                 // 컨테이너 및 UI 요소 설정
                 const panel = this.add
                     .rectangle(353, 30, 90, 45, '#FFFFFF', 0.8)
                     .setOrigin(0)
-                    .setStrokeStyle(8,'#FFFFFF', 1);
+                    .setStrokeStyle(8, '#FFFFFF', 1);
 
                 console.log('Panel:', panel);
 
@@ -1091,35 +730,34 @@ export default class MainScene extends Phaser.Scene {
                     // fontFamily: KENNEY_FUTURE_NARROW_FONT_NAME,
                     color: 'white',
                     fontSize: '216px',
-                    wordWrap: { width: 0 },
+                    wordWrap: {width: 0},
                 });
 
 
                 // 대화 텍스트 객체 추가
                 this.uiText = this.add.text(360, 38, '사운드', {
                     ...UI_TEXT_STYLE,
-                    ...{ fontSize: '10px' },
+                    ...{fontSize: '10px'},
                 }).setScrollFactor(0);
                 this.container.add(this.uiText);
 
                 // 대화 텍스트 객체 추가
                 this.uiText2 = this.add.text(360, 56, '배경음악', {
                     ...UI_TEXT_STYLE,
-                    ...{ fontSize: '10px' },
+                    ...{fontSize: '10px'},
                 }).setScrollFactor(0);
                 this.container.add(this.uiText2);
 
-                this.bgSoundIcon.setInteractive({ useHandCursor: true });
+                this.bgSoundIcon.setInteractive({useHandCursor: true});
 
                 this.bgSoundIcon.on('pointerdown', () => {
                     console.log('bgSoundIcon  pointerdown');
 
-                    if(window.gameConfig.bgVolume === 0){
+                    if (window.gameConfig.bgVolume === 0) {
                         this.bgSoundIcon.setTexture('status', 0);
                         window.gameConfig.bgVolume = 0.2;
                         this.backgroundMusic.setVolume(0.2);
-                    }
-                    else{
+                    } else {
                         this.bgSoundIcon.setTexture('status', 1);
                         window.gameConfig.bgVolume = 0;
                         this.backgroundMusic.setVolume(0);
@@ -1128,12 +766,12 @@ export default class MainScene extends Phaser.Scene {
                 });
 
 
-                this.soundIcon.setInteractive({ useHandCursor: true });
+                this.soundIcon.setInteractive({useHandCursor: true});
 
                 this.soundIcon.on('pointerdown', () => {
                     console.log('soundIcon  pointerdown');
 
-                    if(window.gameConfig.soundVolume === 0){
+                    if (window.gameConfig.soundVolume === 0) {
                         this.soundIcon.setTexture('status', 0);
                         window.gameConfig.soundVolume = 1;
 
@@ -1154,8 +792,7 @@ export default class MainScene extends Phaser.Scene {
                         this.player.soundRoll.setVolume(0.5);
 
                         // this.backgroundMusic.setVolume(0.2);
-                    }
-                    else{
+                    } else {
                         this.soundIcon.setTexture('status', 1);
                         window.gameConfig.soundVolume = 0;
 
@@ -1209,8 +846,8 @@ export default class MainScene extends Phaser.Scene {
                     const bounds2 = this.menuBtn.getBounds();
 
                     // 포인터가 설정 창 바깥을 클릭했는지 확인
-                    if (!Phaser.Geom.Rectangle.Contains(bounds, pointer.x, pointer.y) 
-                            && !Phaser.Geom.Rectangle.Contains(bounds2, pointer.x, pointer.y)) {
+                    if (!Phaser.Geom.Rectangle.Contains(bounds, pointer.x, pointer.y)
+                        && !Phaser.Geom.Rectangle.Contains(bounds2, pointer.x, pointer.y)) {
                         this.container.visible = false;
                         this.isInDialogue = false;
                         // this.soundToggle.visible = false;
@@ -1221,17 +858,15 @@ export default class MainScene extends Phaser.Scene {
 
                 this.input.on('pointerdown', this.handler, this);
 
-                if(window.gameConfig.bgVolume === 0){
+                if (window.gameConfig.bgVolume === 0) {
                     this.bgSoundIcon.setTexture('status', 1);
-                }
-                else{
+                } else {
                     this.bgSoundIcon.setTexture('status', 0);
                 }
 
-                if(window.gameConfig.soundVolume === 0){
+                if (window.gameConfig.soundVolume === 0) {
                     this.soundIcon.setTexture('status', 1);
-                }
-                else{
+                } else {
                     this.soundIcon.setTexture('status', 0);
                 }
                 // this.soundIcon.setTexture('status', 1);
@@ -1251,12 +886,13 @@ export default class MainScene extends Phaser.Scene {
 
         const index = this.monsterArr.indexOf(monster);
         if (index > -1) {
+            this.monsterArr[index].setVisible(false);
             this.monsterArr.splice(index, 1);
         }
         // 배열이 비었으면 전투 종료 메서드 실행
         if (this.monsterArr.length === 0) {
             this.time.delayedCall(1000, () => {
-                this.stageManager.setStageEnd(this.stageNumber, this.mapNumber);
+                this.stageManager.setStageEnd(this.stageNumber, this.mapNumber, this.mapAttribute);
             }, [], this);
         }
     }
@@ -1273,7 +909,11 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 화살에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.bowATK, gameObjectB);
                     if (result === 'death') {
-                        // this.iteamDrop(gameObjectA);
+                        if (gameObjectA instanceof Monster) { // 일반 몬스터일 경우
+                            this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        } else { // 보스 몬스터일 경우
+                            this.meatcoin.bossCoinDrop(this, gameObjectA.x, gameObjectA.y);
+                        }                        
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -1283,7 +923,11 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 칼날에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.swordATK, gameObjectB);
                     if (result === 'death') {
-                        // this.iteamDrop(gameObjectA);
+                        if (gameObjectA instanceof Monster) { // 일반 몬스터일 경우
+                            this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        } else { // 보스 몬스터일 경우
+                            this.meatcoin.bossCoinDrop(this, gameObjectA.x, gameObjectA.y);
+                        }  
                         // 몬스터 배열에서 해당 몬스터 제거
                         this.removeMonsterFromArr(gameObjectA);
                     }
@@ -1291,7 +935,11 @@ export default class MainScene extends Phaser.Scene {
                     console.log("몬스터가 마법에 맞음");
                     const result = gameObjectA.takeDamage(this.player.status.magicATK, gameObjectB);
                     if (result === 'death') {
-                        // this.iteamDrop(gameObjectA);
+                        if (gameObjectA instanceof Monster) { // 일반 몬스터일 경우
+                            this.meatcoin.coinDrop(this, 5, 10, gameObjectA.x, gameObjectA.y);
+                        } else { // 보스 몬스터일 경우
+                            this.meatcoin.bossCoinDrop(this, gameObjectA.x, gameObjectA.y);
+                        }  
                         // 몬스터 배열에서 해당 몬스터 제거
 
                         this.removeMonsterFromArr(gameObjectA);
@@ -1299,54 +947,9 @@ export default class MainScene extends Phaser.Scene {
                 }
             }
         });
+
+
     }
-
-    iteamDrop(monster) {
-        if (this.mapNumber === 1) {
-            //맵 1인 경우, 반드시 미트코인이 나온다
-            this.coinDropSound.play();
-
-            this.itemType = Item.COIN_ITEM;
-
-            // 몬스터의 위치에 객체 생성 
-            this.item = new Item({
-                scene: this,
-                x: monster.x,
-                y: monster.y,
-                itemType: this.itemType
-            });
-        } else {
-            this.potionDropSound.play();
-
-            // 아이템 종류 정하기 (토마토는 토마토시체 또는 코인 / 가지는 가지 시체 또는 코인)
-            this.itemType = Item.createItemType(monster);
-
-            // 몬스터의 위치에 객체 생성 
-            this.item = new Item({
-                scene: this,
-                x: monster.x,
-                y: monster.y,
-                itemType: this.itemType
-            });
-        }
-
-
-        // 플레이어와 아이템 충돌 이벤트 설정
-        const unsubscribe = this.matterCollision.addOnCollideStart({
-            objectA: this.player,
-            objectB: this.item,
-            callback: eventData => {
-                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
-                this.getItemSound.play();
-                console.log("플레이어와 아이템 충돌");
-                // 아이템 효과 적용하기 및 화면에 반영하기
-                gameObjectB.applyItem(gameObjectA, this.coinIndicatorText, this.heartIndicator);
-                unsubscribe();
-            }
-        });
-        
-    }
-
 
     setCollisionOfMonsterShortAttack(attack) {
         this.matterCollision.addOnCollideStart({
@@ -1365,21 +968,8 @@ export default class MainScene extends Phaser.Scene {
                         this.player.speed = initSpeed;
                     });
                 }
-
-                // // 충돌하면 총알 제거
-                // gameObjectB.destroy();
-                //
-                // // 충돌 후 애니메이션 재생 하고 소멸
-                // let egg_hit_anim = this.matter.add.sprite(x, y, 'eggplant_egg_hit');
-                // egg_hit_anim.setBody({width: 1, height: 1})
-                // egg_hit_anim.setSensor(true)
-                // egg_hit_anim.play('eggplant_egg_hit');
-                // this.time.delayedCall(600, () => {
-                //     egg_hit_anim.destroy();
-                // });
             }
         });
-
     }
 
     // 동적으로 생성된 몬스터 원거리 공격에 대한 충돌 이벤트 추가, 몸통박치기의 경우 이 메서드 사용하면 안됨

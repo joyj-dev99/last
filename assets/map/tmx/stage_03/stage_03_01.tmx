@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="8">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="18">
  <tileset firstgid="1" name="Modern_Office_32x32" tilewidth="32" tileheight="32" tilecount="848" columns="16">
-  <image source="../Modern_Office_32x32.png" width="512" height="1696"/>
+  <image source="../../Modern_Office_32x32.png" width="512" height="1696"/>
   <tile id="263">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -24,7 +24,7 @@
   </tile>
  </tileset>
  <tileset firstgid="849" name="Room_Builder_Office_32x32" tilewidth="32" tileheight="32" tilecount="224" columns="16">
-  <image source="../Room_Builder_Office_32x32.png" width="512" height="448"/>
+  <image source="../../Room_Builder_Office_32x32.png" width="512" height="448"/>
   <tile id="80">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -367,9 +367,9 @@
   </tile>
  </tileset>
  <tileset firstgid="1073" name="Lab Tileset" tilewidth="32" tileheight="32" tilecount="40" columns="5">
-  <image source="../Lab Tileset.png" width="160" height="256"/>
+  <image source="../../Lab Tileset.png" width="160" height="256"/>
  </tileset>
- <layer id="1" name="floor" width="30" height="10" locked="1">
+ <layer id="1" name="floor" width="30" height="10">
   <data encoding="csv">
 908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
 908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,908,
@@ -397,12 +397,12 @@
 1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1042,1043,0,0,1048
 </data>
  </layer>
- <layer id="3" name="decor1" width="30" height="10" locked="1">
+ <layer id="3" name="decor1" width="30" height="10">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-879,879,879,0,0,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,
+0,0,0,264,265,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,264,265,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,264,265,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+879,879,879,280,281,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,879,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -425,11 +425,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,264,265,0
 </data>
  </layer>
- <objectgroup id="6" name="object" locked="1">
+ <objectgroup id="6" name="object">
   <object id="1" name="playerStart" x="38" y="140">
    <point/>
   </object>
-  <object id="2" name="chordStart" type="chord" x="114" y="82">
+  <object id="2" name="chordStart" type="chord" x="80.1165" y="140.798">
    <point/>
   </object>
   <object id="3" name="chordBattle" type="chord" x="396" y="116">
@@ -441,10 +441,22 @@
   <object id="5" name="chordEnd" type="chord" x="910" y="218">
    <point/>
   </object>
-  <object id="6" name="bugbear" type="monster" x="440" y="204">
+  <object id="6" name="tomato" type="monster" x="622.373" y="156.164">
    <point/>
   </object>
-  <object id="7" name="bugbear" type="monster" x="494" y="206">
+  <object id="7" name="bugbear" type="monster" x="697.301" y="231.911">
+   <point/>
+  </object>
+  <object id="8" name="tomato" type="monster" x="325.88" y="228.216">
+   <point/>
+  </object>
+  <object id="9" name="bugbear" type="monster" x="223.232" y="160.449">
+   <point/>
+  </object>
+  <object id="10" name="lemon" type="monster" x="530.178" y="236.189">
+   <point/>
+  </object>
+  <object id="11" name="bugbear" type="monster" x="427.53" y="165.431">
    <point/>
   </object>
  </objectgroup>

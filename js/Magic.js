@@ -10,7 +10,7 @@ export default class Magic extends Phaser.Physics.Matter.Sprite {
         const player = scene.player;
         const monsterArr = scene.monsterArr;
         // 마법이 도달할 수 있는 최대 거리
-        const REACH = 150;
+        const REACH = 200;
 
         // 현재 플레이어가 바라보고 있는 방향 벡터
         const directionVector = new Phaser.Math.Vector2(player.isLookingRight ? 1 : -1, 0);
@@ -20,24 +20,26 @@ export default class Magic extends Phaser.Physics.Matter.Sprite {
         let minDistance = Infinity;
         const angleThreshold = Math.PI / 2; // 90도 각도로 반원 설정
 
-        monsterArr.forEach(monster => {
-            const monsterVector = new Phaser.Math.Vector2(monster.x - player.x, monster.y - player.y);
-            const distance = monsterVector.length();
-            console.log('distance : ', distance);
-
-            // 몬스터가 reach 내에 있는지 확인
-            if (distance <= REACH) {
-                // 몬스터와 플레이어가 바라보는 방향 간의 각도 계산
-                const angleBetween = Phaser.Math.Angle.Between(player.x, player.y, monster.x, monster.y);
-                const directionAngle = Math.atan2(directionVector.y, directionVector.x);
-
-                // 각도가 90도 이하일 때만 해당 몬스터를 대상으로 설정
-                if (Math.abs(Phaser.Math.Angle.Wrap(angleBetween - directionAngle)) <= angleThreshold && distance < minDistance) {
-                    minDistance = distance;
-                    closestMonster = monster;
+        if (monsterArr) {
+            monsterArr.forEach(monster => {
+                const monsterVector = new Phaser.Math.Vector2(monster.x - player.x, monster.y - player.y);
+                const distance = monsterVector.length();
+                console.log('distance : ', distance);
+    
+                // 몬스터가 reach 내에 있는지 확인
+                if (distance <= REACH) {
+                    // 몬스터와 플레이어가 바라보는 방향 간의 각도 계산
+                    const angleBetween = Phaser.Math.Angle.Between(player.x, player.y, monster.x, monster.y);
+                    const directionAngle = Math.atan2(directionVector.y, directionVector.x);
+    
+                    // 각도가 90도 이하일 때만 해당 몬스터를 대상으로 설정
+                    if (Math.abs(Phaser.Math.Angle.Wrap(angleBetween - directionAngle)) <= angleThreshold && distance < minDistance) {
+                        minDistance = distance;
+                        closestMonster = monster;
+                    }
                 }
-            }
-        });
+            });
+        }
 
         console.log('closestMonster : ', closestMonster);
 

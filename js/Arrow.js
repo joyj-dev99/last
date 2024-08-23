@@ -15,7 +15,7 @@ export default class Arrow extends Phaser.Physics.Matter.Sprite {
         // 물리적 바디 설정
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         //물리적 바디가 초기 시각적 스프라이트 위치와 일치
-        const arrowCollider = Bodies.rectangle(this.x, this.y, 12, 6, { 
+        const arrowCollider = Bodies.rectangle(this.x, this.y, 12, 6*4, {
             isSensor: false,
             isStatic: false, 
             label: 'arrow' 
@@ -38,10 +38,12 @@ export default class Arrow extends Phaser.Physics.Matter.Sprite {
         scene.time.addEvent({
             delay: this.DURATION,
             callback: () => {
-              this.destroy();
+                console.log('화살 제거됨');
+                this.destroy();
             },
             loop: false,
         });
+        
     }
 
     //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
@@ -63,7 +65,7 @@ export default class Arrow extends Phaser.Physics.Matter.Sprite {
         // 화살의 회전 각도를 플레이어의 이동 방향에 맞춤
         const angle = Phaser.Math.Angle.Between(0, 0, direction.x, direction.y);
         this.setRotation(angle);
-        
+         
     }
     
 }

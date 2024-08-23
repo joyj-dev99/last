@@ -1,4 +1,4 @@
-export default class HeartIndicator {//extends Phaser.GameObjects.Sprite 
+export default class HeartIndicator {
 
     static preload(scene) {
         scene.load.image('no_heart', 'assets/ui/no_heart.png');
@@ -6,30 +6,12 @@ export default class HeartIndicator {//extends Phaser.GameObjects.Sprite
         scene.load.image('heart', 'assets/ui/heart.png');
     }
 
-    constructor(scene, texture, num) {
-        // X, Y 위치를 화면의 상단 중앙으로 설정
-     
+    constructor(scene) {
         this.heartArr = [];
-        this.scene = scene;
-
-        // super(scene, x, y, texture);
-        // scene.add.existing(this);
-
-        // // 초기 프레임 설정
-        // this.setFrame(0);
-        // // 스크롤에 영향을 받지 않도록 설정 
-        // this.setScrollFactor(0);
-        // // 다른 오브젝트 위에 렌더링되도록 z-index 설정
-        // this.setDepth(1000);
-        // // 하트 크기 조절
-        // this.setScale(0.8);
-        // // 하트 조절
-        // this.setHeart(num);
-        
+        this.scene = scene;        
     }
 
     setHeart(nowHeart, maxHeart) {
-
         // 다 지우고
         this.heartArr.forEach((heart) => {
             heart.destroy();

@@ -1,45 +1,30 @@
-export function mapPreload(scene) {
+export function mapSlectionPreload(scene) {
     scene.load.image('heart_icon', "assets/map/icon/heart_icon.png");
-    scene.load.image('skill_icon', "assets/map/icon/skill_icon.png");
     scene.load.image('item_icon', "assets/map/icon/item_icon.png");
     scene.load.image('mystery_icon', "assets/map/icon/mystery_icon.png");
-    scene.load.image('skull_icon', "assets/map/icon/skull_icon.png");
+    scene.load.image('monster_icon', "assets/map/icon/monster_icon.png");
     scene.load.image('gift_icon', "assets/map/icon/gift_icon.png");
-    
-    scene.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-    scene.load.tilemapTiledJSON("stage_01_tutorial", "assets/map/stage_01/stage_01_tutorial.json");
-    scene.load.tilemapTiledJSON("stage_01_01", "assets/map/stage_01/stage_01_01.json");
-    scene.load.tilemapTiledJSON("stage_01_02", "assets/map/stage_01/stage_01_02.json");
-    scene.load.tilemapTiledJSON("stage_01_03", "assets/map/stage_01/stage_01_03.json");
-    scene.load.tilemapTiledJSON("stage_01_04", "assets/map/stage_01/stage_01_04.json");
-    scene.load.tilemapTiledJSON("stage_01_05", "assets/map/stage_01/stage_01_05.json");
-    scene.load.tilemapTiledJSON("stage_01_06", "assets/map/stage_01/stage_01_06.json");
-    scene.load.tilemapTiledJSON("stage_01_07", "assets/map/stage_01/stage_01_07.json");
-    scene.load.tilemapTiledJSON("stage_01_08", "assets/map/stage_01/stage_01_08.json");
-    scene.load.tilemapTiledJSON("stage_01_09", "assets/map/stage_01/stage_01_09.json");
-    scene.load.tilemapTiledJSON("stage_01_10", "assets/map/stage_01/stage_01_10.json");
 }
 
 export const mapAttributes = {
-    1: [1, 2, 3, 4],  // 속성 1~4번 중 하나 랜덤 선택
-    2: [1, 2, 3, 4],
-    3: [1, 2, 3, 4],
-    4: [1, 2, 3, 4],
-    5: [1, 2, 3, 4],
-    6: [1, 2, 3, 4],
-    7: [1, 2, 3, 4],
-    8: [5],  // 속성 5번
-    9: [5],  // 속성 5번
-    10: [6]   // 속성 6번
+    1: [1, 2, 3],  // 속성 1~3번 중 하나 랜덤 선택
+    2: [1, 2, 3],
+    3: [1, 2, 3],
+    4: [1, 2, 3],
+    5: [1, 2, 3],
+    6: [1, 2, 3],
+    7: [1, 2, 3],
+    8: [4],  
+    9: [4],  
+    10:[5] 
 };
 
 export const attributeIcons = {
     1: "heart_icon",  // 하트 드랍
-    2: "skill_icon",  // 스킬 드랍
-    3: "item_icon",   // 아이템 드랍
-    4: "mystery_icon",  // 알 수 없는 보상
-    5: "skull_icon",  // 몬스터 2배
-    6: "gift_icon"    // 아이템만 드랍
+    2: "item_icon",   // 아이템 드랍
+    3: "mystery_icon",  // 알 수 없는 보상
+    4: "monster_icon",  // 몬스터 2배
+    5: "gift_icon"    // 아이템만 드랍
 };
 
 // Dialog 클래스를 전역에서 사용할 수 있도록 선언
@@ -98,9 +83,10 @@ export function showMapSelectionUI(scene, mapSelections, onSelect, onCancel) {
 
         buttonContainer.setInteractive({ useHandCursor: true });
         buttonContainer.on('pointerdown', () => {
-            selectedIndex = index;
-            console.log('index : '+index);
-            onSelect(selectedMaps[selectedIndex]);
+            const selectedMap = mapSelections[index];
+            console.log('테스트중 : ', selectedMap);
+            
+            onSelect(selectedMap.mapNumber, selectedMap.attributeNumber);
             cleanup();
         })
         .on('pointerover', () => {
@@ -138,8 +124,9 @@ export function showMapSelectionUI(scene, mapSelections, onSelect, onCancel) {
             updateSelection();
         } else if (event.code === 'Space') {
             const selectedMap = mapSelections[selectedIndex];
-            const selectedMapAttribute = mapAttributes[selectedMap.mapNumber];
-            onSelect(selectedMap.mapNumber, selectedMapAttribute[0]);
+            console.log('테스트중 : ', selectedMap);
+            
+            onSelect(selectedMap.mapNumber, selectedMap.attributeNumber);
             cleanup();
         } else if (event.code === 'Escape') {
             onCancel();

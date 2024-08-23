@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="9">
  <tileset firstgid="1" name="Royal Dungeon Tileset" tilewidth="32" tileheight="32" tilecount="396" columns="18">
-  <image source="../Royal Dungeon Tileset.png" width="576" height="704"/>
+  <image source="../../Royal Dungeon Tileset.png" width="576" height="704"/>
   <tile id="10">
    <properties>
     <property name="collides" type="bool" value="true"/>
