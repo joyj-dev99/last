@@ -283,6 +283,8 @@ export default class StageManager {
     }
 
     setStageEnd(stageNumber, mapNumber, mapAttribute) {
+        console.log("StageManager setStageEnd" );
+
         this.scene.isInDialogue = true;
         this.player.stopMove();
         this.chord.setLocation(this.scene.chordEnd.x, this.scene.chordEnd.y);
@@ -372,8 +374,8 @@ export default class StageManager {
             this.scene.returnStoreStatus = undefined;
             // 모바일에서 this.scene.matterCollision.addOnCollideEnd 실행 안함...
             // 다시 mainScene으로 돌아오면 실행해야 하는데..
-            this.storeFlag.hideInteractPrompt();
-            console.log('StageManager update() hideInteractPrompt()');
+            // this.storeFlag.hideInteractPrompt();
+            // console.log('StageManager update() hideInteractPrompt()');
             this.storeFlag.destroy();
             console.log('StageManager this.storeFlag.destroy()');
             this.scene.player.arrowCountText.setText(this.scene.player.status.arrowCount);
