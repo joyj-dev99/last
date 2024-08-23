@@ -75,6 +75,9 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
                 this.interativeKeyImg.setInteractive();
                 // Add a click event listener to the sprite
                 this.interativeKeyImg.on('pointerdown', function (pointer) {
+
+                    console.log('StoreFlag pointerdown');
+
                     // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
                     const shiftKeyDownEvent = new KeyboardEvent('keydown', {
                         key: 'Shift',
@@ -101,8 +104,11 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
 
     // 상호작용 가능 표시를 숨기는 메서드
     hideInteractPrompt() {
+        console.log('StoreFlag hideInteractPrompt');
+
         if (this.interativeKeyImg) {
             this.interativeKeyImg.destroy();
+            console.log('this.interativeKeyImg.destroy()');
             this.interativeKeyImg = null;
         }
     }
