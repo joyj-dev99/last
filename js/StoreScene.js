@@ -52,6 +52,7 @@ export default class StoreScene extends Phaser.Scene {
 
         this.matter.world.setBounds();
         const map = this.make.tilemap({key: `stage_0${this.stageNumber}_store`});
+        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3, this.stageNumber, this.mapNumber);
 
         if (this.stageNumber === 1) {
             const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");

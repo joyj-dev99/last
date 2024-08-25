@@ -257,38 +257,21 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
         let dialogMessages = [];
         const dialog = this.scene.dialog;
         const player = this.scene.player;
+        console.log("dialog" + dialog);//dialogundefined
         console.log('item 효과적용 : ' + this.name);
 
-        
         // 붉은 하트
         if(this.itemKey == 1){
-            // 체력 +1 적용
+            dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
             player.increaseHeart(1);
             this.scene.heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
         
-            // 텍스트 띄우기
-            let text = TextIndicator.createText(this.scene, this.x,this.y, this.itemType.message, {
-                fontFamily: 'GalmuriMono7, sans-serif',
-                fontSize: '8px', //8배수 단위로 늘어나야 잘 보임
-                // fill: '#FFFFFF',
-                fill: '#000000',
-                resolution:2
-            });
-
-            this.scene.time.delayedCall(2000, () => {
-                // gpt가 이 지연 호출이 정확히 실행될 때 text 객체가 이미 파괴되었을 가능성이 있습니다. 
-                // 안전하게 처리하려면 text가 존재할 때만 제거하도록 할 수 있습니다.
-                // 라면서 확인하라고 해서 추가한 코드
-                if (text) {
-                    TextIndicator.removeText(text);
-                }
-            });
         }
         //천사의 심장
         else if(this.itemKey == 2){
             dialogMessages.push({ name: '델마', portrait: 'ThelmaPotrait', message: this.description});
             player.increaseMaxHeart(1);
-            heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
+            this.scene.heartIndicator.setHeart(player.status.nowHeart, player.status.maxHeart);
 
         }
         //팬텀 망토
@@ -352,7 +335,7 @@ export default class StoreItem extends Phaser.Physics.Matter.Sprite{
             // 아이템 효과 
         }
         
-        // dialog.showDialogModal(dialogMessages);
+        dialog.showDialogModal(dialogMessages);
 
         // 3초 후에 다이얼로그를 닫음
         setTimeout(() => {
