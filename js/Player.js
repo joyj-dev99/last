@@ -246,14 +246,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics1.fillRect(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * spriteScale, this.btnArrowCoolTime.height * spriteScale);
+            this.graphics1.fillRect(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * buttonScale, this.btnArrowCoolTime.height * buttonScale);//spriteScale
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics1.strokeRect(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * spriteScale, this.btnArrowCoolTime.height * spriteScale);
+            this.graphics1.strokeRect(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * buttonScale, this.btnArrowCoolTime.height * buttonScale);
             // 카메라에 고정시키기
             this.graphics1.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics1.setInteractive(new Phaser.Geom.Rectangle(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * spriteScale, this.btnArrowCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics1.setInteractive(new Phaser.Geom.Rectangle(arrow_x - 26, arrow_y - 26, this.btnArrowCoolTime.width * buttonScale, this.btnArrowCoolTime.height * buttonScale), Phaser.Geom.Rectangle.Contains);
 
 
             // 버튼을 눌렀을 때 (pointerdown)
@@ -304,14 +304,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics2.fillRect(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * spriteScale, this.btnMagicCoolTime.height * spriteScale);
+            this.graphics2.fillRect(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * buttonScale, this.btnMagicCoolTime.height * buttonScale);//spriteScale
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics2.strokeRect(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * spriteScale, this.btnMagicCoolTime.height * spriteScale);
+            this.graphics2.strokeRect(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * buttonScale, this.btnMagicCoolTime.height * buttonScale);
             // 카메라에 고정시키기
             this.graphics2.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics2.setInteractive(new Phaser.Geom.Rectangle(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * spriteScale, this.btnMagicCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics2.setInteractive(new Phaser.Geom.Rectangle(magic_x - 26, magic_y - 26, this.btnMagicCoolTime.width * buttonScale, this.btnMagicCoolTime.height * buttonScale), Phaser.Geom.Rectangle.Contains);
 
 
             // 버튼을 눌렀을 때 (pointerdown)
@@ -363,14 +363,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics3.fillRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * spriteScale, this.btnSlashCoolTime.height * spriteScale);
+            this.graphics3.fillRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * buttonScale, this.btnSlashCoolTime.height * buttonScale);//spriteScale
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics3.strokeRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * spriteScale, this.btnSlashCoolTime.height * spriteScale);
+            this.graphics3.strokeRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * buttonScale, this.btnSlashCoolTime.height * buttonScale);
             // 카메라에 고정시키기
             this.graphics3.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics3.setInteractive(new Phaser.Geom.Rectangle(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * spriteScale, this.btnSlashCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics3.setInteractive(new Phaser.Geom.Rectangle(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * buttonScale, this.btnSlashCoolTime.height * buttonScale), Phaser.Geom.Rectangle.Contains);
 
 
             // 버튼을 눌렀을 때 (pointerdown)
@@ -422,14 +422,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics4.fillRect(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * spriteScale, this.btnRollingCoolTime.height * spriteScale);
+            this.graphics4.fillRect(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * buttonScale, this.btnRollingCoolTime.height * buttonScale);//spriteScale
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
-            this.graphics4.strokeRect(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * spriteScale, this.btnRollingCoolTime.height * spriteScale);
+            this.graphics4.strokeRect(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * buttonScale, this.btnRollingCoolTime.height * buttonScale);
             // 카메라에 고정시키기
             this.graphics4.setScrollFactor(0);//.setDepth(dialogDepth)
-            this.graphics4.setInteractive(new Phaser.Geom.Rectangle(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * spriteScale, this.btnRollingCoolTime.height * spriteScale), Phaser.Geom.Rectangle.Contains);
+            this.graphics4.setInteractive(new Phaser.Geom.Rectangle(roll_x - 26, roll_y - 26, this.btnRollingCoolTime.width * buttonScale, this.btnRollingCoolTime.height * buttonScale), Phaser.Geom.Rectangle.Contains);
 
 
             // 버튼을 눌렀을 때 (pointerdown)
