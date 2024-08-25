@@ -174,7 +174,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             rollImgName = 'roll_16';
             slashImgName = 'sword_16';
             arrowImgName = 'arrow_16';
-            magicImgName = 'magic_32';
+            magicImgName = 'magic_16';
             buttonScale = 0.05;
 
             roll_x = 20;
