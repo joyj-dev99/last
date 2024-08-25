@@ -90,12 +90,6 @@ export default class Magic extends Phaser.Physics.Matter.Sprite {
         this.on('animationcomplete', this.handleAnimationComplete, this);
     }
 
-    //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene){
-        scene.load.atlas('thunder', 'assets/player/thunder.png', 'assets/player/thunder_atlas.json');
-        scene.load.animation('thunderAnim', 'assets/player/thunder_anim.json');
-    }
-
     handleAnimationComplete() {
         this.destroy();
     }

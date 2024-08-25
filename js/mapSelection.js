@@ -1,11 +1,3 @@
-export function mapSlectionPreload(scene) {
-    scene.load.image('heart_icon', "assets/map/icon/heart_icon.png");
-    scene.load.image('item_icon', "assets/map/icon/item_icon.png");
-    scene.load.image('mystery_icon', "assets/map/icon/mystery_icon.png");
-    scene.load.image('monster_icon', "assets/map/icon/monster_icon.png");
-    scene.load.image('gift_icon', "assets/map/icon/gift_icon.png");
-}
-
 export const mapAttributes = {
     1: [1, 2, 3],  // 속성 1~3번 중 하나 랜덤 선택
     2: [1, 2, 3],

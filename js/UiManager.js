@@ -23,12 +23,6 @@ export default class UiManager {
 
     }
 
-    static preload(scene) {
-        HeartIndicator.preload(scene);
-        CoinIndicator.preload(scene);
-        ProgressIndicator.preload(scene);
-    }
-
     update() {
         // 플레이어의 상태에 따라 UI 요소를 업데이트
         this.heartIndicator.setHeart(this.player.status.nowHeart, this.player.status.maxHeart);

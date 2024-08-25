@@ -28,20 +28,6 @@ export default class NightScene extends Phaser.Scene {
         this.maxY = 278;
     }
 
-    preload() {
-        this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-        this.load.tilemapTiledJSON("stage_01_night_map", "assets/map/stage_01/stage_01_night.json");
-        this.load.image("labTileset", "assets/map/Lab Tileset.png");
-        this.load.tilemapTiledJSON("stage_02_night_map", "assets/map/stage_02/stage_02_night.json");
-
-        // 배경음악 로드
-        this.load.audio("night_default", "assets/audio/background/night/night_default.mp3");
-
-        Player.preload(this);
-        Bonfire.preload(this);
-        Chord.preload(this);
-    }
-
     create() {
         // 씬이 시작될때 페이드인 효과 적용
         this.cameras.main.fadeIn(1000, 0, 0, 0);

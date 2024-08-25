@@ -100,12 +100,6 @@ export default class Dialog {
         }).setScrollFactor(0);
         this.#container.add(this.#uiText);
 
-
-        // if(type == 'mobile'){
-
-        // }
-
-
         // 스페이스바 입력 감지
         this.#scene.input.keyboard.on('keydown-SPACE', () => {
             this.onSpaceKeyPressed();
@@ -222,24 +216,6 @@ export default class Dialog {
             this.#currentInstructions.forEach(element => element.destroy());
             this.#currentInstructions = [];
         }
-    }
-
-    static preload(scene) {
-        scene.load.image('MaxPotrait', 'assets/npc/potrait/max.png');
-        scene.load.image('ChordPotrait', 'assets/npc/potrait/chord.png');
-        scene.load.image('ThelmaPotrait', 'assets/npc/potrait/thelma.png');
-        scene.load.image('WolfgangPotrait', 'assets/npc/potrait/wolfgang.png');
-        scene.load.image('NecromancerPotrait', 'assets/npc/potrait/necromancer.png');
-
-        scene.load.spritesheet('keyboard_extas', 'assets/ui/Keyboard Extras.png', {
-            frameWidth: 32, // 각 프레임의 너비
-            frameHeight: 16, // 각 프레임의 높이
-        });
-        scene.load.spritesheet('keyboard_letter_symbols', 'assets/ui/Keyboard Letters and Symbols.png', {
-            frameWidth: 16, // 각 프레임의 너비
-            frameHeight: 16, // 각 프레임의 높이
-        });
-        scene.load.image('nextBtnImage', 'assets/ui/Blue_Buttons_Pixel.png');
     }
 
     /** @type {boolean} */

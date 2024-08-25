@@ -100,15 +100,6 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
 
     }
 
-    static preload(scene) {
-        scene.load.atlas('necromancer', 'assets/monster/necromancer/necromancer.png', 'assets/monster/necromancer/necromancer_atlas.json');
-        scene.load.animation('necromancerAnim', 'assets/monster/necromancer/necromancer_anim.json');
-
-        scene.load.image('necromancer_beam', 'assets/monster/necromancer/beam/beam.png');
-        scene.load.image('necromancer_magic_circle', 'assets/monster/necromancer/magic_circle.png');
-        scene.load.image('necromancer_magic_circle2', 'assets/monster/necromancer/magic_circle2.png');
-    }
-
     update() {
         //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;

@@ -127,19 +127,6 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.pumpkinSeedSound.setVolume(0);
     }
 
-    static preload(scene) {
-        scene.load.atlas('pumpkin', 'assets/monster/pumpkin/pumpkin.png', 'assets/monster/pumpkin/pumpkin_atlas.json');
-        scene.load.animation('pumpkinAnim', 'assets/monster/pumpkin/pumpkin_anim.json');
-
-        scene.load.atlas('seed', 'assets/monster/pumpkin/seed/seed.png', 'assets/monster/pumpkin/seed/seed_atlas.json');
-        scene.load.animation('seedAnim', 'assets/monster/pumpkin/seed/seed_anim.json');
-
-        scene.load.image('pumpkin_shockwave', 'assets/monster/pumpkin/shockwave.png');
-
-        scene.load.audio("pumpkin_shockwave", "assets/audio/pumpkin_shockwave.wav");
-        scene.load.audio("pumpkin_seed", "assets/audio/pumpkin_seed.wav");
-    }
-
     update() {
         //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;

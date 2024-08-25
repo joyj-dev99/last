@@ -1,11 +1,5 @@
 export default class HeartIndicator {
 
-    static preload(scene) {
-        scene.load.image('no_heart', 'assets/ui/no_heart.png');
-        scene.load.image('helf_heart', 'assets/ui/helf_heart.png');
-        scene.load.image('heart', 'assets/ui/heart.png');
-    }
-
     constructor(scene) {
         this.heartArr = [];
         this.scene = scene;        

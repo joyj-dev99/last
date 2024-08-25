@@ -149,20 +149,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         if (this.hiddenFlag) return;
 
-        let rollImgName, rollIndexNum, spriteScale, slashImgName, slashIndexNum, magicIndexNum, magicImgName,
-            arrowImgName, arrowIndexNum;
+        let rollImgName, slashImgName, magicImgName, arrowImgName, buttonScale;
         let roll_x, roll_y, slash_X, slash_y, magic_x, magic_y, arrow_x, arrow_y;
         // 'Weapons and Equipment 16', 68, spriteScale);
         if (type == 'mobile') {
             rollImgName = 'roll_32';
-            rollIndexNum = null;
             slashImgName = 'sword_32';
-            slashIndexNum = null;
-            magicIndexNum = null;
-            arrowIndexNum = null;
             magicImgName = 'magic_32';
             arrowImgName = 'arrow_32';
-            spriteScale = 0.1;
+            buttonScale = 0.1;
 
             let width = scene.sys.game.config.width;
             let height = scene.sys.game.config.height;
@@ -176,15 +171,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             magic_x = width - 140;
             magic_y = height - 35;
         } else if (type == 'pc') {
-            rollImgName = 'Skills and Spells 16';
-            rollIndexNum = 138;//'Skills and Spells 16', 138
-            spriteScale = 0.05;
-            slashImgName = 'Weapons and Equipment 16';
-            slashIndexNum = 68;
-            arrowImgName = 'Weapons and Equipment 16';
-            arrowIndexNum = 1;
-            magicImgName = 'Skills and Spells 16';
-            magicIndexNum = 1056;
+            rollImgName = 'roll_16';
+            slashImgName = 'sword_16';
+            arrowImgName = 'magic_16';
+            magicImgName = 'arrow_16';
+            buttonScale = 0.05;
+
             roll_x = 20;
             roll_y = 200;
             slash_X = 20;
@@ -198,10 +190,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 구르기 버튼과 그 오버레이
         const {
             button: btnRolling,
-            skillSprite: rollingSkill,
+            skillImage: rollingSkill,
             overlay: overlayRolling,
             container: containerRolling
-        } = this.createButtonWithOverlay(scene, roll_x, roll_y, rollImgName, rollIndexNum, spriteScale);
+        } = this.createButtonWithOverlay(scene, roll_x, roll_y, rollImgName, buttonScale);
         this.btnRollingCoolTime = btnRolling;
         this.rollingSkillSprite = rollingSkill;
         this.overLayRollingCoolTime = overlayRolling;
@@ -210,10 +202,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 슬래시 버튼과 그 오버레이
         const {
             button: btnSlash,
-            skillSprite: slashSkill,
+            skillImage: slashSkill,
             overlay: overlaySlash,
             container: containerSlash
-        } = this.createButtonWithOverlay(scene, slash_X, slash_y, slashImgName, slashIndexNum, spriteScale);
+        } = this.createButtonWithOverlay(scene, slash_X, slash_y, slashImgName, buttonScale);
         this.btnSlashCoolTime = btnSlash;
         this.slashSkillSprite = slashSkill;
         this.overLaySlashCoolTime = overlaySlash;
@@ -222,10 +214,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 애로우 버튼과 그 오버레이
         const {
             button: btnArrow,
-            skillSprite: arrowSkill,
+            skillImage: arrowSkill,
             overlay: overlayArrow,
             container: containerArrow
-        } = this.createButtonWithOverlay(scene, arrow_x, arrow_y, arrowImgName, arrowIndexNum, spriteScale);
+        } = this.createButtonWithOverlay(scene, arrow_x, arrow_y, arrowImgName, buttonScale);
         this.btnArrowCoolTime = btnArrow;
         this.arrowSkillSprite = arrowSkill;
         this.overLayArrowCoolTime = overlayArrow;
@@ -235,10 +227,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // 마법 버튼과 그 오버레이
         const {
             button: btnMagic,
-            skillSprite: magicSkill,
+            skillImage: magicSkill,
             overlay: overlayMagic,
             container: containerMagic
-        } = this.createButtonWithOverlay(scene, magic_x, magic_y, magicImgName, magicIndexNum, spriteScale);
+        } = this.createButtonWithOverlay(scene, magic_x, magic_y, magicImgName, buttonScale);
         this.btnMagicCoolTime = btnMagic;
         this.magicSkillSprite = magicSkill;
         this.overLayMagicCoolTime = overlayMagic;
@@ -498,12 +490,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    createButtonWithOverlay(scene, x, y, spriteKey, spriteIndex, spriteScale) {
+    createButtonWithOverlay(scene, x, y, imageKey, buttonScale) {
         // 버튼 이미지 생성
         const button = scene.add.image(0, 0, 'button_indicator');
-        button.setScale(spriteScale);
+        button.setScale(buttonScale);
 
-        const skillSprite = scene.add.sprite(0, 0, spriteKey, spriteIndex).setOrigin(0.5, 0.5);
+        const skillImage = scene.add.image(0, 0, imageKey).setOrigin(0.5, 0.5);
 
         // 오버레이 생성 (반투명한 검은색 사각형)
         const overlay = scene.add.graphics();
@@ -512,48 +504,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         overlay.setVisible(false);
 
         // 컨테이너 생성, 버튼과 오버레이를 추가
-        const container = scene.add.container(x, y, [button, skillSprite, overlay]);
+        const container = scene.add.container(x, y, [button, skillImage, overlay]);
         container.setScrollFactor(0);
 
-        return {button, skillSprite, overlay, container};
-    }
-
-    //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene) {
-        scene.load.atlas('player', 'assets/player/player.png', 'assets/player/player_atlas.json');
-        scene.load.animation('playerAnim', 'assets/player/player_anim.json');
-        scene.load.image('player_stun', 'assets/player/player_stun.png');
-        scene.load.image('button_indicator', 'assets/player/button_indicator.png');
-
-        // Preload the sound effect for sword action
-        scene.load.audio('sound_player_hit', 'assets/audio/sound_player_hit.mp3');
-        scene.load.audio('sound_player_move', 'assets/audio/sound_player_move.mp3');
-        scene.load.audio('sound_player_death', 'assets/audio/sound_player_death.mp3');
-        scene.load.audio('sound_player_damage', 'assets/audio/sound_player_damage.mp3');
-
-        scene.load.audio('sound_player_bow', 'assets/audio/sound_player_bow.mp3');
-        scene.load.audio('sound_player_spell', 'assets/audio/sound_player_spell.mp3');
-        scene.load.audio('sound_player_roll', 'assets/audio/sound_player_roll.wav');
-
-        scene.load.spritesheet('Skills and Spells 16', 'assets/player/Skills and Spells.png', {
-            frameWidth: 16,
-            frameHeight: 16
-        });
-        scene.load.spritesheet('Weapons and Equipment 16', 'assets/player/Weapons and Equipment.png', {
-            frameWidth: 16,
-            frameHeight: 16
-        });
-        scene.load.image('arrow_16', 'assets/item/arrow_16.png');
-
-        scene.load.image('arrow_32', 'assets/player/arrow_32.png');
-        scene.load.image('magic_32', 'assets/player/magic_32.png');
-        scene.load.image('roll_32', 'assets/player/roll_32.png');
-        scene.load.image('sword_32', 'assets/player/sword_32.png');
-
-
-        Slash.preload(scene);
-        Arrow.preload(scene);
-        Magic.preload(scene);
+        return {button, skillImage, overlay, container};
     }
 
     update(time, delta) {

@@ -1,12 +1,5 @@
 export default class ProgressIndicator extends Phaser.GameObjects.Sprite {
 
-    static preload(scene) {
-        scene.load.spritesheet('progressSheet', 'assets/ui/spr_ui_progress_alt_strip5.png', {
-            frameWidth: 230,
-            frameHeight: 180
-        });
-    }
-
     constructor(scene, texture, key) {
         // X, Y 위치를 화면의 상단 우측으로 설정
         const x = scene.sys.game.config.width / 2;/// 2 -65

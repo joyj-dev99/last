@@ -29,53 +29,6 @@ import MonsterGolem from "./monsters/MonsterGolem.js";
 import MonsterBossAlchemist from "./monsters/MonsterBossAlchemist.js";
 import MonsterBossWolfgang from "./monsters/MonsterBossWolfgang.js";
 
-export function mapCreatePreload(scene) {
-    scene.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-    scene.load.image("dungeonTileset", "assets/map/Royal Dungeon Tileset.png");
-    scene.load.image("officeTileset", "assets/map/Modern_Office_32x32.png");
-    scene.load.image("roomBuilderTileset", "assets/map/Room_Builder_Office_32x32.png");
-    scene.load.image("labTileset", "assets/map/Lab Tileset.png");
-
-
-
-    scene.load.tilemapTiledJSON("stage_01_tutorial", "assets/map/stage_01/stage_01_tutorial.json");
-    scene.load.tilemapTiledJSON("stage_01_01", "assets/map/stage_01/stage_01_01.json");
-    scene.load.tilemapTiledJSON("stage_01_02", "assets/map/stage_01/stage_01_02.json");
-    scene.load.tilemapTiledJSON("stage_01_03", "assets/map/stage_01/stage_01_03.json");
-    scene.load.tilemapTiledJSON("stage_01_04", "assets/map/stage_01/stage_01_04.json");
-    scene.load.tilemapTiledJSON("stage_01_05", "assets/map/stage_01/stage_01_05.json");
-    scene.load.tilemapTiledJSON("stage_01_06", "assets/map/stage_01/stage_01_06.json");
-    scene.load.tilemapTiledJSON("stage_01_07", "assets/map/stage_01/stage_01_07.json");
-    scene.load.tilemapTiledJSON("stage_01_08", "assets/map/stage_01/stage_01_08.json");
-    scene.load.tilemapTiledJSON("stage_01_09", "assets/map/stage_01/stage_01_09.json");
-    scene.load.tilemapTiledJSON("stage_01_10", "assets/map/stage_01/stage_01_10.json");
-    scene.load.tilemapTiledJSON("stage_01_boss", "assets/map/stage_01/stage_01_boss.json");
-
-    scene.load.tilemapTiledJSON("stage_02_01", "assets/map/stage_02/stage_02_01.json");
-    scene.load.tilemapTiledJSON("stage_02_02", "assets/map/stage_02/stage_02_02.json");
-    scene.load.tilemapTiledJSON("stage_02_03", "assets/map/stage_02/stage_02_03.json");
-    scene.load.tilemapTiledJSON("stage_02_04", "assets/map/stage_02/stage_02_04.json");
-    scene.load.tilemapTiledJSON("stage_02_05", "assets/map/stage_02/stage_02_05.json");
-    scene.load.tilemapTiledJSON("stage_02_06", "assets/map/stage_02/stage_02_06.json");
-    scene.load.tilemapTiledJSON("stage_02_07", "assets/map/stage_02/stage_02_07.json");
-    scene.load.tilemapTiledJSON("stage_02_08", "assets/map/stage_02/stage_02_08.json");
-    scene.load.tilemapTiledJSON("stage_02_09", "assets/map/stage_02/stage_02_09.json");
-    scene.load.tilemapTiledJSON("stage_02_10", "assets/map/stage_02/stage_02_10.json");
-    scene.load.tilemapTiledJSON("stage_02_boss", "assets/map/stage_02/stage_02_boss.json");
-
-    scene.load.tilemapTiledJSON("stage_03_01", "assets/map/stage_03/stage_03_01.json");
-    scene.load.tilemapTiledJSON("stage_03_02", "assets/map/stage_03/stage_03_02.json");
-    scene.load.tilemapTiledJSON("stage_03_03", "assets/map/stage_03/stage_03_03.json");
-    scene.load.tilemapTiledJSON("stage_03_04", "assets/map/stage_03/stage_03_04.json");
-    scene.load.tilemapTiledJSON("stage_03_05", "assets/map/stage_03/stage_03_05.json");
-    scene.load.tilemapTiledJSON("stage_03_06", "assets/map/stage_03/stage_03_06.json");
-    scene.load.tilemapTiledJSON("stage_03_07", "assets/map/stage_03/stage_03_07.json");
-    scene.load.tilemapTiledJSON("stage_03_08", "assets/map/stage_03/stage_03_08.json");
-    scene.load.tilemapTiledJSON("stage_03_09", "assets/map/stage_03/stage_03_09.json");
-    scene.load.tilemapTiledJSON("stage_03_10", "assets/map/stage_03/stage_03_10.json");
-    scene.load.tilemapTiledJSON("stage_03_boss", "assets/map/stage_03/stage_03_boss.json");
-}
-
 export function setMapSize(scene, stageNumber, mapNumber) {
     if (stageNumber === 1 && mapNumber <= 9) { // 일반맵
         scene.mapWidth = 960;

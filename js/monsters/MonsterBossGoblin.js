@@ -107,16 +107,6 @@ export default class MonsterBossGoblin extends Phaser.Physics.Matter.Sprite {
         this.isKnockBack = false;
     }
 
-    static preload(scene) {
-        scene.load.atlas('goblin', 'assets/monster/goblin/goblin.png', 'assets/monster/goblin/goblin_atlas.json');
-        scene.load.animation('goblinAnim', 'assets/monster/goblin/goblin_anim.json');
-
-        scene.load.atlas('coin_bag', 'assets/monster/goblin/coin_bag/coin_bag.png', 'assets/monster/goblin/coin_bag/coin_bag_atlas.json');
-        scene.load.animation('coin_bagAnim', 'assets/monster/goblin/coin_bag/coin_bag_anim.json');
-
-        scene.load.image('goblin_shockwave', 'assets/monster/goblin/shockwave.png');
-    }
-
     update() {
         //몬스터가 죽었으면 update 실행하지 않음
         if (!this.isAlive) return;

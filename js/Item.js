@@ -215,21 +215,6 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         this.itemType = itemType;
     }
 
-    static preload(scene) {
-        scene.load.image('item_01', 'assets/item/item_01.png');
-        scene.load.image('item_02', 'assets/item/item_02.png');
-        scene.load.image('item_03', 'assets/item/item_03.png');
-        scene.load.image('item_04', 'assets/item/item_04.png');
-        scene.load.image('item_05', 'assets/item/item_05.png');
-        scene.load.image('item_06', 'assets/item/item_06.png');
-        scene.load.image('item_07', 'assets/item/item_07.png');
-        scene.load.image('item_08', 'assets/item/item_08.png');
-        scene.load.image('item_09', 'assets/item/item_09.png');
-        scene.load.image('item_10', 'assets/item/item_10.png');
-        scene.load.image('item_11', 'assets/item/arrow_10.png');
-        
-    }
-
     // 아이템 적용 메소드
     // 아이템마다 상속으로 처리할 수도 있을 듯
     applyItem(player, heartIndicator, dialog) {

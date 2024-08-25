@@ -13,16 +13,6 @@ export default class StageManager {
         this.skipTutorial = skipTutorial;
     }
 
-    static preload(scene) {
-        scene.load.audio("forest_default", "assets/suno/battle_1.wav");
-        scene.load.audio("forest_boss", "assets/audio/background/forest/forest_boss.mp3");
-        scene.load.audio("dungeon_default", "assets/audio/background/dungeon/dungeon_default.mp3");
-        scene.load.audio("dungeon_boss", "assets/audio/background/dungeon/dungeon_boss.mp3");
-        scene.load.audio("room_default", "assets/audio/background/room/room_default.mp3");
-        scene.load.audio("room_boss", "assets/audio/background/room/room_boss.mp3");
-
-    }
-
     /**
      * @param {string} bgmKey - 배경음악 키값
      */
@@ -366,7 +356,7 @@ export default class StageManager {
     }
 
     update() {
-        console.log('StageManager update()');
+        // console.log('StageManager update()');
         if (this.scene.returnStoreStatus !== undefined) {
             this.scene.returnStoreStatus = undefined;
             // 모바일에서 this.scene.matterCollision.addOnCollideEnd 실행 안함...

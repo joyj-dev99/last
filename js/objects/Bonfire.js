@@ -33,29 +33,12 @@ export default class Bonfire extends Phaser.Physics.Matter.Sprite {
         this.anims.play('bonfire_fire');
     }
 
-    //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene){
-        // bonfire.png 파일의 이미지와 bonfireAtlas.json 의 프레임 정보를 연동
-        scene.load.atlas('bonfire', 'assets/objects/bonfire/bonfire.png', 'assets/objects/bonfire/bonfire_atlas.json');
-        // 애니메이션을 정의해놓은 json 파일을 통해 애니메이션 로드 + 생성
-        scene.load.animation('bonfireAnim', 'assets/objects/bonfire/bonfire_anim.json');
-        scene.load.spritesheet('keybordImg', 'assets/ui/Keyboard Letters and Symbols.png', { frameWidth: 16, frameHeight: 16 });
-        scene.load.image('nextBtnImg', 'assets/ui/Blue_Buttons_Pixel.png');//52, { frameWidth: 32, frameHeight: 16 }
-    }
-
     // 상호작용 가능 표시를 보여주는 메서드
     showInteractPrompt() {
-        // if (!this.interativeKeyImg) {
-        //     // this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keybordImg', 20);
-        //     this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImg');//, 52
-
-        //     this.interativeKeyImg.setOrigin(0.5);
-        // }
-
         if (!this.interativeKeyImg) {
 
             if(type === 'mobile'){
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImg');//, 52
+                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImage');//, 52
                 // Make the sprite interactive
                 this.interativeKeyImg.setInteractive();
                 // Add a click event listener to the sprite
@@ -75,7 +58,7 @@ export default class Bonfire extends Phaser.Physics.Matter.Sprite {
 
             }
             else  if(type === 'pc'){
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keybordImg', 20);
+                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keyboard_letter_symbols', 20);
             }
 
             this.interativeKeyImg.setOrigin(0.5);
