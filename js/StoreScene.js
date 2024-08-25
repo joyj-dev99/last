@@ -322,7 +322,7 @@ export default class StoreScene extends Phaser.Scene {
         }
 
         // 스테이지 진행률 UI
-        this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.partNumber, 'store');
+        this.progressIndicator = new ProgressIndicator(this, 'progressSheet','store');
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this);
         this.heartIndicator.setHeart(this.player.status.nowHeart, this.player.status.maxHeart);
