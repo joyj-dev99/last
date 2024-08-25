@@ -363,7 +363,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 바탕 투명한 흰색 설정 (투명도 0.5)
             // this.graphics1.fillStyle(0x000000, 0.5);
             // 사각형 채우기 (x, y, width, height)
-            this.graphics3.fillRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * buttonScale, this.btnSlashCoolTime.height * spriteScale);//spriteScale
+            this.graphics3.fillRect(slash_X - 26, slash_y - 26, this.btnSlashCoolTime.width * buttonScale, this.btnSlashCoolTime.height * buttonScale);//spriteScale
             // 선의 스타일 설정 (두께, 색상 등)
             // this.graphics1.lineStyle(2, 0x000000); // 두께 2, 흰색 테두리
             // 사각형 테두리 그리기
