@@ -25,7 +25,7 @@ export default class PreloadScene extends Phaser.Scene {
         }).setOrigin(0.5);
 
         // 점을 표시할 텍스트
-        const dotsText = this.add.text(loadingText.x + loadingText.width / 2 + 10, height / 2 - 50, '', { 
+        const dotsText = this.add.text(loadingText.x + loadingText.width / 2 + 5, height / 2 - 50, '', { 
             fontSize: '20px', 
             fill: '#ffffff' 
         }).setOrigin(0, 0.5); // 점의 위치를 "Loading" 텍스트 바로 뒤로 설정
