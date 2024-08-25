@@ -98,23 +98,6 @@ export default class MonsterBossWolfgang extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    static preload(scene) {
-        scene.load.atlas('wolfgang', 'assets/monster/Wolfgang/wolfgang.png', 'assets/monster/Wolfgang/wolfgang_atlas.json');
-        scene.load.animation('wolfgangAnim', 'assets/monster/Wolfgang/wolfgang_anim.json');
-
-        scene.load.atlas('explode_flask', 'assets/monster/Wolfgang/explode_flask/explode_flask.png', 'assets/monster/Wolfgang/explode_flask/explode_flask_atlas.json');
-        scene.load.animation('explodeFlaskAnim', 'assets/monster/Wolfgang/explode_flask/explode_flask_anim.json');
-
-        scene.load.atlas('acid_flask', 'assets/monster/Wolfgang/acid_flask/acid_flask.png', 'assets/monster/Wolfgang/acid_flask/acid_flask_atlas.json');
-        scene.load.animation('acidFlaskAnim', 'assets/monster/Wolfgang/acid_flask/acid_flask_anim.json');
-
-        scene.load.atlas('poison_cloud', 'assets/monster/Wolfgang/poison_cloud__flask/poison_cloud.png', 'assets/monster/Wolfgang/poison_cloud__flask/poison_cloud_atlas.json');
-        scene.load.animation('poisonCloudFlaskAnim', 'assets/monster/Wolfgang/poison_cloud__flask/poison_cloud_anim.json');
-
-        scene.load.image('wolfgang_missile', 'assets/monster/Wolfgang/wolfgang_missile.png')
-        scene.load.image('wolfgang_missile_hit', 'assets/monster/Wolfgang/wolfgang_missile_hit.png')
-    }
-
     update() {
         if (!this.isAlive) return;
         this.updateHpState()

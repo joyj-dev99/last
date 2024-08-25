@@ -28,8 +28,6 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
         this.setExistingBody(signCollider);
         this.setScale(0.5);
 
-        // this.anims.fromJSON(this.cache.json.get('flagAnimations'));
-
         this.anims.create({
             key: 'flag_waving',
             frames: this.anims.generateFrameNames('storeFlag', {
@@ -51,26 +49,11 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene) {
-        console.log('Preloading resources for StoreFlag...');
-        scene.load.atlas('storeFlag', 'assets/objects/storeFlag/store_flag.png', 'assets/objects/storeFlag/store_flag_atlas.json');
-        console.log('Atlas loaded:', 'store_flag');
-
-        scene.load.animation('storeFlagAnim', 'assets/objects/storeFlag/store_flag_anim.json');
-        console.log('Animation loaded:', 'flag_waving');
-
-        scene.load.spritesheet('keybordImg', 'assets/ui/Keyboard Letters and Symbols.png', {
-            frameWidth: 16,
-            frameHeight: 16
-        });
-    }
-
     // 상호작용 가능 표시를 보여주는 메서드
     showInteractPrompt() {
         if (!this.interativeKeyImg) {
             if (type === 'mobile') {
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImg');//, 52
+                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImage');
                 // Make the sprite interactive
                 this.interativeKeyImg.setInteractive();
                 // Add a click event listener to the sprite
@@ -92,7 +75,7 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
 
 
             } else if (type === 'pc') {
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keybordImg', 20);
+                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keyboard_letter_symbols', 20);
             }
 
             this.interativeKeyImg.setOrigin(0.5);

@@ -29,12 +29,6 @@ export default class Chord extends Phaser.Physics.Matter.Sprite {
         this.anims.play('chord_idle_1');
     }
 
-    //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene){
-        scene.load.atlas('chord', 'assets/npc/chord/chord.png', 'assets/npc/chord/chord_atlas.json');
-        scene.load.animation('chordAnim', 'assets/npc/chord/chord_anim.json');
-    }
-
     startPlayLute() {
         this.anims.play('chord_ready');
         this.on('animationcomplete', this.handleAnimationComplete, this);

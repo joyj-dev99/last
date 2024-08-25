@@ -36,25 +36,7 @@ export default class Tutorial{
 
         this.boundaries = []; // 경계들을 저장할 배열
     }
-    
-    static preload(scene) {
 
-        // 튜토리얼 keyboard 이미지 파일
-        scene.load.spritesheet('keyboard', 'assets/tutorial/keyboard/Keyboard Letters and Symbols.png', { frameWidth: 16, frameHeight: 16 });
-        scene.load.spritesheet('keyboard_shift_key', 'assets/tutorial/keyboard/shift_key.png', { frameWidth: 32, frameHeight: 16 });
-        scene.load.image('pointer', 'assets/ui/finger_down.png');
-
-        scene.load.atlas('up_key', 'assets/tutorial/keyboard/up_key.png', 'assets/tutorial/keyboard/up_key_anim.json');
-        scene.load.atlas('down_key', 'assets/tutorial/keyboard/down_key.png', 'assets/tutorial/keyboard/down_key_anim.json');
-        scene.load.atlas('left_key', 'assets/tutorial/keyboard/left_key.png', 'assets/tutorial/keyboard/left_key_anim.json');
-        scene.load.atlas('right_key', 'assets/tutorial/keyboard/right_key.png', 'assets/tutorial/keyboard/right_key_anim.json');
-        scene.load.atlas('z_key', 'assets/tutorial/keyboard/z_key.png', 'assets/tutorial/keyboard/z_key_anim.json');
-        scene.load.atlas('shift_key', 'assets/tutorial/keyboard/shift_key.png', 'assets/tutorial/keyboard/shift_key_anim.json');
-        scene.load.image('right_sign', 'assets/tutorial/sign/right_sign-removebg-preview.png' );
-        scene.load.atlas('x_key', 'assets/tutorial/keyboard/x_key.png', 'assets/tutorial/keyboard/x_key_atlas.json');
-        scene.load.atlas('c_key', 'assets/tutorial/keyboard/c_key.png', 'assets/tutorial/keyboard/c_key_atlas.json');
-
-    }
 
     createBoundary(xArray) {
         xArray.forEach(x => {
@@ -115,19 +97,19 @@ export default class Tutorial{
             let cursors = scene.input.keyboard.createCursorKeys();
             // cursors.left
             
-            let keyboard_up  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+130, 'keyboard', 0);
+            let keyboard_up  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+130, 'keyboard_letter_symbols', 0);
             scene.add.existing(keyboard_up);  
             keyboard_up.setScale(2);
 
-            let keyboard_down  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+165, 'keyboard', 1);
+            let keyboard_down  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+10, sensor_y+165, 'keyboard_letter_symbols', 1);
             scene.add.existing(keyboard_down);  
             keyboard_down.setScale(2);
 
-            let keyboard_left  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-25, sensor_y+165, 'keyboard', 2);
+            let keyboard_left  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-25, sensor_y+165, 'keyboard_letter_symbols', 2);
             scene.add.existing(keyboard_left);  
             keyboard_left.setScale(2);
 
-            let keyboard_right  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+45, sensor_y+165, 'keyboard', 3);
+            let keyboard_right  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x+45, sensor_y+165, 'keyboard_letter_symbols', 3);
             scene.add.existing(keyboard_right);  
             keyboard_right.setScale(2);
 

@@ -89,49 +89,6 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    static preload(scene) {
-        scene.load.atlas('tomato', 'assets/monster/tomato/tomato.png', 'assets/monster/tomato/tomato_atlas.json');
-        scene.load.animation('tomatoAnim', 'assets/monster/tomato/tomato_anim.json');
-        scene.load.atlas('eggplant', 'assets/monster/eggplant/eggplant.png', 'assets/monster/eggplant/eggplant_atlas.json');
-        scene.load.animation('eggplantoAnim', 'assets/monster/eggplant/eggplant_anim.json');
-        scene.load.atlas('apple', 'assets/monster/apple/apple.png', 'assets/monster/apple/apple_atlas.json');
-        scene.load.animation('appleAnim', 'assets/monster/apple/apple_anim.json');
-        scene.load.atlas('lemon', 'assets/monster/lemon/lemon.png', 'assets/monster/lemon/lemon_atlas.json');
-        scene.load.animation('lemonAnim', 'assets/monster/lemon/lemon_anim.json');
-        scene.load.atlas('fly', 'assets/monster/fly/fly.png', 'assets/monster/fly/fly_atlas.json');
-        scene.load.animation('flyAnim', 'assets/monster/fly/fly_anim.json');
-        scene.load.atlas('spider', 'assets/monster/spider/spider.png', 'assets/monster/spider/spider_atlas.json');
-        scene.load.animation('spiderAnim', 'assets/monster/spider/spider_anim.json');
-        scene.load.atlas('mini_goblin', 'assets/monster/mini goblin/mini_goblin.png', 'assets/monster/mini goblin/mini_goblin_atlas.json');
-        scene.load.animation('mini_goblinAnim', 'assets/monster/mini goblin/mini_goblin_anim.json');
-        scene.load.atlas('ratfolk', 'assets/monster/ratfolk/ratfolk.png', 'assets/monster/ratfolk/ratfolk_atlas.json');
-        scene.load.animation('ratfolkAnim', 'assets/monster/ratfolk/ratfolk_anim.json');
-
-        scene.load.atlas('bugbear', 'assets/monster/bugbear/bugbear.png', 'assets/monster/bugbear/bugbear_atlas.json');
-        scene.load.animation('bugbearAnim', 'assets/monster/bugbear/bugbear_anim.json');
-        scene.load.atlas('angel', 'assets/monster/angel/angel.png', 'assets/monster/angel/angel_atlas.json');
-        scene.load.animation('angelAnim', 'assets/monster/angel/angel_anim.json');
-        scene.load.atlas('golem', 'assets/monster/golem/golem.png', 'assets/monster/golem/golem_atlas.json');
-        scene.load.animation('golemAnim', 'assets/monster/golem/golem_anim.json');
-        //
-        scene.load.atlas('golem_wave_front', 'assets/monster/golem/golem_wave/Front/wave_attack_front.png', 'assets/monster/golem/golem_wave/Front/wave_attack_front_atlas.json');
-        scene.load.atlas('golem_wave_back', 'assets/monster/golem/golem_wave/Back/wave_attack_back.png', 'assets/monster/golem/golem_wave/Back/wave_attack_back_atlas.json');
-        scene.load.atlas('golem_beam', 'assets/monster/golem/golem_beam/energy_beam.png', 'assets/monster/golem/golem_beam/energy_beam_atlas.json');
-
-        // scene.load.atlas('wolfgang', 'assets/monster/Wolfgang/wolfgang.png', 'assets/monster/Wolfgang/wolfgang_atlas.json');
-        // scene.load.animation('wolfgangAnim', 'assets/monster/Wolfgang/wolfgang_anim.json');
-
-        // scene.load.atlas('minotaur', 'assets/monster/minotaur/minotaur.png', 'assets/monster/minotaur/minotaur_atlas.json');
-        // scene.load.animation('minotaurAnim', 'assets/monster/minotaur/minotaur_anim.json');
-        //
-        // scene.load.atlas('alchemist_transform', 'assets/monster/alchemist/tramsform/alchemist_transform.png', 'assets/monster/alchemist/tramsform/alchemist_transform_atlas.json');
-        // scene.load.animation('alchemist_transformAnim', 'assets/monster/alchemist/tramsform/alchemist_transform_anim.json');
-        //
-        // scene.load.atlas('alchemist', 'assets/monster/alchemist/alchemist.png', 'assets/monster/alchemist/alchemist_atlas.json');
-        // scene.load.animation('alchemistAnim', 'assets/monster/alchemist/alchemist_anim.json');
-
-    }
-
     update() {
         this.updateHpState()
 

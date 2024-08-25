@@ -1,23 +1,12 @@
 import HeartIndicator from "./HeartIndicator.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import TextIndicator from "./TextIndicator.js";
-import Item from "./Item.js";
-import Tutorial from "./Tutorial.js";
 import MeatCoin from "./MeatCoin.js";
 
-import Player from "./Player.js";
 import Monster from "./monsters/Monster.js";
-import MonsterApple from "./monsters/MonsterApple.js";
 import MonsterBossPumpkin from "./monsters/MonsterBossPumpkin.js";
 import MonsterBossGoblin from "./monsters/MonsterBossGoblin.js";
 import MonsterBossNecromancer from "./monsters/MonsterBossNecromancer.js";
-import MonsterBossAlchemist from "./monsters/MonsterBossAlchemist.js";
-import MonsterBossWolfgang from "./monsters/MonsterBossWolfgang.js";
-
-import Milestone from "./objects/Milestone.js";
-import Chord from "./character/Chord.js";
-import StoreFlag from "./objects/StoreFlag.js";
-
 
 import Arrow from "./Arrow.js";
 import Slash from "./Slash.js";
@@ -25,8 +14,8 @@ import Magic from "./Magic.js";
 
 import Dialog from "./Dialog.js";
 import StageManager from "./StageManager.js";
-import {mapSlectionPreload, mapAttributes, attributeIcons, showMapSelectionUI} from './mapSelection.js';
-import {mapCreatePreload, setMapSize, setupMap,} from './mapCreate.js';
+import {mapAttributes, attributeIcons, showMapSelectionUI} from './mapSelection.js';
+import {setMapSize, setupMap,} from './mapCreate.js';
 
 import {
     PLAYER_CATEGORY,
@@ -81,70 +70,6 @@ export default class MainScene extends Phaser.Scene {
         setMapSize(this, this.stageNumber, this.mapNumber);
 
         this.input.addPointer(2); // 기본 포인터 외에 추가로 2개의 포인터를 허용
-    }
-
-    preload() {
-        mapCreatePreload(this);
-        mapSlectionPreload(this);
-
-        // 배경음악 로드
-        this.load.audio("get_item", "assets/audio/get_item.wav");
-        this.load.audio("coin_drop", "assets/audio/coin_drop.wav");
-        this.load.audio("potion_drop", "assets/audio/potion_drop.wav");
-        this.load.audio("monster_damage1", "assets/audio/monster_damage1.wav");
-        this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
-        this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
-        this.load.audio("small_shot", "assets/audio/small_shot.wav");
-        this.load.audio("monster_clear", "assets/audio/팡파르 나팔소리.mp3");
-        this.load.audio("boss_monster_clear", "assets/audio/노래방 100점.mp3");
-
-        // 설정
-        this.load.spritesheet('setting', 'assets/ui/Blue_Buttons_Pixel2.png', {frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('status', 'assets/ui/on_off.png', {frameWidth: 32, frameHeight: 16});
-
-        // // 버튼에 사용할 이미지 로드
-        // this.load.spritesheet('Skills and Spells', 'assets/item/Skills and Spells.png', {
-        //     frameWidth: 32, // 각 프레임의 너비
-        //     frameHeight: 32, // 각 프레임의 높이
-        // });
-
-        // this.load.spritesheet('Weapons and Equipment', 'assets/item/Weapons and Equipment.png', {
-        //     frameWidth: 32, // 각 프레임의 너비
-        //     frameHeight: 32, // 각 프레임의 높이
-        // });
-
-        // this.load.spritesheet('Sword And Arrow', 'assets/item/Sword And Arrow.png', {
-        //     frameWidth: 32, // 각 프레임의 너비
-        //     frameHeight: 32, // 각 프레임의 높이
-        // });
-
-        Player.preload(this);
-        Monster.preload(this);
-        MonsterBossPumpkin.preload(this);
-        MonsterBossGoblin.preload(this);
-        MonsterBossNecromancer.preload(this);
-        MonsterBossAlchemist.preload(this);
-        MonsterBossWolfgang.preload(this);
-        MonsterApple.preload(this);
-        Chord.preload(this);
-        Thelma.preload(this);
-        Item.preload(this);
-        Tutorial.preload(this);
-        MeatCoin.preload(this);
-
-        ProgressIndicator.preload(this);
-        HeartIndicator.preload(this);
-        StageManager.preload(this);
-
-        StoreFlag.preload(this);
-        Milestone.preload(this);
-        Dialog.preload(this);
-
-        this.load.spritesheet('mapButton', 'assets/ui/mapButton.png', {
-            frameWidth: 34, // 각 프레임의 너비
-            frameHeight: 10, // 각 프레임의 높이
-            spacing: 4         // 각 프레임 사이의 간격
-        });
     }
 
     create() {

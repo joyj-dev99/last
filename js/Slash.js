@@ -39,14 +39,4 @@ export default class Slash extends Phaser.Physics.Matter.Sprite {
         this.setDepth(101);
 
     }
-
-    static preload(scene) {
-        if (scene.load) {
-            // Preload the atlas and animation JSON files
-            scene.load.atlas('slash', 'assets/player/slash.png', 'assets/player/slash_atlas.json');
-            scene.load.animation('slashAnim', 'assets/player/slash_anim.json');
-        } else {
-            console.error("Scene does not have a load property. Ensure you're passing a valid Phaser scene.");
-        }
-    }
 }

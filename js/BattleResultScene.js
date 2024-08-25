@@ -7,11 +7,6 @@ export default class BattleResultScene extends Phaser.Scene {
         this.result = data.result;
     }
 
-    preload() {
-        this.load.image('gameOverImage', 'assets/Game over.png');
-        this.load.image('gameClearImage', 'assets/Game clear.png');
-    }
-
     create() {
         console.log('BattleResultScene 시작');
 

@@ -46,27 +46,6 @@ export default class StoreScene extends Phaser.Scene {
         this.maxY = 278;
     }
 
-    preload() {
-        this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-        this.load.image("dungeonTileset", "assets/map/Royal Dungeon Tileset.png");
-        this.load.image("officeTileset", "assets/map/Modern_Office_32x32.png");
-        this.load.image("roomBuilderTileset", "assets/map/Room_Builder_Office_32x32.png");
-
-        this.load.tilemapTiledJSON("stage_01_store", "assets/map/stage_01/stage_01_store.json");
-        this.load.tilemapTiledJSON("stage_02_store", "assets/map/stage_02/stage_02_store.json");
-        this.load.tilemapTiledJSON("stage_03_store", "assets/map/stage_03/stage_03_store.json");
-
-        Player.preload(this);
-        Chord.preload(this);
-        Thelma.preload(this);
-        Milestone.preload(this);
-        StoreItem.preload(this);
-        Dialog.preload(this);
-        ProgressIndicator.preload(this);
-        HeartIndicator.preload(this);
-        this.load.audio("get_item", "assets/audio/get_item.wav");
-    }
-
     create() {
         // 씬이 시작될때 페이드인 효과 적용
         this.cameras.main.fadeIn(1000, 0, 0, 0);

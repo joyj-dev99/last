@@ -99,21 +99,6 @@ export default class MonsterBossAlchemist extends Phaser.Physics.Matter.Sprite {
 
     }
 
-    static preload(scene) {
-        scene.load.atlas('minotaur', 'assets/monster/minotaur/minotaur.png', 'assets/monster/minotaur/minotaur_atlas.json');
-        scene.load.animation('minotaurAnim', 'assets/monster/minotaur/minotaur_anim.json');
-
-        scene.load.atlas('alchemist_transform', 'assets/monster/alchemist/tramsform/alchemist_transform.png', 'assets/monster/alchemist/tramsform/alchemist_transform_atlas.json');
-        scene.load.animation('alchemist_transformAnim', 'assets/monster/alchemist/tramsform/alchemist_transform_anim.json');
-
-        scene.load.atlas('alchemist', 'assets/monster/alchemist/alchemist.png', 'assets/monster/alchemist/alchemist_atlas.json');
-        scene.load.animation('alchemistAnim', 'assets/monster/alchemist/alchemist_anim.json');
-
-        scene.load.image('alchemist_poison', 'assets/monster/alchemist/alchemist_poison.png');
-
-    }
-
-
     update() {
         if (this.monsterType === 'alchemist' && this.initHp / 2 >= this.hp) {
             this.monsterType = 'minotaur';

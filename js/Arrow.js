@@ -46,11 +46,6 @@ export default class Arrow extends Phaser.Physics.Matter.Sprite {
         
     }
 
-    //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene){
-        scene.load.image('arrowImg', 'assets/player/arrow.png');
-    }
-
     // 플레이어의 바라보는 방향에 따라 화살의 속도와 회전을 설정하는 메서드
     setDirectionAndVelocity(player) {
         // 플레이어의 마지막 방향을 가져옴

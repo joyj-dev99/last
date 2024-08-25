@@ -31,17 +31,4 @@ export default class Thelma extends Phaser.Physics.Matter.Sprite {
         
     }
 
-    //static : 리소스 로딩을 특정 객체의 인스턴스와 무관하게 클래스 전체의 관점에서 수행
-    static preload(scene){
-        scene.load.atlas('thelma', 'assets/npc/thelma/thelma.png', 'assets/npc/thelma/thelma_atlas.json');
-        scene.load.animation('thelmaAnim', 'assets/npc/thelma/thelma_anim.json');
-    }
-
-    handleAnimationComplete(animation, frame) {
-        if (
-            animation.key === 'chord_ready') {
-            this.anims.play('chord_sing', true);
-        }
-    }
-
 }

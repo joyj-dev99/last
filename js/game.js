@@ -4,6 +4,7 @@ import IntroScene from './IntroScene.js';
 import TitleScene from './TitleScene.js';
 import BattleResultScene from './BattleResultScene.js';
 import StoreScene from './StoreScene.js';
+import PreloadScene from './PreloadScene.js';
 
 const config = {
     // 32*32px 타일 기준 세로 8칸, 가로 11.1칸
@@ -14,7 +15,7 @@ const config = {
     type: Phaser.AUTO,
     parent: 'game',
     // scene: [MainScene ,TitleScene,  StoreScene, IntroScene, BattleResultScene, NightScene],
-    scene: [TitleScene,MainScene ,  StoreScene, IntroScene, BattleResultScene, NightScene],
+    scene: [PreloadScene, TitleScene,MainScene ,  StoreScene, IntroScene, BattleResultScene, NightScene],
     // scene: [ MainScene],
     scale: {
         // 다양한 디바이스와 해상도에 맞춰지도록

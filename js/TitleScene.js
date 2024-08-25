@@ -7,16 +7,6 @@ export default class TitleScene extends Phaser.Scene {
 
     }
 
-    preload() {
-        this.load.image('title_background', 'assets/title/title_background.png');
-        this.load.image('title_start_button', 'assets/title/title_start_button.png');
-        this.load.image('title_banner', 'assets/title/title_banner.png');
-        this.load.audio('title_bgm', 'assets/suno/title_song_of_hero.wav');
-
-        Player.preload(this);
-        Chord.preload(this);
-    }
-
     create() {
         // 페이드인 효과 적용
         this.cameras.main.fadeIn(1000, 0, 0, 0);

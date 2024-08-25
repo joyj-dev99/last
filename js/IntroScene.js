@@ -45,26 +45,6 @@ export default class IntroScene extends Phaser.Scene {
         this.isInDialogue = true;
     }
 
-    preload() {
-        this.load.video('letter_video', 'assets/intro/letter.mp4');
-        this.load.image("forestTileset", "assets/map/Forest-Prairie Tileset v1.png");
-        this.load.tilemapTiledJSON("stage_01_tutorial", "assets/map/stage_01/stage_01_tutorial.json");
-
-        this.load.audio('song_letter', 'assets/suno/song_letter.wav');
-        this.load.audio("monster_damage1", "assets/audio/monster_damage1.wav");
-        this.load.audio("monster_death1", "assets/audio/monster_death1.wav");
-        this.load.audio("monster_death2", "assets/audio/monster_death2.wav");
-        this.load.audio("coin_drop", "assets/audio/coin_drop.wav");
-        
-        Player.preload(this);
-        Chord.preload(this);
-        Dialog.preload(this);
-        Monster.preload(this);
-        HeartIndicator.preload(this);
-        Tutorial.preload(this);
-        MeatCoin.preload(this);
-    }
-
     create() {
         this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3);
         this.cameras.main.fadeIn(500, 0, 0, 0); 
