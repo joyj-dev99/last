@@ -176,25 +176,25 @@ export default class Tutorial{
             // 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_up.on('animationstop', function () {
                 console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-                keyboard_up.setTexture('keyboard', 0); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
+                keyboard_up.setTexture('keyboard_letter_symbols', 0); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
             }, this);
 
             // 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_down.on('animationstop', function () {
                 console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-                keyboard_down.setTexture('keyboard', 1); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
+                keyboard_down.setTexture('keyboard_letter_symbols', 1); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
             }, this);
 
             // 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_left.on('animationstop', function () {
                 console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-                keyboard_left.setTexture('keyboard', 2); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
+                keyboard_left.setTexture('keyboard_letter_symbols', 2); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
             }, this);
 
             // 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_right.on('animationstop', function () {
                 console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-                keyboard_right.setTexture('keyboard', 3); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
+                keyboard_right.setTexture('keyboard_letter_symbols', 3); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
             }, this);
             
             this.keyHandler = event => {
