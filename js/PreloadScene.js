@@ -21,6 +21,18 @@ export default class PreloadScene extends Phaser.Scene {
         // 로딩 텍스트
         const loadingText = this.add.text(width / 2, height / 2 - 50, 'Loading...', { fontSize: '20px', fill: '#ffffff' }).setOrigin(0.5);
 
+        // 로딩 애니메이션 설정
+        let dotCount = 0;
+        this.time.addEvent({
+            delay: 1000,                // 1초마다 실행
+            callback: () => {
+                dotCount = (dotCount + 1) % 4;   // 0, 1, 2, 3 순서로 반복
+                const dots = '.'.repeat(dotCount);  // 점의 개수를 결정
+                loadingText.setText(`Loading${dots}`); // 텍스트 업데이트
+            },
+            loop: true                  // 무한 반복
+        });
+
         // 퍼센트 텍스트
         const percentText = this.add.text(width / 2, height / 2 + 50, '0%', { fontSize: '18px', fill: '#ffffff' }).setOrigin(0.5);
 

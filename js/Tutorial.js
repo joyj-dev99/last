@@ -571,17 +571,17 @@ export default class Tutorial{
             // 키 입력을 위한 기본 커서 키 설정
             let cursors = scene.input.keyboard.createCursorKeys();
 
-            let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-50, sensor_y+130, 'keyboard', 41);
+            let keyboard_z  = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x-50, sensor_y+130, 'keyboard_letter_symbols', 41);
             keyboard_z.setScale(2);
             scene.add.existing(keyboard_z);  
             this.keyboard_z = keyboard_z;
 
-            let keyboard_x = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x, sensor_y+130, 'keyboard', 39);
+            let keyboard_x = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x, sensor_y+130, 'keyboard_letter_symbols', 39);
             keyboard_x.setScale(2);
             scene.add.existing(keyboard_x);  
             this.keyboard_x = keyboard_x;
 
-            let keyboard_c = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x +30, sensor_y+130, 'keyboard', 18);
+            let keyboard_c = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x +30, sensor_y+130, 'keyboard_letter_symbols', 18);
             keyboard_c.setScale(2);
             scene.add.existing(keyboard_c);  
             this.keyboard_c = keyboard_c;
@@ -653,19 +653,19 @@ export default class Tutorial{
             // z키 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_z.on('animationstop', function () {
                 console.log('animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-                keyboard_z.setTexture('keyboard', 41); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
+                keyboard_z.setTexture('keyboard_letter_symbols', 41); // 'yourOriginalTexture'는 원래 이미지의 키, 0은 첫 번째 프레임
             }, this);
         
             // x키 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_x.on('animationstop', function () {
                 console.log('animation stop '); 
-                keyboard_x.setTexture('keyboard', 39); 
+                keyboard_x.setTexture('keyboard_letter_symbols', 39); 
             }, this);
 
             // c키 애니메이션 완료 후 원래 이미지로 돌아가기
             keyboard_c.on('animationstop', function () {
                 console.log('animation stop '); 
-                keyboard_c.setTexture('keyboard', 18); 
+                keyboard_c.setTexture('keyboard_letter_symbols', 18); 
             }, this);
 
             let 관련된값 = this.관련된값반환(this.키조작설명순서[0] ,cursors);
@@ -739,7 +739,7 @@ export default class Tutorial{
             let cursors = scene.input.keyboard.createCursorKeys();
 
             // 왼쪽 키보드 스프라이트 생성
-            let keyboard_left = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x - 25, sensor_y +130, 'keyboard', 2);
+            let keyboard_left = new Phaser.Physics.Matter.Sprite(scene.matter.world, sensor_x - 25, sensor_y +130, 'keyboard_letter_symbols', 2);
             keyboard_left.setScale(2);
             scene.add.existing(keyboard_left);
             this.keyboard_left = keyboard_left;
@@ -775,7 +775,7 @@ export default class Tutorial{
             // 애니메이션 완료 후 원래 이미지로 돌아가기 (왼쪽 키)
             this.keyboard_left.on('animationstop', function () {
                 console.log('left animation stop '); // 애니메이션 완료 이벤트가 발생했는지 확인
-                keyboard_left.setTexture('keyboard', 2); // 원래 이미지로 돌아감
+                keyboard_left.setTexture('keyboard_letter_symbols', 2); // 원래 이미지로 돌아감
             }, this);
             
 
