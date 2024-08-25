@@ -24,7 +24,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'phantom_cloak',
         texture: 'item_03',  
         message: '앞으로 당신은 무적입니다. 망토 덕분에 아무리 몬스터에게 맞아도 죽지 않죠!',  
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0.01  // 드랍 확률 (1%)
     };
 
     // 신속의 장화 아이템 데이터
@@ -56,7 +56,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         type: 'herbal_medicine',
         texture: 'item_07',  
         message: '허리에 바른 약초가 마르려면, 앞으로 구르기는 금지입니다.', 
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0.05  // 드랍 확률 (5%)
     };
 
     // 해적의 금고 아이템 데이터
@@ -90,7 +90,7 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         frame: 0,  
         scale: 0.5,
         message: '화살 +10개',
-        drap_per: 0.1  // 드랍 확률 (10%)
+        drap_per: 0.2  // 드랍 확률 (20%)
     };
 
 

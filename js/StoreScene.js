@@ -52,6 +52,7 @@ export default class StoreScene extends Phaser.Scene {
 
         this.matter.world.setBounds();
         const map = this.make.tilemap({key: `stage_0${this.stageNumber}_store`});
+        this.dialog = new Dialog(this, this.cameras.main.width, this.cameras.main.height * 0.3, this.stageNumber, this.mapNumber);
 
         if (this.stageNumber === 1) {
             const forestTileset = map.addTilesetImage("Forest-Prairie Tileset v1", "forestTileset");
@@ -321,7 +322,7 @@ export default class StoreScene extends Phaser.Scene {
         }
 
         // 스테이지 진행률 UI
-        this.progressIndicator = new ProgressIndicator(this, 'progressSheet', this.stageNumber, this.partNumber, 'store');
+        this.progressIndicator = new ProgressIndicator(this, 'progressSheet','store');
         // 하트(체력) UI
         this.heartIndicator = new HeartIndicator(this);
         this.heartIndicator.setHeart(this.player.status.nowHeart, this.player.status.maxHeart);
