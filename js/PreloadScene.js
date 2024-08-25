@@ -33,7 +33,7 @@ export default class PreloadScene extends Phaser.Scene {
         // 로딩 애니메이션 설정
         let dotCount = 0;
         this.time.addEvent({
-            delay: 1000,                // 1초마다 실행
+            delay: 100,                // 1초마다 실행
             callback: () => {
                 dotCount = (dotCount + 1) % 4;   // 0, 1, 2, 3 순서로 반복
                 const dots = '.'.repeat(dotCount);  // 점의 개수를 결정
