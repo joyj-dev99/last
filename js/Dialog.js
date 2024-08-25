@@ -114,7 +114,7 @@ export default class Dialog {
 
 
         // 대화창의 depth를 플레이어보다 높게 설정
-        const dialogDepth = 101;
+        const dialogDepth = 102;
         this.#container.setDepth(dialogDepth);
         this.#nameText.setDepth(dialogDepth);
         this.#portrait.setDepth(dialogDepth);

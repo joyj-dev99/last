@@ -504,6 +504,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         const container = scene.add.container(x, y, [button, skillImage, overlay]);
         container.setScrollFactor(0);
 
+        // 플레이어 depth 100. 항상 플레이어보다 위에 있음.
+        container.setDepth(101);
+
         return {button, skillImage, overlay, container};
     }
 

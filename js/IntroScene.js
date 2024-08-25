@@ -308,8 +308,8 @@ export default class IntroScene extends Phaser.Scene {
             x: 80,
             y: 200,
             radius: 28,
-            base: this.add.circle(0, 0, 30, 0x888888),
-            thumb: this.add.circle(0, 0, 15, 0xcccccc),
+            base: this.add.circle(0, 0, 30, 0x888888).setDepth(101),
+            thumb: this.add.circle(0, 0, 15, 0xcccccc).setDepth(101),
             dir: '8dir',
             forceMin: 1,
         }).on('update', this.updateJoystickState, this);
