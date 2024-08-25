@@ -41,6 +41,8 @@ export default class IntroScene extends Phaser.Scene {
         this.isInDialogue = true;
 
         this.monsterArr = [];
+        this.input.addPointer(2); // 기본 포인터 외에 추가로 2개의 포인터를 허용
+
     }
 
     create() {
@@ -305,11 +307,11 @@ export default class IntroScene extends Phaser.Scene {
         this.joystick = this.plugins.get('rexVirtualJoystick').add(this, {
             x: 80,
             y: 200,
-            radius: 100,
+            radius: 28,
             base: this.add.circle(0, 0, 30, 0x888888),
             thumb: this.add.circle(0, 0, 15, 0xcccccc),
             dir: '8dir',
-            forceMin: 16,
+            forceMin: 1,
         }).on('update', this.updateJoystickState, this);
 
         // this.joystick.setEnable(false); // 조이스틱 컨테이너를 비활성화
