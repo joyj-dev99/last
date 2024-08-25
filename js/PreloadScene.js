@@ -19,7 +19,7 @@ export default class PreloadScene extends Phaser.Scene {
         const progressBar = this.add.graphics();
 
         // "Loading" 텍스트
-        const loadingText = this.add.text(width / 2, height / 2 - 50, 'Loading', { 
+        const loadingText = this.add.text(width / 2 - 20, height / 2 - 50, 'Loading', { 
             fontSize: '20px', 
             fill: '#ffffff' 
         }).setOrigin(0.5);
@@ -33,7 +33,7 @@ export default class PreloadScene extends Phaser.Scene {
         // 로딩 애니메이션 설정
         let dotCount = 0;
         this.time.addEvent({
-            delay: 100,                // 1초마다 실행
+            delay: 500,                // 1초마다 실행
             callback: () => {
                 dotCount = (dotCount + 1) % 4;   // 0, 1, 2, 3 순서로 반복
                 const dots = '.'.repeat(dotCount);  // 점의 개수를 결정
