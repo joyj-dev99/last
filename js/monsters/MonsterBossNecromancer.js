@@ -116,7 +116,6 @@ export default class MonsterBossNecromancer extends Phaser.Physics.Matter.Sprite
         this.timeOutBullets();
         // 전투 시작 전이거나, 다쳤으면 이동 계산 안함
         // if (!this.isBattleStared || this.isHurt) return;
-        console.log('update 2 실행')
         this.monsterDistanceControlPlayer();
     }
 

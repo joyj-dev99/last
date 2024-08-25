@@ -115,9 +115,12 @@ export default class IntroScene extends Phaser.Scene {
 
     // 다음 씬으로 이동 함수
     startNextScene() {
+        const stageNumber = 1;
+        const mapNumber = 1;
+        const playerStatus = null;
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.start('MainScene');  // 다음 씬으로 이동 (NextScene을 원하는 씬 키로 교체)
+            this.scene.start('MainScene',{stageNumber, mapNumber, playerStatus, skipTutorial: true});  // 다음 씬으로 이동 (NextScene을 원하는 씬 키로 교체)
         });
     }
 

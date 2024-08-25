@@ -147,7 +147,6 @@ export default class MonsterBossPumpkin extends Phaser.Physics.Matter.Sprite {
         this.timeOutBullets();
         // 전투 시작 전이거나, 맞을때 이동안함 그래서 넉백됨
         // if (!this.isBattleStared || this.isKnockBack) return;
-        console.log('update 2 실행');
         this.monsterFollowPlayer();
     }
 

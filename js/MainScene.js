@@ -1124,12 +1124,33 @@ export default class MainScene extends Phaser.Scene {
             } else {
                 return;
             }
-            m.setCollisionCategory(MONSTER_CATEGORY);
-            m.setCollidesWith([PLAYER_CATEGORY, PLAYER_ATTACK_CATEGORY, TILE_CATEGORY]);
             this.monsterArr.push(m);
             m.startBattle();
         }
+        this.matterCollision.addOnCollideStart({
+            objectA: this.player,
+            objectB: this.monsterArr,
+            callback: eventData => {
+                // 플레이어가 A, 충돌이 발생한 몬스터가 B
+                const {bodyA, bodyB, gameObjectA, gameObjectB, pair} = eventData;
+                console.log("플레이어와 몬스터 충돌");
+                // console.dir(gameObjectB);
 
+                // 슬래쉬 제거
+                this.player.removeSlash();
+                // 콤보 초기화
+                this.player.comboState = 0;
+
+                // 몬스터가 살아있을때만 넉백도 하고 데미지도 받음
+                if (gameObjectB.isAlive && this.player.isAlive) {
+                    gameObjectB.monsterAttackPlayer();
+                    this.player.takeDamage(gameObjectB.damage);
+                    if (this.player.isAlive) {
+                        this.player.applyKnockback(gameObjectB);
+                    }
+                }
+            }
+        });
     }
 
 }
