@@ -128,9 +128,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.soundSword = this.scene.sound.add(`sound_player_hit`, {
             volume: 0.3 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });
-        this.soundMove = this.scene.sound.add(`sound_player_move`, {
-            volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
-        });
         this.soundDeath = this.scene.sound.add(`sound_player_death`, {
             volume: 0.5 * window.gameConfig.soundVolume // Set the volume (0 to 1)
         });

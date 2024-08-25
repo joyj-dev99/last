@@ -20,12 +20,14 @@ export default class PreloadScene extends Phaser.Scene {
 
         // "Loading" 텍스트
         const loadingText = this.add.text(width / 2 - 20, height / 2 - 50, 'Loading', { 
+            fontFamily: 'NeoDunggeunmo',
             fontSize: '20px', 
             fill: '#ffffff' 
         }).setOrigin(0.5);
 
         // 점을 표시할 텍스트
         const dotsText = this.add.text(loadingText.x + loadingText.width / 2 + 5, height / 2 - 50, '', { 
+            
             fontSize: '20px', 
             fill: '#ffffff' 
         }).setOrigin(0, 0.5); // 점의 위치를 "Loading" 텍스트 바로 뒤로 설정
@@ -327,7 +329,6 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.audio("boss_monster_clear", "assets/audio/노래방 100점.mp3");
 
         this.load.audio('sound_player_hit', 'assets/audio/sound_player_hit.mp3');
-        this.load.audio('sound_player_move', 'assets/audio/sound_player_move.mp3');
         this.load.audio('sound_player_death', 'assets/audio/sound_player_death.mp3');
         this.load.audio('sound_player_damage', 'assets/audio/sound_player_damage.mp3');
         this.load.audio('sound_player_bow', 'assets/audio/sound_player_bow.mp3');

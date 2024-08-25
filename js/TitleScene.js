@@ -20,6 +20,8 @@ export default class TitleScene extends Phaser.Scene {
         });
 
         const background = this.add.image(0, 0, 'title_background');
+        // 픽셀 아트 스타일이 적용되지 않도록 설정
+        background.setPipeline('TextureTintPipeline'); // 부드러운 스케일링 적용
         // 이미지의 크기를 화면 크기에 맞게 조정
         background.setDisplaySize(mapWidth, mapHieght);
         // 이미지를 씬의 중앙에 위치시키기 위해 origin을 설정
@@ -27,6 +29,8 @@ export default class TitleScene extends Phaser.Scene {
 
         const banner = this.add.image(mapWidth / 2, 5, 'title_banner')
             .setOrigin(0.5, 0);
+        // 픽셀 아트 스타일이 적용되지 않도록 설정
+        banner.setPipeline('TextureTintPipeline'); // 부드러운 스케일링 적용
 
         this.tweens.add({
             targets: banner,
@@ -77,6 +81,8 @@ export default class TitleScene extends Phaser.Scene {
         const startButton = this.add.image(mapWidth - 20, mapHieght - 20, 'title_start_button')
             .setOrigin(1, 1)
             .setInteractive();
+        // 픽셀 아트 스타일이 적용되지 않도록 설정
+        startButton.setPipeline('TextureTintPipeline'); // 부드러운 스케일링 적용
         
         // 마우스가 버튼 위로 올라갔을 때
         startButton.on('pointerover', () => {
