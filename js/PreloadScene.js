@@ -18,8 +18,17 @@ export default class PreloadScene extends Phaser.Scene {
         // 로딩 바
         const progressBar = this.add.graphics();
 
-        // 로딩 텍스트
-        const loadingText = this.add.text(width / 2, height / 2 - 50, 'Loading...', { fontSize: '20px', fill: '#ffffff' }).setOrigin(0.5);
+        // "Loading" 텍스트
+        const loadingText = this.add.text(width / 2, height / 2 - 50, 'Loading', { 
+            fontSize: '20px', 
+            fill: '#ffffff' 
+        }).setOrigin(0.5);
+
+        // 점을 표시할 텍스트
+        const dotsText = this.add.text(loadingText.x + loadingText.width / 2 + 10, height / 2 - 50, '', { 
+            fontSize: '20px', 
+            fill: '#ffffff' 
+        }).setOrigin(0, 0.5); // 점의 위치를 "Loading" 텍스트 바로 뒤로 설정
 
         // 로딩 애니메이션 설정
         let dotCount = 0;
@@ -28,11 +37,10 @@ export default class PreloadScene extends Phaser.Scene {
             callback: () => {
                 dotCount = (dotCount + 1) % 4;   // 0, 1, 2, 3 순서로 반복
                 const dots = '.'.repeat(dotCount);  // 점의 개수를 결정
-                loadingText.setText(`Loading${dots}`); // 텍스트 업데이트
+                dotsText.setText(dots); // 점 텍스트만 업데이트
             },
             loop: true                  // 무한 반복
         });
-
         // 퍼센트 텍스트
         const percentText = this.add.text(width / 2, height / 2 + 50, '0%', { fontSize: '18px', fill: '#ffffff' }).setOrigin(0.5);
 
