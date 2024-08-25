@@ -424,7 +424,7 @@ export default class IntroScene extends Phaser.Scene {
                     dialog_msg = 'z 키를 눌러서 검을 휘둘러보자!';
                 }
                 else if(type === 'mobile'){
-                    dialog_msg = '공격 버튼을 눌러서 검을 휘둘러보자!';
+                    dialog_msg = '공격 버튼을 눌러서 공격해보자!';
                     // 공격 버튼을 연속으로 눌러 빠르게 검을 최대 3번까지 휘둘러 보세요. 3번의 연속 공격이 가능합니다!
                 }
     
