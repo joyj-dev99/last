@@ -1,10 +1,10 @@
-/** @type {Phaser.Types.GameObjects.Text.TextStyle} */
-const UI_TEXT_STYLE = Object.freeze({
-    // fontFamily: KENNEY_FUTURE_NARROW_FONT_NAME,
-    color: 'white',
-    fontSize: '20px',
-    wordWrap: {width: 0},
-});
+// /** @type {Phaser.Types.GameObjects.Text.TextStyle} */
+// const UI_TEXT_STYLE = Object.freeze({
+//     // fontFamily: KENNEY_FUTURE_NARROW_FONT_NAME,
+//     color: 'white',
+//     fontSize: '20px',
+//     wordWrap: {width: 0},
+// });
 
 const {type} = window.gameConfig;
 
@@ -92,10 +92,11 @@ export default class Dialog {
         // 초상화 이미지 객체 추가
         this.#portrait = this.#scene.add.image(50, this.#height / 2, null).setScale(0.4).setVisible(false).setScrollFactor(0);
         this.#container.add(this.#portrait);
-
+  
         // 대화 텍스트 객체 추가
         this.#uiText = this.#scene.add.text(90, 30, '', {
-            ...UI_TEXT_STYLE,
+            fontFamily: 'Arial',
+            color: 'white',
             ...{wordWrap: {width: this.#width - 100}, fontSize: '15px'},
         }).setScrollFactor(0);
         this.#container.add(this.#uiText);
