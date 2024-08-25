@@ -278,8 +278,11 @@ export default class StageManager {
 
         console.log("mapAttribute " + mapAttribute);
         // 맵의 속성에 따라서, 아이템 or 하트 or 랜덤 보상을 드랍한다.
-        const dropX = this.player.x - 50;
-        const dropY = this.player.y;
+        const dropX = 650
+        const dropY = 150
+
+        const dropX_boss =300;
+        const dropY_boss = 250;
 
         let randomNumber = Math.random();
         if (randomNumber <= 0.2) {
@@ -319,10 +322,10 @@ export default class StageManager {
         if (mapNumber === 'boss') {
             this.scene.boss_monster_clear.play();
             // 첫 번째 아이템 드랍
-            const firstItem = Item.dropRandomItem(this.scene, this.player, dropX, dropY, this.dialog, null);
+            const firstItem = Item.dropRandomItem(this.scene, this.player, dropX_boss, dropY_boss, this.dialog, null);
             console.log("첫번째 아이템 드랍" + firstItem.itemType.type);
             // 두 번째 아이템 드랍 (첫 번째 아이템과 다른 종류로)
-            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX - 40, dropY, this.dialog, firstItem.itemType);
+            const secondItem = Item.dropRandomItem(this.scene, this.player, dropX_boss - 40, dropY_boss, this.dialog, firstItem.itemType);
             console.log("두번째 아이템 드랍" + secondItem.itemType.type);
         } else if (mapAttribute === 1) {
             this.scene.monster_clear.play();
