@@ -356,7 +356,7 @@ export default class StageManager {
     }
 
     update() {
-        // console.log('StageManager update()');
+        console.log('StageManager update()');
         if (this.scene.returnStoreStatus !== undefined) {
             this.scene.returnStoreStatus = undefined;
             // 모바일에서 this.scene.matterCollision.addOnCollideEnd 실행 안함...
