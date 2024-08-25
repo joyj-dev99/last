@@ -84,8 +84,8 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
         // 초기 프레임 설정
         // this.healthBar.setScrollFactor(0);
         // this.healthBarBack.setScrollFactor(0);
-        this.healthBar.setDepth(1001);
-        this.healthBarBack.setDepth(1001);
+        this.healthBar.setDepth(100);
+        this.healthBarBack.setDepth(100);
 
     }
 
