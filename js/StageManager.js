@@ -79,7 +79,10 @@ export default class StageManager {
                 } else if (type == 'mobile') {
                     this.dialog.addInstructions('next');
                 }
-            } else {
+            } else if(mapNumber === 10){
+                this.scene.isInDialogue = false;
+            }
+            else{
                 this.startBattleSequence();
             }
         }
@@ -265,7 +268,6 @@ export default class StageManager {
         this.scene.monsterArr.forEach((monster) => {
             monster.startBattle();
         });
-
 
     }
 

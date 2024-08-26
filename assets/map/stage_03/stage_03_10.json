@@ -38,7 +38,7 @@
          "height":10,
          "id":2,
          "locked":true,
-         "name":"cliff",
+         "name":"wall",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
