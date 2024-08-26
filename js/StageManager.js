@@ -287,11 +287,21 @@ export default class StageManager {
         let randomNumber = Math.random();
         if (randomNumber <= 0.2) {
         }
-        this.storeFlag = new StoreFlag({
-            scene: this.scene,
-            x: this.player.x,
-            y: this.player.y
-        });
+        // 상점 깃발 위치
+        if (mapNumber === 'boss') {
+            this.storeFlag = new StoreFlag({
+                scene: this.scene,
+                x: 130,
+                y: 250
+            });
+        }
+        else{
+            this.storeFlag = new StoreFlag({
+                scene: this.scene,
+                x: 670,
+                y: 200
+            });
+        }
         this.scene.matterCollision.addOnCollideStart({
             objectA: this.player,
             objectB: this.storeFlag,
