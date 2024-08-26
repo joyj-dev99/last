@@ -239,8 +239,8 @@ export default class Monster extends Phaser.Physics.Matter.Sprite {
             this.isAlive = false;
             this.setCollidesWith([TILE_CATEGORY]);
             this.hp = 0;
-            this.healthBarBack.clear();
-            this.healthBar.clear();
+            this.healthBarBack.destroy();
+            this.healthBar.destroy();
             this.anims.play(`${this.monsterType}_death`);
             return 'death';
         }

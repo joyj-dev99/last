@@ -39,7 +39,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             speed: 3.5,
             rollingCoolTime: 500,
             swordCoolTime: 1000,
-            magicCoolTime: 100,
+            magicCoolTime: 2000,
             arrowCount: 3,//화살의 갯수
             // 무적 상태
             isInvincible: false,
