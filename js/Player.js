@@ -160,13 +160,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             let height = scene.sys.game.config.height;
 
             roll_x = width - 30;
-            roll_y = height - 95;
-            slash_X = width - 30;
-            slash_y = height - 35;
+            roll_y = height - 35;//95
+            slash_X = width - 85;
+            slash_y = height - 35;//35
             arrow_x = width - 85;
-            arrow_y = height - 35;
-            magic_x = width - 140;
-            magic_y = height - 35;
+            arrow_y = height - 95;
+            magic_x = width - 30;
+            magic_y = height - 95;
         } else if (type == 'pc') {
             rollImgName = 'roll_16';
             slashImgName = 'sword_16';
@@ -239,7 +239,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // 화살 남은 갯수 text
             // 텍스트 스타일 (폰트 크기 조절)
             const buttonTextStyle = {font: "30px Arial", fill: "#000000"};
-            this.arrowCountText = this.scene.add.text(arrow_x, arrow_y, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
+            this.arrowCountText = this.scene.add.text(arrow_x,arrow_y, this.status.arrowCount, buttonTextStyle).setOrigin(0.5).setScrollFactor(0);
+            this.arrowCountText.setDepth(101);
 
             // 새로운 그래픽스 객체 생성
             this.graphics1 = scene.add.graphics();
