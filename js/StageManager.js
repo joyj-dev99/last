@@ -373,6 +373,8 @@ export default class StageManager {
     update() {
         if (this.scene.returnStoreStatus !== undefined) {
             this.scene.returnStoreStatus = undefined;
+            // 모든 'keydown-E' 핸들러 제거
+            this.scene.input.keyboard.off('keydown-E');
             // 모바일에서 this.scene.matterCollision.addOnCollideEnd 실행 안함...
             // 다시 mainScene으로 돌아오면 실행해야 하는데..
             // this.storeFlag.hideInteractPrompt();
