@@ -678,13 +678,12 @@ export default class Tutorial{
         }
         else if(this.type === 'mobile'){
 
-
             let width = scene.sys.game.config.width;
             let height = scene.sys.game.config.height;
 
             // 손 표시, 원 표시
             // - 원형 표시, 손가락 가리키는 표시
-            this.pointer = scene.add.image(372, 165, 'pointer');
+            this.pointer = scene.add.image(390, 110, 'pointer');
             this.pointer.setDepth(1001);
             scene.add.existing(this.pointer);   
             this.pointer.setScale(0.2);
@@ -697,10 +696,25 @@ export default class Tutorial{
             this.graphics.lineStyle(2, 0xffffff); // 두께 2, 흰색 테두리
             // 원 그리기 (x, y, 반지름)
             // this.graphics.strokeCircle(372, 220, 33); // (200, 200) 위치에 반지름 50의 원
-            this.graphics.strokeRect(width - 170, height - 65, 167, 60);
+            this.graphics.strokeRect(width - 114, height - 125, 113, 120);
             this.graphics.setDepth(1001);
             // 카메라에 고정시키기
             this.graphics.setScrollFactor(0);
+
+            // 새로운 그래픽스 객체 생성
+            this.graphics2 = scene.add.graphics();
+            // 선의 스타일 설정 (두께, 색상 등)
+            this.graphics2.lineStyle(2, 0xffffff); // 두께 2, 흰색 테두리
+            // 원 그리기 (x, y, 반지름)
+            // this.graphics.strokeCircle(372, 220, 33); // (200, 200) 위치에 반지름 50의 원
+            // this.graphics.strokeRect(width - 114, height - 125, 113, 120);
+            this.graphics2.strokeRect(width - 60, height - 63, 58, 58);
+
+            this.graphics2.setDepth(1001);
+            // 카메라에 고정시키기
+            this.graphics2.setScrollFactor(0);
+     
+
         }
     }
 
@@ -724,6 +738,9 @@ export default class Tutorial{
         }
         if(this.graphics){
             this.graphics.destroy();
+        }
+        if(this.graphics2){
+            this.graphics2.destroy();
         }
         
 
@@ -794,7 +811,7 @@ export default class Tutorial{
 
             // 손 표시, 원 표시
             // - 원형 표시, 손가락 가리키는 표시
-            this.pointer = scene.add.image(420, height - 148, 'pointer');
+            this.pointer = scene.add.image(420, height - 85, 'pointer');
             this.pointer.setDepth(1001);
             scene.add.existing(this.pointer);   
             this.pointer.setScale(0.2);
@@ -809,7 +826,7 @@ export default class Tutorial{
             this.graphics.lineStyle(2, 0xffffff); // 두께 2, 흰색 테두리
             // 원 그리기 (x, y, 반지름)
             // this.graphics.strokeCircle(420, 220, 33); // (200, 200) 위치에 반지름 50의 원
-            this.graphics.strokeRect(width - 60, height - 123, 58, 58);
+            this.graphics.strokeRect(width - 60, height - 63, 58, 58);
 
             // 카메라에 고정시키기
             this.graphics.setScrollFactor(0);
