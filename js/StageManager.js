@@ -378,6 +378,7 @@ export default class StageManager {
             // this.storeFlag.hideInteractPrompt();
             // console.log('StageManager update() hideInteractPrompt()');
             if (this.storeFlag) {
+                this.storeFlag.hideInteractPrompt();
                 this.storeFlag.destroy();
             }
             this.scene.player.arrowCountText.setText(this.scene.player.status.arrowCount);

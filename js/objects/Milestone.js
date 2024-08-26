@@ -32,9 +32,20 @@ export default class Milestone extends Phaser.Physics.Matter.Sprite {
     showInteractPrompt() {
         if (!this.interativeKeyImg) {
             let keyImg;
+            // 텍스트 추가
+            const interactText = this.scene.add.text(0, 15, '다음 맵', {
+                fontFamily: 'NeoDunggeunmo',
+                fontSize: '12px',
+                fill: '#ffffff',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                padding: { left: 10, right: 10, top: 5, bottom: 5 },
+            }).setOrigin(0.5, 0.5);
+
+
             if(type === 'mobile'){
-                keyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImage');
+                keyImg = this.scene.add.sprite(interactText.x, interactText.y-15, 'nextBtnImage');
                 // Make the sprite interactive
+
                 keyImg.setInteractive();
                 // Add a click event listener to the sprite
                 keyImg.on('pointerdown', function (pointer) {
@@ -53,17 +64,8 @@ export default class Milestone extends Phaser.Physics.Matter.Sprite {
 
             }
             else  if(type === 'pc'){
-                keyImg = this.scene.add.sprite(this.x, this.y - 15, 'keyboard_letter_symbols', 20);
+                keyImg = this.scene.add.sprite(interactText.x, interactText.y-15, 'keyboard_letter_symbols', 20);
             }
-
-            // 텍스트 추가
-            const interactText = this.scene.add.text(0, 15, '다음 맵', {
-                fontFamily: 'NeoDunggeunmo',
-                fontSize: '12px',
-                fill: '#ffffff',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                padding: { left: 10, right: 10, top: 5, bottom: 5 },
-            }).setOrigin(0.5, 0.5);
 
             // 컨테이너 생성
             this.interativeKeyImg = this.scene.add.container(this.x, this.y - 50, [keyImg, interactText]);
