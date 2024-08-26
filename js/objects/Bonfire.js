@@ -36,13 +36,13 @@ export default class Bonfire extends Phaser.Physics.Matter.Sprite {
     // 상호작용 가능 표시를 보여주는 메서드
     showInteractPrompt() {
         if (!this.interativeKeyImg) {
-
+            let keyImg;
             if(type === 'mobile'){
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImage');//, 52
+                keyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImage');//, 52
                 // Make the sprite interactive
-                this.interativeKeyImg.setInteractive();
+                keyImg.setInteractive();
                 // Add a click event listener to the sprite
-                this.interativeKeyImg.on('pointerdown', function (pointer) {
+                keyImg.on('pointerdown', function (pointer) {
                     // 예시: zKey에 대해 keydown 이벤트를 수동으로 트리거하기
                     const shiftKeyDownEvent = new KeyboardEvent('keydown', {
                         key: 'Shift',
@@ -58,10 +58,22 @@ export default class Bonfire extends Phaser.Physics.Matter.Sprite {
 
             }
             else  if(type === 'pc'){
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keyboard_letter_symbols', 20);
+                keyImg = this.scene.add.sprite(this.x, this.y - 15, 'keyboard_letter_symbols', 20);
             }
+            // 텍스트 추가
+            const interactText = this.scene.add.text(0, 15, '다음 스테이지', {
+                fontFamily: 'NeoDunggeunmo',
+                fontSize: '12px',
+                fill: '#ffffff',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                padding: { left: 10, right: 10, top: 5, bottom: 5 },
+            }).setOrigin(0.5, 0.5);
 
-            this.interativeKeyImg.setOrigin(0.5);
+            // 컨테이너 생성
+            this.interativeKeyImg = this.scene.add.container(this.x, this.y - 50, [keyImg, interactText]);
+            this.interativeKeyImg.setSize(keyImg.width, keyImg.height + interactText.height);
+            this.interativeKeyImg.setInteractive();
+            this.interativeKeyImg.setDepth(101);
            
         }
         

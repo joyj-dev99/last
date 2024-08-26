@@ -246,15 +246,6 @@ export default class StoreScene extends Phaser.Scene {
             let mainScene = this.scene.get('MainScene');
             mainScene.returnStoreStatus = this.player.status;
             this.scene.stop('StoreScene');
-            // this.scene.start('MainScene', {
-            //     stageNumber : this.stageNumber,
-            //     partNumber: this.partNumber,
-            //     mapNumber: this.mapNumber,
-            //     mapAttribute: 0,
-            //     battleEnd : true,
-            //     playerStatus : this.player.status
-            // });
-
         }
         if (this.milestone) {
             // 플레이어와 표지판 충돌 이벤트 설정

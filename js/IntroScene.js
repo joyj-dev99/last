@@ -130,6 +130,7 @@ export default class IntroScene extends Phaser.Scene {
                 duration: 2000,
                 onComplete: () => {
                     this.bgm.stop();
+                    console.log('fadeOutBGM onComplete');
                 }
             });
         } else {
@@ -142,6 +143,10 @@ export default class IntroScene extends Phaser.Scene {
         if (this.letterVideo) {
             this.letterVideo.stop();  // 동영상 정지
         }
+        if (this.bgm) {
+            this.bgm.stop();
+        }
+        
         this.startNextScene();    // 다음 씬으로 이동
     }
 
@@ -527,9 +532,11 @@ export default class IntroScene extends Phaser.Scene {
 
     battleEnd() {
         this.fadeOutBGM();
+        this.isInDialogue = true;
+        this.player.stopMove()
         
         this.time.delayedCall(1000, () => {
-            this.isInDialogue = true;
+            
             let messages = [
                 {name : '맥스', portrait : 'MaxPotrait', message : '이건 미트코인이잖아?'},
                 {name : '맥스', portrait : 'MaxPotrait', message : '소유자의 영혼을 인식하는 기술 때문에 죽어도 소유권이 이전되지 않는다고 유행했었지'},
