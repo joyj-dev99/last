@@ -529,6 +529,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // z키를 눌렀을때, 콤보 상태를 확인하고 칼 휘두르기 시작 (각, 1단계, 2단계, 3단계)
         if (Phaser.Input.Keyboard.JustDown(this.zKey)) {
             if(this.scene.scene.isActive('StoreScene') === true)return;
+            if(this.scene.scene.isActive('NightScene') === true)return;
 
             // 슬래시 쿨타임
             if (this.isSlash === true) {
@@ -550,6 +551,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // x키 누르면 해당 방향으로 활 쏘기
         if (Phaser.Input.Keyboard.JustDown(this.xKey)) {
             if(this.scene.scene.isActive('StoreScene') === true)return;
+            if(this.scene.scene.isActive('NightScene') === true)return;
             if (this.status.arrowCount > 0)
                 this.handleBow(); //활쏘기 동작 처리
         }
@@ -557,6 +559,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         //c키 누르면 마법 생성.
         if (Phaser.Input.Keyboard.JustDown(this.cKey)) {
             if(this.scene.scene.isActive('StoreScene') === true)return;
+            if(this.scene.scene.isActive('NightScene') === true)return;
             this.handleSpell(); //마법 부리기
         }
 
@@ -576,6 +579,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             // Shift 키를 눌렀을 때 구르기 시작
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
                 if(this.scene.scene.isActive('StoreScene') === true)return;
+                if(this.scene.scene.isActive('NightScene') === true)return;
 
                 this.handleRoll(playerVelocity); // 구르기
             }
@@ -1090,7 +1094,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     stopMove() {
         this.isMoving = false;
-        this.setVelocity(0, 0);
+        this.setVelocity(0, 0)
+        this.anims.play('player_idle', true);
 
     }
 

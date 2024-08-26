@@ -18,7 +18,7 @@ export default class NightScene extends Phaser.Scene {
         this.playerStatus = data.playerStatus || null;
 
         // 현재 대화창이 떠있는지 여부를 나타내는 상태변수
-        this.isInDialogue = true;
+        this.isInDialogue = false;
 
         this.mapWidth = 480;
         this.mapHigth = 320;
@@ -98,7 +98,8 @@ export default class NightScene extends Phaser.Scene {
                 this.player = new Player({
                     scene: this,
                     x: x,
-                    y: y
+                    y: y,
+                    hiddenFlag: true
                 });
             }
         });

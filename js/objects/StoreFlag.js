@@ -52,12 +52,13 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
     // 상호작용 가능 표시를 보여주는 메서드
     showInteractPrompt() {
         if (!this.interativeKeyImg) {
+            let keyImg;
             if (type === 'mobile') {
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'nextBtnImage');
+                keyImg = this.scene.add.sprite(0, 0, 'nextBtnImage');
                 // Make the sprite interactive
-                this.interativeKeyImg.setInteractive();
+                keyImg.setInteractive();
                 // Add a click event listener to the sprite
-                this.interativeKeyImg.on('pointerdown', function (pointer) {
+                keyImg.on('pointerdown', function (pointer) {
 
                     console.log('StoreFlag pointerdown');
 
@@ -75,14 +76,24 @@ export default class StoreFlag extends Phaser.Physics.Matter.Sprite {
 
 
             } else if (type === 'pc') {
-                this.interativeKeyImg = this.scene.add.sprite(this.x, this.y - 15, 'keyboard_letter_symbols', 20);
+                keyImg = this.scene.add.sprite(0, 0, 'keyboard_letter_symbols', 20);
             }
 
-            this.interativeKeyImg.setOrigin(0.5);
+            // 텍스트 추가
+            const interactText = this.scene.add.text(0, 15, '상점 가기', {
+                fontFamily: 'NeoDunggeunmo',
+                fontSize: '12px',
+                fill: '#ffffff',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                padding: { left: 10, right: 10, top: 5, bottom: 5 },
+            }).setOrigin(0.5, 0.5);
 
+            // 컨테이너 생성
+            this.interativeKeyImg = this.scene.add.container(this.x, this.y - 50, [keyImg, interactText]);
+            this.interativeKeyImg.setSize(keyImg.width, keyImg.height + interactText.height);
+            this.interativeKeyImg.setInteractive();
+            this.interativeKeyImg.setDepth(101);
         }
-
-
     }
 
     // 상호작용 가능 표시를 숨기는 메서드
